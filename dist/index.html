@@ -1116,7 +1116,8 @@ html{scroll-padding-top:1.25rem}
 .search-feedback{font:600 .82rem system-ui,sans-serif;color:#e0bd89;margin:.65rem 0;line-height:1.5}
 .search-target-active{outline:2px solid rgba(198,154,99,.75);outline-offset:6px;scroll-margin-top:1.75rem}
 @media(max-width:420px){.enhanced-search-box{gap:.3rem}.enhanced-search-box .search-go-btn{padding:0 .55rem;min-width:3.65rem}}
-</style><style id="real-components-style">.real-home-feature{padding:18px 0 26px;background:linear-gradient(180deg,#11100e,#1f1a15)}.real-home-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.real-home-heading strong{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.15rem,3vw,1.7rem);color:#f3d6af}.real-home-heading a{font-size:.8rem;color:#e7bc83}.real-home-rail{display:flex;gap:9px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}.real-home-card{background:#211c16;flex:0 0 138px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid #695238;border-radius:7px;text-decoration:none;color:#ecdecc;padding:6px;scroll-snap-align:start;min-height:133px}.real-home-card img{width:100%;height:96px;object-fit:contain;mix-blend-mode:screen}.real-home-card span{font:700 .74rem system-ui,sans-serif;text-align:center}.real-home-card:hover,.real-home-card:focus-visible{border-color:#efbb79}</style><link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" /></head>
+</style><style id="real-components-style">.real-home-feature{padding:18px 0 26px;background:linear-gradient(180deg,#11100e,#1f1a15)}.real-home-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.real-home-heading strong{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.15rem,3vw,1.7rem);color:#f3d6af}.real-home-heading a{font-size:.8rem;color:#e7bc83}.real-home-rail{display:flex;gap:9px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}.real-home-card{background:#211c16;flex:0 0 138px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid #695238;border-radius:7px;text-decoration:none;color:#ecdecc;padding:6px;scroll-snap-align:start;min-height:133px}.real-home-card img{width:100%;height:96px;object-fit:contain;mix-blend-mode:screen}.real-home-card span{font:700 .74rem system-ui,sans-serif;text-align:center}.real-home-card:hover,.real-home-card:focus-visible{border-color:#efbb79}</style><link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" /><link rel="stylesheet" href="/assets/6006-scroll-story.css?v=20261010" />
+</head>
   <body>
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
     <header class="site-header">
@@ -1165,7 +1166,71 @@ html{scroll-padding-top:1.25rem}
         </div>
       </section>
 
-      <section class="real-home-feature" aria-label="Görsel arıza kataloğu"><div class="shell"><div class="real-home-heading"><strong>Sistem görselleriyle arıza teşhisi</strong><a href="fehlercodes/">Tüm sistemleri aç →</a></div><div class="real-home-rail"><a href="fehlercodes/?category=turbo#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/turbo.webp" alt="" /><span>Turbo / Hava</span></a><a href="fehlercodes/?category=dpf#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/dpf.webp" alt="" /><span>DPF / Egzoz</span></a><a href="fehlercodes/?category=adblue#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/adblue.webp" alt="" /><span>AdBlue / SCR</span></a><a href="fehlercodes/?category=egr#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/egr.webp" alt="" /><span>EGR Sistemi</span></a><a href="fehlercodes/?category=fuel#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/fuel.webp" alt="" /><span>Yakıt Sistemi</span></a><a href="fehlercodes/?category=transmission#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/transmission.webp" alt="" /><span>Şanzıman</span></a><a href="fehlercodes/?category=brake#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/brake.webp" alt="" /><span>Fren / ABS</span></a><a href="fehlercodes/?category=network#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/network.webp" alt="" /><span>CAN / ECU</span></a><a href="fehlercodes/?category=airbag#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/airbag.webp" alt="" /><span>Hava Yastığı</span></a><a href="fehlercodes/?category=cooling#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/cooling.webp" alt="" /><span>Soğutma Sistemi</span></a></div></div></section>
+      
+<section class="six-story" id="diagnostic-story" aria-labelledby="story-title">
+  <div class="shell six-story-heading">
+    <div class="six-story-heading-top"><span class="six-story-dash"></span><span class="six-story-eyebrow" data-story-text="eyebrow">6006 / TEKNİĞİN İÇİNDE</span><span class="six-story-counter">01 — 04</span></div>
+    <h2 id="story-title" data-story-text="title">Arızayı yalnızca görme. <em>Sistemi anla.</em></h2>
+    <p data-story-text="intro">Sayfayı kaydır: otomobilin dört kritik sistemi, parça görselleri ve doğru teşhis yaklaşımıyla adım adım ortaya çıksın.</p>
+  </div>
+  <div class="shell six-story-layout">
+    <div class="six-story-visual" data-active="0">
+      <div class="six-story-stage" aria-hidden="true">
+        <div class="six-story-grid"></div>
+        <div class="six-story-orbit six-story-orbit--one"></div>
+        <div class="six-story-orbit six-story-orbit--two"></div>
+        <svg class="six-story-car" viewBox="0 0 650 285" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M60 170c23-14 61-31 104-40l59-70c15-17 35-23 64-24h143c26 1 52 10 69 31l57 63c32 7 56 14 71 31l10 46H47l13-37z"/>
+          <path d="M195 130l50-63c10-9 29-12 48-12h126c25 0 47 8 60 22l46 53zM68 178h524"/>
+          <circle cx="171" cy="212" r="41"/><circle cx="171" cy="212" r="25"/><circle cx="512" cy="212" r="41"/><circle cx="512" cy="212" r="25"/>
+          <path d="M331 68v63M471 133v35M59 189h47M563 190h55"/>
+        </svg>
+        <div class="six-story-scanner"></div>
+        <img class="six-story-part six-story-part--0" src="/assets/realparts/turbo.webp" alt="" decoding="async" loading="lazy"/>
+        <img class="six-story-part six-story-part--1" src="/assets/realparts/dpf.webp" alt="" decoding="async" loading="lazy"/>
+        <img class="six-story-part six-story-part--2" src="/assets/realparts/network.webp" alt="" decoding="async" loading="lazy"/>
+        <img class="six-story-part six-story-part--3" src="/assets/realparts/brake.webp" alt="" decoding="async" loading="lazy"/>
+        <div class="six-story-scanline"></div>
+        <div class="six-story-reticle six-story-reticle--a"></div>
+        <div class="six-story-reticle six-story-reticle--b"></div>
+      </div>
+      <div class="six-story-hud six-story-hud--top"><span class="six-story-recording-dot"></span><span data-story-text="systemScan">SİSTEM İNCELEMESİ</span><span class="six-story-hud-right">6006 // LIVE</span></div>
+      <div class="six-story-stage-caption">
+        <div class="six-story-caption-main"><span class="six-story-caption-index" id="sixStoryIndex">01 / 04</span><strong id="sixStoryActiveLabel">Turbo / Hava yönetimi</strong></div>
+        <span class="six-story-scroll-hint" data-story-text="scroll">KAYDIR ↓</span>
+      </div>
+      <div class="six-story-progress" aria-hidden="true"><span id="sixStoryProgress"></span></div>
+    </div>
+    <ol class="six-story-chapters">
+      <li class="six-story-chapter is-active" data-story-step="0">
+        <span class="six-story-step-index">01 <span>—</span> AIR / BOOST</span>
+        <h3 data-story-text="turboTitle">Turbo. Basıncı ölçmeden karar verme.</h3>
+        <p data-story-text="turboBody">Hava akışı, basınç kaçağı, vakum hattı ve aktüatör verilerini birlikte değerlendir. P0299 bir başlangıç noktasıdır; tek başına turbo arızası demek değildir.</p>
+        <a href="/fehlercodes/?q=P0299#arama" data-story-text="turboLink">P0299 teşhis rehberini aç <span aria-hidden="true">↗</span></a>
+      </li>
+      <li class="six-story-chapter" data-story-step="1">
+        <span class="six-story-step-index">02 <span>—</span> EXHAUST / DPF</span>
+        <h3 data-story-text="dpfTitle">DPF. Sorunu kaynağında araştır.</h3>
+        <p data-story-text="dpfBody">Diferansiyel basınç, sıcaklık sensörleri, doluluk hesabı ve rejenerasyon koşulları birlikte yorumlanmalı. Kod silmek veya parçayı değiştirmek her zaman çözüm değildir.</p>
+        <a href="/fehlercodes/?q=P2002#arama" data-story-text="dpfLink">P2002 teşhis rehberini aç <span aria-hidden="true">↗</span></a>
+      </li>
+      <li class="six-story-chapter" data-story-step="2">
+        <span class="six-story-step-index">03 <span>—</span> ECU / NETWORK</span>
+        <h3 data-story-text="ecuTitle">ECU. Verinin izini sür.</h3>
+        <p data-story-text="ecuBody">Kontrol üniteleri arasındaki iletişim, besleme gerilimi ve CAN hattı kontrol edilmeden modül arızası sonucuna varılmaz. Freeze-frame ve canlı değerler önemlidir.</p>
+        <a href="/fehlercodes/?q=U0100#arama" data-story-text="ecuLink">U0100 teşhis rehberini aç <span aria-hidden="true">↗</span></a>
+      </li>
+      <li class="six-story-chapter" data-story-step="3">
+        <span class="six-story-step-index">04 <span>—</span> BRAKE / ABS</span>
+        <h3 data-story-text="absTitle">ABS. Güvenlikten ödün verme.</h3>
+        <p data-story-text="absBody">Tekerlek hız sensörleri, kablolar ve ABS kontrol ünitesi sistematik biçimde kontrol edilir. Fren sistemi arızalarında güvenli kullanım her şeyden önce gelir.</p>
+        <a href="/fehlercodes/?q=C0035#arama" data-story-text="absLink">C0035 teşhis rehberini aç <span aria-hidden="true">↗</span></a>
+      </li>
+    </ol>
+  </div>
+  <div class="shell six-story-finish"><span class="six-story-finish-line"></span><p data-story-text="foot">Önce teşhis. Sonra doğru müdahale.</p><a href="/fehlercodes/" data-story-text="all">18.805 arıza kodunu keşfet <span aria-hidden="true">↗</span></a></div>
+</section>
+<section class="real-home-feature" aria-label="Görsel arıza kataloğu"><div class="shell"><div class="real-home-heading"><strong>Sistem görselleriyle arıza teşhisi</strong><a href="fehlercodes/">Tüm sistemleri aç →</a></div><div class="real-home-rail"><a href="fehlercodes/?category=turbo#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/turbo.webp" alt="" /><span>Turbo / Hava</span></a><a href="fehlercodes/?category=dpf#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/dpf.webp" alt="" /><span>DPF / Egzoz</span></a><a href="fehlercodes/?category=adblue#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/adblue.webp" alt="" /><span>AdBlue / SCR</span></a><a href="fehlercodes/?category=egr#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/egr.webp" alt="" /><span>EGR Sistemi</span></a><a href="fehlercodes/?category=fuel#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/fuel.webp" alt="" /><span>Yakıt Sistemi</span></a><a href="fehlercodes/?category=transmission#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/transmission.webp" alt="" /><span>Şanzıman</span></a><a href="fehlercodes/?category=brake#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/brake.webp" alt="" /><span>Fren / ABS</span></a><a href="fehlercodes/?category=network#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/network.webp" alt="" /><span>CAN / ECU</span></a><a href="fehlercodes/?category=airbag#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/airbag.webp" alt="" /><span>Hava Yastığı</span></a><a href="fehlercodes/?category=cooling#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/cooling.webp" alt="" /><span>Soğutma Sistemi</span></a></div></div></section>
 <section class="quick-access-section" aria-labelledby="quickAccessTitle">
         <div class="shell">
           <div class="quick-access-panel">
@@ -2372,5 +2437,6 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script></body>
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script><script defer src="/assets/6006-scroll-story.js?v=20261010"></script>
+</body>
 </html>
