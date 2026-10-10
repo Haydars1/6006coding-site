@@ -1237,7 +1237,9 @@ html{scroll-padding-top:1.25rem}
             </defs>
             <path class="ecub__ribbon-base" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
             <path class="ecub__ribbon-active" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
-            <circle cx="500" cy="1420" r="5"/>
+            <circle cx="500" cy="1420" r="4" class="ecub__ribbon-end"/>
+            <circle class="ecub__signal-head ecub__signal-head--halo" cx="500" cy="405" r="12"/>
+            <circle class="ecub__signal-head ecub__signal-head--core" cx="500" cy="405" r="4"/>
           </svg>
           <div class="ecub__assembly" aria-hidden="true">
             <div class="ecub__socket ecub__socket--a"></div>
@@ -1266,6 +1268,9 @@ html{scroll-padding-top:1.25rem}
               <div class="ecub__component ecub__component--b"></div>
               <div class="ecub__component ecub__component--c"></div>
               <div class="ecub__component ecub__component--d"></div>
+              <div class="ecub__contact-row ecub__contact-row--top" aria-hidden="true"></div>
+              <div class="ecub__contact-row ecub__contact-row--bottom" aria-hidden="true"></div>
+              <div class="ecub__board-leds" aria-hidden="true"><span></span><span></span><span></span></div>
               <div class="ecub__chip">6006<small>ECU · CORE</small></div>
             </div>
             <span class="ecub__screw ecub__screw--a"></span><span class="ecub__screw ecub__screw--b"></span>
@@ -1285,6 +1290,9 @@ html{scroll-padding-top:1.25rem}
               </g>
               <path class="ecub__chart-stock" d="M17 268C98 264 145 254 209 221S315 161 389 142S502 95 590 111S701 141 742 154"/>
               <path class="ecub__chart-tuned" d="M17 267C96 262 146 237 211 194S313 122 386 101S504 47 595 61S708 83 743 97"/>
+              <line class="ecub__chart-cursor" x1="17" y1="22" x2="17" y2="283"/>
+              <circle class="ecub__chart-marker ecub__chart-marker--stock" cx="17" cy="268" r="5"/>
+              <circle class="ecub__chart-marker ecub__chart-marker--tuned" cx="17" cy="267" r="6"/>
             </svg>
             <div class="ecub__graph-key"><span data-ecub-i18n="orig">Orijinal</span><span data-ecub-i18n="stage">Stage 1</span></div>
             <div class="ecub__figures">
