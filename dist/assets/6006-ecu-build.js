@@ -57,40 +57,37 @@
    lastP=p;
    const opening=ease(.08,.30,p);
    const detach=ease(.34,.63,p);
-   const closedFade=ease(.085,.27,p);
-   const openFade=ease(.36,.54,p);
-   const opened=ease(.10,.26,p)*(1-openFade);
-   const exploded=ease(.37,.55,p)*(1-ease(.60,.82,p));
+   const closedFade=ease(.17,.235,p);
+   const openFade=ease(.425,.495,p);
+   const opened=ease(.185,.25,p)*(1-openFade);
+   const exploded=ease(.45,.515,p)*(1-ease(.625,.755,p));
    const data=ease(.30,.68,p);
    const path=ease(.28,.90,p);
-   const chart=ease(.65,.88,p);
-   const graphLines=ease(.67,.97,p);
-   const result=ease(.85,1,p);
+   const chart=ease(.66,.81,p);
+   const graphLines=ease(.7,.94,p);
+   const result=ease(.82,.97,p);
    const mobile=window.innerWidth<=760;
    set('progress',(p*100).toFixed(2)+'%');
    /* Photographic model: keep the same ECU registered as the lid opens, then lift the PCB. */
    set('closed-alpha',1-closedFade);
    set('open-alpha',opened);
    set('exploded-alpha',exploded);
-   // Move the photographed ECU WITH the user's actual scroll, then let it visibly
-   // travel farther DOWN through the page. This fixes the object remaining at
-   // the original top position while the rest of the page passes below.
-   // We only animate transforms/opacity; no fixed or sticky viewport.
+   // Keep the physical ECU within the phone's usable viewport instead of
+   // accumulating hundreds of pixels of downward movement. Translating by
+   // the section scroll cancels the upward page movement, while the bounded
+   // release introduces a clear, controlled downward progression.
+   // Near the dyno transition the image fades BEFORE it can be clipped.
    const travelWithScroll=p*scrollRange;
-   const releaseA=Math.min(viewportHeight*.13,105)*ease(.02,.30,p);
-   const releaseB=Math.min(viewportHeight*.16,138)*ease(.28,.60,p);
-   const releaseC=Math.min(viewportHeight*.20,176)*ease(.60,.89,p);
-   const leave=Math.min(viewportHeight*.13,110)*ease(.84,1,p);
-   set('object-y',travelWithScroll+releaseA+releaseB+releaseC+leave,'px');
-   set('object-scale',1+.03*opening+.02*detach-.23*ease(.48,.84,p));
+   const releaseA=Math.min(viewportHeight*.10,86)*ease(.08,.33,p);
+   const releaseB=Math.min(viewportHeight*.12,98)*ease(.30,.62,p);
+   set('object-y',travelWithScroll+releaseA+releaseB,'px');
+   set('object-scale',.92+.03*opening+.025*detach-.09*ease(.57,.79,p));
    set('closed-y',0,'px');
    set('closed-scale',1);
-   set('open-y',-13*opening,'px');
-   set('open-scale',1+.018*opening);
-   // Board separates inside the same travelling ECU, without a second jump
-   // that would make the image leave the screen prematurely on small phones.
-   set('exploded-y',detach*(mobile?16:26),'px');
-   set('exploded-scale',.965+.065*detach);
+   set('open-y',-3*opening,'px');
+   set('open-scale',1);
+   set('exploded-y',6*detach,'px');
+   set('exploded-scale',1);
    set('circuit-opacity',data);set('circuit-dash',650*(1-data));
    set('leds-opacity',data*(1-ease(.74,.91,p)));
    set('ribbon-opacity',path);
