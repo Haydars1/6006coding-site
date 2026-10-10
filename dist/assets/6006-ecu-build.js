@@ -50,7 +50,7 @@
    for(const el of translated){const value=i18n[l][el.dataset.ecubI18n];if(value)el.textContent=value}
    root.setAttribute('aria-label',l==='tr'?'Sayfa ile ilerleyen ECU açılış animasyonu':l==='en'?'Scrolling ECU assembly animation':'ECU-Aufbauanimation beim Scrollen');
  }
- function paint(progress){
+ function paint(progress,scrollRange,viewportHeight){
    const p=clamp(reduced.matches?1:progress);
    language();
    if(Math.abs(p-lastP)<.0007)return;
@@ -60,7 +60,7 @@
    const closedFade=ease(.085,.27,p);
    const openFade=ease(.36,.54,p);
    const opened=ease(.10,.26,p)*(1-openFade);
-   const exploded=ease(.37,.55,p)*(1-ease(.68,.90,p));
+   const exploded=ease(.37,.55,p)*(1-ease(.68,.88,p));
    const data=ease(.30,.68,p);
    const path=ease(.28,.90,p);
    const chart=ease(.65,.88,p);
@@ -72,14 +72,25 @@
    set('closed-alpha',1-closedFade);
    set('open-alpha',opened);
    set('exploded-alpha',exploded);
-   set('object-y',-12*opening+16*detach,'px');
-   set('object-scale',1+.045*opening+.045*detach);
+   // Move the photographed ECU WITH the user's actual scroll, then let it visibly
+   // travel farther DOWN through the page. This fixes the object remaining at
+   // the original top position while the rest of the page passes below.
+   // We only animate transforms/opacity; no fixed or sticky viewport.
+   const travelWithScroll=p*scrollRange;
+   const releaseA=Math.min(viewportHeight*.13,105)*ease(.02,.30,p);
+   const releaseB=Math.min(viewportHeight*.16,138)*ease(.28,.60,p);
+   const releaseC=Math.min(viewportHeight*.20,176)*ease(.60,.89,p);
+   const leave=Math.min(viewportHeight*.13,110)*ease(.84,1,p);
+   set('object-y',travelWithScroll+releaseA+releaseB+releaseC+leave,'px');
+   set('object-scale',1+.03*opening+.03*detach-.12*ease(.67,.92,p));
    set('closed-y',0,'px');
    set('closed-scale',1);
    set('open-y',-13*opening,'px');
    set('open-scale',1+.018*opening);
-   set('exploded-y',detach*(mobile?85:116),'px');
-   set('exploded-scale',.965+.10*detach);
+   // Board separates inside the same travelling ECU, without a second jump
+   // that would make the image leave the screen prematurely on small phones.
+   set('exploded-y',detach*(mobile?16:26),'px');
+   set('exploded-scale',.965+.065*detach);
    set('circuit-opacity',data);set('circuit-dash',650*(1-data));
    set('leds-opacity',data*(1-ease(.74,.91,p)));
    set('ribbon-opacity',path);
@@ -115,7 +126,8 @@
    const rect=root.getBoundingClientRect();
    const vh=window.innerHeight||document.documentElement.clientHeight||800;
    if(!reduced.matches&&(rect.bottom<0||rect.top>vh))return;
-   paint(-rect.top/Math.max(1,rect.height-vh));
+   const scrollRange=Math.max(1,rect.height-vh);
+   paint(-rect.top/scrollRange,scrollRange,vh);
  }
  function schedule(){if(!raf)raf=requestAnimationFrame(update)}
  window.addEventListener('scroll',schedule,{passive:true});
