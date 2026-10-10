@@ -37,10 +37,10 @@
   const reveal=smooth(.07,.18,p);
   const lidTravel=smooth(.20,.46,p);
   const boardTravel=smooth(.48,.75,p);
-  const fade=smooth(.79,.88,p);
-  const graphIn=smooth(.79,.93,p);
-  const draw=smooth(.82,.97,p);
-  const gains=smooth(.89,1,p);
+  const fade=smooth(.775,.86,p);
+  const graphIn=smooth(.775,.885,p);
+  const draw=smooth(.80,.965,p);
+  const gains=smooth(.865,.98,p);
   toCss('hold',hold,'px');
   toCss('scale',.98-.035*smooth(.70,.88,p));
   // Only a short initial reveal; actual separation uses distinct DOM layers.
