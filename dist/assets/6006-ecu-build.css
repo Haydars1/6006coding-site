@@ -1,7 +1,7 @@
 
 /* 6006 Performance · Full-bleed ECU build as a travelling page illustration.
    No sticky area, no fixed animation frame, no stack of illustrated cards. */
-.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:151svh;min-height:980px;color:#f3e9df;background:transparent;overflow:clip;isolation:isolate}
+.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:174svh;min-height:1040px;color:#f3e9df;background:transparent;overflow:clip;isolation:isolate}
 .ecub *{box-sizing:border-box}
 .ecub__world{position:relative;width:min(100%,1200px);height:100%;margin:0 auto}
 .ecub__world::before{content:none}
@@ -67,7 +67,7 @@
 .ecub__micro--b{top:39%;right:clamp(20px,7vw,110px);opacity:var(--ecub-data-opacity,0)}
 .ecub__micro--c{top:70%;left:clamp(19px,5vw,75px);opacity:var(--ecub-graph-opacity,0)}
 @media(max-width:760px){
- .ecub{height:151svh;min-height:970px}
+ .ecub{height:174svh;min-height:1030px}
  .ecub__eyebrow{top:3%;font-size:9px;letter-spacing:.09em}
  .ecub__hint{display:none}
  .ecub__skip{top:4.7%;font-size:10px}
@@ -94,7 +94,7 @@
  .ecub__micro--c{top:69%}
 }
 @media(max-width:380px){
- .ecub{min-height:950px}
+ .ecub{min-height:970px}
  .ecub__assembly{top:13%}
  .ecub__readout{font-size:8px}
  .ecub__stats{font-size:8px}
@@ -187,4 +187,38 @@
   .ecub__real-ecu{top:16%;transform:translateX(-50%) scale(1)}
   .ecub__real-ecu-img--closed,.ecub__real-ecu-img--exploded{opacity:0!important}
   .ecub__real-ecu-img--open{opacity:1!important;transform:none!important}
+}
+
+
+/* Stage 1 precise ECU: center body while opening; lid and board separate independently.
+   The section remains part of ordinary page flow, with no pinned background or video. */
+.ecub__real-ecu{
+  top:calc(24svh - 0px);
+  width:min(72%,610px);
+}
+.ecub__real-ecu-img--exploded{
+  opacity:var(--ecub-exploded-alpha,0);
+}
+.ecub__real-ecu-img--exploded-lid{
+  /* The raised cover is cut from the real exploded ECU photograph. */
+  -webkit-clip-path:polygon(0 0,100% 0,100% 59%,95% 60%,91% 58%,87% 55%,79% 51%,72% 46%,63% 43%,50% 41%,39% 39%,30% 38%,22% 37%,14% 38%,7% 43%,0 54%);
+  clip-path:polygon(0 0,100% 0,100% 59%,95% 60%,91% 58%,87% 55%,79% 51%,72% 46%,63% 43%,50% 41%,39% 39%,30% 38%,22% 37%,14% 38%,7% 43%,0 54%);
+  transform:translate3d(0,var(--ecub-lid-separate-y,0px),0) scale(var(--ecub-exploded-scale,1));
+  z-index:5;
+}
+.ecub__real-ecu-img--exploded-board{
+  -webkit-clip-path:polygon(0 49%,7% 39%,14% 34%,22% 33%,30% 34%,39% 35%,50% 37%,63% 39%,72% 42%,79% 47%,87% 51%,91% 54%,95% 56%,100% 55%,100% 100%,0 100%);
+  clip-path:polygon(0 49%,7% 39%,14% 34%,22% 33%,30% 34%,39% 35%,50% 37%,63% 39%,72% 42%,79% 47%,87% 51%,91% 54%,95% 56%,100% 55%,100% 100%,0 100%);
+  transform:translate3d(0,var(--ecub-board-separate-y,0px),0) scale(var(--ecub-exploded-scale,1));
+  z-index:4;
+}
+.ecub__real-ecu-img--closed,.ecub__real-ecu-img--open{z-index:3}
+@media(max-width:760px){
+ .ecub__real-ecu{top:36svh;width:min(78vw,410px)}
+}
+@media(max-width:380px){.ecub__real-ecu{top:35svh}}
+@media(prefers-reduced-motion:reduce){
+ .ecub__real-ecu{top:24svh;transform:translateX(-50%) scale(.94)}
+ .ecub__real-ecu-img--exploded-lid,.ecub__real-ecu-img--exploded-board{opacity:0!important}
+ .ecub__real-ecu-img--open{opacity:1!important}
 }
