@@ -1134,7 +1134,7 @@ html{scroll-padding-top:1.25rem}
       @media(max-width:760px){.quick-access-grid{grid-template-columns:1fr}.quick-access-card{min-height:6.7rem;gap:.6rem}.real-home-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.real-home-card{max-width:none;min-width:0;min-height:118px}.real-home-heading{flex-wrap:wrap}.hero-copy h1{font-size:clamp(2.6rem,11vw,4.1rem)}}
       @media(prefers-reduced-motion:reduce){.quick-access-card,.button-primary,.button-quiet{transition:none!important;transform:none!important}}
     </style>
-      <link rel="stylesheet" href="/assets/6006-ecu-build.css?v=20261010h" />
+      <link rel="stylesheet" href="/assets/6006-ecu-build.css?v=20261010i" />
 <style id="6006-ecu-transparent-background">
 /* Transparent animation backdrop; must override any stale cached animation stylesheet. */
 .ecub{background:transparent!important}
@@ -1241,41 +1241,10 @@ html{scroll-padding-top:1.25rem}
             <circle class="ecub__signal-head ecub__signal-head--halo" cx="500" cy="405" r="12"/>
             <circle class="ecub__signal-head ecub__signal-head--core" cx="500" cy="405" r="4"/>
           </svg>
-          <div class="ecub__assembly" aria-hidden="true">
-            <div class="ecub__socket ecub__socket--a"></div>
-            <div class="ecub__socket ecub__socket--b"></div>
-            <div class="ecub__socket ecub__socket--c"></div>
-            <div class="ecub__housing"></div>
-            <div class="ecub__pcb">
-              <svg class="ecub__traces" viewBox="0 0 620 390" preserveAspectRatio="none" focusable="false">
-                <g>
-                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 175H134L173 197H220M0 270H102L162 232H220M0 349H125L165 284H218"/>
-                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 230H502L454 210H400M620 325H508L431 285H402"/>
-                  <path d="M130 0V55L217 120M280 0V60L295 96M458 0V60L407 110M150 390V318L220 275M285 390V324L294 289M470 390V312L410 275"/>
-                  <path d="M56 22H145L211 67M53 212H93L167 235M570 23H512L442 65M584 377H501L437 321"/>
-                </g>
-                <g class="ecub__signal">
-                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 349H125L165 284H218"/>
-                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 325H508L431 285H402"/>
-                  <path d="M130 0V55L217 120M470 390V312L410 275"/>
-                </g>
-                <g fill="#c49e6d" opacity=".6">
-                  <circle cx="110" cy="44" r="5"/><circle cx="501" cy="230" r="5"/>
-                  <rect x="95" y="205" width="38" height="19" rx="2"/><rect x="497" y="268" width="30" height="20" rx="2"/>
-                </g>
-              </svg>
-              <div class="ecub__component ecub__component--a"></div>
-              <div class="ecub__component ecub__component--b"></div>
-              <div class="ecub__component ecub__component--c"></div>
-              <div class="ecub__component ecub__component--d"></div>
-              <div class="ecub__contact-row ecub__contact-row--top" aria-hidden="true"></div>
-              <div class="ecub__contact-row ecub__contact-row--bottom" aria-hidden="true"></div>
-              <div class="ecub__board-leds" aria-hidden="true"><span></span><span></span><span></span></div>
-              <div class="ecub__chip">6006<small>ECU · CORE</small></div>
-            </div>
-            <span class="ecub__screw ecub__screw--a"></span><span class="ecub__screw ecub__screw--b"></span>
-            <span class="ecub__screw ecub__screw--c"></span><span class="ecub__screw ecub__screw--d"></span>
-            <div class="ecub__lid"><div class="ecub__lid-mark">6006<small>PERFORMANCE · ECU</small></div></div>
+          <div class="ecub__real-ecu" aria-hidden="true">
+            <img class="ecub__real-ecu-img ecub__real-ecu-img--closed" src="/assets/ecu/ecu-closed.webp" alt="" decoding="async" loading="lazy" width="1120" height="840" />
+            <img class="ecub__real-ecu-img ecub__real-ecu-img--open" src="/assets/ecu/ecu-open.webp" alt="" decoding="async" loading="lazy" width="1120" height="840" />
+            <img class="ecub__real-ecu-img ecub__real-ecu-img--exploded" src="/assets/ecu/ecu-exploded.webp" alt="" decoding="async" loading="lazy" width="1120" height="840" />
           </div>
           <div class="ecub__arc" aria-hidden="true"></div>
           <div class="ecub__rail-glow" aria-hidden="true"></div>
@@ -2512,6 +2481,6 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>      <script defer src="/assets/6006-ecu-build.js?v=20261010h"></script>
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>      <script defer src="/assets/6006-ecu-build.js?v=20261010i"></script>
 </body>
 </html>
