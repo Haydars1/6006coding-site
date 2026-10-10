@@ -1134,7 +1134,7 @@ html{scroll-padding-top:1.25rem}
       @media(max-width:760px){.quick-access-grid{grid-template-columns:1fr}.quick-access-card{min-height:6.7rem;gap:.6rem}.real-home-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.real-home-card{max-width:none;min-width:0;min-height:118px}.real-home-heading{flex-wrap:wrap}.hero-copy h1{font-size:clamp(2.6rem,11vw,4.1rem)}}
       @media(prefers-reduced-motion:reduce){.quick-access-card,.button-primary,.button-quiet{transition:none!important;transform:none!important}}
     </style>
-      <link rel="stylesheet" href="/assets/6006-ecu-cinematic.css?v=20261010d" />
+      <link rel="stylesheet" href="/assets/6006-ecu-build.css?v=20261010e" />
 </head>
   <body>
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
@@ -1215,88 +1215,77 @@ html{scroll-padding-top:1.25rem}
       
       
       
-      <section class="ecux" id="ecu-journey" aria-label="Stage 1 öncesi etkileşimli ECU animasyonu">
-        <div class="ecux__pin">
-          <div class="ecux__ambient" aria-hidden="true"></div>
-          <div class="ecux__hud">
-            <span data-ecux-text="kicker">6006 · STAGE 1 / ECU</span>
-            <b>ECU / 6006</b>
-          </div>
-          <div class="ecux__scroll-hint" data-ecux-text="hint">KAYDIRARAK İLERLET</div>
-          <div class="ecux__scene">
-            <div class="ecux__radar" aria-hidden="true"></div>
-            <div class="ecux__device" aria-hidden="true">
-              <div class="ecux__socket"></div><div class="ecux__socket"></div><div class="ecux__socket"></div>
-              <div class="ecux__heatsink"></div>
-              <div class="ecux__board">
-                <div class="ecux__board-texture"></div>
-                <svg class="ecux__circuit" viewBox="0 0 700 440" preserveAspectRatio="none" focusable="false" aria-hidden="true">
-                  <g class="ecux__trace">
-                    <path d="M0 65H130L204 112H285M0 121H85L183 185H282M0 192H155L190 226H281M0 292H99L211 265H277M0 378H140L202 321H280"/>
-                    <path d="M700 48H561L486 108H421M700 135H597L517 184H418M700 220H565L518 226H425M700 313H596L497 273H416M700 394H561L486 324H418"/>
-                    <path d="M115 0V49L252 125M301 0V65L312 132M476 0V54L424 132M601 0V81L465 160M135 440V364L268 294M301 440V347L317 309M470 440V357L432 294M575 440V364L460 271"/>
-                    <path d="M92 98H150L210 150H279M580 89H542L481 141H419M76 330H157L214 282H278M600 349H546L472 287H421"/>
-                  </g>
-                  <g class="ecux__trace ecux__trace--lite">
-                    <path d="M28 22H116L181 91M38 152H94L157 203M25 251H143L178 220M33 415H168L244 348"/>
-                    <path d="M666 12H554L507 65M665 190H565L541 162M658 271H593L545 241M656 422H563L495 357"/>
-                    <path d="M234 13V84M250 423V348M404 15V86M427 429V357"/>
-                  </g>
-                  <g class="ecux__trace-glow">
-                    <path d="M0 65H130L204 112H285M0 121H85L183 185H282M0 378H140L202 321H280"/>
-                    <path d="M700 48H561L486 108H421M700 135H597L517 184H418M700 394H561L486 324H418"/>
-                    <path d="M115 0V49L252 125M470 440V357L432 294M92 98H150L210 150H279"/>
-                  </g>
-                  <g fill="#b69b75" opacity=".85">
-                    <circle cx="93" cy="98" r="5"/><circle cx="153" cy="252" r="4"/>
-                    <circle cx="555" cy="159" r="4"/><circle cx="604" cy="348" r="5"/>
-                    <rect x="97" y="185" width="38" height="13" rx="2"/><rect x="571" y="268" width="27" height="12" rx="2"/>
-                    <rect x="244" y="26" width="36" height="12" rx="2"/><rect x="460" y="394" width="45" height="12" rx="2"/>
-                  </g>
-                </svg>
-                <div class="ecux__component ecux__component--a"></div>
-                <div class="ecux__component ecux__component--b"></div>
-                <div class="ecux__component ecux__component--c"></div>
-                <div class="ecux__component ecux__component--d"></div>
-                <div class="ecux__component ecux__component--e"></div>
-                <div class="ecux__resistors"></div>
-                <div class="ecux__processor">6006<small>ECU CORE</small></div>
-              </div>
-              <span class="ecux__screw ecux__screw--a"></span>
-              <span class="ecux__screw ecux__screw--b"></span>
-              <span class="ecux__screw ecux__screw--c"></span>
-              <span class="ecux__screw ecux__screw--d"></span>
-              <div class="ecux__lid">
-                <div class="ecux__lid-rivet"></div>
-                <div class="ecux__lid-brand">6006<small>PERFORMANCE · ECU</small></div>
-              </div>
+      
+      <section class="ecub" id="ecu-journey" aria-label="Sayfa ile ilerleyen ECU açılış animasyonu">
+        <div class="ecub__world">
+          <div class="ecub__light" aria-hidden="true"></div>
+          <p class="ecub__eyebrow" data-ecub-i18n="eyebrow">6006 / STAGE 1</p>
+          <a class="ecub__skip" href="#aracin" data-ecub-i18n="skip">Doğrudan araç seç ↓</a>
+          <div class="ecub__progress" aria-hidden="true"></div>
+          <span class="ecub__micro ecub__micro--a" data-ecub-i18n="stepA">01 / ECU KAPAĞI</span>
+          <span class="ecub__micro ecub__micro--b" data-ecub-i18n="stepB">02 / DEVRE ANALİZİ</span>
+          <span class="ecub__micro ecub__micro--c" data-ecub-i18n="stepC">03 / GÜÇ EĞRİSİ</span>
+          <svg class="ecub__ribbon" viewBox="0 0 1000 1900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="ecubGradient" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d8b17c"/><stop offset=".49" stop-color="#d47e57"/><stop offset="1" stop-color="#e37363"/></linearGradient>
+            </defs>
+            <path class="ecub__ribbon-base" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
+            <path class="ecub__ribbon-active" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
+            <circle cx="500" cy="1420" r="5"/>
+          </svg>
+          <div class="ecub__assembly" aria-hidden="true">
+            <div class="ecub__socket ecub__socket--a"></div>
+            <div class="ecub__socket ecub__socket--b"></div>
+            <div class="ecub__socket ecub__socket--c"></div>
+            <div class="ecub__housing"></div>
+            <div class="ecub__pcb">
+              <svg class="ecub__traces" viewBox="0 0 620 390" preserveAspectRatio="none" focusable="false">
+                <g>
+                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 175H134L173 197H220M0 270H102L162 232H220M0 349H125L165 284H218"/>
+                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 230H502L454 210H400M620 325H508L431 285H402"/>
+                  <path d="M130 0V55L217 120M280 0V60L295 96M458 0V60L407 110M150 390V318L220 275M285 390V324L294 289M470 390V312L410 275"/>
+                  <path d="M56 22H145L211 67M53 212H93L167 235M570 23H512L442 65M584 377H501L437 321"/>
+                </g>
+                <g class="ecub__signal">
+                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 349H125L165 284H218"/>
+                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 325H508L431 285H402"/>
+                  <path d="M130 0V55L217 120M470 390V312L410 275"/>
+                </g>
+                <g fill="#c49e6d" opacity=".6">
+                  <circle cx="110" cy="44" r="5"/><circle cx="501" cy="230" r="5"/>
+                  <rect x="95" y="205" width="38" height="19" rx="2"/><rect x="497" y="268" width="30" height="20" rx="2"/>
+                </g>
+              </svg>
+              <div class="ecub__component ecub__component--a"></div>
+              <div class="ecub__component ecub__component--b"></div>
+              <div class="ecub__component ecub__component--c"></div>
+              <div class="ecub__component ecub__component--d"></div>
+              <div class="ecub__chip">6006<small>ECU · CORE</small></div>
             </div>
-            <div class="ecux__beam" aria-hidden="true"></div>
-            <div class="ecux__data" aria-hidden="true"><div class="ecux__data-grid"></div></div>
-            <div class="ecux__dyno" aria-hidden="true">
-              <div class="ecux__dyno-inner">
-                <div class="ecux__dyno-head"><span data-ecux-text="chart">ÖRNEK PERFORMANS ANALİZİ</span><span>6006 · STAGE 1</span></div>
-                <svg class="ecux__dyno-svg" viewBox="0 0 650 230" preserveAspectRatio="xMidYMid meet" focusable="false">
-                  <g class="ecux__graph-grid">
-                    <path d="M15 20H640M15 63H640M15 106H640M15 149H640M15 192H640M15 225H640"/>
-                    <path d="M110 10V225M215 10V225M320 10V225M425 10V225M530 10V225"/>
-                  </g>
-                  <path class="ecux__graph-stock" d="M18 212C84 210 120 204 168 180S244 132 305 116S408 77 487 79S586 88 634 97"/>
-                  <path class="ecux__graph-tuned" d="M18 212C84 208 118 193 167 159S245 103 305 84S412 35 489 38S585 49 634 56"/>
-                </svg>
-                <div class="ecux__dyno-legend"><span data-ecux-text="legendStock">Orijinal</span><span data-ecux-text="legendTuned">Stage 1</span></div>
-                <div class="ecux__dyno-bottom">
-                  <div class="ecux__gain"><strong><span data-ecux-ps>+0</span> PS</strong><small data-ecux-text="power">ÖRNEK GÜÇ ARTIŞI</small></div>
-                  <div class="ecux__gain"><strong><span data-ecux-nm>+0</span> Nm</strong><small data-ecux-text="torque">ÖRNEK TORK ARTIŞI</small></div>
-                </div>
-                <p class="ecux__dyno-note" data-ecux-text="note">Temsilî +30 PS / +60 Nm. Gerçek sonuç araç, motor ve ölçüme bağlıdır.</p>
-              </div>
-            </div>
+            <span class="ecub__screw ecub__screw--a"></span><span class="ecub__screw ecub__screw--b"></span>
+            <span class="ecub__screw ecub__screw--c"></span><span class="ecub__screw ecub__screw--d"></span>
+            <div class="ecub__lid"><div class="ecub__lid-mark">6006<small>PERFORMANCE · ECU</small></div></div>
           </div>
-          <div class="ecux__status"><span class="ecux__status-label" data-ecux-status>ECU KAPAĞI AÇILIYOR</span></div>
-          <div class="ecux__bottom">
-            <div class="ecux__progress-track" aria-hidden="true"><div class="ecux__progress-fill"></div></div>
-            <a class="ecux__skip" href="#aracin" data-ecux-text="skip">Animasyonu geç ↓</a>
+          <div class="ecub__arc" aria-hidden="true"></div>
+          <div class="ecub__rail-glow" aria-hidden="true"></div>
+          <div class="ecub__readout" aria-hidden="true"><span data-ecub-i18n="readout">CAN / ECU</span><span data-ecub-i18n="readoutDetail">VERİ AKIŞI</span></div>
+          <div class="ecub__stats" aria-hidden="true">BOOST <b>01</b> / TORQUE <b>02</b> / FUEL <b>03</b></div>
+          <div class="ecub__graph">
+            <div class="ecub__graph-head"><span data-ecub-i18n="chart">ÖRNEK GÜÇ ANALİZİ</span><span>ECU · STAGE 1</span></div>
+            <svg class="ecub__chart" viewBox="0 0 760 300" role="img" aria-label="Orijinal ve Stage 1 güç eğrileri örnek karşılaştırması">
+              <g class="ecub__chart-grid">
+                <path d="M12 19H748M12 72H748M12 125H748M12 178H748M12 231H748M12 282H748"/>
+                <path d="M120 10V285M245 10V285M370 10V285M495 10V285M620 10V285"/>
+              </g>
+              <path class="ecub__chart-stock" d="M17 268C98 264 145 254 209 221S315 161 389 142S502 95 590 111S701 141 742 154"/>
+              <path class="ecub__chart-tuned" d="M17 267C96 262 146 237 211 194S313 122 386 101S504 47 595 61S708 83 743 97"/>
+            </svg>
+            <div class="ecub__graph-key"><span data-ecub-i18n="orig">Orijinal</span><span data-ecub-i18n="stage">Stage 1</span></div>
+            <div class="ecub__figures">
+              <div><strong><span data-ecub-ps>+0</span> PS</strong><small data-ecub-i18n="gainPS">ÖRNEK GÜÇ ARTIŞI</small></div>
+              <div><strong><span data-ecub-nm>+0</span> Nm</strong><small data-ecub-i18n="gainNM">ÖRNEK TORK ARTIŞI</small></div>
+            </div>
+            <p class="ecub__note" data-ecub-i18n="note">+30 PS / +60 Nm yalnızca örnektir. Kesin değer araç ve motor verilerine bağlıdır.</p>
           </div>
         </div>
       </section>
@@ -2509,6 +2498,6 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>      <script defer src="/assets/6006-ecu-cinematic.js?v=20261010d"></script>
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>      <script defer src="/assets/6006-ecu-build.js?v=20261010e"></script>
 </body>
 </html>
