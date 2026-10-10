@@ -57,14 +57,14 @@
    lastP=p;
    const opening=ease(.08,.30,p);
    const detach=ease(.34,.63,p);
-   const closedFade=ease(.17,.235,p);
-   const openFade=ease(.425,.495,p);
-   const opened=ease(.185,.25,p)*(1-openFade);
-   const exploded=ease(.45,.515,p)*(1-ease(.625,.755,p));
+   const closedFade=ease(.195,.225,p);
+   const openFade=ease(.45,.48,p);
+   const opened=ease(.20,.23,p)*(1-openFade);
+   const exploded=ease(.455,.485,p)*(1-ease(.635,.735,p));
    const data=ease(.30,.68,p);
    const path=ease(.28,.90,p);
-   const chart=ease(.66,.81,p);
-   const graphLines=ease(.7,.94,p);
+   const chart=ease(.625,.755,p);
+   const graphLines=ease(.69,.94,p);
    const result=ease(.82,.97,p);
    const mobile=window.innerWidth<=760;
    set('progress',(p*100).toFixed(2)+'%');
@@ -77,11 +77,11 @@
    // the section scroll cancels the upward page movement, while the bounded
    // release introduces a clear, controlled downward progression.
    // Near the dyno transition the image fades BEFORE it can be clipped.
-   const travelWithScroll=p*scrollRange;
-   const releaseA=Math.min(viewportHeight*.10,86)*ease(.08,.33,p);
-   const releaseB=Math.min(viewportHeight*.12,98)*ease(.30,.62,p);
-   set('object-y',travelWithScroll+releaseA+releaseB,'px');
-   set('object-scale',.92+.03*opening+.025*detach-.09*ease(.57,.79,p));
+   // Natural page-flow parallax: the ECU follows only 45% of the page's
+   // movement. It rises gently relative to the viewport instead of falling
+   // down or remaining pinned in place. No abrupt extra release.
+   set('object-y',p*scrollRange*.45,'px');
+   set('object-scale',.94+.025*opening+.025*detach-.055*ease(.62,.79,p));
    set('closed-y',0,'px');
    set('closed-scale',1);
    set('open-y',-3*opening,'px');
