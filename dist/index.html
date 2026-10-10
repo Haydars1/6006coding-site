@@ -1,0 +1,2376 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="6006 Performance — präzise ECU-Kalibrierung, Live-Daten und OBD-Fehlercode-Leitfaden." />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#302a23" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="canonical" href="https://6006coding.de/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="6006 Performance" />
+    <meta property="og:url" content="https://6006coding.de/" />
+    <meta property="og:title" content="6006 Performance — Präzise ECU-Kalibrierung" />
+    <meta property="og:description" content="Präzise ECU-Kalibrierung, Live-Daten und ein verständlicher OBD-Fehlercode-Leitfaden." />
+    <meta property="og:locale" content="de_DE" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/assets/6006-favicon.svg" />
+    <title>6006 Performance — Präzise ECU-Kalibrierung</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://6006coding.de/#website",
+            "url": "https://6006coding.de/",
+            "name": "6006 Performance",
+            "inLanguage": "de-DE"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://6006coding.de/#webpage",
+            "url": "https://6006coding.de/",
+            "name": "6006 Performance — Präzise ECU-Kalibrierung",
+            "description": "Präzise ECU-Kalibrierung, Live-Daten und ein OBD-Fehlercode-Leitfaden.",
+            "isPartOf": { "@id": "https://6006coding.de/#website" },
+            "inLanguage": "de-DE"
+          },
+          {
+            "@type": "AutomotiveBusiness",
+            "@id": "https://6006coding.de/#organization",
+            "name": "6006 Performance",
+            "url": "https://6006coding.de/",
+            "email": "6006performance@gmail.com",
+            "telephone": "+49 178 8354756",
+            "description": "ECU-Kalibrierung und fahrzeugtechnische Diagnoseberatung.",
+            "logo": "https://6006coding.de/assets/6006-mark-white.png",
+            "contactPoint": [{
+              "@type": "ContactPoint",
+              "telephone": "+49 178 8354756",
+              "contactType": "customer service",
+              "availableLanguage": ["de", "tr", "en"]
+            }]
+          }
+        ]
+      }
+    </script>
+    <style>
+      :root {
+        --night: #0b1218;
+        --graphite: #14222a;
+        --steel: #1c303a;
+        --porcelain: #f4f0e8;
+        --cloud: #bac7cb;
+        --copper: #d59a52;
+        --teal: #2cb7ab;
+        --lime: #a8d66b;
+        --coral: #f0806b;
+        --spruce: #0e3b3b;
+        --ink: #102128;
+        --line-dark: rgba(186, 199, 203, 0.18);
+        --line-light: rgba(16, 33, 40, 0.14);
+        --shadow: 0 28px 80px rgba(0, 0, 0, 0.26);
+        --font: "Manrope", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        color: var(--porcelain);
+        background: var(--night);
+        font-family: var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+      button, input, select { font: inherit; }
+      button, select { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      a { color: inherit; text-decoration: none; }
+      img { display: block; max-width: 100%; }
+      ::selection { color: var(--night); background: var(--lime); }
+      :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+
+      .shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+      .mono { font-family: var(--mono); }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0 0 1.1rem;
+        color: var(--teal);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before {
+        width: 1.8rem;
+        height: 1px;
+        content: "";
+        background: currentColor;
+      }
+      .section-copy { max-width: 37rem; }
+      .section-copy h2, .process-copy h2 {
+        max-width: 13ch;
+        margin: 0;
+        color: inherit;
+        font-size: clamp(2rem, 4.2vw, 4rem);
+        letter-spacing: -0.055em;
+        line-height: 1.02;
+      }
+      .section-copy p, .process-copy p { color: inherit; font-size: 1rem; line-height: 1.7; }
+
+      .site-header {
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(1280px, calc(100% - 48px));
+        min-height: 5.5rem;
+        margin: 0 auto;
+        border-bottom: 1px solid rgba(244, 240, 232, 0.14);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.28rem;
+        color: var(--porcelain);
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: -0.06em;
+      }
+      .brand span { color: var(--teal); font-family: var(--mono); font-size: 0.56rem; font-weight: 500; letter-spacing: 0.1em; }
+      .top-nav { display: flex; gap: clamp(1rem, 2.2vw, 2.1rem); }
+      .top-nav a { color: rgba(244, 240, 232, 0.74); font-size: 0.8rem; font-weight: 600; transition: color 180ms ease; }
+      .top-nav a:hover { color: var(--porcelain); }
+      .header-button {
+        min-height: 2.55rem;
+        padding: 0 1.1rem;
+        border: 1px solid rgba(244, 240, 232, 0.45);
+        border-radius: 999px;
+        color: var(--porcelain);
+        background: transparent;
+        font-size: 0.78rem;
+        font-weight: 700;
+        transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+      }
+      .header-button:hover { border-color: var(--teal); color: var(--night); background: var(--teal); }
+
+      .hero {
+        position: relative;
+        isolation: isolate;
+        min-height: min(900px, 100svh);
+        overflow: hidden;
+        background: var(--night);
+      }
+      .hero-media {
+        position: absolute;
+        z-index: -3;
+        inset: 0;
+        overflow: hidden;
+      }
+      .hero-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 65% center;
+        transform: scale(1.035);
+        transition: transform 700ms cubic-bezier(.2,.8,.2,1);
+      }
+      .hero::after {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        content: "";
+        background:
+          linear-gradient(90deg, rgba(5, 13, 18, 0.98) 0%, rgba(5, 13, 18, 0.84) 36%, rgba(5, 13, 18, 0.27) 72%, rgba(5, 13, 18, 0.4) 100%),
+          linear-gradient(0deg, rgba(5, 13, 18, 0.78), transparent 43%);
+      }
+      .tech-grid {
+        position: absolute;
+        z-index: -2;
+        inset: 0;
+        opacity: 0.33;
+        background-image: linear-gradient(rgba(44, 183, 171, 0.13) 1px, transparent 1px), linear-gradient(90deg, rgba(44, 183, 171, 0.13) 1px, transparent 1px);
+        background-size: 78px 78px;
+        mask-image: linear-gradient(90deg, black, transparent 76%);
+      }
+      .hero-inner { display: flex; flex-direction: column; justify-content: center; min-height: min(900px, 100svh); padding: 9.75rem 0 4.25rem; }
+      .hero-copy { max-width: 42rem; }
+      .hero-copy h1 {
+        max-width: 11ch;
+        margin: 0;
+        font-size: clamp(3.1rem, 7.2vw, 6.8rem);
+        font-weight: 700;
+        letter-spacing: -0.075em;
+        line-height: 0.92;
+      }
+      .hero-copy h1 em { color: var(--copper); font-style: normal; }
+      .hero-copy > p {
+        max-width: 34rem;
+        margin: 1.8rem 0 0;
+        color: var(--cloud);
+        font-size: clamp(1rem, 1.35vw, 1.16rem);
+        line-height: 1.75;
+      }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+      .button-primary, .button-quiet {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3.3rem;
+        padding: 0 1.35rem;
+        border-radius: 999px;
+        font-size: 0.86rem;
+        font-weight: 800;
+        transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
+      }
+      .button-primary { border: 1px solid var(--teal); color: var(--night); background: var(--teal); box-shadow: 0 14px 30px rgba(44, 183, 171, 0.2); }
+      .button-primary:hover { background: var(--lime); border-color: var(--lime); transform: translateY(-2px); }
+      .button-quiet { border: 1px solid rgba(244, 240, 232, 0.3); color: var(--porcelain); background: rgba(11, 18, 24, 0.14); backdrop-filter: blur(10px); }
+      .button-quiet:hover { border-color: var(--porcelain); background: rgba(244, 240, 232, 0.08); transform: translateY(-2px); }
+      .hero-proof { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; margin-top: 3.2rem; }
+      .proof-item { display: flex; align-items: center; gap: 0.6rem; color: rgba(244, 240, 232, 0.72); font-size: 0.75rem; font-weight: 700; }
+      .proof-dot { width: 0.44rem; height: 0.44rem; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 5px rgba(168, 214, 107, 0.11); }
+      .hero-index {
+        position: absolute;
+        right: max(24px, calc((100vw - 1180px) / 2));
+        bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        color: rgba(244, 240, 232, 0.64);
+        font-family: var(--mono);
+        font-size: 0.67rem;
+        letter-spacing: 0.08em;
+      }
+      .index-line { width: 4rem; height: 1px; background: rgba(244, 240, 232, 0.34); }
+
+      .vehicle-section { position: relative; padding: clamp(5.8rem, 10vw, 9rem) 0; overflow: hidden; background: var(--porcelain); color: var(--ink); }
+      .vehicle-section::before { position: absolute; inset: 0; pointer-events: none; content: ""; opacity: 0.62; background-image: radial-gradient(circle at 80% 7%, rgba(213,154,82,.22), transparent 20rem), linear-gradient(rgba(16, 33, 40, .036) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 33, 40, .036) 1px, transparent 1px); background-size: auto, 34px 34px, 34px 34px; }
+      .vehicle-grid { position: relative; display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: start; }
+      .vehicle-intro { position: sticky; top: 2rem; }
+      .vehicle-intro .eyebrow { color: var(--spruce); }
+      .vehicle-intro .section-copy h2 { max-width: 9.5ch; }
+      .intro-notes { display: grid; gap: 0.75rem; margin-top: 2rem; padding: 0; list-style: none; }
+      .intro-notes li { display: flex; gap: 0.7rem; align-items: flex-start; max-width: 27rem; color: #40535b; font-size: 0.83rem; line-height: 1.55; }
+      .intro-notes strong { color: var(--spruce); }
+      .check { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-top: 0.05rem; border-radius: 50%; background: var(--spruce); color: var(--lime); text-align: center; font-family: var(--mono); font-size: 0.7rem; line-height: 1.25rem; }
+
+      .estimate-wrap { perspective: 1300px; }
+      .estimate-card {
+        --rx: 0deg;
+        --ry: 0deg;
+        position: relative;
+        overflow: hidden;
+        padding: clamp(1.1rem, 3vw, 2rem);
+        border: 1px solid rgba(186, 199, 203, 0.23);
+        border-radius: 1.25rem;
+        color: var(--porcelain);
+        background: linear-gradient(145deg, #142a33 0%, #0c191f 80%);
+        box-shadow: var(--shadow);
+        transform: rotateX(var(--rx)) rotateY(var(--ry));
+        transform-style: preserve-3d;
+        transition: transform 180ms ease;
+      }
+      .estimate-card::before { position: absolute; inset: 0; pointer-events: none; content: ""; opacity: 0.56; background-image: linear-gradient(rgba(44,183,171,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(44,183,171,.1) 1px, transparent 1px); background-size: 38px 38px; mask-image: linear-gradient(120deg, black, transparent 70%); }
+      .estimate-card > * { position: relative; transform: translateZ(16px); }
+      .calc-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1.15rem; border-bottom: 1px solid var(--line-dark); }
+      .calc-top h3 { margin: 0; font-size: 0.95rem; letter-spacing: -0.03em; }
+      .calc-status { display: inline-flex; align-items: center; gap: .45rem; color: var(--lime); font-family: var(--mono); font-size: .64rem; letter-spacing: .07em; text-transform: uppercase; }
+      .status-signal { width: .4rem; height: .4rem; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 .28rem rgba(168,214,107,.12); }
+      .select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; padding: 1.2rem 0; }
+      .field { display: grid; gap: .42rem; }
+      .field label { color: var(--cloud); font-family: var(--mono); font-size: .63rem; letter-spacing: .08em; text-transform: uppercase; }
+      .field select { width: 100%; min-height: 3.25rem; appearance: none; border: 1px solid rgba(186, 199, 203, .22); border-radius: .68rem; outline: none; color: var(--porcelain); background: rgba(11, 18, 24, .58); padding: .55rem 2.25rem .55rem .82rem; font-size: .86rem; font-weight: 700; background-image: linear-gradient(45deg, transparent 50%, var(--teal) 50%), linear-gradient(135deg, var(--teal) 50%, transparent 50%); background-position: calc(100% - 1rem) calc(50% - 2px), calc(100% - .73rem) calc(50% - 2px); background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+      .field select:hover { border-color: rgba(44,183,171,.8); }
+      .vehicle-ident { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.15rem 0; border-top: 1px solid var(--line-dark); }
+      .vehicle-ident h4 { margin: .22rem 0 0; font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: -.055em; }
+      .vehicle-ident p { margin: .4rem 0 0; color: var(--cloud); font-size: .78rem; }
+      .vehicle-badge { flex: 0 0 auto; padding: .42rem .55rem; border: 1px solid rgba(213,154,82,.5); border-radius: 999px; color: var(--copper); font-family: var(--mono); font-size: .59rem; letter-spacing: .07em; text-transform: uppercase; }
+      .power-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; padding: .55rem 0 1rem; }
+      .power-stat { min-height: 8.6rem; padding: 1rem; border: 1px solid rgba(186,199,203,.16); border-radius: .85rem; background: rgba(7, 17, 22, .48); }
+      .power-stat .label { color: var(--cloud); font-family: var(--mono); font-size: .61rem; letter-spacing: .07em; text-transform: uppercase; }
+      .power-stat .value { margin-top: .55rem; font-size: clamp(1.45rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -.075em; }
+      .power-stat .gain { margin-top: .32rem; color: var(--lime); font-family: var(--mono); font-size: .72rem; }
+      .dyno-chart { width: 100%; height: 10rem; margin-top: .35rem; overflow: visible; }
+      .chart-grid { stroke: rgba(186,199,203,.12); stroke-width: 1; }
+      .chart-stock { fill: none; stroke: var(--cloud); stroke-width: 2; stroke-dasharray: 7 7; opacity: .8; }
+      .chart-stage { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; }
+      .chart-fill { opacity: .18; }
+      .chart-legend { display: flex; gap: 1rem; align-items: center; color: var(--cloud); font-family: var(--mono); font-size: .62rem; }
+      .legend-item { display: inline-flex; align-items: center; gap: .42rem; }
+      .legend-line { width: 1.2rem; height: 2px; background: var(--teal); }
+      .legend-line.stock { opacity: .8; background: repeating-linear-gradient(90deg, var(--cloud) 0 5px, transparent 5px 8px); }
+      .estimate-foot { display: flex; gap: .7rem; margin-top: 1.1rem; padding: .85rem .9rem; border-radius: .7rem; color: #c9d7d9; background: rgba(44,183,171,.09); font-size: .73rem; line-height: 1.5; }
+      .estimate-foot span { color: var(--teal); font-family: var(--mono); }
+
+      .diagnostic-section { padding: clamp(5.8rem, 10vw, 9rem) 0; background: var(--night); }
+      .diagnostic-header { display: flex; justify-content: space-between; gap: 3rem; align-items: end; }
+      .diagnostic-header .section-copy p { max-width: 34rem; color: var(--cloud); }
+      .obd-chip { display: inline-flex; gap: .5rem; align-items: center; min-width: 7rem; padding: .9rem 1rem; border: 1px solid rgba(213,154,82,.36); border-radius: .75rem; color: var(--copper); background: rgba(213,154,82,.08); font-family: var(--mono); font-size: .69rem; letter-spacing: .05em; }
+      .diagnostic-layout { display: grid; grid-template-columns: minmax(0, .67fr) minmax(0, 1.33fr); gap: clamp(2rem, 5vw, 5rem); margin-top: 3.3rem; }
+      .code-finder { padding: 1.25rem; border: 1px solid var(--line-dark); border-radius: 1.1rem; background: linear-gradient(155deg, rgba(28,48,58,.78), rgba(20,34,42,.55)); }
+      .code-finder h3 { margin: 0; font-size: 1rem; letter-spacing: -.03em; }
+      .code-finder > p { margin: .62rem 0 1.25rem; color: var(--cloud); font-size: .8rem; line-height: 1.6; }
+      .search-box { position: relative; }
+      .search-box input { width: 100%; min-height: 3.4rem; border: 1px solid rgba(186,199,203,.3); border-radius: .7rem; outline: none; color: var(--porcelain); background: #0b171d; padding: 0 .85rem 0 2.55rem; font-family: var(--mono); font-size: .92rem; text-transform: uppercase; }
+      .search-box input:focus { border-color: var(--teal); box-shadow: 0 0 0 4px rgba(44,183,171,.1); }
+      .search-mark { position: absolute; top: 50%; left: .9rem; width: .75rem; height: .75rem; border: 2px solid var(--teal); border-radius: 50%; pointer-events: none; transform: translateY(-60%); }
+      .search-mark::after { position: absolute; right: -.36rem; bottom: -.3rem; width: .4rem; height: 2px; content: ""; background: var(--teal); transform: rotate(45deg); }
+      .category-list { display: flex; flex-wrap: wrap; gap: .48rem; margin-top: 1rem; }
+      .category-chip { min-height: 2rem; padding: 0 .67rem; border: 1px solid rgba(186,199,203,.22); border-radius: 999px; color: var(--cloud); background: transparent; font-size: .67rem; font-weight: 700; transition: all 180ms ease; }
+      .category-chip:hover, .category-chip.active { border-color: var(--teal); color: var(--night); background: var(--teal); }
+      .finder-note { display: flex; gap: .6rem; margin: 1.25rem 0 .05rem; color: #9eb1b6; font-size: .71rem; line-height: 1.55; }
+      .finder-note strong { color: var(--copper); }
+      .fault-result { min-height: 21rem; padding: clamp(1.25rem, 3.4vw, 2.25rem); border: 1px solid rgba(186,199,203,.2); border-radius: 1.1rem; background: rgba(20,34,42,.48); }
+      .fault-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; }
+      .fault-code { color: var(--teal); font-family: var(--mono); font-size: clamp(1.35rem, 3.5vw, 2.25rem); font-weight: 500; letter-spacing: -.08em; }
+      .severity { padding: .36rem .55rem; border-radius: 999px; color: var(--copper); background: rgba(213,154,82,.11); font-family: var(--mono); font-size: .59rem; letter-spacing: .07em; text-transform: uppercase; }
+      .fault-result h3 { max-width: 22ch; margin: 1.35rem 0 .7rem; font-size: clamp(1.45rem, 3vw, 2.15rem); letter-spacing: -.055em; line-height: 1.1; }
+      .fault-result > p { max-width: 57ch; margin: 0; color: var(--cloud); font-size: .92rem; line-height: 1.7; }
+      .fault-details { display: grid; grid-template-columns: 1.25fr .75fr; gap: 1.4rem; margin-top: 1.7rem; padding-top: 1.25rem; border-top: 1px solid var(--line-dark); }
+      .detail-label { margin-bottom: .62rem; color: var(--teal); font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+      .cause-list { display: flex; flex-wrap: wrap; gap: .45rem; }
+      .cause-list span { padding: .4rem .5rem; border: 1px solid rgba(186,199,203,.18); border-radius: .42rem; color: #d1dddf; font-size: .71rem; }
+      .next-step { color: #dfe8e9; font-size: .78rem; line-height: 1.65; }
+      .result-state { color: var(--cloud); font-size: .92rem; line-height: 1.7; }
+
+      .services-section { padding: clamp(5.8rem, 10vw, 9rem) 0; color: var(--ink); background: #dfe3df; }
+      .services-head { display: flex; justify-content: space-between; gap: 2rem; align-items: end; }
+      .services-head .section-copy h2 { max-width: 11ch; }
+      .services-head .section-copy p { max-width: 33rem; color: #52646a; }
+      .compliance-key { max-width: 17rem; color: #52646a; font-size: .73rem; line-height: 1.55; }
+      .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+      .service-card { position: relative; min-height: 16rem; display:block; padding: 1.35rem; overflow: hidden; border: 1px solid rgba(16,33,40,.15); border-radius: 1rem; color:inherit; background: rgba(244,240,232,.72); transition: transform 260ms ease, box-shadow 260ms ease, background 260ms ease; }
+      .service-card:hover { z-index: 1; background: var(--porcelain); box-shadow: 0 20px 46px rgba(16,33,40,.14); transform: translateY(-7px); }
+      .service-number { color: var(--copper); font-family: var(--mono); font-size: .7rem; }
+      .service-card h3 { max-width: 16ch; margin: 2.2rem 0 .7rem; font-size: 1.2rem; letter-spacing: -.045em; }
+      .service-card p { max-width: 31ch; margin: 0; color: #506169; font-size: .79rem; line-height: 1.65; }
+      .service-tag { position: absolute; top: 1.25rem; right: 1.25rem; max-width: 9rem; padding: .4rem .52rem; border-radius: .4rem; color: var(--spruce); background: rgba(44,183,171,.15); font-family: var(--mono); font-size: .55rem; letter-spacing: .06em; line-height: 1.35; text-align: right; text-transform: uppercase; }
+      .service-card.track .service-tag { color: #9b4d38; background: rgba(240,128,107,.22); }
+      .service-card .service-line { position: absolute; right: 1.35rem; bottom: 1.35rem; left: 1.35rem; height: 1px; background: linear-gradient(90deg, var(--teal), transparent); opacity: .55; }
+
+      .process-section { padding: clamp(5.8rem, 10vw, 8.5rem) 0; background: var(--graphite); }
+      .process-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(3rem, 8vw, 9rem); }
+      .process-copy { align-self: start; }
+      .process-copy p { color: var(--cloud); }
+      .process-list { margin: 0; padding: 0; list-style: none; counter-reset: process; }
+      .process-list li { display: grid; grid-template-columns: 3.8rem 1fr auto; gap: 1rem; align-items: center; padding: 1.2rem 0; border-top: 1px solid var(--line-dark); counter-increment: process; }
+      .process-list li::before { content: "0" counter(process); color: var(--copper); font-family: var(--mono); font-size: .76rem; }
+      .process-list h3 { margin: 0; font-size: 1.1rem; letter-spacing: -.035em; }
+      .process-list p { max-width: 27rem; margin: .32rem 0 0; color: var(--cloud); font-size: .78rem; line-height: 1.55; }
+      .process-marker { width: .62rem; height: .62rem; border: 2px solid var(--teal); border-radius: 50%; }
+      .legal-bar { display: flex; gap: 1rem; align-items: flex-start; margin-top: 3.5rem; padding: 1rem 1.15rem; border-left: 2px solid var(--copper); color: #cedbdd; background: rgba(11,18,24,.35); font-size: .76rem; line-height: 1.65; }
+      .legal-bar strong { color: var(--porcelain); }
+
+      .contact-section { padding: 0 0 clamp(4.5rem, 8vw, 7rem); }
+      .contact-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(19rem, .85fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding: clamp(1.5rem, 3.3vw, 2.6rem); border: 1px solid rgba(186,199,203,.2); border-radius: 1.1rem; background: rgba(20,34,42,.48); }
+      .contact-copy h2 { max-width: 14ch; margin: .55rem 0 .75rem; font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -.06em; line-height: .98; }
+      .contact-copy > p:last-child { max-width: 43ch; margin: 0; color: var(--cloud); font-size: .9rem; line-height: 1.7; }
+      .contact-actions { display: grid; gap: .72rem; }
+      .contact-action { display: flex; min-height: 4.2rem; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 1rem; border: 1px solid rgba(186,199,203,.26); border-radius: .75rem; color: var(--porcelain); background: rgba(11,18,24,.28); transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; }
+      .contact-action:hover { border-color: var(--teal); background: rgba(44,183,171,.09); transform: translateY(-2px); }
+      .contact-action span:first-child { font-size: .82rem; font-weight: 700; }
+      .contact-action span:last-child { color: var(--teal); font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+      .contact-action.whatsapp span:last-child { color: #9ecbb7; }
+
+      footer { padding: 2rem 0; background: #070c10; }
+      .footer-inner { display: flex; gap: 1rem; align-items: center; justify-content: space-between; color: #83989d; font-size: .72rem; }
+      .footer-note { max-width: 49rem; line-height: 1.55; text-align: right; }
+      .footer-brand { color: var(--porcelain); font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; }
+
+      .reveal { opacity: 1; transform: translateY(0); transition: opacity 620ms ease, transform 620ms cubic-bezier(.2,.7,.2,1); }
+      html.motion-ready .reveal:not(.visible) { opacity: 0; transform: translateY(18px); }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 880px) {
+        .vehicle-grid, .diagnostic-layout, .process-layout, .contact-card { grid-template-columns: 1fr; }
+        .vehicle-intro { position: static; }
+        .diagnostic-header, .services-head { display: block; }
+        .obd-chip, .compliance-key { margin-top: 1.5rem; }
+        .services-grid { grid-template-columns: repeat(2, 1fr); }
+        .section-copy h2 { max-width: 12ch; }
+      }
+      @media (max-width: 680px) {
+        .shell, .header-inner { width: min(100% - 32px, 1180px); }
+        .top-nav { display: none; }
+        .header-inner { min-height: 4.75rem; }
+        .header-button { min-height: 2.35rem; padding: 0 .85rem; font-size: .7rem; }
+        .hero { min-height: 720px; }
+        .hero-inner { min-height: 720px; padding-top: 7rem; padding-bottom: 3rem; }
+        .hero-copy h1 { max-width: 9ch; font-size: clamp(3.2rem, 15.2vw, 4.8rem); }
+        .hero-media img { object-position: 66% center; }
+        .hero::after { background: linear-gradient(90deg, rgba(5,13,18,.96) 0%, rgba(5,13,18,.76) 61%, rgba(5,13,18,.32) 100%), linear-gradient(0deg, rgba(5,13,18,.9), transparent 45%); }
+        .hero-proof { max-width: 19rem; gap: .75rem 1rem; }
+        .hero-index { display: none; }
+        .select-grid, .fault-details { grid-template-columns: 1fr; }
+        .power-grid { gap: .55rem; }
+        .power-stat { min-height: 7.5rem; padding: .82rem; }
+        .services-grid { grid-template-columns: 1fr; }
+        .service-card { min-height: 14rem; }
+        .process-list li { grid-template-columns: 2.7rem 1fr auto; }
+        .footer-inner { align-items: flex-start; flex-direction: column; }
+        .footer-note { text-align: left; }
+        .contact-action { min-height: 3.7rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+        .estimate-card, .hero-media img { transform: none !important; }
+      }
+    </style>
+    <style id="quiet-luxury-overrides">
+      :root {
+        --night: #151615;
+        --graphite: #282724;
+        --steel: #36342f;
+        --porcelain: #f2eee5;
+        --cloud: #c4bdb2;
+        --copper: #b28a5a;
+        --teal: #56716b;
+        --lime: #d8c293;
+        --coral: #8a4e46;
+        --spruce: #26312d;
+        --ink: #211f1c;
+        --line-dark: rgba(242, 238, 229, 0.16);
+        --line-light: rgba(33, 31, 28, 0.15);
+        --shadow: 0 22px 65px rgba(21, 22, 21, 0.17);
+        --display: "Newsreader", Georgia, serif;
+      }
+
+      body { background: var(--night); letter-spacing: -0.012em; }
+      .shell { width: min(1240px, calc(100% - 64px)); }
+      .eyebrow { gap: .75rem; color: var(--copper); font-size: .65rem; letter-spacing: .18em; }
+      .eyebrow::before { width: 2.5rem; background: var(--copper); }
+      .section-copy h2, .process-copy h2, .hero-copy h1, .fault-result h3 {
+        font-family: var(--display);
+        font-weight: 500;
+        letter-spacing: -0.055em;
+      }
+      .section-copy h2, .process-copy h2 { max-width: 12ch; font-size: clamp(2.35rem, 4.2vw, 4.35rem); line-height: .98; }
+      .section-copy p, .process-copy p { max-width: 34rem; font-size: 1rem; line-height: 1.78; }
+
+      .header-inner { width: min(1320px, calc(100% - 64px)); min-height: 5.7rem; border-bottom-color: rgba(242, 238, 229, .16); }
+      .brand { gap: .45rem; font-family: var(--font); font-size: .85rem; font-weight: 600; letter-spacing: .19em; }
+      .brand span { color: var(--copper); font-family: var(--font); font-size: .56rem; letter-spacing: .24em; }
+      .top-nav { gap: 2.35rem; }
+      .top-nav a { color: rgba(242, 238, 229, .67); font-size: .69rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+      .top-nav a:hover { color: var(--porcelain); }
+      .header-button { min-height: 2.45rem; border-color: rgba(242, 238, 229, .5); border-radius: 3px; padding: 0 1rem; font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+      .header-button:hover { border-color: var(--copper); color: var(--porcelain); background: rgba(178, 138, 90, .17); }
+
+      .hero { min-height: min(850px, 100svh); background: var(--night); }
+      .hero-media img { object-position: 50% 50%; filter: saturate(.76) contrast(.98) brightness(.68); transform: scale(1.015); transform-origin: 55% 50%; animation: heroFocus 16s cubic-bezier(.45,0,.55,1) both; }
+      .hero::after { background: radial-gradient(ellipse 58% 96% at 48% 51%, rgba(11, 12, 11, .91) 0%, rgba(14, 15, 14, .73) 47%, rgba(14, 15, 14, .16) 78%, transparent 100%), linear-gradient(90deg, rgba(21, 22, 21, .98) 0%, rgba(21, 22, 21, .92) 35%, rgba(21, 22, 21, .56) 59%, rgba(21, 22, 21, .24) 100%), linear-gradient(180deg, rgba(11, 12, 11, .4), transparent 18%, transparent 66%, rgba(11, 12, 11, .72) 100%); }
+      .tech-grid, .hero-index { display: none; }
+      .hero-inner { min-height: min(850px, 100svh); padding: 9.5rem 0 5rem; }
+      .hero-copy { max-width: 43rem; }
+      .hero-copy h1 { max-width: 11ch; font-size: clamp(3.55rem, 7.3vw, 7rem); line-height: .9; }
+      .hero-copy h1 em { color: var(--porcelain); font-style: italic; }
+      .hero-copy > p { max-width: 33rem; margin-top: 1.7rem; color: var(--cloud); font-size: 1rem; line-height: 1.8; }
+      .hero-actions { gap: .7rem; margin-top: 2.25rem; }
+      .button-primary, .button-quiet { min-height: 3.05rem; border-radius: 3px; padding: 0 1.2rem; font-size: .67rem; letter-spacing: .1em; text-transform: uppercase; }
+      .button-primary { border-color: var(--copper); color: var(--night); background: var(--copper); box-shadow: none; }
+      .button-primary:hover { border-color: #c8a875; color: var(--night); background: #c8a875; transform: translateY(-1px); }
+      .button-quiet { border-color: rgba(242, 238, 229, .34); background: transparent; backdrop-filter: none; }
+      .button-quiet:hover { border-color: var(--porcelain); background: rgba(242, 238, 229, .06); transform: translateY(-1px); }
+      .hero-proof { gap: 0; margin-top: 4rem; border-top: 1px solid rgba(242, 238, 229, .2); }
+      .proof-item { width: auto; min-height: 3.7rem; padding: 1.25rem 1.25rem 1.2rem 0; margin-right: 1.25rem; color: rgba(242, 238, 229, .68); font-family: var(--mono); font-size: .6rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+      .proof-dot { display: none; }
+      .proof-item + .proof-item { padding-left: 1.25rem; border-left: 1px solid rgba(242, 238, 229, .2); }
+
+      .vehicle-section { padding: clamp(7rem, 11vw, 10rem) 0; background: var(--porcelain); }
+      .vehicle-section::before { opacity: 1; background: radial-gradient(circle at 86% 10%, rgba(178, 138, 90, .15), transparent 24rem); }
+      .vehicle-grid { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: clamp(3rem, 9vw, 10rem); }
+      .vehicle-intro .eyebrow { color: var(--copper); }
+      .intro-notes { gap: 1rem; margin-top: 2.5rem; }
+      .intro-notes li { gap: .85rem; color: #5e5b54; font-size: .82rem; }
+      .intro-notes strong { color: var(--ink); }
+      .check { width: 1.25rem; height: 1.25rem; border: 1px solid var(--copper); border-radius: 50%; color: #8a673f; background: transparent; font-family: var(--mono); font-size: .65rem; line-height: 1.15rem; }
+      .estimate-wrap { perspective: none; }
+      .estimate-card { padding: clamp(1.4rem, 3.2vw, 2.25rem); overflow: hidden; border: 1px solid rgba(178, 138, 90, .42); border-radius: 4px; background: #22221f; box-shadow: 0 20px 44px rgba(33, 31, 28, .13); transform: none !important; }
+      .estimate-card::before { display: none; }
+      .estimate-card > * { transform: none; }
+      .calc-top { padding-bottom: 1.35rem; border-bottom-color: rgba(242, 238, 229, .17); }
+      .calc-top h3 { font-family: var(--display); font-size: 1.45rem; font-weight: 500; letter-spacing: -.04em; }
+      .calc-status { color: var(--cloud); font-size: .58rem; font-weight: 500; letter-spacing: .13em; }
+      .status-signal { display: none; }
+      .select-grid { gap: 1.1rem; padding: 1.55rem 0; }
+      .field { gap: .55rem; }
+      .field label, .power-stat .label, .detail-label { color: #ada69a; font-size: .59rem; letter-spacing: .14em; }
+      .field select { min-height: 3.15rem; border-color: rgba(242, 238, 229, .22); border-radius: 2px; color: var(--porcelain); background-color: #171816; background-image: linear-gradient(45deg, transparent 50%, var(--copper) 50%), linear-gradient(135deg, var(--copper) 50%, transparent 50%); font-size: .79rem; font-weight: 600; }
+      .field select:hover { border-color: var(--copper); }
+      .vehicle-ident { padding: 1.45rem 0; border-top-color: rgba(242, 238, 229, .17); }
+      .vehicle-ident h4 { font-family: var(--display); font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 500; letter-spacing: -.045em; }
+      .vehicle-ident p { color: var(--cloud); font-size: .74rem; }
+      .vehicle-badge { border: 1px solid rgba(178, 138, 90, .63); border-radius: 2px; color: var(--copper); font-size: .55rem; letter-spacing: .11em; }
+      .power-grid { gap: 1px; padding: .45rem 0 1.15rem; background: rgba(242, 238, 229, .15); }
+      .power-stat { min-height: 8.7rem; padding: 1.15rem; border: 0; border-radius: 0; background: #1b1c1a; }
+      .power-stat .value { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.55rem); font-weight: 500; letter-spacing: -.06em; }
+      .power-stat .gain { color: var(--copper); font-size: .67rem; }
+      .dyno-chart { margin-top: .7rem; }
+      .chart-grid { stroke: rgba(242, 238, 229, .1); }
+      .chart-stock { stroke: #9f9b91; }
+      .chart-stage { stroke: var(--copper); }
+      .chart-fill { opacity: .12; }
+      .chart-legend { color: var(--cloud); font-size: .59rem; }
+      .legend-line { background: var(--copper); }
+      .legend-line.stock { background: repeating-linear-gradient(90deg, #9f9b91 0 5px, transparent 5px 8px); }
+      .estimate-foot { margin-top: 1.2rem; border-radius: 0; color: #cac3b8; background: transparent; border-top: 1px solid rgba(242, 238, 229, .16); padding: 1rem 0 0; font-size: .72rem; }
+      .estimate-foot span { color: var(--copper); }
+
+      .diagnostic-section { padding: clamp(7rem, 11vw, 10rem) 0; background: #1c1b19; }
+      .diagnostic-header { align-items: end; }
+      .diagnostic-header .section-copy p { color: var(--cloud); }
+      .obd-chip { min-width: auto; border-color: rgba(178, 138, 90, .55); border-radius: 2px; color: var(--copper); background: transparent; font-size: .61rem; letter-spacing: .11em; }
+      .diagnostic-layout { gap: clamp(2.5rem, 5vw, 5.5rem); margin-top: 4rem; }
+      .code-finder { padding: 1.55rem; border-color: rgba(242, 238, 229, .16); border-radius: 3px; background: #252421; }
+      .code-finder h3 { font-family: var(--display); font-size: 1.45rem; font-weight: 500; letter-spacing: -.04em; }
+      .code-finder > p { color: var(--cloud); }
+      .search-box input { min-height: 3.25rem; border-color: rgba(242, 238, 229, .25); border-radius: 2px; background: #171816; }
+      .search-box input:focus { border-color: var(--copper); box-shadow: 0 0 0 3px rgba(178, 138, 90, .13); }
+      .search-mark { border-color: var(--copper); }
+      .search-mark::after { background: var(--copper); }
+      .category-list { gap: .45rem; }
+      .category-chip { min-height: 2rem; border-color: rgba(242, 238, 229, .2); border-radius: 2px; color: var(--cloud); font-size: .6rem; letter-spacing: .03em; }
+      .category-chip:hover, .category-chip.active { border-color: var(--copper); color: var(--night); background: var(--copper); }
+      .finder-note { color: #aaa398; }
+      .finder-note strong { color: var(--copper); }
+      .fault-result { min-height: 21rem; border-color: rgba(242, 238, 229, .16); border-radius: 3px; background: #22211f; }
+      .fault-code { color: var(--copper); font-size: clamp(1.25rem, 3vw, 2rem); letter-spacing: -.04em; }
+      .severity { border: 1px solid rgba(178, 138, 90, .4); border-radius: 2px; color: var(--copper); background: transparent; font-size: .56rem; letter-spacing: .1em; }
+      .fault-result h3 { font-size: clamp(1.8rem, 3vw, 2.55rem); }
+      .fault-result > p { color: var(--cloud); }
+      .fault-details { border-top-color: rgba(242, 238, 229, .16); }
+      .cause-list span { border-color: rgba(242, 238, 229, .16); border-radius: 2px; color: #ddd6ca; }
+      .next-step { color: #ddd6ca; }
+
+      .services-section { padding: clamp(7rem, 11vw, 10rem) 0; background: #e6dfd3; }
+      .services-head .section-copy p, .compliance-key { color: #625e56; }
+      .compliance-key { border-left: 1px solid var(--copper); padding-left: 1rem; }
+      .services-grid { gap: 1px; margin-top: 4rem; background: rgba(33, 31, 28, .17); }
+      .service-card { min-height: 16.5rem; padding: 1.55rem; border: 0; border-radius: 0; background: #eee8de; }
+      .service-card:hover { background: #f5f0e7; box-shadow: 0 11px 24px rgba(33, 31, 28, .07); transform: translateY(-2px); }
+      .service-number { color: var(--copper); font-size: .62rem; letter-spacing: .12em; }
+      .service-card h3 { margin-top: 2.45rem; font-family: var(--display); font-size: 1.6rem; font-weight: 500; letter-spacing: -.04em; }
+      .service-card p { color: #625e56; font-size: .78rem; }
+      .service-tag { top: 1.45rem; right: 1.45rem; border: 1px solid rgba(86, 113, 107, .45); border-radius: 2px; color: #425851; background: transparent; font-size: .51rem; letter-spacing: .08em; }
+      .service-card.track .service-tag { border-color: rgba(138, 78, 70, .45); color: #7a403a; background: transparent; }
+      .service-card .service-line { right: 1.55rem; bottom: 1.45rem; left: 1.55rem; background: linear-gradient(90deg, var(--copper), transparent 70%); }
+
+      .process-section { padding: clamp(7rem, 11vw, 9.5rem) 0; background: #282724; }
+      .process-copy p { color: var(--cloud); }
+      .process-list li { padding: 1.45rem 0; border-top-color: rgba(242, 238, 229, .15); }
+      .process-list li::before { color: var(--copper); font-size: .69rem; letter-spacing: .09em; }
+      .process-list h3 { font-family: var(--display); font-size: 1.5rem; font-weight: 500; letter-spacing: -.04em; }
+      .process-list p { color: var(--cloud); font-size: .78rem; }
+      .process-marker { width: .46rem; height: .46rem; border: 1px solid var(--copper); }
+      .legal-bar { margin-top: 4rem; border-left-color: var(--copper); color: var(--cloud); background: rgba(21, 22, 21, .32); font-size: .75rem; }
+      .legal-bar strong { color: var(--porcelain); }
+      footer { background: #10110f; }
+      .footer-brand { color: var(--copper); letter-spacing: .12em; }
+      .footer-note { color: #8e8a82; }
+
+      .reveal { transform: translateY(14px); transition: opacity 650ms cubic-bezier(.22,1,.36,1), transform 650ms cubic-bezier(.22,1,.36,1); transition-delay: var(--reveal-delay, 0ms); will-change: opacity, transform; }
+
+      @keyframes heroFocus {
+        0% { opacity: .72; transform: scale(1.015) translate3d(0, 6px, 0); }
+        22% { opacity: 1; }
+        100% { opacity: 1; transform: scale(1.045) translate3d(-7px, -3px, 0); }
+      }
+      @keyframes heroRise {
+        from { opacity: 0; filter: blur(8px); transform: translateY(22px); }
+        to { opacity: 1; filter: blur(0); transform: translateY(0); }
+      }
+      @keyframes traceCurve {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes chartAppear {
+        to { opacity: 1; }
+      }
+      @keyframes stockAppear {
+        to { opacity: .8; }
+      }
+      @keyframes fillAppear {
+        to { opacity: .12; }
+      }
+      @keyframes dataRefresh {
+        0% { opacity: .42; transform: translateY(4px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes resultRefresh {
+        from { opacity: .45; transform: translateY(7px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .hero-copy .eyebrow, .hero-copy h1, .hero-copy > p, .hero-copy .hero-actions, .hero-copy .hero-proof { opacity: 0; animation: heroRise 800ms cubic-bezier(.22,1,.36,1) forwards; }
+      .hero-copy .eyebrow { animation-delay: 140ms; }
+      .hero-copy h1 { animation-delay: 250ms; }
+      .hero-copy > p { animation-delay: 390ms; }
+      .hero-copy .hero-actions { animation-delay: 510ms; }
+      .hero-copy .hero-proof { animation-delay: 640ms; }
+      .estimate-wrap.visible .chart-stage { stroke-dasharray: 720; stroke-dashoffset: 720; animation: traceCurve 1.5s 380ms cubic-bezier(.22,1,.36,1) forwards; }
+      .estimate-wrap.visible .chart-stock { opacity: 0; animation: stockAppear 700ms 240ms ease forwards; }
+      .estimate-wrap.visible .chart-fill { opacity: 0; animation: fillAppear 700ms 240ms ease forwards; }
+      .estimate-card.data-refresh .power-stat, .estimate-card.data-refresh .vehicle-ident { animation: dataRefresh 520ms cubic-bezier(.22,1,.36,1) both; }
+      .estimate-card.data-refresh .power-stat:nth-child(2) { animation-delay: 70ms; }
+      .estimate-card.data-refresh .chart-stage { stroke-dasharray: 720; stroke-dashoffset: 720; animation: traceCurve 950ms 120ms cubic-bezier(.22,1,.36,1) forwards; }
+      .fault-result.result-enter { animation: resultRefresh 480ms cubic-bezier(.22,1,.36,1) both; }
+      .category-chip, .field select, .service-card { transition-duration: 220ms; transition-timing-function: cubic-bezier(.22,1,.36,1); }
+
+      .header-tools { display: flex; align-items: center; gap: .65rem; }
+      .language-picker { position: relative; display: inline-flex; align-items: center; }
+      .language-picker select { min-height: 2.45rem; appearance: none; border: 1px solid rgba(242, 238, 229, .35); border-radius: 3px; color: var(--porcelain); background: transparent; padding: 0 1.85rem 0 .74rem; font-family: var(--mono); font-size: .6rem; letter-spacing: .09em; }
+      .language-picker::after { position: absolute; right: .68rem; width: .36rem; height: .36rem; border-right: 1px solid var(--copper); border-bottom: 1px solid var(--copper); content: ""; pointer-events: none; transform: rotate(45deg) translateY(-2px); }
+      .language-picker select:hover { border-color: var(--copper); }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+      .concierge-launcher { position: fixed; z-index: 40; right: 2rem; bottom: 2rem; display: inline-flex; align-items: center; justify-content: center; min-height: 3.25rem; padding: 0 1rem; border: 1px solid rgba(178, 138, 90, .72); border-radius: 3px; color: var(--porcelain); background: #1d1c1a; box-shadow: 0 13px 34px rgba(0, 0, 0, .22); font-family: var(--font); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: transform 220ms cubic-bezier(.22,1,.36,1), background 220ms ease, border-color 220ms ease; }
+      .concierge-launcher:hover { border-color: var(--copper); background: #292720; transform: translateY(-2px); }
+      .concierge-launcher::before { width: .46rem; height: .46rem; margin-right: .58rem; border: 1px solid var(--copper); border-radius: 50%; content: ""; }
+      .concierge { position: fixed; z-index: 41; right: 2rem; bottom: 6.3rem; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; width: min(25rem, calc(100vw - 2.5rem)); max-height: min(39rem, calc(100svh - 8rem)); overflow: hidden; border: 1px solid rgba(178, 138, 90, .58); border-radius: 4px; opacity: 0; color: var(--porcelain); background: #1d1c1a; box-shadow: 0 28px 80px rgba(0, 0, 0, .36); pointer-events: none; transform: translateY(10px); transition: opacity 260ms ease, transform 260ms cubic-bezier(.22,1,.36,1); }
+      .concierge.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+      .concierge-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.15rem 1.15rem .95rem; border-bottom: 1px solid rgba(242, 238, 229, .14); }
+      .concierge-eyebrow { display: block; margin-bottom: .35rem; color: var(--copper); font-family: var(--mono); font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; }
+      .concierge-head h2 { margin: 0; font-family: var(--display); font-size: 1.45rem; font-weight: 500; letter-spacing: -.04em; }
+      .concierge-actions { display: flex; gap: .38rem; }
+      .concierge-close { display: inline-grid; width: 2rem; height: 2rem; place-items: center; border: 1px solid rgba(242, 238, 229, .22); border-radius: 2px; color: var(--cloud); background: transparent; font-family: var(--mono); font-size: 1rem; line-height: 1; }
+      .concierge-close:hover { border-color: var(--copper); color: var(--porcelain); }
+      .concierge-reset { min-height: 2rem; padding: 0 .5rem; border: 1px solid rgba(242, 238, 229, .22); border-radius: 2px; color: var(--cloud); background: transparent; font-size: .55rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+      .concierge-reset:hover { border-color: var(--copper); color: var(--porcelain); }
+      .concierge-messages { display: grid; align-content: start; gap: .7rem; min-height: 11rem; overflow: auto; padding: 1rem 1.15rem; scrollbar-color: var(--copper) transparent; }
+      .chat-message { max-width: 88%; padding: .72rem .78rem; border: 1px solid rgba(242, 238, 229, .14); border-radius: 3px; color: #d9d1c4; background: #24231f; font-size: .76rem; line-height: 1.58; white-space: pre-line; }
+      .chat-message.user { justify-self: end; border-color: rgba(178, 138, 90, .45); color: var(--night); background: #c09a67; }
+      .concierge-quick { display: flex; flex-wrap: wrap; gap: .42rem; padding: .05rem 1.15rem .85rem; }
+      .concierge-quick button { min-height: 1.95rem; padding: 0 .62rem; border: 1px solid rgba(242, 238, 229, .2); border-radius: 2px; color: var(--cloud); background: transparent; font-size: .61rem; font-weight: 700; transition: color 180ms ease, border-color 180ms ease, background 180ms ease; }
+      .concierge-quick button:hover { border-color: var(--copper); color: var(--porcelain); background: rgba(178, 138, 90, .12); }
+      .concierge-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; padding: .85rem 1.15rem 0; border-top: 1px solid rgba(242, 238, 229, .14); }
+      .concierge-form input { min-width: 0; min-height: 3rem; border: 1px solid rgba(242, 238, 229, .23); border-radius: 2px; outline: none; color: var(--porcelain); background: #151615; padding: 0 .74rem; font-size: .76rem; }
+      .concierge-form input:focus { border-color: var(--copper); box-shadow: 0 0 0 3px rgba(178, 138, 90, .11); }
+      .concierge-form button, .concierge-whatsapp { min-height: 3rem; border-radius: 2px; font-size: .61rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+      .concierge-form button { min-width: 4.7rem; border: 1px solid var(--copper); color: var(--night); background: var(--copper); }
+      .concierge-form button:hover, .concierge-whatsapp:hover { background: #c8a875; }
+      .concierge-whatsapp { width: calc(100% - 2.3rem); margin: .8rem 1.15rem 1.1rem; border: 1px solid #5f806f; color: #e4eee7; background: #274238; }
+      .concierge-privacy { margin: -.35rem 1.15rem 1rem; color: #a39d92; font-size: .62rem; line-height: 1.45; }
+
+      @media (max-width: 680px) {
+        .header-tools { gap: .4rem; }
+        .language-picker select { min-height: 2.25rem; padding-left: .56rem; font-size: .56rem; }
+        .header-tools .header-button { display: none; }
+        .concierge-launcher { right: 1rem; bottom: 1rem; min-height: 3.15rem; }
+        .concierge { right: 1rem; bottom: 5.2rem; width: calc(100vw - 2rem); max-height: min(38rem, calc(100svh - 6.5rem)); }
+      }
+
+      @media (max-width: 880px) {
+        .vehicle-grid, .diagnostic-layout, .process-layout { grid-template-columns: 1fr; }
+        .vehicle-intro { position: static; }
+        .vehicle-section, .diagnostic-section, .services-section, .process-section { padding: 6.5rem 0; }
+      }
+      @media (max-width: 680px) {
+        .shell, .header-inner { width: min(100% - 32px, 1240px); }
+        .top-nav { display: none; }
+        .hero { min-height: 720px; }
+        .hero-inner { min-height: 720px; padding: 7.25rem 0 3.5rem; }
+        .hero-copy h1 { max-width: 10ch; font-size: clamp(3.2rem, 14.4vw, 5rem); }
+        .hero-media img { object-position: 58% 50%; animation: none; transform: scale(1.018); }
+        .hero::after { background: radial-gradient(ellipse 82% 88% at 47% 47%, rgba(11, 12, 11, .93), rgba(14, 15, 14, .58) 56%, transparent 100%), linear-gradient(90deg, rgba(21, 22, 21, .98) 0%, rgba(21, 22, 21, .93) 56%, rgba(21, 22, 21, .38) 100%), linear-gradient(0deg, rgba(11, 12, 11, .78), transparent 47%); }
+        .hero-proof { margin-top: 3rem; }
+        .proof-item { width: 100%; min-height: auto; padding: .85rem 0; margin: 0; }
+        .proof-item + .proof-item { padding-left: 0; border-top: 1px solid rgba(242,238,229,.16); border-left: 0; }
+        .services-grid { grid-template-columns: 1fr; }
+        .services-head .section-copy h2, .section-copy h2, .process-copy h2 { max-width: 11ch; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+        .reveal, .hero-copy .eyebrow, .hero-copy h1, .hero-copy > p, .hero-copy .hero-actions, .hero-copy .hero-proof { opacity: 1; filter: none; transform: none; }
+        .hero-media img { transform: none; }
+      }
+    </style>
+    <style id="liquid-glass-overrides">
+      :root {
+        --glass-border: rgba(255, 244, 226, .19);
+        --glass-highlight: rgba(255, 248, 234, .13);
+        --glass-shadow: 0 22px 60px rgba(15, 11, 8, .22);
+        --glass-deep: rgba(24, 22, 19, .57);
+        --glass-light: rgba(93, 75, 55, .27);
+      }
+
+      html { background: #302a23; }
+      body {
+        min-height: 100vh;
+        background: #302a23;
+        isolation: isolate;
+      }
+      .site-diagnostics-bg {
+        position: fixed;
+        z-index: 0;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        background: #302a23;
+      }
+      .site-diagnostics-bg::before {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: url("/assets/diagnostic-3d-badges.webp") center / 940px auto repeat;
+        filter: saturate(1.04) contrast(1.09) brightness(1.02);
+        opacity: .68;
+      }
+      .site-diagnostics-bg::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background:
+          linear-gradient(112deg, rgba(25, 23, 20, .11), transparent 48%, rgba(25, 20, 17, .1)),
+          linear-gradient(180deg, rgba(18, 17, 15, .12), rgba(18, 17, 15, .15));
+      }
+      main, footer { position: relative; z-index: 1; }
+      .site-header { z-index: 20; }
+
+      .header-inner,
+      .hero-copy,
+      .vehicle-intro,
+      .estimate-card,
+      .diagnostic-header,
+      .code-finder,
+      .fault-result,
+      .services-head,
+      .service-card,
+      .process-copy,
+      .process-list,
+      .legal-bar,
+      .contact-card,
+      .footer-inner {
+        border: 1px solid var(--glass-border);
+        background: linear-gradient(135deg, var(--glass-light), var(--glass-deep) 66%);
+        box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+        -webkit-backdrop-filter: blur(20px) saturate(128%);
+        backdrop-filter: blur(20px) saturate(128%);
+      }
+
+      .header-inner {
+        min-height: 4.85rem;
+        margin-top: .8rem;
+        padding: 0 1.15rem;
+        border-radius: 1.15rem;
+      }
+      .header-button,
+      .language-picker select,
+      .button-quiet,
+      .obd-chip,
+      .category-chip {
+        background: rgba(255, 247, 230, .075);
+        -webkit-backdrop-filter: blur(12px) saturate(120%);
+        backdrop-filter: blur(12px) saturate(120%);
+      }
+
+      .hero,
+      .vehicle-section,
+      .diagnostic-section,
+      .services-section,
+      .process-section,
+      footer { background: transparent !important; }
+      .vehicle-section::before { display: none; }
+      .hero-media { display: none; }
+      .hero::after {
+        background: radial-gradient(ellipse 72% 84% at 35% 49%, rgba(24, 21, 18, .31), rgba(24, 21, 18, .04) 74%, transparent 100%);
+      }
+      .hero-inner { position: relative; z-index: 1; }
+      .hero-copy {
+        max-width: 46rem;
+        padding: clamp(1.4rem, 3.2vw, 2.8rem);
+        border-radius: 1.8rem;
+      }
+      .hero-copy > p { color: rgba(242, 238, 229, .86); }
+      .hero-proof { border-top-color: rgba(255, 244, 226, .22); }
+      .proof-item { color: rgba(242, 238, 229, .78); }
+      .proof-item + .proof-item { border-left-color: rgba(255, 244, 226, .18); }
+
+      .vehicle-section,
+      .diagnostic-section,
+      .services-section,
+      .process-section { color: var(--porcelain); }
+      .vehicle-section { padding-bottom: clamp(3rem, 5vw, 5rem); }
+      .diagnostic-section { padding-top: clamp(3rem, 5vw, 5rem); }
+      .vehicle-intro,
+      .diagnostic-header,
+      .services-head,
+      .process-copy,
+      .process-list {
+        padding: clamp(1.35rem, 2.8vw, 2.25rem);
+        border-radius: 1.45rem;
+      }
+      .vehicle-intro .section-copy p,
+      .diagnostic-header .section-copy p,
+      .services-head .section-copy p,
+      .process-copy p,
+      .intro-notes li,
+      .services-head .compliance-key,
+      .service-card p,
+      .process-list p { color: rgba(242, 238, 229, .79); }
+      .intro-notes strong,
+      .service-card h3 { color: var(--porcelain); }
+      .intro-notes li { font-size: .84rem; }
+      .check { color: var(--copper); background: rgba(255, 247, 230, .06); }
+
+      .estimate-card,
+      .code-finder,
+      .fault-result { border-radius: 1.35rem; }
+      .estimate-card { background: linear-gradient(140deg, rgba(67, 55, 41, .52), rgba(18, 18, 16, .64) 72%); }
+      .power-grid { background: rgba(255, 247, 230, .12); }
+      .power-stat { background: rgba(18, 18, 16, .5); }
+      .estimate-request { display: grid; gap: .78rem; margin-top: 1.35rem; padding-top: 1.2rem; border-top: 1px solid rgba(255, 244, 226, .16); }
+      .context-request {
+        display: flex;
+        min-height: 3.7rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        border: 1px solid rgba(226, 192, 140, .62);
+        border-radius: .72rem;
+        color: var(--porcelain);
+        background: rgba(178, 138, 90, .12);
+        padding: .85rem 1rem;
+        text-align: left;
+        transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+      .context-request:hover { border-color: #dfbd8c; background: rgba(178, 138, 90, .22); transform: translateY(-2px); }
+      .context-request:focus-visible,
+      .fault-request:focus-visible { outline: 2px solid #dfbd8c; outline-offset: 3px; }
+      .context-request-title { font-size: .86rem; font-weight: 700; line-height: 1.35; }
+      .context-request-channel { flex: 0 0 auto; color: #dfbd8c; font-family: var(--mono); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
+      .estimate-compliance { display: flex; gap: .55rem; margin: 0; color: rgba(242, 238, 229, .72); font-size: .76rem; line-height: 1.55; }
+      .estimate-compliance > span:first-child { flex: 0 0 auto; color: var(--copper); font-family: var(--mono); }
+      .stage-catalog-link { display:flex; align-items:center; justify-content:space-between; min-height:2.8rem; padding:0 .12rem; border-bottom:1px solid rgba(226,192,140,.28); color:rgba(242,238,229,.82); font-size:.76rem; font-weight:750; letter-spacing:.015em; }
+      .stage-catalog-link:hover { border-color:var(--copper); color:var(--copper-pale); }
+      .stage-catalog-link span { color:var(--copper-pale); font-size:1.1rem; }
+      .field select,
+      .search-box input,
+      .concierge-form input {
+        background-color: rgba(13, 14, 13, .54);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .field select option { color: var(--porcelain); background: #1b1a17; }
+      .code-finder,
+      .fault-result { background: linear-gradient(140deg, rgba(65, 54, 42, .43), rgba(18, 18, 16, .6)); }
+      .fault-result > p,
+      .code-finder > p,
+      .finder-note,
+      .next-step,
+      .cause-list span { color: rgba(242, 238, 229, .79); }
+      .fault-request {
+        width: 100%;
+        min-height: 3.45rem;
+        margin-top: 1.25rem;
+        border: 1px solid rgba(226, 192, 140, .5);
+        border-radius: .72rem;
+        color: var(--porcelain);
+        background: rgba(255, 247, 230, .06);
+        font-size: .8rem;
+        font-weight: 700;
+        letter-spacing: .01em;
+        transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+      .fault-request:hover { border-color: var(--copper); background: rgba(178, 138, 90, .16); transform: translateY(-2px); }
+
+      .services-grid { gap: .9rem; background: transparent; }
+      .service-card {
+        min-height: 16.5rem;
+        border-radius: 1.25rem;
+        background: linear-gradient(145deg, rgba(91, 74, 55, .3), rgba(22, 21, 19, .44));
+      }
+      .service-card:hover { background: linear-gradient(145deg, rgba(111, 88, 63, .4), rgba(25, 23, 20, .5)); box-shadow: inset 0 1px 0 var(--glass-highlight), 0 24px 50px rgba(15, 11, 8, .24); }
+      .service-tag { border-color: rgba(226, 192, 140, .48); color: #dfbd8c; background: rgba(15, 14, 13, .2); }
+      .service-card.track .service-tag { border-color: rgba(210, 113, 95, .48); color: #e09a8f; }
+
+      .process-list { margin: 0; }
+      .legal-bar { border-left-color: var(--copper); border-radius: 0 1rem 1rem 0; }
+      .contact-card { border-radius: 1.35rem; }
+      .contact-copy > p:last-child { color: rgba(242, 238, 229, .79); }
+      .contact-action { border-color: rgba(255, 244, 226, .24); background: rgba(255, 247, 230, .07); -webkit-backdrop-filter: blur(12px) saturate(120%); backdrop-filter: blur(12px) saturate(120%); }
+      .contact-action:hover { border-color: var(--copper); background: rgba(178, 138, 90, .14); }
+      .contact-action span:last-child { color: #dfbd8c; }
+      .contact-action.whatsapp { border-color: rgba(116, 164, 132, .5); }
+      .contact-action.whatsapp:hover { border-color: #8bb69a; background: rgba(57, 94, 72, .28); }
+      .contact-action.whatsapp span:last-child { color: #b9ddc5; }
+      footer { padding: 1.2rem 0 1.6rem; border-top: 1px solid rgba(255, 244, 226, .12); }
+      .footer-inner { padding: 1rem 1.15rem; border-radius: 1rem; }
+
+      /* White marks lead on charcoal; red is used only as a restrained technical accent. */
+      .brand { flex: 0 0 auto; align-items: center; }
+      .brand-logo { display: block; width: clamp(8.25rem, 15vw, 11.75rem); height: auto; }
+      .cover-emblem {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        width: clamp(7.8rem, 13.5vw, 13.25rem);
+        height: auto;
+        opacity: .12;
+        pointer-events: none;
+        user-select: none;
+      }
+      .cover-emblem--wide { width: min(36rem, 39vw); opacity: .2; }
+      .cover-emblem--red { opacity: .15; }
+      .hero > .cover-emblem { right: clamp(1rem, 5.5vw, 6.5rem); bottom: clamp(2rem, 8vh, 6.25rem); z-index: 1; }
+      .hero-inner { position: relative; z-index: 2; }
+      .vehicle-section,
+      .diagnostic-section,
+      .services-section,
+      .process-section,
+      .contact-section,
+      footer { position: relative; isolation: isolate; overflow: hidden; }
+      .vehicle-section > .cover-emblem { top: clamp(2.2rem, 8vw, 5.5rem); right: clamp(1rem, 5vw, 5.5rem); }
+      .diagnostic-section > .cover-emblem { bottom: clamp(2rem, 7vw, 5rem); left: clamp(1rem, 5vw, 5.5rem); }
+      .services-section > .cover-emblem { top: clamp(2rem, 6vw, 4.5rem); right: clamp(1rem, 5vw, 5.5rem); }
+      .process-section > .cover-emblem { bottom: clamp(2rem, 6vw, 4.5rem); right: clamp(1rem, 5vw, 5.5rem); }
+      .contact-section > .cover-emblem { top: 50%; right: clamp(1rem, 5vw, 5.5rem); transform: translateY(-50%); }
+      footer > .cover-emblem { top: .35rem; right: clamp(1rem, 4vw, 4.5rem); width: clamp(7rem, 13vw, 11rem); opacity: .09; }
+      .vehicle-section > .shell,
+      .diagnostic-section > .shell,
+      .services-section > .shell,
+      .process-section > .shell,
+      .contact-section > .shell,
+      footer > .shell { position: relative; z-index: 1; }
+
+      .concierge-launcher,
+      .concierge {
+        background: linear-gradient(145deg, rgba(76, 60, 43, .5), rgba(20, 19, 17, .68));
+        -webkit-backdrop-filter: blur(20px) saturate(135%);
+        backdrop-filter: blur(20px) saturate(135%);
+      }
+      .chat-message { background: rgba(36, 34, 30, .54); }
+      .concierge-quick button { background: rgba(255, 247, 230, .05); }
+
+      @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+        .header-inner,
+        .hero-copy,
+        .vehicle-intro,
+        .estimate-card,
+        .diagnostic-header,
+        .code-finder,
+        .fault-result,
+        .services-head,
+        .service-card,
+        .process-copy,
+        .process-list,
+        .legal-bar,
+        .contact-card,
+        .footer-inner { background: rgba(24, 22, 19, .86); }
+      }
+
+      @media (max-width: 680px) {
+        .site-diagnostics-bg::before { background-position: 50% top; background-size: 720px auto; filter: saturate(1.02) contrast(1.08) brightness(1.02); opacity: .68; }
+        .header-inner { min-height: 4.5rem; margin-top: .6rem; padding: 0 .75rem; border-radius: .95rem; }
+        .hero-inner { padding-top: 7.3rem; }
+        .hero-copy { width: 100%; padding: 1.35rem; border-radius: 1.35rem; }
+        .vehicle-section { padding-bottom: 2.8rem; }
+        .diagnostic-section { padding-top: 2.8rem; }
+        .vehicle-intro,
+        .diagnostic-header,
+        .services-head,
+        .process-copy,
+        .process-list { padding: 1.2rem; border-radius: 1.2rem; }
+        .estimate-card,
+        .code-finder,
+        .fault-result,
+        .service-card { border-radius: 1.1rem; }
+        .context-request { align-items: flex-start; flex-direction: column; gap: .3rem; }
+        .context-request-channel { font-size: .65rem; }
+        .header-inner,
+        .hero-copy,
+        .vehicle-intro,
+        .estimate-card,
+        .diagnostic-header,
+        .code-finder,
+        .fault-result,
+        .services-head,
+        .service-card,
+        .process-copy,
+        .process-list,
+        .legal-bar,
+        .contact-card,
+        .footer-inner { -webkit-backdrop-filter: blur(14px) saturate(118%); backdrop-filter: blur(14px) saturate(118%); }
+        .brand-logo { width: 8rem; }
+        .cover-emblem--wide { right: -4vw !important; width: 67vw; opacity: .12; }
+        .cover-emblem { width: 7.6rem; opacity: .08; }
+        .contact-section > .cover-emblem { display: none; }
+      }
+      @media (max-width: 960px) {
+        .top-nav { display: none; }
+      }
+
+      /* Mobile-first shortcuts keep the knowledge base visible instead of hiding it behind desktop navigation. */
+      .quick-access-section { position: relative; z-index: 2; padding: clamp(1rem, 3vw, 1.8rem) 0 .25rem; }
+      .quick-access-panel {
+        display: grid;
+        grid-template-columns: minmax(13rem, .78fr) minmax(0, 1.22fr);
+        gap: 1rem;
+        align-items: stretch;
+        padding: 1rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 1.35rem;
+        background: linear-gradient(135deg, rgba(90, 70, 48, .3), rgba(22, 20, 17, .74) 68%);
+        box-shadow: inset 0 1px 0 var(--glass-highlight), var(--glass-shadow);
+        -webkit-backdrop-filter: blur(18px) saturate(124%);
+        backdrop-filter: blur(18px) saturate(124%);
+      }
+      .quick-access-copy { display: flex; flex-direction: column; justify-content: center; padding: .65rem .85rem; }
+      .quick-access-copy .eyebrow { margin-bottom: .75rem; }
+      .quick-access-copy h2 { max-width: 14ch; margin: 0; color: var(--porcelain); font-family: var(--display); font-size: clamp(1.55rem, 2.6vw, 2.25rem); font-weight: 500; letter-spacing: -.045em; line-height: 1.02; }
+      .quick-access-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+      .quick-access-card {
+        position: relative;
+        display: flex;
+        min-height: 10.2rem;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+        overflow: hidden;
+        padding: 1.15rem;
+        border: 1px solid rgba(242, 238, 229, .2);
+        border-radius: 1rem;
+        color: var(--porcelain);
+        background: rgba(17, 17, 15, .76);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+      .quick-access-card::after { position: absolute; right: -1rem; bottom: -2.3rem; width: 6rem; height: 6rem; border: 1px solid rgba(178, 138, 90, .38); border-radius: 50%; content: ""; }
+      .quick-access-card:hover { border-color: var(--copper); background: rgba(42, 35, 27, .9); transform: translateY(-2px); }
+      .quick-access-card h3 { position: relative; z-index: 1; max-width: 14ch; margin: 0 0 .48rem; font-family: var(--display); font-size: 1.35rem; font-weight: 500; letter-spacing: -.035em; line-height: 1.04; }
+      .quick-access-card p { position: relative; z-index: 1; max-width: 27ch; margin: 0; color: rgba(242, 238, 229, .7); font-size: .76rem; line-height: 1.55; }
+      .quick-access-action { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .55rem; color: #dfbd8c; font-family: var(--mono); font-size: .62rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+      .quick-access-action::after { content: "→"; font-size: .9rem; line-height: 1; }
+
+      .mobile-nav-toggle,
+      .mobile-nav { display: none; }
+      .field select { background-color: #171816 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+      .field select:disabled { cursor: not-allowed; border-color: rgba(242, 238, 229, .12); color: rgba(242, 238, 229, .42); background-color: #111210 !important; }
+      .estimate-card.is-empty .power-stat .value { color: rgba(242, 238, 229, .54); }
+      .estimate-card.is-empty .vehicle-badge { border-color: rgba(242, 238, 229, .23); color: rgba(242, 238, 229, .56); }
+
+      @media (max-width: 960px) {
+        .mobile-nav-toggle {
+          display: inline-grid;
+          width: 2.45rem;
+          height: 2.45rem;
+          flex: 0 0 auto;
+          place-items: center;
+          border: 1px solid rgba(242, 238, 229, .32);
+          border-radius: .72rem;
+          color: var(--porcelain);
+          background: rgba(18, 17, 15, .68);
+          -webkit-backdrop-filter: blur(12px) saturate(120%);
+          backdrop-filter: blur(12px) saturate(120%);
+        }
+        .mobile-nav-toggle:hover { border-color: var(--copper); }
+        .mobile-nav-lines,
+        .mobile-nav-lines::before,
+        .mobile-nav-lines::after { display: block; width: 1.05rem; height: 1px; border-radius: 999px; background: currentColor; content: ""; transition: transform 180ms ease, opacity 180ms ease; }
+        .mobile-nav-lines { position: relative; }
+        .mobile-nav-lines::before { position: absolute; top: -.34rem; left: 0; }
+        .mobile-nav-lines::after { position: absolute; top: .34rem; left: 0; }
+        .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-lines { background: transparent; }
+        .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-lines::before { transform: translateY(.34rem) rotate(45deg); }
+        .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-lines::after { transform: translateY(-.34rem) rotate(-45deg); }
+        .mobile-nav { position: absolute; top: calc(100% + .45rem); right: max(1rem, calc((100vw - 1240px) / 2)); left: max(1rem, calc((100vw - 1240px) / 2)); z-index: 30; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; padding: .75rem; border: 1px solid var(--glass-border); border-radius: 1rem; background: rgba(21, 20, 18, .94); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(128%); backdrop-filter: blur(18px) saturate(128%); }
+        .mobile-nav.is-open { display: grid; }
+        .mobile-nav a { min-height: 2.8rem; display: flex; align-items: center; padding: 0 .75rem; border: 1px solid rgba(242, 238, 229, .14); border-radius: .65rem; color: rgba(242, 238, 229, .88); font-size: .72rem; font-weight: 700; }
+        .mobile-nav a:hover { border-color: var(--copper); color: var(--porcelain); }
+      }
+      @media (max-width: 680px) {
+        .quick-access-section { padding-top: .8rem; }
+        .quick-access-panel { grid-template-columns: 1fr; gap: .55rem; padding: .7rem; border-radius: 1.1rem; }
+        .quick-access-copy { padding: .55rem .65rem .7rem; }
+        .quick-access-copy .eyebrow { margin-bottom: .55rem; }
+        .quick-access-grid { gap: .55rem; }
+        .quick-access-card { min-height: 8.9rem; padding: 1rem; border-radius: .85rem; }
+        .quick-access-card h3 { font-size: 1.2rem; }
+        .mobile-nav { grid-template-columns: 1fr 1fr; }
+        .concierge-launcher { right: .3rem; bottom: .7rem; width: 2.8rem; min-width: 2.8rem; min-height: 2.8rem; padding: 0; border-radius: 50%; }
+        .concierge-launcher::before { width: .62rem; height: .62rem; margin: 0; }
+        .concierge-launcher span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+      }
+    </style>
+  <style id="6006-global-search-navigation">
+html{scroll-padding-top:1.25rem}
+.enhanced-search-box{display:flex!important;align-items:center;gap:.45rem}
+.enhanced-search-box input[type=search]{min-width:0!important;flex:1 1 auto!important;width:100%!important}
+.enhanced-search-box .search-go-btn{flex:0 0 auto;min-height:2.65rem;padding:0 .8rem;border:1px solid #c69a63;background:#c69a63;color:#211811;border-radius:5px;font:700 .84rem system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.enhanced-search-box .search-go-btn:focus-visible{outline:2px solid white;outline-offset:3px}
+.search-feedback{font:600 .82rem system-ui,sans-serif;color:#e0bd89;margin:.65rem 0;line-height:1.5}
+.search-target-active{outline:2px solid rgba(198,154,99,.75);outline-offset:6px;scroll-margin-top:1.75rem}
+@media(max-width:420px){.enhanced-search-box{gap:.3rem}.enhanced-search-box .search-go-btn{padding:0 .55rem;min-width:3.65rem}}
+</style><style id="real-components-style">.real-home-feature{padding:18px 0 26px;background:linear-gradient(180deg,#11100e,#1f1a15)}.real-home-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.real-home-heading strong{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.15rem,3vw,1.7rem);color:#f3d6af}.real-home-heading a{font-size:.8rem;color:#e7bc83}.real-home-rail{display:flex;gap:9px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}.real-home-card{background:#211c16;flex:0 0 138px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid #695238;border-radius:7px;text-decoration:none;color:#ecdecc;padding:6px;scroll-snap-align:start;min-height:133px}.real-home-card img{width:100%;height:96px;object-fit:contain;mix-blend-mode:screen}.real-home-card span{font:700 .74rem system-ui,sans-serif;text-align:center}.real-home-card:hover,.real-home-card:focus-visible{border-color:#efbb79}</style><link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" /></head>
+  <body>
+    <div class="site-diagnostics-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#baslangic" aria-label="6006 Performance ana sayfa"><img class="brand-logo" src="/assets/6006-primary-white.png" alt="6006 Performance" /></a>
+        <nav class="top-nav" aria-label="Ana gezinti">
+          <a href="#aracin">Stage 1</a>
+          <a href="#teshis">Hata kodları</a>
+          <a href="fehlercodes/">Hata kodu rehberi</a>
+          <a href="#hizmetler">Hizmetler</a>
+          <a href="technik/">Teknik rehber</a>
+          <a href="reparatur-wartung/">Tamir &amp; bakım</a>
+        </nav>
+        <div class="header-tools">
+          <label class="language-picker" for="languageSelect"><span class="sr-only">Site dili</span><select id="languageSelect" aria-label="Site dili"><option value="de">DE</option><option value="tr">TR</option><option value="en">EN</option></select></label>
+          <a class="header-button" href="#iletisim">İletişim</a>
+        </div>
+          <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Menüyü aç"><span class="mobile-nav-lines" aria-hidden="true"></span><span class="sr-only" data-mobile-nav-label>Menüyü aç</span></button>
+      </div>
+        <nav class="mobile-nav" id="mobileNav" aria-label="Hızlı gezinme" hidden>
+          <a href="#aracin">Stage 1</a>
+          <a href="fehlercodes/">Hata kodu rehberi</a>
+          <a href="reparatur-wartung/">Tamir &amp; bakım</a>
+          <a href="technik/">Teknik rehber</a>
+        </nav>
+    </header>
+
+    <main id="baslangic">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="cover-emblem cover-emblem--wide" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" />
+        <div class="shell hero-inner">
+          <div class="hero-copy reveal visible">
+            <p class="eyebrow">6006 Performance · kalibrasyon atölyesi</p>
+            <h1 id="hero-title">Hassasiyet, farkı <em>sessizce</em> yaratır.</h1>
+            <p>6006 Performance; motor verisini, sürüş beklentisini ve mekanik sınırları özenle bir araya getiren, araç özelinde bir kalibrasyon yaklaşımıdır.</p>
+            <div class="hero-actions">
+              <a class="button-primary" href="#aracin">Araç profilini gör</a>
+              <a class="button-quiet" href="fehlercodes/">Kod rehberi</a>
+            </div>
+            <div class="hero-proof" aria-label="Çalışma ilkeleri">
+              <span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Araç özelinde değerlendirme</span>
+              <span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Orijinal dosya yedeği</span>
+              <span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Ölçülebilir teknik notlar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="real-home-feature" aria-label="Görsel arıza kataloğu"><div class="shell"><div class="real-home-heading"><strong>Sistem görselleriyle arıza teşhisi</strong><a href="fehlercodes/">Tüm sistemleri aç →</a></div><div class="real-home-rail"><a href="fehlercodes/?category=turbo#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/turbo.webp" alt="" /><span>Turbo / Hava</span></a><a href="fehlercodes/?category=dpf#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/dpf.webp" alt="" /><span>DPF / Egzoz</span></a><a href="fehlercodes/?category=adblue#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/adblue.webp" alt="" /><span>AdBlue / SCR</span></a><a href="fehlercodes/?category=egr#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/egr.webp" alt="" /><span>EGR Sistemi</span></a><a href="fehlercodes/?category=fuel#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/fuel.webp" alt="" /><span>Yakıt Sistemi</span></a><a href="fehlercodes/?category=transmission#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/transmission.webp" alt="" /><span>Şanzıman</span></a><a href="fehlercodes/?category=brake#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/brake.webp" alt="" /><span>Fren / ABS</span></a><a href="fehlercodes/?category=network#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/network.webp" alt="" /><span>CAN / ECU</span></a><a href="fehlercodes/?category=airbag#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/airbag.webp" alt="" /><span>Hava Yastığı</span></a><a href="fehlercodes/?category=cooling#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/cooling.webp" alt="" /><span>Soğutma Sistemi</span></a></div></div></section>
+<section class="quick-access-section" aria-labelledby="quickAccessTitle">
+        <div class="shell">
+          <div class="quick-access-panel">
+            <div class="quick-access-copy">
+              <p class="eyebrow" id="quickAccessEyebrow">6006 bilgi merkezi</p>
+              <h2 id="quickAccessTitle">Arıza ve bakım için doğru sayfaya doğrudan girin.</h2>
+            </div>
+            <div class="quick-access-grid">
+              <a class="quick-access-card" href="fehlercodes/" id="faultGuideCard">
+                <div><h3 id="faultGuideTitle">Arıza kodu rehberi</h3><p id="faultGuideText">OBD hata kodunu, olası nedenleri ve güvenli kontrol sırasını inceleyin.</p></div>
+                <span class="quick-access-action" id="faultGuideAction">Kodları aç</span>
+              </a>
+              <a class="quick-access-card" href="reparatur-wartung/" id="repairGuideCard">
+                <div><h3 id="repairGuideTitle">Bakım &amp; tamir rehberi</h3><p id="repairGuideText">Aracınızı seçin; bakım, fren, elektrik ve onarım konularına göre ilerleyin.</p></div>
+                <span class="quick-access-action" id="repairGuideAction">Rehberi aç</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="vehicle-section" id="aracin" aria-labelledby="vehicle-title">
+        <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
+        <div class="shell vehicle-grid">
+          <div class="vehicle-intro reveal">
+            <div class="section-copy">
+              <p class="eyebrow">Stage 1 keşfi</p>
+              <h2 id="vehicle-title">Potansiyeli abartmadan, aralıklarla göster.</h2>
+              <p>Rakamları kesin vaat gibi değil; motor kodu, yakıt, çevresel koşullar ve mekanik sağlıkla birlikte yorumlanan teknik bir başlangıç olarak sunuyoruz.</p>
+            </div>
+            <ul class="intro-notes" aria-label="Stage 1 değerlendirme ilkeleri">
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce sağlık:</strong> Aktif motor veya aktarma arızası varsa kalibrasyon öncesi teşhis gerekir.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce doğrulama:</strong> Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce denge:</strong> Tork hedefi, şanzıman ve kullanım biçimine göre planlanır.</span></li>
+            </ul>
+          </div>
+
+          <div class="estimate-wrap reveal">
+            <section class="estimate-card" id="estimateCard" aria-label="Stage 1 tahmin kartı">
+              <div class="calc-top">
+                <h3>Stage 1 tahmini</h3>
+                <span class="calc-status" id="stageStatus"><i class="status-signal" aria-hidden="true"></i>Araç seçin</span>
+              </div>
+              <div class="select-grid">
+                <div class="field">
+                  <label for="brandSelect">Marka</label>
+                  <select id="brandSelect" aria-label="Araç markası"></select>
+                </div>
+                <div class="field">
+                  <label for="modelSelect">Model / motor</label>
+                  <select id="modelSelect" aria-label="Araç modeli ve motoru"></select>
+                </div>
+              </div>
+              <div class="vehicle-ident">
+                <div>
+                  <p class="mono" id="vehicleYears">ARAÇ SEÇİMİ BEKLİYOR</p>
+                  <h4 id="vehicleName">Stage 1 için araç seçin</h4>
+                  <p id="vehicleEngine">Önce marka, ardından model / motor seçin.</p>
+                </div>
+                <span class="vehicle-badge">Önce seçim</span>
+              </div>
+              <div class="power-grid" aria-live="polite">
+                <div class="power-stat">
+                  <div class="label">Güç</div>
+                  <div class="value" id="psValue">—</div>
+                  <div class="gain" id="psGain">—</div>
+                </div>
+                <div class="power-stat">
+                  <div class="label">Tork</div>
+                  <div class="value" id="nmValue">—</div>
+                  <div class="gain" id="nmGain">—</div>
+                </div>
+              </div>
+              <svg class="dyno-chart" viewBox="0 0 600 160" role="img" aria-label="Stok ve Stage 1 örnek güç eğrisi">
+                <defs>
+                  <linearGradient id="stageFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#2CB7AB" stop-opacity=".75"/><stop offset="1" stop-color="#2CB7AB" stop-opacity="0"/></linearGradient>
+                </defs>
+                <path class="chart-grid" d="M0 130H600M0 85H600M0 40H600M100 0V140M250 0V140M400 0V140M550 0V140" />
+                <path class="chart-fill" fill="url(#stageFill)" d="M10 133 C105 128 122 106 180 84 S292 52 350 39 S500 18 590 12 L590 140 L10 140 Z" />
+                <path class="chart-stock" d="M10 138 C110 135 135 119 184 102 S290 71 350 61 S505 42 590 36" />
+                <path class="chart-stage" d="M10 133 C105 128 122 106 180 84 S292 52 350 39 S500 18 590 12" />
+              </svg>
+              <div class="chart-legend" aria-label="Grafik açıklaması"><span class="legend-item"><i class="legend-line stock"></i>Stok güç</span><span class="legend-item"><i class="legend-line"></i>Stage 1 hedefi</span></div>
+              <div class="estimate-foot"><span aria-hidden="true">[i]</span><div>Bu değerler bilgi amaçlı aralıklardır. Kesin sonuç motor kodu, mekanik kontrol ve ölçüm koşullarında farklılaşabilir.</div></div>
+              <div class="estimate-request">
+                <button class="context-request" id="stageInquiry" type="button">
+                  <span class="context-request-title">Bu araç için kişisel değerlendirme iste</span>
+                  <span class="context-request-channel">WhatsApp Business</span>
+                </button>
+                <a class="stage-catalog-link" id="stageCatalogLink" href="reparatur-wartung/">Bakım, tamir ve arıza kataloğunu aç <span aria-hidden="true">→</span></a>
+                <p class="estimate-compliance" id="stageComplianceNote"><span aria-hidden="true">[i]</span><span>Trafiğe uygunluk, sigorta, garanti ve emisyon sistemleri işlemden önce ayrıca değerlendirilir.</span></p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="diagnostic-section" id="teshis" aria-labelledby="diagnostic-title">
+        <img class="cover-emblem cover-emblem--red" src="/assets/6006-mark-red.png" alt="" aria-hidden="true" loading="lazy" />
+        <div class="shell">
+          <div class="diagnostic-header reveal">
+            <div class="section-copy">
+              <p class="eyebrow">OBD rehberi</p>
+              <h2 id="diagnostic-title">Belirsizliği, doğru veriyle azalt.</h2>
+              <p>Hata kodu tek başına kesin teşhis değildir. Dondurulmuş veri, canlı değerler ve sistemin bağlamı birlikte değerlendirilmelidir.</p>
+            </div>
+            <div class="obd-chip"><span aria-hidden="true">OBD-II</span><span>·</span><span>18.805 tanım</span></div>
+          </div>
+          <div class="diagnostic-layout">
+            <aside class="code-finder reveal" aria-label="Hata kodu arama">
+              <h3>Hızlı kod bulucu</h3>
+              <p>P0299 ya da “turbo” gibi bir kod veya anahtar kelime yaz.</p>
+              <div class="search-box">
+                <i class="search-mark" aria-hidden="true"></i>
+                <input id="faultSearch" type="search" autocomplete="off" placeholder="Örn. P0299" aria-label="OBD hata kodu veya kelime ara" />
+              </div>
+              <div class="category-list" aria-label="Hata kategorileri">
+                <button class="category-chip active" type="button" data-category="all">Tümü</button>
+                <button class="category-chip" type="button" data-category="Hava/Turbo">Hava / Turbo</button>
+                <button class="category-chip" type="button" data-category="Yakıt">Yakıt</button>
+                <button class="category-chip" type="button" data-category="Egzoz & Emisyon">Egzoz</button>
+                <button class="category-chip" type="button" data-category="Şanzıman">Şanzıman</button>
+              </div>
+              <p class="finder-note"><strong>Not:</strong> Kodu silmek arızayı çözmez. Önce kök nedenin bulunması gerekir.</p>
+              <a class="context-request" href="fehlercodes/" style="margin-top: 1.1rem;">
+                <span class="context-request-title">Detaylı hata kodu bilgisi</span>
+                <span class="context-request-channel">Tüm kodlar</span>
+              </a>
+            </aside>
+            <article class="fault-result reveal" id="faultResult" aria-live="polite"></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="services-section" id="hizmetler" aria-labelledby="services-title">
+        <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
+        <div class="shell">
+          <div class="services-head reveal">
+            <div class="section-copy">
+              <p class="eyebrow">Teknik kapsam</p>
+              <h2 id="services-title">Teknik kapsam, ölçülü bir disiplin ister.</h2>
+              <p>Hizmeti sadece adıyla değil; araç güvenliği, mevzuat ve kullanım bağlamıyla birlikte tanımlıyoruz.</p>
+            </div>
+            <p class="compliance-key">Kapsam notu: Emisyon sistemleriyle ilgili talepler yol kullanımına uygunluk açısından ayrıca değerlendirilir.</p>
+          </div>
+          <div class="services-grid">
+            <a class="service-card reveal" href="#aracin"><span class="service-number">01</span><span class="service-tag">Uygunluk kontrolü</span><h3>Stage 1 ECU Kalibrasyonu</h3><p>Sağlıklı motor verileri ve aktarma sınırları üzerinde, dengeli güç ve tork hedefi.</p><i class="service-line" aria-hidden="true"></i></a>
+            <a class="service-card reveal" href="fehlercodes/"><span class="service-number">02</span><span class="service-tag">Canlı veri</span><h3>Arıza Teşhisi</h3><p>Hata kodu, freeze-frame ve temel çalışma değerlerini tek bir teknik hikâyede birleştirir.</p><i class="service-line" aria-hidden="true"></i></a>
+            <a class="service-card reveal" href="fehlercodes/?code=P2002#detay"><span class="service-number">03</span><span class="service-tag">OEM uyumlu</span><h3>DPF Sağlık Kontrolü</h3><p>Kurum yükü, diferansiyel basınç ve rejenerasyon koşullarının sistematik değerlendirmesi.</p><i class="service-line" aria-hidden="true"></i></a>
+            <a class="service-card reveal" href="reparatur-wartung/#arbeiten"><span class="service-number">04</span><span class="service-tag">OEM uyumlu</span><h3>EGR Sistem Teşhisi</h3><p>Valf, soğutucu ve ilişkili sensörler için kök neden odaklı kontrol yaklaşımı.</p><i class="service-line" aria-hidden="true"></i></a>
+            <a class="service-card reveal" href="fehlercodes/?code=P20EE#detay"><span class="service-number">05</span><span class="service-tag">OEM uyumlu</span><h3>SCR / AdBlue Teşhisi</h3><p>NOx, ısıtma, pompa ve dozaj sisteminin canlı veriyle teknik değerlendirmesi.</p><i class="service-line" aria-hidden="true"></i></a>
+            <a class="service-card track reveal" href="#iletisim"><span class="service-number">06</span><span class="service-tag">Kapalı alan / pist</span><h3>Pop &amp; Bangs Değerlendirmesi</h3><p>Gürültü, ısıl yük ve yerel kurallar dikkate alınarak yalnızca araç uygunluğu kapsamında değerlendirilir.</p><i class="service-line" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="process-section" id="surec" aria-labelledby="process-title">
+        <img class="cover-emblem cover-emblem--red" src="/assets/6006-mark-red.png" alt="" aria-hidden="true" loading="lazy" />
+        <div class="shell process-layout">
+          <div class="process-copy reveal">
+            <p class="eyebrow">6006 yaklaşımı</p>
+            <h2 id="process-title">Dosya değil, ölçülü karar.</h2>
+            <p>Her araç, güç hedefinden önce mevcut durumuyla ele alınır. Bu yaklaşım hem sonucu hem de iletişimi daha güvenilir kılar.</p>
+          </div>
+          <ol class="process-list reveal">
+            <li><div><h3>Oku ve doğrula</h3><p>Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Kalibre et</h3><p>Hedefler, yakıt kalitesi ve aktarma limitleriyle uyumlu biçimde belirlenir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Kontrol et</h3><p>Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+          </ol>
+        </div>
+        <div class="shell legal-bar reveal"><strong>Yasal kullanım notu</strong><span>DPF, EGR ve AdBlue gibi emisyon kontrol sistemlerinin devre dışı bırakılması trafiğe açık araçlarda mevzuata aykırı olabilir. Bu site, bu sistemleri devre dışı bırakmaya yönelik uygulama veya yönlendirme sunmaz; uygunluk ve OEM uyumlu teşhis yaklaşımını esas alır.</span></div>
+      </section>
+
+      <section class="contact-section" id="iletisim" aria-labelledby="contact-title">
+        <img class="cover-emblem cover-emblem--wide" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" loading="lazy" />
+        <div class="shell contact-card reveal">
+          <div class="contact-copy">
+            <p class="eyebrow">İletişim</p>
+            <h2 id="contact-title">Aracınızı ve hedefinizi paylaşın.</h2>
+            <p>Teknik talebinizi e-posta ya da WhatsApp Business üzerinden iletebilirsiniz.</p>
+          </div>
+          <div class="contact-actions" aria-label="İletişim seçenekleri">
+            <a class="contact-action email" data-contact-email href="mailto:6006performance@gmail.com" aria-label="6006performance@gmail.com adresine e-posta gönder"><span>E-posta gönder</span><span>6006performance@gmail.com</span></a>
+            <a class="contact-action whatsapp" data-contact-whatsapp href="https://wa.me/491788354756" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Business üzerinden 6006 Performance'e mesaj gönder"><span>WhatsApp Business</span><span>Doğrudan mesaj</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <button class="concierge-launcher" id="conciergeLauncher" type="button" aria-controls="concierge" aria-expanded="false"><span>Akıllı danışman</span></button>
+    <aside class="concierge" id="concierge" role="dialog" aria-modal="false" aria-labelledby="conciergeTitle" aria-hidden="true" inert>
+      <div class="concierge-head">
+        <div><span class="concierge-eyebrow">6006 Performance</span><h2 id="conciergeTitle">Akıllı danışman</h2></div>
+        <div class="concierge-actions"><button class="concierge-reset" id="assistantReset" type="button">Sıfırla</button><button class="concierge-close" id="conciergeClose" type="button" aria-label="Asistanı kapat">×</button></div>
+      </div>
+      <div class="concierge-messages" id="assistantMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <div class="concierge-quick" id="assistantQuick">
+        <button type="button" data-assistant-intent="stage">Stage 1</button>
+        <button type="button" data-assistant-intent="dtc">Hata kodu</button>
+        <button type="button" data-assistant-intent="consult">Danışmanlık</button>
+      </div>
+      <form class="concierge-form" id="assistantForm">
+        <label class="sr-only" for="assistantInput">Mesajınız</label><input id="assistantInput" type="text" autocomplete="off" placeholder="Aracınızı veya kodunuzu yazın" />
+        <button type="submit">Gönder</button>
+      </form>
+      <button class="concierge-whatsapp" id="assistantWhatsApp" type="button">WhatsApp’ta devam et</button>
+      <p class="concierge-privacy" id="assistantPrivacy">Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.</p>
+    </aside>
+
+    <footer>
+      <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
+      <div class="shell footer-inner">
+        <span class="footer-brand">6006 PERFORMANCE / TECHNICAL PERFORMANCE</span>
+        <span class="footer-note">Bilgilendirme amaçlı teknik içerik. Araç üzerinde yapılacak her işlemden önce üretici, sigorta, garanti ve yerel mevzuat koşulları ayrıca doğrulanmalıdır.</span>
+      </div>
+    </footer>
+
+    <script defer src="/assets/6006-language-bridge.js"></script>
+    <script>
+      const vehicles = [
+        { brand: "BMW", name: "320i G20", years: "2019–2024", engine: "2.0T B48 · Benzin · Otomatik", stock: { ps: 184, nm: 300 }, stage: { ps: [240, 250], nm: [380, 400] } },
+        { brand: "BMW", name: "320d G20", years: "2019–2024", engine: "2.0T B47 · Dizel · Otomatik", stock: { ps: 190, nm: 400 }, stage: { ps: [220, 230], nm: [440, 460] } },
+        { brand: "Audi", name: "A3 8V 1.4 TFSI", years: "2014–2020", engine: "1.4T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 }, stage: { ps: [175, 185], nm: [280, 300] } },
+        { brand: "Audi", name: "A3 8V 1.6 TDI", years: "2014–2020", engine: "1.6TDI · Dizel · Otomatik/Manuel", stock: { ps: 110, nm: 250 }, stage: { ps: [140, 145], nm: [310, 320] } },
+        { brand: "Mercedes-Benz", name: "C200 W205", years: "2015–2021", engine: "2.0T · Benzin · Otomatik", stock: { ps: 184, nm: 300 }, stage: { ps: [230, 245], nm: [360, 390] } },
+        { brand: "Mercedes-Benz", name: "E220d W213", years: "2016–2023", engine: "2.0TDI · Dizel · Otomatik", stock: { ps: 194, nm: 400 }, stage: { ps: [220, 230], nm: [460, 500] } },
+        { brand: "Volkswagen", name: "Golf VII 1.5 TSI", years: "2017–2020", engine: "1.5T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 }, stage: { ps: [180, 190], nm: [290, 310] } },
+        { brand: "Volkswagen", name: "Passat B8 2.0 TDI", years: "2015–2023", engine: "2.0TDI · Dizel · DSG", stock: { ps: 150, nm: 340 }, stage: { ps: [185, 195], nm: [390, 410] } },
+        { brand: "Ford", name: "Focus IV 1.5 EcoBlue", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 120, nm: 300 }, stage: { ps: [145, 155], nm: [340, 360] } },
+        { brand: "Peugeot", name: "308 1.5 BlueHDi", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 130, nm: 300 }, stage: { ps: [155, 165], nm: [350, 370] } }
+      ];
+
+      // Stage 1 rakamları yalnızca yukarıdaki doğrulanmış örnek profiller için gösterilir.
+      // Aşağıdaki geniş dizin, ziyaretçinin aracını bulmasını ve bakım/tamir kataloğuna
+      // geçmesini sağlar; doğrulanmamış araçlar için tahmini güç veya tork uydurulmaz.
+      const vehicleDirectory = {
+        "Abarth": ["500", "595", "695"],
+        "Alfa Romeo": ["Giulia", "Stelvio", "Tonale", "Giulietta", "MiTo"],
+        "Audi": ["A1", "A3", "A4", "A5", "A6", "Q2", "Q3", "Q5", "Q7", "TT"],
+        "BMW": ["1er", "2er", "3er", "4er", "5er", "7er", "X1", "X3", "X5", "X6"],
+        "Chevrolet": ["Spark", "Cruze", "Captiva", "Camaro"],
+        "Citroën": ["C1", "C3", "C4", "C5 Aircross", "Berlingo", "Jumpy", "Jumper"],
+        "Cupra": ["Formentor", "Leon", "Ateca", "Born", "Terramar"],
+        "Dacia": ["Sandero", "Duster", "Logan", "Jogger", "Dokker"],
+        "Dodge": ["Charger", "Challenger", "Durango", "RAM"],
+        "DS Automobiles": ["DS 3", "DS 4", "DS 7"],
+        "Fiat": ["500", "Panda", "Tipo", "Doblo", "Ducato"],
+        "Ford": ["Fiesta", "Focus", "Mondeo", "Kuga", "Puma", "Mustang", "Transit", "Ranger"],
+        "Honda": ["Jazz", "Civic", "CR-V", "HR-V"],
+        "Hyundai": ["i10", "i20", "i30", "Tucson", "Kona", "Santa Fe"],
+        "Iveco": ["Daily", "Eurocargo", "S-Way"],
+        "Jaguar": ["XE", "XF", "F-Pace", "E-Pace", "I-Pace"],
+        "Jeep": ["Renegade", "Compass", "Wrangler", "Grand Cherokee"],
+        "Kia": ["Picanto", "Ceed", "Niro", "Sportage", "Sorento", "EV6"],
+        "Land Rover": ["Defender", "Discovery", "Range Rover Evoque", "Range Rover Sport"],
+        "Lexus": ["UX", "NX", "RX", "ES"],
+        "MAN": ["TGE", "TGL", "TGM", "TGS", "TGX"],
+        "Mazda": ["2", "3", "6", "CX-30", "CX-5", "CX-60"],
+        "Mercedes-Benz": ["A-Klasse", "B-Klasse", "C-Klasse", "E-Klasse", "S-Klasse", "GLA", "GLC", "GLE", "Vito", "Sprinter"],
+        "MINI": ["Hatch", "Clubman", "Countryman", "Aceman"],
+        "Mitsubishi": ["Space Star", "ASX", "Outlander", "L200"],
+        "Nissan": ["Micra", "Juke", "Qashqai", "X-Trail", "Navara", "Leaf"],
+        "Opel": ["Corsa", "Astra", "Insignia", "Mokka", "Grandland", "Zafira", "Vivaro", "Movano"],
+        "Peugeot": ["108", "208", "308", "3008", "5008", "Rifter", "Expert", "Boxer"],
+        "Porsche": ["911", "Macan", "Cayenne", "Panamera", "Taycan"],
+        "Renault": ["Clio", "Captur", "Mégane", "Scénic", "Austral", "Trafic", "Master"],
+        "SEAT": ["Ibiza", "Leon", "Arona", "Ateca", "Tarraco"],
+        "Škoda": ["Fabia", "Scala", "Octavia", "Superb", "Kamiq", "Karoq", "Kodiaq"],
+        "Smart": ["fortwo", "forfour", "#1", "#3"],
+        "Subaru": ["Impreza", "Forester", "Outback", "Crosstrek"],
+        "Suzuki": ["Swift", "Vitara", "S-Cross", "Jimny"],
+        "Tesla": ["Model 3", "Model Y", "Model S", "Model X"],
+        "Toyota": ["Yaris", "Corolla", "C-HR", "RAV4", "Land Cruiser", "Proace"],
+        "Volkswagen": ["Polo", "Golf", "Passat", "Arteon", "T-Roc", "Tiguan", "Touareg", "Touran", "Caddy", "Transporter"],
+        "Volvo": ["V40", "V60", "V90", "XC40", "XC60", "XC90"],
+        "Andere Marke": ["Mein Modell manuell eingeben"]
+      };
+
+      const faultCodes = [
+        { code: "P0101", title: "Hava kütle ölçer aralık / performans", category: "Hava/Turbo", severity: "Kontrol gerekli", description: "Motor kontrol ünitesi, hava kütle ölçer sinyalini beklenen çalışma aralığı dışında görüyor.", causes: ["Hava kaçağı", "Kirli MAF", "Emiş kısıtı"], next: "Canlı veri ile MAF değerleri ve emiş hattı kontrol edilmelidir." },
+        { code: "P0234", title: "Turbo aşırı basınç", category: "Hava/Turbo", severity: "Öncelikli kontrol", description: "İstenen turbo basıncının üzerinde bir değer algılanmış olabilir. Aracı zorlamamak gerekir.", causes: ["Vakum / aktüatör", "Değişken geometri", "Basınç sensörü"], next: "Vakum, aktüatör hareketi ve hedef / gerçek basınç karşılaştırılır." },
+        { code: "P0299", title: "Turbo yetersiz basınç", category: "Hava/Turbo", severity: "Kontrol gerekli", description: "İstenen basınç ile ölçülen basınç arasında yetersizlik tespit edilmiş olabilir.", causes: ["Basınç kaçağı", "Vakum hattı", "Aktüatör", "Turbo aşınması"], next: "Basınç ve vakum testi ile canlı turbo verisi birlikte değerlendirilmelidir." },
+        { code: "P0087", title: "Yakıt hattı basıncı düşük", category: "Yakıt", severity: "Öncelikli kontrol", description: "Yakıt ray basıncı istenen seviyenin altında kalmış olabilir.", causes: ["Yakıt filtresi", "Düşük besleme", "Pompa / enjektör"], next: "Sürüşü sınırlayın; yakıt basıncı ve besleme sistemi kontrol edilmelidir." },
+        { code: "P0191", title: "Yakıt ray basınç sensörü aralık / performans", category: "Yakıt", severity: "Kontrol gerekli", description: "Basınç sinyali ile beklenen değerler arasında tutarsızlık algılanmış olabilir.", causes: ["Sensör / kablo", "Basınç kontrolü", "Yakıt kalitesi"], next: "Canlı veri ve tesisat kontrolüyle doğrulama yapılmalıdır." },
+        { code: "P0401", title: "EGR akışı yetersiz", category: "Egzoz & Emisyon", severity: "Teşhis önerilir", description: "EGR sistemi beklenen egzoz gazı devridaimi akışını sağlayamıyor olabilir.", causes: ["Kurum", "Valf / soğutucu", "İlişkili sensör"], next: "OEM uyumlu sistem teşhisi ve kök neden analizi yapılmalıdır." },
+        { code: "P0420", title: "Katalizör verimliliği eşik altında", category: "Egzoz & Emisyon", severity: "Teşhis önerilir", description: "Katalizör verimliliği izleme kriterini karşılamıyor olabilir; tek başına parça kararı verdirmez.", causes: ["Egzoz kaçağı", "Ateşleme / yakıt", "Katalizör"], next: "Önce ateşleme, yakıt ve kaçak kaynakları kontrol edilmelidir." },
+        { code: "P2002", title: "DPF verimliliği eşik altında", category: "Egzoz & Emisyon", severity: "Teşhis önerilir", description: "Partikül filtresi performans kriteri karşılanmıyor olabilir.", causes: ["Kurum yükü", "Basınç sensörü", "Kısa mesafe kullanımı"], next: "DPF sağlık kontrolü, sensör verisi ve rejenerasyon koşulları incelenmelidir." },
+        { code: "P2452", title: "DPF diferansiyel basınç sensörü devresi", category: "Egzoz & Emisyon", severity: "Kontrol gerekli", description: "DPF diferansiyel basınç sensörü veya devresinde aralık dışı bir sinyal algılanmış olabilir.", causes: ["Sensör", "Tesisat", "Basınç hortumu"], next: "Sensör hattı ve basınç ölçüm tutarlılığı incelenmelidir." },
+        { code: "P2463", title: "DPF kurum birikimi", category: "Egzoz & Emisyon", severity: "Öncelikli kontrol", description: "Sistem, partikül filtresinde yüksek kurum yükü algılamış olabilir.", causes: ["Rejenerasyon koşulları", "Sensör verisi", "Kullanım tipi"], next: "Gecikmeden DPF sağlığı ve güvenli rejenerasyon koşulları kontrol edilmelidir." },
+        { code: "P20EE", title: "SCR NOx katalizör verimliliği", category: "Egzoz & Emisyon", severity: "Teşhis önerilir", description: "SCR sistemi, beklenen NOx dönüşüm verimini sağlayamıyor olabilir.", causes: ["AdBlue kalitesi", "Dozaj", "NOx sensörü"], next: "SCR sistemi OEM teşhis adımlarıyla değerlendirilmelidir." },
+        { code: "P204F", title: "Redüktan / AdBlue sistemi performansı", category: "Egzoz & Emisyon", severity: "Teşhis önerilir", description: "Redüktan sistemi performans kriterlerinin dışında çalışıyor olabilir.", causes: ["Pompa", "Isıtma", "Seviye / kalite sensörü"], next: "Pompa, ısıtma ve dozaj verileri sistematik şekilde incelenmelidir." },
+        { code: "P2201", title: "NOx sensörü aralık / performans", category: "Sensörler", severity: "Kontrol gerekli", description: "NOx sensörü sinyali beklenen aralığın dışında olabilir.", causes: ["NOx sensörü", "Tesisat", "SCR ilişkili sorun"], next: "Canlı veri, tesisat ve ilgili SCR parametreleri birlikte kontrol edilmelidir." },
+        { code: "P0700", title: "Şanzıman kontrol sistemi arızası", category: "Şanzıman", severity: "Ayrıntı kodu gerekli", description: "Motor ECU’su, şanzıman kontrol ünitesinde ayrı bir hata kaydı olduğunu bildirir.", causes: ["TCM ayrıntı kodu", "Besleme", "Haberleşme"], next: "Şanzıman kontrol ünitesindeki ayrıntı kodu ayrıca okutulmalıdır." },
+        { code: "U0100", title: "Motor kontrol ünitesiyle iletişim kaybı", category: "Haberleşme", severity: "Kontrol gerekli", description: "Kontrol üniteleri arasında iletişim kaybı kaydedilmiş olabilir.", causes: ["Akü / şarj", "CAN hattı", "Soket"], next: "Elektrik beslemesi, akü durumu ve CAN iletişimi kontrol edilmelidir." }
+      ];
+
+      const languageContent = {
+        tr: {
+          catalog: "GÜNCEL KATALOG", sample: "Örnek veri", related: "eşleşme", likely: "Muhtemel başlıklar", next: "Güvenli sonraki adım", noResultLabel: "SONUÇ YOK", noResultTitle: "Bu arama için bir kod bulunamadı.", noResultBody: "Örn. P0299, P2002 veya “turbo” deneyebilirsin. OBD kodu, üreticiye ve alt koda göre değişebilir.",
+          category: { "Hava/Turbo": "Hava / Turbo", "Yakıt": "Yakıt", "Egzoz & Emisyon": "Egzoz & Emisyon", "Şanzıman": "Şanzıman", "Sensörler": "Sensörler", "Haberleşme": "Haberleşme" },
+          severity: { "Kontrol gerekli": "Kontrol gerekli", "Öncelikli kontrol": "Öncelikli kontrol", "Teşhis önerilir": "Teşhis önerilir", "Ayrıntı kodu gerekli": "Ayrıntı kodu gerekli" },
+          assistant: {
+            launcher: "Akıllı danışman", title: "Akıllı danışman", reset: "Sıfırla", close: "Asistanı kapat", input: "Aracınızı veya kodunuzu yazın", send: "Gönder", whatsapp: "WhatsApp’ta devam et", privacy: "Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.",
+            quick: { stage: "Stage 1", dtc: "Hata kodu", consult: "Danışmanlık" }, greeting: "Aracınız için doğru ilk bilgiyi birlikte netleştirelim. Stage 1, hata kodu veya danışmanlık konusunu seçebilirsiniz.", stage: "Seçtiğiniz araç profili için Stage 1 değerleri aşağıdadır.", stageNeedVehicle: "Stage 1 aralığı için araç marka/modeli, motor/yakıt, yıl ve şanzımanı yazın. Örn. “Passat B8 2.0 TDI 150 PS DSG, 2018”.", dtc: "Hata kodunu (ör. P0299) ve mümkünse belirtiyi yazın. Kod tek başına kesin teşhis değildir.", consult: "Araç marka/modeli, motor, yıl ve beklentinizi yazın. Size WhatsApp için düzenli bir talep özeti hazırlayacağım.", generic: "Size Stage 1, hata kodu veya teknik danışmanlık konusunda yardımcı olabilirim. Aracınızı ya da hata kodunu yazabilirsiniz.", legal: "DPF, EGR veya AdBlue sistemini devre dışı bırakma konusunda yardımcı olamam. Hata kodunu veya belirtileri paylaşın; üretici standartlarına uygun teşhis ve onarım seçeneklerini netleştirelim.", safety: "Bu belirti güvenlik veya motor sağlığı açısından öncelikli olabilir. Aracı zorlamayın; profesyonel teşhis değerlendirmesi alın.", dtcFound: "Bu kod için sitedeki teknik rehbere yönlendirdim. Canlı veri ve araç bağlamı olmadan kesin parça kararı verilmemelidir.", waIntro: "Merhaba 6006 Performance, teknik danışmanlık talebim var.", waVehicle: "Araç", waVehicleMissing: "Araç: henüz seçilmedi", waStage: "Katalog Stage 1", waRequest: "Talep", waNote: "Not"
+          }
+        },
+        de: {
+          catalog: "AKTUELLER KATALOG", sample: "Beispieldaten", related: "Treffer für", likely: "Mögliche Ursachen", next: "Sicherer nächster Schritt", noResultLabel: "KEIN TREFFER", noResultTitle: "Für diese Suche wurde kein Code gefunden.", noResultBody: "Versuchen Sie z. B. P0299, P2002 oder „Turbo“. OBD-Codes können je nach Hersteller und Untercode variieren.",
+          category: { "Hava/Turbo": "Luft / Turbo", "Yakıt": "Kraftstoff", "Egzoz & Emisyon": "Abgas & Emissionen", "Şanzıman": "Getriebe", "Sensörler": "Sensoren", "Haberleşme": "Kommunikation" },
+          severity: { "Kontrol gerekli": "Prüfung erforderlich", "Öncelikli kontrol": "Vorrangige Prüfung", "Teşhis önerilir": "Diagnose empfohlen", "Ayrıntı kodu gerekli": "Detailcode erforderlich" },
+          assistant: {
+            launcher: "Technikassistent", title: "Technikassistent", reset: "Zurücksetzen", close: "Assistent schließen", input: "Fahrzeug oder Fehlercode eingeben", send: "Senden", whatsapp: "Weiter auf WhatsApp", privacy: "Die Angaben bleiben nur auf diesem Gerät. Den vorbereiteten Überblick senden Sie selbst über WhatsApp.",
+            quick: { stage: "Stage 1", dtc: "Fehlercode", consult: "Beratung" }, greeting: "Lassen Sie uns die passenden ersten Angaben für Ihr Fahrzeug klären. Wählen Sie Stage 1, Fehlercode oder Beratung.", stage: "Hier sind die Stage-1-Werte für das ausgewählte Fahrzeugprofil.", stageNeedVehicle: "Für eine Stage-1-Spanne nennen Sie bitte Marke/Modell, Motor/Kraftstoff, Baujahr und Getriebe. Beispiel: „Passat B8 2.0 TDI 150 PS DSG, 2018“.", dtc: "Senden Sie den Fehlercode (z. B. P0299) und möglichst das Symptom. Ein Code allein ist keine eindeutige Diagnose.", consult: "Schreiben Sie Marke/Modell, Motor, Baujahr und Ihr Ziel. Ich bereite eine strukturierte Anfrage für WhatsApp vor.", generic: "Ich helfe Ihnen bei Stage 1, Fehlercodes oder einer technischen Beratung. Schreiben Sie Ihr Fahrzeug oder den Fehlercode.", legal: "Bei der Deaktivierung von DPF, EGR oder AdBlue kann ich nicht helfen. Teilen Sie Fehlercode oder Symptome mit; wir klären herstellerkonforme Diagnose- und Instandsetzungsoptionen.", safety: "Dieses Symptom kann für die Sicherheit oder den Motorschutz kritisch sein. Bitte das Fahrzeug nicht weiter belasten und professionell prüfen lassen.", dtcFound: "Für diesen Code finden Sie in der technischen Übersicht einen ersten Hinweis. Ohne Live-Daten und Fahrzeugkontext sollte keine endgültige Teileentscheidung getroffen werden.", waIntro: "Hallo 6006 Performance, ich möchte eine technische Beratung.", waVehicle: "Fahrzeug", waVehicleMissing: "Fahrzeug: noch nicht ausgewählt", waStage: "Stage-1-Katalogwert", waRequest: "Anfrage", waNote: "Notiz"
+          }
+        },
+        en: {
+          catalog: "CURRENT CATALOGUE", sample: "Sample data", related: "match", likely: "Likely causes", next: "Safe next step", noResultLabel: "NO RESULT", noResultTitle: "No code was found for this search.", noResultBody: "Try P0299, P2002 or “turbo”. OBD codes may vary by manufacturer and subcode.",
+          category: { "Hava/Turbo": "Air / turbo", "Yakıt": "Fuel", "Egzoz & Emisyon": "Exhaust & emissions", "Şanzıman": "Transmission", "Sensörler": "Sensors", "Haberleşme": "Communication" },
+          severity: { "Kontrol gerekli": "Check required", "Öncelikli kontrol": "Priority check", "Teşhis önerilir": "Diagnosis recommended", "Ayrıntı kodu gerekli": "Detail code required" },
+          assistant: {
+            launcher: "Smart concierge", title: "Smart concierge", reset: "Reset", close: "Close assistant", input: "Enter your vehicle or code", send: "Send", whatsapp: "Continue in WhatsApp", privacy: "Details stay only on this device. You send the prepared summary yourself in WhatsApp.",
+            quick: { stage: "Stage 1", dtc: "Fault code", consult: "Consultation" }, greeting: "Let’s clarify the right first details for your vehicle. Choose Stage 1, fault code or consultation.", stage: "Here are the Stage 1 figures for the selected vehicle profile.", stageNeedVehicle: "For a Stage 1 range, provide make/model, engine/fuel, year and gearbox. Example: “Passat B8 2.0 TDI 150 PS DSG, 2018”.", dtc: "Send the fault code (for example P0299) and, if possible, the symptom. A code alone is not a definitive diagnosis.", consult: "Write the make/model, engine, year and your objective. I’ll prepare a structured WhatsApp request.", generic: "I can help with Stage 1, fault codes or technical consultation. Write your vehicle or fault code.", legal: "I can’t help deactivate DPF, EGR or AdBlue systems. Share the fault code or symptoms and we can identify manufacturer-aligned diagnostic and repair options.", safety: "This symptom may need priority attention for safety or engine protection. Please do not stress the vehicle and arrange professional diagnosis.", dtcFound: "The technical guide includes a first note for this code. No final part decision should be made without live data and vehicle context.", waIntro: "Hello 6006 Performance, I would like technical advice.", waVehicle: "Vehicle", waVehicleMissing: "Vehicle: not selected yet", waStage: "Stage 1 catalogue range", waRequest: "Request", waNote: "Note"
+          }
+        }
+      };
+
+      const quickAccessCopy = {
+        tr: {
+          eyebrow: "6006 bilgi merkezi",
+          title: "Arıza ve bakım için doğru sayfaya doğrudan girin.",
+          faultTitle: "Arıza kodu rehberi",
+          faultText: "OBD hata kodunu, olası nedenleri ve güvenli kontrol sırasını inceleyin.",
+          faultAction: "Kodları aç",
+          repairTitle: "Bakım & tamir rehberi",
+          repairText: "Aracınızı seçin; bakım, fren, elektrik ve onarım konularına göre ilerleyin.",
+          repairAction: "Rehberi aç"
+        },
+        de: {
+          eyebrow: "6006 Wissensbasis",
+          title: "Direkt zum passenden Leitfaden für Fehler oder Wartung.",
+          faultTitle: "Fehlercode-Leitfaden",
+          faultText: "OBD-Code, mögliche Ursachen und eine sichere Prüfreihenfolge nachlesen.",
+          faultAction: "Codes öffnen",
+          repairTitle: "Wartungs- & Reparaturleitfaden",
+          repairText: "Fahrzeug auswählen und nach Wartung, Bremsen, Elektrik oder Reparatur vorgehen.",
+          repairAction: "Leitfaden öffnen"
+        },
+        en: {
+          eyebrow: "6006 knowledge base",
+          title: "Go straight to the right guide for faults or maintenance.",
+          faultTitle: "Fault-code guide",
+          faultText: "Review the OBD code, likely causes and a safe inspection order.",
+          faultAction: "Open codes",
+          repairTitle: "Maintenance & repair guide",
+          repairText: "Select your vehicle, then continue by maintenance, brakes, electrical or repair topic.",
+          repairAction: "Open guide"
+        }
+      };
+
+      const stageCopy = {
+        tr: {
+          brandPlaceholder: "Marka seçin",
+          modelFirst: "Önce marka seçin",
+          modelPlaceholder: "Model / motor seçin",
+          statusEmpty: "Araç seçin",
+          statusReady: "Veri hazır",
+          emptyYears: "ARAÇ SEÇİMİ BEKLİYOR",
+          emptyName: "Stage 1 için araç seçin",
+          emptyEngine: "Önce marka, ardından model / motor seçin.",
+          emptyBadge: "Önce seçim",
+          sample: "Örnek veri",
+          statusReview: "Doğrulama gerekli",
+          reviewYears: "GENİŞ ARAÇ DİZİNİ",
+          reviewName: "Bu araç için Stage 1 aralığı doğrulanmalı",
+          reviewEngine: "Bakım, tamir ve arıza rehberi aşağıdaki katalogda açılabilir. Güç/tork ancak motor kodu ve şanzımanla doğrulanır.",
+          reviewBadge: "Kesin veri yok",
+          catalogueLink: "Bu araç için bakım ve tamir kataloğunu aç"
+        },
+        de: {
+          brandPlaceholder: "Marke wählen",
+          modelFirst: "Zuerst Marke wählen",
+          modelPlaceholder: "Modell / Motor wählen",
+          statusEmpty: "Fahrzeug wählen",
+          statusReady: "Daten bereit",
+          emptyYears: "FAHRZEUGAUSWAHL AUSSTEHEND",
+          emptyName: "Fahrzeug für Stage 1 wählen",
+          emptyEngine: "Zuerst Marke, dann Modell / Motor wählen.",
+          emptyBadge: "Erst auswählen",
+          sample: "Beispieldaten",
+          statusReview: "Abgleich erforderlich",
+          reviewYears: "ERWEITERTES FAHRZEUGVERZEICHNIS",
+          reviewName: "Stage-1-Spanne für dieses Fahrzeug prüfen",
+          reviewEngine: "Wartung, Reparatur und Diagnose lassen sich im Katalog öffnen. Leistung und Drehmoment werden erst mit Motorcode und Getriebe bestätigt.",
+          reviewBadge: "Keine Pauschalwerte",
+          catalogueLink: "Wartungs- und Reparaturkatalog für dieses Fahrzeug öffnen"
+        },
+        en: {
+          brandPlaceholder: "Select brand",
+          modelFirst: "Select a brand first",
+          modelPlaceholder: "Select model / engine",
+          statusEmpty: "Select vehicle",
+          statusReady: "Data ready",
+          emptyYears: "VEHICLE SELECTION PENDING",
+          emptyName: "Select a vehicle for Stage 1",
+          emptyEngine: "Select brand, then model / engine.",
+          emptyBadge: "Select first",
+          sample: "Sample data",
+          statusReview: "Verification required",
+          reviewYears: "EXTENDED VEHICLE DIRECTORY",
+          reviewName: "Verify the Stage 1 range for this vehicle",
+          reviewEngine: "Open maintenance, repair and fault guidance in the catalogue below. Power and torque need the confirmed engine code and gearbox.",
+          reviewBadge: "No generic figures",
+          catalogueLink: "Open maintenance and repair catalogue for this vehicle"
+        }
+      };
+
+      const assistantVehicleCopy = {
+        tr: {
+          matched: "Katalog eşleşmesi", stock: "Stok", gain: "Artış",
+          confirm: "Bu sonuç katalogdaki motor varyantı içindir; motor kodu, yıl ve şanzımanı teyit ederek netleştirelim.",
+          clarify: "Bu araç için tek bir doğru Stage 1 değeri yok. Motor/yakıt, stok güç, yıl ve şanzımanı yazın. Örnek: “Passat B8 2.0 TDI 150 PS DSG, 2018”."
+        },
+        de: {
+          matched: "Katalogtreffer", stock: "Serie", gain: "Zuwachs",
+          confirm: "Dieser Wert gilt für die Katalog-Motorvariante. Bitte Motorkennbuchstabe, Baujahr und Getriebe bestätigen.",
+          clarify: "Für dieses Fahrzeug gibt es keinen einzigen korrekten Stage-1-Wert. Bitte Motor/Kraftstoff, Serienleistung, Baujahr und Getriebe angeben. Beispiel: „Passat B8 2.0 TDI 150 PS DSG, 2018“.",
+        },
+        en: {
+          matched: "Catalogue match", stock: "Stock", gain: "Gain",
+          confirm: "This result applies to the catalogue engine variant; please confirm the engine code, year and gearbox.",
+          clarify: "There is no single correct Stage 1 figure for this vehicle. Please provide engine/fuel, stock power, year and gearbox. Example: “Passat B8 2.0 TDI 150 PS DSG, 2018”."
+        }
+      };
+
+      const contactCopy = {
+        tr: {
+          emailAria: "6006performance@gmail.com adresine e-posta gönder",
+          whatsappAria: "WhatsApp Business üzerinden 6006 Performance'e mesaj gönder",
+          emailSubject: "6006 Performance teknik danışmanlık",
+          whatsappMessage: "Merhaba 6006 Performance, teknik danışmanlık talebim var."
+        },
+        de: {
+          emailAria: "E-Mail an 6006performance@gmail.com senden",
+          whatsappAria: "6006 Performance über WhatsApp Business eine Nachricht senden",
+          emailSubject: "6006 Performance technische Beratung",
+          whatsappMessage: "Hallo 6006 Performance, ich möchte eine technische Beratung."
+        },
+        en: {
+          emailAria: "Email 6006performance@gmail.com",
+          whatsappAria: "Message 6006 Performance on WhatsApp Business",
+          emailSubject: "6006 Performance technical advice",
+          whatsappMessage: "Hello 6006 Performance, I would like technical advice."
+        }
+      };
+
+      const inquiryCopy = {
+        tr: {
+          stageAction: "Kişisel Stage 1 değerlendirmesi iste",
+          channel: "WhatsApp Business",
+          compliance: "Trafiğe uygunluk, sigorta, garanti ve emisyon sistemleri işlemden önce ayrıca değerlendirilir.",
+          stageIntro: "Merhaba 6006 Performance, Stage 1 değerlendirmesi istiyorum.",
+          vehicle: "Araç",
+          engine: "Motor",
+          years: "Yıl aralığı",
+          catalogue: "Katalog Stage 1 aralığı",
+          stagePrompt: "Lütfen motor kodu, mevcut yazılım, teknik durum ve uygunluk kontrolü için sonraki adımı paylaşın.",
+          faultAction: (code) => `${code} için OEM uyumlu teşhis iste`,
+          faultIntro: "Merhaba 6006 Performance, OEM uyumlu teşhis değerlendirmesi istiyorum.",
+          faultCode: "Hata kodu",
+          vehicleMissing: "Araç: henüz seçilmedi",
+          faultPrompt: "Lütfen marka/model, motor, yıl ve belirtileri (ne zaman, ne sıklıkta, hangi uyarı ışığı) ekleyin."
+        },
+        de: {
+          stageAction: "Persönliche Stage-1-Bewertung anfragen",
+          channel: "WhatsApp Business",
+          compliance: "Straßenzulässigkeit, Betriebserlaubnis, Versicherung, Garantie und Emissionssysteme werden vor einer Beauftragung gesondert geprüft.",
+          stageIntro: "Hallo 6006 Performance, ich möchte eine Stage-1-Bewertung anfragen.",
+          vehicle: "Fahrzeug",
+          engine: "Motor",
+          years: "Baujahrbereich",
+          catalogue: "Stage-1-Katalogbereich",
+          stagePrompt: "Bitte teilen Sie mir den nächsten Schritt für die Prüfung von Motorkennbuchstabe, Softwarestand, technischem Zustand und Zulässigkeit mit.",
+          faultAction: (code) => `OEM-orientierte Diagnose für ${code} anfragen`,
+          faultIntro: "Hallo 6006 Performance, ich möchte eine OEM-orientierte Diagnose anfragen.",
+          faultCode: "Fehlercode",
+          vehicleMissing: "Fahrzeug: noch nicht ausgewählt",
+          faultPrompt: "Bitte ergänzen Sie Marke/Modell, Motor, Baujahr und Symptome (wann, wie häufig, welche Warnleuchte)."
+        },
+        en: {
+          stageAction: "Request a personal Stage 1 assessment",
+          channel: "WhatsApp Business",
+          compliance: "Road legality, insurance, warranty and emissions systems are assessed separately before any work is agreed.",
+          stageIntro: "Hello 6006 Performance, I would like a Stage 1 assessment.",
+          vehicle: "Vehicle",
+          engine: "Engine",
+          years: "Year range",
+          catalogue: "Stage 1 catalogue range",
+          stagePrompt: "Please share the next step for checking the engine code, software version, technical condition and suitability.",
+          faultAction: (code) => `Request OEM-aligned diagnosis for ${code}`,
+          faultIntro: "Hello 6006 Performance, I would like an OEM-aligned diagnostic assessment.",
+          faultCode: "Fault code",
+          vehicleMissing: "Vehicle: not selected yet",
+          faultPrompt: "Please add make/model, engine, year and symptoms (when, how often and which warning light)."
+        }
+      };
+
+      const pageCopy = {
+        "Hata kodları": { de: "Fehlercodes", en: "Fault codes" }, "Hata kodu rehberi": { de: "Fehlercode-Wissen", en: "Fault code knowledge" }, "Hizmetler": { de: "Leistungen", en: "Services" }, "Teknik rehber": { de: "Technik-Ratgeber", en: "Technical guide" }, "Tamir & bakım": { de: "Reparatur & Wartung", en: "Repair & maintenance" }, "Yaklaşım": { de: "Ansatz", en: "Approach" }, "Araç profili": { de: "Fahrzeugprofil", en: "Vehicle profile" }, "İletişim": { de: "Kontakt", en: "Contact" },
+        "6006 Performance · kalibrasyon atölyesi": { de: "6006 Performance · Kalibrierungswerkstatt", en: "6006 Performance · calibration atelier" }, "Hassasiyet, farkı": { de: "Präzision schafft den Unterschied —", en: "Precision makes the difference —" }, "sessizce": { de: "leise", en: "quietly" }, "yaratır.": { de: ".", en: "." },
+        "6006 Performance; motor verisini, sürüş beklentisini ve mekanik sınırları özenle bir araya getiren, araç özelinde bir kalibrasyon yaklaşımıdır.": { de: "6006 Performance steht für eine fahrzeugspezifische Kalibrierung, die Motordaten, Fahrerwartung und mechanische Grenzen mit Sorgfalt zusammenführt.", en: "6006 Performance is a vehicle-specific calibration approach that brings engine data, driving expectations and mechanical limits together with care." },
+        "Araç profilini gör": { de: "Fahrzeugprofil ansehen", en: "View vehicle profile" }, "Kod rehberi": { de: "Fehlercode-Leitfaden", en: "Code guide" }, "Detaylı hata kodu bilgisi": { de: "Detailliertes Fehlercode-Wissen", en: "Detailed fault-code knowledge" }, "Tüm kodlar": { de: "Alle Codes", en: "All codes" }, "Araç özelinde değerlendirme": { de: "Fahrzeugspezifische Beurteilung", en: "Vehicle-specific assessment" }, "Orijinal dosya yedeği": { de: "Sicherung der Originaldatei", en: "Original file backup" }, "Ölçülebilir teknik notlar": { de: "Nachvollziehbare technische Notizen", en: "Measurable technical notes" },
+        "Stage 1 keşfi": { de: "Stage-1-Analyse", en: "Stage 1 assessment" }, "Potansiyeli abartmadan, aralıklarla göster.": { de: "Potenzial, in ehrlichen Bandbreiten.", en: "Potential, expressed in honest ranges." },
+        "Rakamları kesin vaat gibi değil; motor kodu, yakıt, çevresel koşullar ve mekanik sağlıkla birlikte yorumlanan teknik bir başlangıç olarak sunuyoruz.": { de: "Die Werte sind kein verbindliches Versprechen, sondern ein technischer Ausgangspunkt — abhängig von Motorkennbuchstabe, Kraftstoff, Umgebungsbedingungen und mechanischem Zustand.", en: "These figures are not a fixed promise; they are a technical starting point, interpreted alongside engine code, fuel, ambient conditions and mechanical health." },
+        "Önce sağlık:": { de: "Erst der Zustand:", en: "Health first:" }, "Aktif motor veya aktarma arızası varsa kalibrasyon öncesi teşhis gerekir.": { de: "Bei aktiven Motor- oder Antriebsfehlern steht die Diagnose vor jeder Kalibrierung.", en: "Active engine or drivetrain faults require diagnosis before calibration." },
+        "Önce doğrulama:": { de: "Erst die Verifikation:", en: "Verification first:" }, "Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.": { de: "Für ein verbindliches Angebot prüfen wir Motorkennbuchstabe und Softwarestand.", en: "For a firm quotation, we verify engine code and software version." },
+        "Önce denge:": { de: "Erst die Balance:", en: "Balance first:" }, "Tork hedefi, şanzıman ve kullanım biçimine göre planlanır.": { de: "Das Drehmomentziel richtet sich nach Getriebe und Nutzung.", en: "Torque targets are planned around the transmission and intended use." },
+        "Stage 1 tahmini": { de: "Stage-1-Schätzung", en: "Stage 1 estimate" }, "Veri hazır": { de: "Daten bereit", en: "Data ready" }, "Marka": { de: "Marke", en: "Brand" }, "Model / motor": { de: "Modell / Motor", en: "Model / engine" }, "Güç": { de: "Leistung", en: "Power" }, "Tork": { de: "Drehmoment", en: "Torque" }, "Stok güç": { de: "Serienleistung", en: "Stock power" }, "Stage 1 hedefi": { de: "Stage-1-Zielwert", en: "Stage 1 target" },
+        "Bu değerler bilgi amaçlı aralıklardır. Kesin sonuç motor kodu, mekanik kontrol ve ölçüm koşullarında farklılaşabilir.": { de: "Diese Werte sind Orientierungsbereiche. Das tatsächliche Ergebnis kann je nach Motorkennbuchstabe, mechanischer Prüfung und Messbedingungen abweichen.", en: "These figures are indicative ranges. Actual results may vary with engine code, mechanical inspection and measurement conditions." },
+        "OBD rehberi": { de: "OBD-Leitfaden", en: "OBD guide" }, "Belirsizliği, doğru veriyle azalt.": { de: "Klarheit beginnt mit präzisen Daten.", en: "Clarity begins with the right data." }, "Hata kodu tek başına kesin teşhis değildir. Dondurulmuş veri, canlı değerler ve sistemin bağlamı birlikte değerlendirilmelidir.": { de: "Ein Fehlercode ist für sich allein keine eindeutige Diagnose. Freeze-Frame-Daten, Live-Werte und Systemkontext müssen gemeinsam bewertet werden.", en: "A fault code alone is not a definitive diagnosis. Freeze-frame data, live values and system context must be assessed together." },
+        "Hızlı kod bulucu": { de: "Fehlercode-Schnellsuche", en: "Quick code finder" }, "P0299 ya da “turbo” gibi bir kod veya anahtar kelime yaz.": { de: "Geben Sie einen Code oder Suchbegriff wie P0299 oder „Turbo“ ein.", en: "Enter a code or term such as P0299 or “turbo”." }, "Tümü": { de: "Alle", en: "All" }, "Hava / Turbo": { de: "Luft / Turbo", en: "Air / turbo" }, "Yakıt": { de: "Kraftstoff", en: "Fuel" }, "Egzoz": { de: "Abgas", en: "Exhaust" }, "Şanzıman": { de: "Getriebe", en: "Transmission" }, "Not:": { de: "Hinweis:", en: "Note:" }, "Kodu silmek arızayı çözmez. Önce kök nedenin bulunması gerekir.": { de: "Das Löschen eines Codes behebt den Fehler nicht. Zuerst muss die Ursache geklärt werden.", en: "Clearing a code does not resolve the fault. The root cause must be found first." },
+        "Teknik kapsam": { de: "Technischer Umfang", en: "Technical scope" }, "Teknik kapsam, ölçülü bir disiplin ister.": { de: "Technischer Umfang verlangt Disziplin mit Augenmaß.", en: "Technical scope calls for measured discipline." }, "Hizmeti sadece adıyla değil; araç güvenliği, mevzuat ve kullanım bağlamıyla birlikte tanımlıyoruz.": { de: "Wir definieren jede Leistung nicht allein über ihren Namen, sondern im Zusammenhang mit Fahrzeugsicherheit, Rechtslage und Nutzung.", en: "We define each service not merely by name, but in relation to vehicle safety, regulation and intended use." }, "Kapsam notu: Emisyon sistemleriyle ilgili talepler yol kullanımına uygunluk açısından ayrıca değerlendirilir.": { de: "Hinweis zum Umfang: Anfragen zu Emissionssystemen werden im Hinblick auf die Zulässigkeit im öffentlichen Straßenverkehr gesondert beurteilt.", en: "Scope note: requests concerning emissions systems are assessed separately for suitability on public roads." },
+        "Uygunluk kontrolü": { de: "Eignungsprüfung", en: "Suitability check" }, "Canlı veri": { de: "Live-Daten", en: "Live data" }, "OEM uyumlu": { de: "OEM-orientiert", en: "OEM-aligned" }, "Kapalı alan / pist": { de: "Abgesperrtes Gelände / Rennstrecke", en: "Closed course / track" },
+        "Stage 1 ECU Kalibrasyonu": { de: "Stage-1-ECU-Kalibrierung", en: "Stage 1 ECU calibration" }, "Sağlıklı motor verileri ve aktarma sınırları üzerinde, dengeli güç ve tork hedefi.": { de: "Ausgewogene Leistungs- und Drehmomentziele auf Grundlage einwandfreier Motordaten und innerhalb der Grenzen des Antriebsstrangs.", en: "Balanced power and torque targets, based on sound engine data and within drivetrain limits." }, "Arıza Teşhisi": { de: "Fehlerdiagnose", en: "Fault diagnosis" }, "Hata kodu, freeze-frame ve temel çalışma değerlerini tek bir teknik hikâyede birleştirir.": { de: "Verbindet Fehlercode, Freeze-Frame-Daten und zentrale Betriebswerte zu einem stimmigen technischen Bild.", en: "Brings fault codes, freeze-frame data and core operating values into one coherent technical picture." }, "DPF Sağlık Kontrolü": { de: "DPF-Zustandsprüfung", en: "DPF health assessment" }, "Kurum yükü, diferansiyel basınç ve rejenerasyon koşullarının sistematik değerlendirmesi.": { de: "Systematische Beurteilung von Rußbeladung, Differenzdruck und Regenerationsbedingungen.", en: "A systematic assessment of soot load, differential pressure and regeneration conditions." }, "EGR Sistem Teşhisi": { de: "EGR-Systemdiagnose", en: "EGR system diagnosis" }, "Valf, soğutucu ve ilişkili sensörler için kök neden odaklı kontrol yaklaşımı.": { de: "Ursachenorientierte Prüfung von Ventil, Kühler und zugehörigen Sensoren.", en: "A root-cause-led assessment of the valve, cooler and associated sensors." }, "SCR / AdBlue Teşhisi": { de: "SCR-/AdBlue-Diagnose", en: "SCR / AdBlue diagnosis" }, "NOx, ısıtma, pompa ve dozaj sisteminin canlı veriyle teknik değerlendirmesi.": { de: "Technische Bewertung der NOx-, Heizungs-, Pumpen- und Dosiersysteme anhand von Live-Daten.", en: "A live-data technical assessment of NOx, heating, pump and dosing systems." }, "Pop & Bangs Değerlendirmesi": { de: "Bewertung von Pop & Bangs", en: "Pop & Bangs assessment" }, "Gürültü, ısıl yük ve yerel kurallar dikkate alınarak yalnızca araç uygunluğu kapsamında değerlendirilir.": { de: "Ausschließlich im Rahmen der Fahrzeugeignung und unter Berücksichtigung von Geräuschentwicklung, thermischer Belastung und örtlichen Vorschriften.", en: "Considered only in the context of vehicle suitability, with noise, thermal load and local rules in view." },
+        "6006 yaklaşımı": { de: "Der 6006-Ansatz", en: "The 6006 approach" }, "Dosya değil, ölçülü karar.": { de: "Nicht bloß eine Datei. Eine wohlüberlegte Entscheidung.", en: "Not a file. A considered decision." }, "Her araç, güç hedefinden önce mevcut durumuyla ele alınır. Bu yaklaşım hem sonucu hem de iletişimi daha güvenilir kılar.": { de: "Jedes Fahrzeug wird zunächst in seinem aktuellen Zustand beurteilt — noch vor jedem Leistungsziel. Das macht Ergebnis und Beratung verlässlicher.", en: "Each vehicle is assessed first as it stands, before setting a power target. This makes both the result and the conversation more dependable." }, "Oku ve doğrula": { de: "Auslesen & verifizieren", en: "Read & verify" }, "Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.": { de: "Motorkennbuchstabe, vorhandene Software, DTCs und wesentliche Betriebswerte werden erfasst.", en: "Engine code, existing software, DTCs and core operating values are established." }, "Kalibre et": { de: "Kalibrieren", en: "Calibrate" }, "Hedefler, yakıt kalitesi ve aktarma limitleriyle uyumlu biçimde belirlenir.": { de: "Ziele werden im Einklang mit Kraftstoffqualität und den Grenzen des Antriebsstrangs definiert.", en: "Targets are defined in line with fuel quality and drivetrain limits." }, "Kontrol et": { de: "Prüfen", en: "Check" }, "Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.": { de: "Das Ergebnis wird anhand von Live-Daten und Rückmeldung aus der Fahrt erneut bewertet.", en: "The result is reassessed through live data and driving feedback." },
+        "Yasal kullanım notu": { de: "Hinweis zur legalen Nutzung", en: "Legal-use notice" }, "DPF, EGR ve AdBlue gibi emisyon kontrol sistemlerinin devre dışı bırakılması trafiğe açık araçlarda mevzuata aykırı olabilir. Bu site, bu sistemleri devre dışı bırakmaya yönelik uygulama veya yönlendirme sunmaz; uygunluk ve OEM uyumlu teşhis yaklaşımını esas alır.": { de: "Die Deaktivierung von Emissionskontrollsystemen wie DPF, EGR und AdBlue kann bei Fahrzeugen im öffentlichen Straßenverkehr gegen geltendes Recht verstoßen. Diese Website bietet keine Durchführung oder Anleitung zur Deaktivierung solcher Systeme; ihr Fokus liegt auf Eignungsprüfung und OEM-orientierter Diagnose.", en: "Disabling emission-control systems such as the DPF, EGR and AdBlue may be unlawful for vehicles used on public roads. This site neither offers nor instructs on disabling these systems; it is centred on suitability checks and OEM-aligned diagnostics." },
+        "Bilgilendirme amaçlı teknik içerik. Araç üzerinde yapılacak her işlemden önce üretici, sigorta, garanti ve yerel mevzuat koşulları ayrıca doğrulanmalıdır.": { de: "Technische Inhalte zu Informationszwecken. Vor jedem Eingriff am Fahrzeug müssen Herstelleranforderungen, Versicherung, Garantiebedingungen und lokale rechtliche Vorgaben gesondert geprüft werden.", en: "Technical content for information purposes. Before any work is undertaken, manufacturer requirements, insurance, warranty conditions and local legal requirements must be verified separately." },
+        "Aracınızı ve hedefinizi paylaşın.": { de: "Teilen Sie uns Ihr Fahrzeug und Ihr Ziel mit.", en: "Share your vehicle and objective." }, "Teknik talebinizi e-posta ya da WhatsApp Business üzerinden iletebilirsiniz.": { de: "Senden Sie Ihre technische Anfrage per E-Mail oder über WhatsApp Business.", en: "Send your technical request by email or WhatsApp Business." }, "E-posta gönder": { de: "E-Mail senden", en: "Send email" }, "WhatsApp Business": { de: "WhatsApp Business", en: "WhatsApp Business" }, "Doğrudan mesaj": { de: "Direktnachricht", en: "Direct message" }
+      };
+
+      const faultTitles = {
+        P0101: { de: "Luftmassenmesser – Bereich / Leistung", en: "Mass air flow sensor – range / performance" }, P0234: { de: "Turbolader – Ladedruck zu hoch", en: "Turbocharger overboost" }, P0299: { de: "Turbolader – Ladedruck zu niedrig", en: "Turbocharger underboost" }, P0087: { de: "Kraftstoffdruck zu niedrig", en: "Fuel rail pressure too low" }, P0191: { de: "Kraftstoffdrucksensor – Bereich / Leistung", en: "Fuel rail pressure sensor – range / performance" }, P0401: { de: "EGR-Durchfluss zu niedrig", en: "EGR flow insufficient" }, P0420: { de: "Katalysatoreffizienz unter Grenzwert", en: "Catalyst efficiency below threshold" }, P2002: { de: "DPF-Effizienz unter Grenzwert", en: "DPF efficiency below threshold" }, P2452: { de: "DPF-Differenzdrucksensor – Stromkreis", en: "DPF differential pressure sensor circuit" }, P2463: { de: "DPF-Rußbeladung", en: "DPF soot accumulation" }, P20EE: { de: "SCR-NOx-Katalysatoreffizienz", en: "SCR NOx catalyst efficiency" }, P204F: { de: "AdBlue-System – Leistung", en: "Reductant / AdBlue system performance" }, P2201: { de: "NOx-Sensor – Bereich / Leistung", en: "NOx sensor range / performance" }, P0700: { de: "Getriebesteuerungssystem – Fehlfunktion", en: "Transmission control system malfunction" }, U0100: { de: "Kommunikation mit dem Motorsteuergerät unterbrochen", en: "Lost communication with engine control module" }
+      };
+
+      const faultCauseTerms = {
+        "Hava kaçağı": { de: "Luftleck", en: "Air leak" }, "Kirli MAF": { de: "Verschmutzter MAF", en: "Contaminated MAF" }, "Emiş kısıtı": { de: "Ansaugbehinderung", en: "Intake restriction" }, "Vakum / aktüatör": { de: "Unterdruck / Aktuator", en: "Vacuum / actuator" }, "Değişken geometri": { de: "Variable Geometrie", en: "Variable geometry" }, "Basınç sensörü": { de: "Drucksensor", en: "Pressure sensor" }, "Basınç kaçağı": { de: "Ladedruckleck", en: "Boost leak" }, "Vakum hattı": { de: "Unterdruckleitung", en: "Vacuum line" }, "Aktüatör": { de: "Aktuator", en: "Actuator" }, "Turbo aşınması": { de: "Turbo-Verschleiß", en: "Turbo wear" }, "Yakıt filtresi": { de: "Kraftstofffilter", en: "Fuel filter" }, "Düşük besleme": { de: "Zu geringer Vorförderdruck", en: "Low supply pressure" }, "Pompa / enjektör": { de: "Pumpe / Injektor", en: "Pump / injector" }, "Sensör / kablo": { de: "Sensor / Kabel", en: "Sensor / wiring" }, "Basınç kontrolü": { de: "Druckregelung", en: "Pressure control" }, "Yakıt kalitesi": { de: "Kraftstoffqualität", en: "Fuel quality" }, "Kurum": { de: "Rußablagerung", en: "Soot build-up" }, "Valf / soğutucu": { de: "Ventil / Kühler", en: "Valve / cooler" }, "İlişkili sensör": { de: "Zugehöriger Sensor", en: "Related sensor" }, "Egzoz kaçağı": { de: "Abgasleck", en: "Exhaust leak" }, "Ateşleme / yakıt": { de: "Zündung / Kraftstoff", en: "Ignition / fuel" }, "Katalizör": { de: "Katalysator", en: "Catalyst" }, "Kurum yükü": { de: "Rußbeladung", en: "Soot load" }, "Kısa mesafe kullanımı": { de: "Kurzstreckennutzung", en: "Short-trip use" }, "Sensör": { de: "Sensor", en: "Sensor" }, "Tesisat": { de: "Verkabelung", en: "Wiring" }, "Basınç hortumu": { de: "Druckschlauch", en: "Pressure hose" }, "Rejenerasyon koşulları": { de: "Regenerationsbedingungen", en: "Regeneration conditions" }, "Sensör verisi": { de: "Sensordaten", en: "Sensor data" }, "Kullanım tipi": { de: "Nutzungsprofil", en: "Usage pattern" }, "AdBlue kalitesi": { de: "AdBlue-Qualität", en: "AdBlue quality" }, "Dozaj": { de: "Dosierung", en: "Dosing" }, "NOx sensörü": { de: "NOx-Sensor", en: "NOx sensor" }, "Pompa": { de: "Pumpe", en: "Pump" }, "Isıtma": { de: "Heizung", en: "Heater" }, "Seviye / kalite sensörü": { de: "Füllstands-/Qualitätssensor", en: "Level / quality sensor" }, "SCR ilişkili sorun": { de: "SCR-bezogene Störung", en: "SCR-related concern" }, "TCM ayrıntı kodu": { de: "TCM-Detailcode", en: "TCM detail code" }, "Besleme": { de: "Versorgung", en: "Power supply" }, "Haberleşme": { de: "Kommunikation", en: "Communication" }, "Akü / şarj": { de: "Batterie / Ladesystem", en: "Battery / charging" }, "CAN hattı": { de: "CAN-Leitung", en: "CAN bus" }, "Soket": { de: "Steckverbindung", en: "Connector" }
+      };
+
+      const brandSelect = document.getElementById("brandSelect");
+      const modelSelect = document.getElementById("modelSelect");
+      const byId = (id) => document.getElementById(id);
+      const languageSelect = byId("languageSelect");
+      const mobileNavToggle = byId("mobileNavToggle");
+      const mobileNav = byId("mobileNav");
+      const browserLanguages = Array.isArray(navigator.languages) && navigator.languages.length ? navigator.languages : [navigator.language || "de"];
+      const detectedLanguage = browserLanguages.map((language) => language.slice(0, 2).toLowerCase()).find((language) => ["de", "tr", "en"].includes(language)) || "de";
+      let currentLanguage = (() => { try { return ["de", "tr", "en"].includes(localStorage.getItem("6006-language")) ? localStorage.getItem("6006-language") : detectedLanguage; } catch { return detectedLanguage; } })();
+      const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]));
+      const fmtRange = (range, unit) => `${range[0]}–${range[1]} ${unit}`;
+      const fmtGain = (range, stock, unit) => `+${range[0] - stock}–${range[1] - stock} ${unit}`;
+      let vehicleHasRendered = false;
+      let faultHasRendered = false;
+      let pageTextNodes = [];
+
+      function t(key) {
+        return languageContent[currentLanguage]?.[key] || languageContent.tr[key] || key;
+      }
+
+      function stageLabels() {
+        return stageCopy[currentLanguage] || stageCopy.de;
+      }
+
+      function syncQuickAccessCopy() {
+        const copy = quickAccessCopy[currentLanguage] || quickAccessCopy.de;
+        byId("quickAccessEyebrow").textContent = copy.eyebrow;
+        byId("quickAccessTitle").textContent = copy.title;
+        byId("faultGuideTitle").textContent = copy.faultTitle;
+        byId("faultGuideText").textContent = copy.faultText;
+        byId("faultGuideAction").textContent = copy.faultAction;
+        byId("repairGuideTitle").textContent = copy.repairTitle;
+        byId("repairGuideText").textContent = copy.repairText;
+        byId("repairGuideAction").textContent = copy.repairAction;
+      }
+
+      function syncStageSelectCopy() {
+        const copy = stageLabels();
+        const brandPlaceholder = brandSelect.querySelector('option[value=""]');
+        const modelPlaceholder = modelSelect.querySelector('option[value=""]');
+        if (brandPlaceholder) brandPlaceholder.textContent = copy.brandPlaceholder;
+        if (modelPlaceholder) modelPlaceholder.textContent = brandSelect.value ? copy.modelPlaceholder : copy.modelFirst;
+        const catalogLink = byId("stageCatalogLink");
+        if (catalogLink) catalogLink.firstChild.textContent = `${copy.catalogueLink} `;
+      }
+
+      function capturePageTextNodes() {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            const tag = node.parentElement?.tagName;
+            return !node.nodeValue.trim() || ["SCRIPT", "STYLE", "OPTION"].includes(tag) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        let node;
+        while ((node = walker.nextNode())) {
+          const match = node.nodeValue.match(/^(\s*)(.*?)(\s*)$/s);
+          if (match && pageCopy[match[2]]) pageTextNodes.push({ node, before: match[1], source: match[2], after: match[3] });
+        }
+      }
+
+      function syncContactLinks() {
+        const copy = contactCopy[currentLanguage] || contactCopy.tr;
+        document.querySelectorAll("[data-contact-email]").forEach((link) => {
+          link.href = `mailto:6006performance@gmail.com?subject=${encodeURIComponent(copy.emailSubject)}`;
+          link.setAttribute("aria-label", copy.emailAria);
+        });
+        document.querySelectorAll("[data-contact-whatsapp]").forEach((link) => {
+          link.href = `https://wa.me/491788354756?text=${encodeURIComponent(copy.whatsappMessage)}`;
+          link.setAttribute("aria-label", copy.whatsappAria);
+        });
+      }
+
+      function syncContextualInquiryCopy() {
+        const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
+        const stageInquiry = byId("stageInquiry");
+        stageInquiry.querySelector(".context-request-title").textContent = copy.stageAction;
+        stageInquiry.querySelector(".context-request-channel").textContent = copy.channel;
+        byId("stageComplianceNote").lastElementChild.textContent = copy.compliance;
+      }
+
+      function translateStaticPage() {
+        pageTextNodes.forEach(({ node, before, source, after }) => {
+          const translation = pageCopy[source]?.[currentLanguage] || source;
+          const leadingSpace = source === "yaratır." && currentLanguage !== "tr" ? "" : before;
+          node.nodeValue = `${leadingSpace}${translation}${after}`;
+        });
+        const pageMeta = {
+          tr: { title: "6006 Performance — Hassas ECU Kalibrasyonu", description: "6006 Performance — hassas ECU kalibrasyonu, canlı veri ve hata kodu rehberi." },
+          de: { title: "6006 Performance — Präzise ECU-Kalibrierung", description: "6006 Performance — präzise ECU-Kalibrierung, Live-Daten und OBD-Fehlercode-Leitfaden." },
+          en: { title: "6006 Performance — Precision ECU Calibration", description: "6006 Performance — precision ECU calibration, live data and OBD fault-code guide." }
+        };
+        document.documentElement.lang = currentLanguage;
+        document.title = pageMeta[currentLanguage].title;
+        document.querySelector('meta[name="description"]').setAttribute("content", pageMeta[currentLanguage].description);
+        document.querySelector(".brand").setAttribute("aria-label", currentLanguage === "de" ? "6006 Performance Startseite" : currentLanguage === "en" ? "6006 Performance home" : "6006 Performance ana sayfa");
+        document.querySelector(".top-nav").setAttribute("aria-label", currentLanguage === "de" ? "Hauptnavigation" : currentLanguage === "en" ? "Main navigation" : "Ana gezinti");
+        const languageLabel = currentLanguage === "de" ? "Seitensprache" : currentLanguage === "en" ? "Site language" : "Site dili";
+        languageSelect.setAttribute("aria-label", languageLabel);
+        document.querySelector(".language-picker .sr-only").textContent = languageLabel;
+        document.querySelector(".hero-proof").setAttribute("aria-label", currentLanguage === "de" ? "Arbeitsprinzipien" : currentLanguage === "en" ? "Working principles" : "Çalışma ilkeleri");
+        document.querySelector(".intro-notes").setAttribute("aria-label", currentLanguage === "de" ? "Grundsätze der Stage-1-Bewertung" : currentLanguage === "en" ? "Stage 1 assessment principles" : "Stage 1 değerlendirme ilkeleri");
+        byId("estimateCard").setAttribute("aria-label", currentLanguage === "de" ? "Stage-1-Schätzung" : currentLanguage === "en" ? "Stage 1 estimate" : "Stage 1 tahmin kartı");
+        brandSelect.setAttribute("aria-label", currentLanguage === "de" ? "Fahrzeugmarke" : currentLanguage === "en" ? "Vehicle brand" : "Araç markası");
+        modelSelect.setAttribute("aria-label", currentLanguage === "de" ? "Fahrzeugmodell und Motor" : currentLanguage === "en" ? "Vehicle model and engine" : "Araç modeli ve motoru");
+        document.querySelector(".dyno-chart").setAttribute("aria-label", currentLanguage === "de" ? "Beispielhafte Leistungskennlinie: Serie und Stage 1" : currentLanguage === "en" ? "Example power curve: stock and Stage 1" : "Stok ve Stage 1 örnek güç eğrisi");
+        document.querySelector(".chart-legend").setAttribute("aria-label", currentLanguage === "de" ? "Diagrammerklärung" : currentLanguage === "en" ? "Chart legend" : "Grafik açıklaması");
+        document.querySelector(".code-finder").setAttribute("aria-label", currentLanguage === "de" ? "Fehlercode-Suche" : currentLanguage === "en" ? "Fault-code search" : "Hata kodu arama");
+        document.querySelector(".category-list").setAttribute("aria-label", currentLanguage === "de" ? "Fehlerkategorien" : currentLanguage === "en" ? "Fault categories" : "Hata kategorileri");
+        document.querySelector(".contact-actions").setAttribute("aria-label", currentLanguage === "de" ? "Kontaktmöglichkeiten" : currentLanguage === "en" ? "Contact options" : "İletişim seçenekleri");
+        document.querySelector(".obd-chip span:last-child").textContent = currentLanguage === "de" ? "15 Codes" : currentLanguage === "en" ? "15 codes" : "15 kod";
+        byId("faultSearch").setAttribute("placeholder", currentLanguage === "de" ? "z. B. P0299" : currentLanguage === "en" ? "e.g. P0299" : "Örn. P0299");
+        byId("faultSearch").setAttribute("aria-label", currentLanguage === "de" ? "OBD-Fehlercode oder Suchbegriff eingeben" : currentLanguage === "en" ? "Search OBD fault code or keyword" : "OBD hata kodu veya kelime ara");
+        mobileNav.setAttribute("aria-label", currentLanguage === "de" ? "Schnellnavigation" : currentLanguage === "en" ? "Quick navigation" : "Hızlı gezinme");
+        const menuLabel = currentLanguage === "de" ? "Menü öffnen" : currentLanguage === "en" ? "Open menu" : "Menüyü aç";
+        mobileNavToggle.setAttribute("aria-label", menuLabel);
+        byId("mobileNavToggle").querySelector("[data-mobile-nav-label]").textContent = menuLabel;
+        syncQuickAccessCopy();
+        syncStageSelectCopy();
+        syncContactLinks();
+        syncContextualInquiryCopy();
+      }
+
+      function localizeEngine(engine) {
+        const terms = {
+          tr: {},
+          de: { "Dizel": "Diesel", "Otomatik": "Automatik", "Manuel": "Manuell" },
+          en: { "Benzin": "Petrol", "Dizel": "Diesel", "Otomatik": "Automatic", "Manuel": "Manual" }
+        }[currentLanguage];
+        return Object.entries(terms).reduce((text, [source, target]) => text.split(source).join(target), engine);
+      }
+
+      function localizeFault(fault) {
+        if (currentLanguage === "tr") return fault;
+        const language = currentLanguage;
+        const category = t("category")[fault.category] || fault.category;
+        const title = faultTitles[fault.code]?.[language] || (language === "de" ? `${category} – Diagnosehinweis` : `${category} diagnostic code`);
+        const description = language === "de"
+          ? `Der Code ${fault.code} weist auf eine mögliche Auffälligkeit im Bereich ${category} hin. Er ersetzt keine Diagnose mit Live-Daten und Fahrzeugkontext.`
+          : `Code ${fault.code} indicates a possible concern in the ${category} system. It does not replace diagnosis using live data and vehicle context.`;
+        const next = language === "de"
+          ? "Empfohlen sind eine Prüfung der Live-Daten, der Verkabelung und der fahrzeugspezifischen Betriebsbedingungen."
+          : "Review live data, wiring and the vehicle-specific operating conditions before deciding on a repair.";
+        return { ...fault, title, category, severity: t("severity")[fault.severity] || fault.severity, description, causes: fault.causes.map((cause) => faultCauseTerms[cause]?.[language] || cause), next };
+      }
+
+      function applyLanguage(language, resetConversation = true, persistPreference = false) {
+        currentLanguage = ["de", "tr", "en"].includes(language) ? language : "de";
+        if (persistPreference) { try { localStorage.setItem("6006-language", currentLanguage); } catch {} }
+        languageSelect.value = currentLanguage;
+        translateStaticPage();
+        if (brandSelect.options.length) renderVehicle();
+        if (faultHasRendered) renderFault(findFault(byId("faultSearch").value, activeCategory), byId("faultSearch").value);
+        if (typeof syncConciergeCopy === "function") syncConciergeCopy(resetConversation);
+      }
+
+      function replayMotion(element, className) {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        element.classList.remove(className);
+        void element.offsetWidth;
+        element.classList.add(className);
+      }
+
+      function populateBrands() {
+        const brands = [...new Set([...Object.keys(vehicleDirectory), ...vehicles.map((vehicle) => vehicle.brand)])].sort((a, b) => a.localeCompare(b, "de"));
+        const currentBrand = brands.includes(brandSelect.value) ? brandSelect.value : "";
+        const copy = stageLabels();
+        brandSelect.innerHTML = `<option value="">${copy.brandPlaceholder}</option>${brands.map((brand) => `<option value="${brand}">${brand}</option>`).join("")}`;
+        brandSelect.value = currentBrand;
+        populateModels();
+      }
+
+      function populateModels() {
+        const copy = stageLabels();
+        const currentModel = modelSelect.value;
+        const models = [...new Set([
+          ...vehicles.filter((vehicle) => vehicle.brand === brandSelect.value).map((vehicle) => vehicle.name),
+          ...(vehicleDirectory[brandSelect.value] || [])
+        ])];
+        if (!brandSelect.value) {
+          modelSelect.innerHTML = `<option value="">${copy.modelFirst}</option>`;
+          modelSelect.value = "";
+          modelSelect.disabled = true;
+          renderVehicle();
+          return;
+        }
+        modelSelect.disabled = false;
+        modelSelect.innerHTML = `<option value="">${copy.modelPlaceholder}</option>${models.map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("")}`;
+        modelSelect.value = models.includes(currentModel) ? currentModel : "";
+        renderVehicle();
+      }
+
+      function renderVehicle() {
+        const vehicle = currentVehicle();
+        const copy = stageLabels();
+        const card = byId("estimateCard");
+        if (!vehicle) {
+          const hasDirectorySelection = Boolean(brandSelect.value && modelSelect.value);
+          card.classList.add("is-empty");
+          byId("stageStatus").innerHTML = `<i class="status-signal" aria-hidden="true"></i>${hasDirectorySelection ? copy.statusReview : copy.statusEmpty}`;
+          byId("vehicleYears").textContent = hasDirectorySelection ? copy.reviewYears : copy.emptyYears;
+          byId("vehicleName").textContent = hasDirectorySelection ? `${brandSelect.value} ${modelSelect.value}` : copy.emptyName;
+          byId("vehicleEngine").textContent = hasDirectorySelection ? copy.reviewEngine : copy.emptyEngine;
+          document.querySelector(".vehicle-badge").textContent = hasDirectorySelection ? copy.reviewBadge : copy.emptyBadge;
+          byId("psValue").textContent = "—";
+          byId("psGain").textContent = "—";
+          byId("nmValue").textContent = "—";
+          byId("nmGain").textContent = "—";
+          const catalogLink = byId("stageCatalogLink");
+          if (catalogLink) {
+            const query = new URLSearchParams({ brand: brandSelect.value, model: modelSelect.value });
+            catalogLink.href = hasDirectorySelection ? `reparatur-wartung/?${query.toString()}` : "reparatur-wartung/";
+          }
+          return;
+        }
+        card.classList.remove("is-empty");
+        byId("stageStatus").innerHTML = `<i class="status-signal" aria-hidden="true"></i>${copy.statusReady}`;
+        byId("vehicleYears").textContent = `${vehicle.years} · ${t("catalog")}`;
+        byId("vehicleName").textContent = vehicle.brand + " " + vehicle.name;
+        byId("vehicleEngine").textContent = localizeEngine(vehicle.engine);
+        document.querySelector(".vehicle-badge").textContent = copy.sample;
+        byId("psValue").textContent = fmtRange(vehicle.stage.ps, "PS");
+        byId("psGain").textContent = fmtGain(vehicle.stage.ps, vehicle.stock.ps, "PS");
+        byId("nmValue").textContent = fmtRange(vehicle.stage.nm, "Nm");
+        byId("nmGain").textContent = fmtGain(vehicle.stage.nm, vehicle.stock.nm, "Nm");
+        const catalogLink = byId("stageCatalogLink");
+        if (catalogLink) catalogLink.href = `reparatur-wartung/?${new URLSearchParams({ brand: vehicle.brand, model: vehicle.name }).toString()}`;
+        if (vehicleHasRendered) replayMotion(byId("estimateCard"), "data-refresh");
+        vehicleHasRendered = true;
+      }
+
+      function renderFault(fault, query = "") {
+        const result = byId("faultResult");
+        if (!fault) {
+          result.innerHTML = `<div class="result-state"><span class="mono">${t("noResultLabel")}</span><h3>${t("noResultTitle")}</h3><p>${t("noResultBody")}</p></div>`;
+          if (faultHasRendered) replayMotion(result, "result-enter");
+          faultHasRendered = true;
+          return;
+        }
+        const displayFault = localizeFault(fault);
+        const inquiry = inquiryCopy[currentLanguage] || inquiryCopy.de;
+        const related = query ? ` · ${t("related")} “${escapeHtml(query.toUpperCase())}”` : "";
+        result.innerHTML = `
+          <div class="fault-meta"><span class="fault-code">${displayFault.code}</span><span class="severity">${displayFault.severity}</span></div>
+          <h3>${displayFault.title}</h3>
+          <p>${displayFault.description}</p>
+          <div class="fault-details">
+            <div><div class="detail-label">${t("likely")}${related}</div><div class="cause-list">${displayFault.causes.map((cause) => `<span>${cause}</span>`).join("")}</div></div>
+            <div><div class="detail-label">${t("next")}</div><div class="next-step">${displayFault.next}</div></div>
+          </div>
+          <button class="fault-request" type="button" data-fault-inquiry-code="${displayFault.code}">${inquiry.faultAction(displayFault.code)}</button>`;
+        if (faultHasRendered) replayMotion(result, "result-enter");
+        faultHasRendered = true;
+      }
+
+      function findFault(value, category = "all") {
+        const normalized = value.trim().toLocaleLowerCase(currentLanguage);
+        const candidates = category === "all" ? faultCodes : faultCodes.filter((fault) => fault.category === category);
+        if (!normalized) return candidates[2] || faultCodes[2];
+        return candidates.find((fault) => {
+          const displayFault = localizeFault(fault);
+          return `${fault.code} ${fault.title} ${fault.category} ${fault.causes.join(" ")} ${displayFault.title} ${displayFault.category} ${displayFault.causes.join(" ")}`.toLocaleLowerCase(currentLanguage).includes(normalized);
+        });
+      }
+
+      brandSelect.addEventListener("change", () => {
+        populateModels();
+        assistantState.selectedVehicle = null;
+      });
+      modelSelect.addEventListener("change", () => {
+        renderVehicle();
+        assistantState.selectedVehicle = currentVehicle();
+      });
+
+      const faultSearch = byId("faultSearch");
+      let activeCategory = "all";
+      faultSearch.addEventListener("input", () => renderFault(findFault(faultSearch.value, activeCategory), faultSearch.value));
+      document.querySelectorAll(".category-chip").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeCategory = button.dataset.category;
+          document.querySelectorAll(".category-chip").forEach((chip) => chip.classList.toggle("active", chip === button));
+          renderFault(findFault(faultSearch.value, activeCategory), faultSearch.value);
+        });
+      });
+
+      byId("stageInquiry").addEventListener("click", () => openWhatsAppMessage(stageInquiryMessage()));
+      byId("faultResult").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-fault-inquiry-code]");
+        if (!button) return;
+        const fault = faultCodes.find((item) => item.code === button.dataset.faultInquiryCode);
+        if (fault) openWhatsAppMessage(faultInquiryMessage(fault));
+      });
+
+      const whatsappNumber = "491788354756";
+      const concierge = byId("concierge");
+      const conciergeLauncher = byId("conciergeLauncher");
+      const conciergeClose = byId("conciergeClose");
+      const assistantReset = byId("assistantReset");
+      const assistantMessages = byId("assistantMessages");
+      const assistantQuick = byId("assistantQuick");
+      const assistantForm = byId("assistantForm");
+      const assistantInput = byId("assistantInput");
+      const assistantWhatsapp = byId("assistantWhatsApp");
+      const assistantState = { messages: [], selectedVehicle: null, intent: null };
+      const vehicleAliasRules = [
+        { brand: "BMW", name: "320i G20", aliases: ["BMW 320i G20", "320i G20", "G20 320i"], engineHints: ["2.0 T", "2.0 B48"], conflicts: ["320d", "B47", "diesel", "dizel"] },
+        { brand: "BMW", name: "320d G20", aliases: ["BMW 320d G20", "320d G20", "G20 320d"], engineHints: ["2.0 TDI", "2.0 B47"], conflicts: ["320i", "B48", "benzin", "petrol"] },
+        { brand: "Audi", name: "A3 8V 1.4 TFSI", aliases: ["Audi A3 8V 1.4 TFSI", "A3 8V 1.4 TFSI", "A3 1.4 TFSI"], engineHints: ["1.4 TFSI"], conflicts: ["1.6 TDI", "2.0 TDI"] },
+        { brand: "Audi", name: "A3 8V 1.6 TDI", aliases: ["Audi A3 8V 1.6 TDI", "A3 8V 1.6 TDI", "A3 1.6 TDI"], engineHints: ["1.6 TDI"], conflicts: ["1.4 TFSI", "2.0 TDI"] },
+        { brand: "Mercedes-Benz", name: "C200 W205", aliases: ["Mercedes C200 W205", "C200 W205", "W205 C200"], engineHints: ["2.0 T"], conflicts: ["1.5", "48V", "C220", "C300"] },
+        { brand: "Mercedes-Benz", name: "E220d W213", aliases: ["Mercedes E220d W213", "E220d W213", "W213 E220d"], engineHints: ["2.0 TDI"], conflicts: ["E200", "E300"] },
+        { brand: "Volkswagen", name: "Golf VII 1.5 TSI", aliases: ["Volkswagen Golf VII 1.5 TSI", "Golf 7 1.5 TSI", "Golf VII 1.5 TSI", "Golf 1.5 TSI"], engineHints: ["1.5 TSI"], conflicts: ["1.4 TSI", "2.0 TDI"] },
+        { brand: "Volkswagen", name: "Passat B8 2.0 TDI", aliases: ["Volkswagen Passat B8", "VW Passat B8", "Passat B8", "Passat B8 2.0 TDI", "Passat 2.0 TDI"], engineHints: ["2.0 TDI"], conflicts: ["1.6 TDI", "1.4 TSI", "1.5 TSI", "2.0 TSI", "BiTDI", "190", "240", "272"] },
+        { brand: "Ford", name: "Focus IV 1.5 EcoBlue", aliases: ["Ford Focus IV 1.5 EcoBlue", "Focus 4 1.5 EcoBlue", "Focus IV 1.5 EcoBlue", "Focus 1.5 EcoBlue"], engineHints: ["1.5 EcoBlue"], conflicts: ["1.0 EcoBoost", "1.5 EcoBoost"] },
+        { brand: "Peugeot", name: "308 1.5 BlueHDi", aliases: ["Peugeot 308 1.5 BlueHDi", "308 1.5 BlueHDi", "308 BlueHDi"], engineHints: ["1.5 BlueHDi"], conflicts: ["1.2 PureTech", "1.6"] }
+      ];
+
+      function assistantCopy() {
+        return t("assistant");
+      }
+
+      function assistantVehicleLabels() {
+        return assistantVehicleCopy[currentLanguage] || assistantVehicleCopy.tr;
+      }
+
+      function normalizeVehicleQuery(value) {
+        return String(value || "")
+          .toLocaleLowerCase("tr-TR")
+          .replace(/ı/g, "i")
+          .replace(/ß/g, "ss")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/([a-z])(\d)|(\d)([a-z])/g, (_, leftLetter, rightDigit, leftDigit, rightLetter) => leftLetter ? `${leftLetter} ${rightDigit}` : `${leftDigit} ${rightLetter}`)
+          .replace(/[^a-z0-9]+/g, " ")
+          .trim()
+          .replace(/\s+/g, " ");
+      }
+
+      function queryHasAlias(query, alias) {
+        return (` ${query} `).includes(` ${normalizeVehicleQuery(alias)} `);
+      }
+
+      function engineHint(query) {
+        const match = query.match(/\b(\d)\s+(\d)\s+(tdi|tsi|tfsi|ecoblue|bluehdi|ecoboost|puretech)\b/);
+        return match ? `${match[1]} ${match[2]} ${match[3]}` : "";
+      }
+
+      function findCatalogVehicle(raw) {
+        const query = normalizeVehicleQuery(raw);
+        const rule = vehicleAliasRules.find((item) => item.aliases.some((alias) => queryHasAlias(query, alias)));
+        if (!rule) return { query, vehicle: null, conflict: false };
+        const vehicle = vehicles.find((item) => item.brand === rule.brand && item.name === rule.name);
+        const hintedEngine = engineHint(query);
+        const hasConflict = Boolean(
+          (hintedEngine && !rule.engineHints.some((hint) => normalizeVehicleQuery(hint) === hintedEngine)) ||
+          rule.conflicts.some((hint) => queryHasAlias(query, hint))
+        );
+        return { query, vehicle: hasConflict ? null : vehicle, conflict: hasConflict };
+      }
+
+      function isStandaloneCatalogVehicleQuery(raw) {
+        const match = findCatalogVehicle(raw);
+        if (!match.vehicle) return false;
+        return vehicleAliasRules.some((rule) =>
+          rule.brand === match.vehicle.brand &&
+          rule.name === match.vehicle.name &&
+          rule.aliases.some((alias) => match.query === normalizeVehicleQuery(alias))
+        );
+      }
+
+      function isVehicleLikeQuery(query) {
+        const terms = ["bmw", "audi", "mercedes", "vw", "volkswagen", "ford", "peugeot", "opel", "seat", "skoda", "passat", "golf", "focus", "astra", "a3", "320i", "320d", "c200", "e220", "308"];
+        return terms.some((term) => queryHasAlias(query, term));
+      }
+
+      function addAssistantMessage(role, text, source = "assistant") {
+        const message = document.createElement("div");
+        message.className = `chat-message ${role}`;
+        message.textContent = text;
+        assistantMessages.appendChild(message);
+        assistantState.messages.push({ role, text, source });
+        assistantMessages.scrollTop = assistantMessages.scrollHeight;
+      }
+
+      function resetAssistantConversation() {
+        assistantState.messages = [];
+        assistantState.intent = null;
+        assistantMessages.replaceChildren();
+        addAssistantMessage("assistant", assistantCopy().greeting);
+      }
+
+      function currentVehicle() {
+        return vehicles.find((item) => item.brand === brandSelect.value && item.name === modelSelect.value) || null;
+      }
+
+      function openWhatsAppMessage(message) {
+        const popup = window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+        if (popup) popup.opener = null;
+      }
+
+      function stageInquiryMessage() {
+        const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
+        const vehicle = currentVehicle();
+        const lines = [copy.stageIntro, ""];
+        if (vehicle) {
+          lines.push(`${copy.vehicle}: ${vehicle.brand} ${vehicle.name}`);
+          lines.push(`${copy.engine}: ${localizeEngine(vehicle.engine)}`);
+          lines.push(`${copy.years}: ${vehicle.years}`);
+          lines.push(`${copy.catalogue}: ${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`);
+        } else {
+          lines.push(copy.vehicleMissing);
+        }
+        lines.push("", copy.stagePrompt);
+        return lines.join("\n");
+      }
+
+      function faultInquiryMessage(fault) {
+        const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
+        const displayFault = localizeFault(fault);
+        const vehicle = currentVehicle() || assistantState.selectedVehicle;
+        const lines = [copy.faultIntro, "", `${copy.faultCode}: ${displayFault.code} — ${displayFault.title}`];
+        if (vehicle) lines.push(`${copy.vehicle}: ${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}`);
+        else lines.push(copy.vehicleMissing);
+        lines.push("", copy.faultPrompt);
+        return lines.join("\n");
+      }
+
+      function stageSummary() {
+        const vehicle = currentVehicle() || assistantState.selectedVehicle;
+        if (!vehicle) return "";
+        return `${vehicle.brand} ${vehicle.name} · ${fmtRange(vehicle.stage.ps, "PS")} · ${fmtRange(vehicle.stage.nm, "Nm")}`;
+      }
+
+      function selectCatalogVehicle(vehicle) {
+        assistantState.selectedVehicle = vehicle;
+        if (brandSelect.value === vehicle.brand && modelSelect.value === vehicle.name) return;
+        brandSelect.value = vehicle.brand;
+        populateModels();
+        modelSelect.value = vehicle.name;
+        renderVehicle();
+      }
+
+      function catalogVehicleResponse(vehicle) {
+        const labels = assistantVehicleLabels();
+        const stock = `${vehicle.stock.ps} PS / ${vehicle.stock.nm} Nm`;
+        const stage = `${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`;
+        const gain = `${fmtGain(vehicle.stage.ps, vehicle.stock.ps, "PS")} / ${fmtGain(vehicle.stage.nm, vehicle.stock.nm, "Nm")}`;
+        return `${labels.matched}: ${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}\n${labels.stock}: ${stock} → Stage 1: ${stage}\n${labels.gain}: ${gain}\n${labels.confirm}`;
+      }
+
+      function openConcierge() {
+        concierge.classList.add("is-open");
+        concierge.setAttribute("aria-hidden", "false");
+        concierge.removeAttribute("inert");
+        conciergeLauncher.setAttribute("aria-expanded", "true");
+        window.setTimeout(() => assistantInput.focus(), 180);
+      }
+
+      function closeConcierge() {
+        concierge.classList.remove("is-open");
+        concierge.setAttribute("aria-hidden", "true");
+        concierge.setAttribute("inert", "");
+        conciergeLauncher.setAttribute("aria-expanded", "false");
+        conciergeLauncher.focus();
+      }
+
+      function assistantIntent(intent) {
+        const copy = assistantCopy();
+        assistantState.intent = intent;
+        if (intent === "stage") {
+          addAssistantMessage("user", copy.quick.stage, "quick");
+          addAssistantMessage("assistant", assistantState.selectedVehicle ? `${copy.stage}\n${stageSummary()}` : copy.stageNeedVehicle);
+        } else if (intent === "dtc") {
+          addAssistantMessage("user", copy.quick.dtc, "quick");
+          addAssistantMessage("assistant", copy.dtc);
+        } else {
+          addAssistantMessage("user", copy.quick.consult, "quick");
+          addAssistantMessage("assistant", copy.consult);
+        }
+      }
+
+      function inferredAssistantIntent(raw) {
+        const text = raw.toLocaleLowerCase(currentLanguage);
+        if (/\b([PBUC][0-9A-F]{4})\b/i.test(raw)) return "dtc";
+        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) return "stage";
+        if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return "consult";
+        return null;
+      }
+
+      function assistantResponse(raw) {
+        const copy = assistantCopy();
+        const text = raw.toLocaleLowerCase(currentLanguage);
+        const codeMatch = raw.toUpperCase().match(/\b([PBUC][0-9A-F]{4})\b/);
+        const emissionDisable = /(dpf|egr|adblue|scr).*(off|delete|sil|kapat|devre dışı|disable|deaktiv|ausprogramm|stillleg)|((off|delete|sil|kapat|devre dışı|disable|deaktiv|ausprogramm|stillleg).*(dpf|egr|adblue|scr))/i.test(raw);
+        const urgent = /(airbag|fren|brems|brake|direksiyon|lenkung|overheat|hararet|yağ basıncı|öldruck|misfire|tekleme|güç kaybı|leistungsverlust)/i.test(raw);
+        if (emissionDisable) return copy.legal;
+        if (urgent) return copy.safety;
+        if (codeMatch) {
+          const fault = faultCodes.find((item) => item.code === codeMatch[1]);
+          if (fault) {
+            const displayFault = localizeFault(fault);
+            return `${displayFault.code} — ${displayFault.title}. ${copy.dtcFound}`;
+          }
+          return copy.dtc;
+        }
+        const vehicleMatch = findCatalogVehicle(raw);
+        if (vehicleMatch.vehicle) {
+          selectCatalogVehicle(vehicleMatch.vehicle);
+          return catalogVehicleResponse(vehicleMatch.vehicle);
+        }
+        if (vehicleMatch.conflict || isVehicleLikeQuery(vehicleMatch.query)) return assistantVehicleLabels().clarify;
+        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) return assistantState.selectedVehicle ? `${copy.stage}\n${stageSummary()}` : copy.stageNeedVehicle;
+        if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return copy.consult;
+        return copy.generic;
+      }
+
+      function syncConciergeCopy(resetConversation = true) {
+        const copy = assistantCopy();
+        conciergeLauncher.querySelector("span").textContent = copy.launcher;
+        conciergeLauncher.setAttribute("aria-label", copy.launcher);
+        byId("conciergeTitle").textContent = copy.title;
+        assistantReset.textContent = copy.reset;
+        conciergeClose.setAttribute("aria-label", copy.close);
+        assistantInput.setAttribute("placeholder", copy.input);
+        assistantInput.previousElementSibling.textContent = copy.input;
+        assistantForm.querySelector("button").textContent = copy.send;
+        assistantWhatsapp.textContent = copy.whatsapp;
+        byId("assistantPrivacy").textContent = copy.privacy;
+        assistantQuick.querySelector('[data-assistant-intent="stage"]').textContent = copy.quick.stage;
+        assistantQuick.querySelector('[data-assistant-intent="dtc"]').textContent = copy.quick.dtc;
+        assistantQuick.querySelector('[data-assistant-intent="consult"]').textContent = copy.quick.consult;
+        if (resetConversation) resetAssistantConversation();
+      }
+
+      conciergeLauncher.addEventListener("click", () => concierge.classList.contains("is-open") ? closeConcierge() : openConcierge());
+      conciergeClose.addEventListener("click", closeConcierge);
+      assistantReset.addEventListener("click", resetAssistantConversation);
+      assistantQuick.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-assistant-intent]");
+        if (button) assistantIntent(button.dataset.assistantIntent);
+      });
+      assistantForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const raw = assistantInput.value.trim();
+        if (!raw) return;
+        assistantState.intent = inferredAssistantIntent(raw) || assistantState.intent;
+        addAssistantMessage("user", raw, "input");
+        addAssistantMessage("assistant", assistantResponse(raw));
+        assistantInput.value = "";
+      });
+      function setMobileNav(open) {
+        mobileNav.hidden = !open;
+        mobileNav.classList.toggle("is-open", open);
+        mobileNavToggle.setAttribute("aria-expanded", String(open));
+      }
+
+      mobileNavToggle.addEventListener("click", () => setMobileNav(mobileNav.hidden));
+      mobileNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMobileNav(false)));
+
+      assistantWhatsapp.addEventListener("click", () => {
+        const copy = assistantCopy();
+        const vehicle = currentVehicle() || assistantState.selectedVehicle;
+        const notes = assistantState.messages
+          .filter((message) => message.role === "user" && message.source === "input")
+          .map((message) => message.text.trim())
+          .filter((message) => message && !isStandaloneCatalogVehicleQuery(message))
+          .slice(-3);
+        const lines = [copy.waIntro, ""];
+        if (vehicle) {
+          lines.push(`${copy.waVehicle}: ${vehicle.brand} ${vehicle.name}`);
+          lines.push(`${copy.waStage}: ${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`);
+        } else {
+          lines.push(copy.waVehicleMissing);
+        }
+        if (assistantState.intent) lines.push(`${copy.waRequest}: ${copy.quick[assistantState.intent]}`);
+        if (notes.length) lines.push(`${copy.waNote}: ${notes.join(" · ")}`);
+        const text = lines.join("\n");
+        openWhatsAppMessage(text);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (concierge.classList.contains("is-open")) closeConcierge();
+        if (!mobileNav.hidden) setMobileNav(false);
+      });
+      languageSelect.addEventListener("change", () => applyLanguage(languageSelect.value, true, true));
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        document.documentElement.classList.add("motion-ready");
+        const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        }), { threshold: .12 });
+        document.querySelectorAll(".services-grid .reveal").forEach((element, index) => element.style.setProperty("--reveal-delay", `${index * 75}ms`));
+        document.querySelectorAll(".reveal:not(.visible)").forEach((element) => observer.observe(element));
+      } else {
+        document.querySelectorAll(".reveal").forEach((element) => element.classList.add("visible"));
+      }
+
+      capturePageTextNodes();
+      applyLanguage(currentLanguage);
+      populateBrands();
+      renderFault(faultCodes[2]);
+    </script>
+  <script id="6006-global-search-navigation-script">
+(function(){
+  "use strict";
+  const labels = {tr:{search:"Ara",empty:"Eşleşen sonuç bulunamadı.",found:"Eşleşen sonuç açıldı."},de:{search:"Suchen",empty:"Keine passenden Ergebnisse gefunden.",found:"Passender Treffer geöffnet."},en:{search:"Search",empty:"No matching results found.",found:"Matching result opened."}};
+  const lang = () => {const v=(document.documentElement.lang||"de").slice(0,2).toLowerCase();return labels[v]?v:"de";};
+  const label = key => labels[lang()][key];
+  const dest = el => el && (el.getBoundingClientRect().height || el.offsetParent !== null) && !el.hidden && !el.closest("[hidden]");
+  function go(el){
+    if(!el)return;
+    el.classList.add("search-target-active");
+    if(!el.id)el.id="search-result-"+Array.from(el.parentNode.children).indexOf(el);
+    try{history.replaceState(null,"",location.pathname+location.search+"#"+encodeURIComponent(el.id));}catch(_){}
+    el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
+    el.setAttribute("tabindex","-1");
+    el.focus({preventScroll:true});
+  }
+  function status(input,content){let n=input.parentNode.parentNode.querySelector(".search-feedback");if(!n){n=document.createElement("p");n.className="search-feedback";n.setAttribute("role","status");input.parentNode.insertAdjacentElement("afterend",n);}n.textContent=content;}
+  function enhance(fieldId,cardSelector){
+    const input=document.getElementById(fieldId);if(!input)return;
+    const box=input.parentNode;if(!box)return;
+    box.classList.add("enhanced-search-box");
+    input.setAttribute("enterkeyhint","search");
+    const button=document.createElement("button");button.type="button";button.className="search-go-btn";button.textContent=label("search");button.setAttribute("aria-label",label("search"));box.appendChild(button);
+    const refresh=()=>{button.textContent=label("search");button.setAttribute("aria-label",label("search"));};
+    new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+    const preferred = new URLSearchParams(location.search);
+    if(preferred.has("q")){input.value=preferred.get("q")||"";input.dispatchEvent(new Event("input",{bubbles:true}));}
+    const candidates=()=>Array.from(document.querySelectorAll(cardSelector)).filter(dest);
+    function execute(){
+      input.dispatchEvent(new Event("input",{bubbles:true}));
+      input.blur();
+      const visible=candidates();
+      if(visible.length){status(input,visible.length+" · "+label("found"));go(visible[0]);}
+      else{status(input,label("empty"));input.scrollIntoView({behavior:"smooth",block:"center"});}
+    }
+    button.addEventListener("click",execute);
+    input.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();execute();}});
+    const filters=Array.from(document.querySelectorAll("button[data-filter]"));
+    if(preferred.has("category")){const option=filters.find(x=>x.dataset.filter===preferred.get("category"));if(option)option.click();}
+    filters.forEach(f=>f.addEventListener("click",()=>requestAnimationFrame(()=>{const visible=candidates();if(visible.length)go(visible[0]);else status(input,label("empty"));})));
+    if(preferred.has("q")||preferred.has("category")){requestAnimationFrame(()=>requestAnimationFrame(execute));}
+    else if(location.hash.length>1){const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target){requestAnimationFrame(()=>go(target));}}
+  }
+  const homeInput=document.getElementById("faultSearch");
+  if(homeInput){
+    const box=homeInput.parentNode;box.classList.add("enhanced-search-box");
+    homeInput.setAttribute("enterkeyhint","search");
+    const btn=document.createElement("button");btn.type="button";btn.className="search-go-btn notranslate";btn.setAttribute("translate","no");btn.textContent=label("search");btn.setAttribute("aria-label",label("search"));box.appendChild(btn);
+    new MutationObserver(()=>{btn.textContent=label("search");btn.setAttribute("aria-label",label("search"));}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+    function openResults(params){
+      homeInput.blur();
+      const q=homeInput.value.trim();
+      const url=new URL("fehlercodes/",location.href);
+      if(q)url.searchParams.set("q",q);
+      if(params&&params.category&&params.category!=="all")url.searchParams.set("category",params.category);
+      url.hash="codes";
+      location.assign(url.href);
+    }
+    btn.addEventListener("click",()=>openResults({}));
+    homeInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();openResults({});}});
+    const groups={"Hava/Turbo":"luft","Yakıt":"kraftstoff","Egzoz & Emisyon":"abgas","Şanzıman":"antrieb","all":"all"};
+    document.querySelectorAll(".code-finder button[data-category]").forEach(b=>b.addEventListener("click",()=>{homeInput.value="";openResults({category:groups[b.dataset.category]||"all"});}));
+  }
+  enhance("code-search",".code-card");
+  enhance("topic-search",".topic");
+  enhance("work-search",".work");
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script></body>
+</html>

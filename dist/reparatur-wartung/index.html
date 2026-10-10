@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#12100f" />
+    <meta name="description" content="Reparatur- und Wartungswissen für Pkw, Transporter und Lkw: Arbeiten richtig einordnen, passende Fahrzeugdaten sammeln und nur mit geprüften Herstellerwerten arbeiten." />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="google" content="notranslate" />
+    <link rel="canonical" href="https://6006coding.de/reparatur-wartung/" />
+    <link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="6006 Performance" />
+    <meta property="og:url" content="https://6006coding.de/reparatur-wartung/" />
+    <meta property="og:title" content="Reparatur & Wartung | 6006 Performance" />
+    <meta property="og:description" content="Vom Bremsservice bis zur Elektrik: Fahrzeugdaten statt gefährlicher Pauschalwerte." />
+    <meta property="og:locale" content="de_DE" />
+    <title>Reparatur & Wartung | Auto, Transporter & Lkw | 6006 Performance</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://6006coding.de/reparatur-wartung/#webpage",
+            "url": "https://6006coding.de/reparatur-wartung/",
+            "name": "Reparatur & Wartung für Pkw, Transporter und Lkw",
+            "description": "Ein wachsender, fahrzeugbezogener Leitfaden für Wartung, Reparatur und sichere technische Einordnung.",
+            "inLanguage": "de-DE",
+            "dateModified": "2026-10-07",
+            "isPartOf": { "@type": "WebSite", "name": "6006 Performance", "url": "https://6006coding.de/" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "6006 Performance", "item": "https://6006coding.de/" },
+              { "@type": "ListItem", "position": 2, "name": "Reparatur & Wartung", "item": "https://6006coding.de/reparatur-wartung/" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Kann ich für Bremsen, Öl oder Fahrwerk pauschale Drehmomente verwenden?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Nein. Drehmoment, Winkelanzug, Verschleißgrenze, Bremsanlage, Betriebsstoff und Arbeitsablauf können sich nach Modell, Baujahr, Motor, Achs- oder PR-Code unterscheiden. Verbindlich sind ausschließlich die Angaben für die konkrete Fahrzeugvariante." }
+              },
+              {
+                "@type": "Question",
+                "name": "Welche Reparaturen gehören nicht in eine allgemeine DIY-Anleitung?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Bremsen, Lenkung, Airbag und Gurtstraffer, Hochvolt, Hochdruck-Kraftstoff, Kältemittel, CNG/LPG, Lkw-Druckluft und emissionsrelevante Systeme benötigen qualifiziertes Personal und fahrzeugbezogene Herstellerinformationen." }
+              },
+              {
+                "@type": "Question",
+                "name": "Welche Angaben werden für eine genaue Reparatur- oder Wartungsanleitung benötigt?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Mindestens Fahrzeugart, Marke, Modell, Baujahr, Motorisierung beziehungsweise Motorcode und das konkrete Thema. Für Bremsen, Fahrwerk und Teile sind je nach Fahrzeug auch VIN, PR-/Ausstattungscodes oder Achslast entscheidend." }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <style>
+      :root {
+        --ink: #12100f;
+        --ink-soft: #191613;
+        --panel: rgba(34, 29, 24, .82);
+        --panel-deep: rgba(23, 20, 18, .92);
+        --porcelain: #f3eee4;
+        --mist: #d0c7bb;
+        --muted: #9e9589;
+        --copper: #c69a63;
+        --copper-pale: #e0bd89;
+        --danger: #cf7b61;
+        --safe: #9fc0a5;
+        --line: rgba(243, 238, 228, .15);
+        --line-copper: rgba(198,154,99,.43);
+        --shadow: 0 26px 78px rgba(0,0,0,.3);
+        --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+        --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; background: var(--ink); }
+      body { min-width: 320px; margin: 0; color: var(--porcelain); background: radial-gradient(circle at 7% 18%, rgba(198,154,99,.11), transparent 27rem), radial-gradient(circle at 91% 66%, rgba(133,77,45,.15), transparent 33rem), linear-gradient(132deg, #11100e, #1a1612 51%, #10100f); font-family: var(--sans); font-size: 16px; line-height: 1.58; }
+      body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .16; background-image: linear-gradient(30deg, rgba(224,189,137,.12) 12%, transparent 12.5%, transparent 87%, rgba(224,189,137,.12) 87.5%, rgba(224,189,137,.12)), linear-gradient(150deg, rgba(224,189,137,.12) 12%, transparent 12.5%, transparent 87%, rgba(224,189,137,.12) 87.5%, rgba(224,189,137,.12)); background-size: 64px 111px; mask-image: linear-gradient(to bottom, rgba(0,0,0,.78), transparent 94%); }
+      a { color: inherit; text-decoration: none; }
+      button, input, select { font: inherit; }
+      .shell { width: min(1210px, calc(100% - 48px)); margin: 0 auto; }
+      .skip-link { position: fixed; top: -5rem; left: 1rem; z-index: 90; padding: .75rem 1rem; border-radius: .25rem; color: var(--ink); background: var(--porcelain); }
+      .skip-link:focus { top: 1rem; }
+      .site-header { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line); background: rgba(18,16,15,.70); backdrop-filter: blur(18px); }
+      .header-inner { min-height: 5.35rem; display: flex; align-items: center; justify-content: space-between; gap: 1.15rem; }
+      .brand { display: inline-flex; min-width: 8.8rem; }
+      .brand img { display: block; width: 8.7rem; height: auto; }
+      .nav { display: flex; align-items: center; gap: clamp(.55rem,1.35vw,1.12rem); }
+      .nav a, .header-contact { color: rgba(243,238,228,.72); font-size: .69rem; font-weight: 760; letter-spacing: .082em; text-transform: uppercase; white-space: nowrap; }
+      .nav a:hover, .nav a[aria-current="page"] { color: var(--porcelain); }
+      .header-contact { padding: .6rem .8rem; border: 1px solid rgba(243,238,228,.38); border-radius: 3px; }
+      .header-contact:hover { color: var(--porcelain); border-color: var(--copper); }
+      main { overflow: hidden; }
+      .hero { padding: clamp(3.7rem,7vw,6.7rem) 0 2.5rem; }
+      .hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(19rem,.92fr); gap: clamp(1.65rem,5vw,5rem); align-items: end; }
+      .eyebrow, .section-kicker { display: flex; align-items: center; gap: .75rem; margin: 0 0 1.1rem; color: var(--copper-pale); font-family: var(--mono); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+      .eyebrow::before, .section-kicker::before { content: ""; width: 2.55rem; height: 1px; background: currentColor; opacity: .75; }
+      h1,h2,h3,h4,p { margin-top: 0; }
+      h1 { max-width: 12ch; margin-bottom: 1.25rem; font-family: var(--serif); font-size: clamp(3.1rem,6.15vw,5.7rem); font-weight: 500; line-height: .93; letter-spacing: -.06em; }
+      h1 em { color: var(--copper-pale); font-style: italic; }
+      .lead { max-width: 60ch; color: var(--mist); font-size: 1.06rem; line-height: 1.78; }
+      .position-note { margin: 1.25rem 0 0; padding-left: .9rem; border-left: 1px solid var(--line-copper); color: var(--muted); font-size: .9rem; }
+      .data-card { --card-pad: clamp(1.2rem,2.5vw,1.7rem); padding: var(--card-pad); border: 1px solid var(--line-copper); border-radius: 9px; background: linear-gradient(146deg, rgba(58,48,38,.88), rgba(21,19,17,.9)); box-shadow: var(--shadow); backdrop-filter: blur(18px); }
+      .vehicle-panel { overflow: hidden; }
+      .vehicle-media { position: relative; isolation: isolate; min-height: 11.75rem; margin: calc(0px - var(--card-pad)) calc(0px - var(--card-pad)) 1.25rem; overflow: hidden; border-bottom: 1px solid var(--line-copper); background: #201b16; }
+      .vehicle-media::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events:none; background: linear-gradient(112deg, rgba(14,12,10,.84) 0%, rgba(14,12,10,.35) 52%, rgba(14,12,10,.10) 100%), linear-gradient(0deg, rgba(14,12,10,.72), transparent 58%); }
+      .vehicle-media img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .45s ease; }
+      .vehicle-panel:hover .vehicle-media img { transform: scale(1.035); }
+      .vehicle-media figcaption { position: relative; z-index: 2; display: grid; align-content: end; min-height: 11.75rem; padding: 1.15rem var(--card-pad); }
+      .vehicle-media-kicker { display: block; margin-bottom: .35rem; color: var(--copper-pale); font-family: var(--mono); font-size: .65rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .vehicle-media-title { max-width: 16ch; color: var(--porcelain); font-family: var(--serif); font-size: clamp(1.65rem,3.1vw,2.25rem); font-weight: 500; line-height: .98; letter-spacing: -.045em; }
+      .data-card h2 { margin-bottom: .4rem; font-family: var(--serif); font-size: 2rem; font-weight: 500; letter-spacing: -.04em; line-height: 1; }
+      .data-card > p { color: var(--mist); font-size: .9rem; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: 1rem; }
+      .field { display: grid; gap: .34rem; }
+      .field--wide { grid-column: 1 / -1; }
+      .field label { color: var(--mist); font-family: var(--mono); font-size: .64rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+      .field input, .field select, .search input { min-height: 2.8rem; width: 100%; border: 1px solid rgba(243,238,228,.25); border-radius: 4px; outline: 0; color: var(--porcelain); background: rgba(8,8,7,.38); padding: .55rem .7rem; }
+      .field input:focus, .field select:focus, .search:focus-within { border-color: var(--copper); box-shadow: 0 0 0 3px rgba(198,154,99,.12); }
+      .field select option { color: #171411; background: #f3eee4; }
+      .form-note { margin: .8rem 0 0; color: var(--muted); font-size: .76rem; line-height: 1.45; }
+      .vehicle-status { margin:1rem 0 0; padding:.76rem .86rem; border-left:1px solid var(--copper); color:var(--mist); background:rgba(198,154,99,.07); font-size:.84rem; line-height:1.48; }
+      .vehicle-status[hidden] { display:none; }
+      .vehicle-status strong { color:var(--porcelain); }
+      .primary { cursor: pointer; display: inline-flex; width: 100%; min-height: 3rem; align-items: center; justify-content: center; margin-top: 1rem; border: 1px solid var(--copper-pale); border-radius: 3px; color: var(--ink); background: var(--copper-pale); font-size: .74rem; font-weight: 850; letter-spacing: .075em; text-transform: uppercase; }
+      .primary:hover { border-color: #edcd99; background: #edcd99; }
+      .triage { padding: 1rem 0 3.5rem; }
+      .triage-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .triage-item { padding: 1.1rem 1.2rem 1.15rem 0; }
+      .triage-item + .triage-item { padding-left: 1.2rem; border-left: 1px solid var(--line); }
+      .triage-item strong { display: block; margin-bottom: .25rem; color: var(--copper-pale); font-family: var(--mono); font-size: .7rem; letter-spacing: .09em; text-transform: uppercase; }
+      .triage-item span { display: block; color: var(--mist); font-size: .87rem; line-height: 1.45; }
+      .finder { padding: clamp(1.25rem,3vw,2rem); border: 1px solid var(--line); border-radius: 9px; background: linear-gradient(138deg, rgba(58,49,40,.73), rgba(23,20,18,.78)); box-shadow: var(--shadow); backdrop-filter: blur(18px); }
+      .finder-head { display: grid; grid-template-columns: 1fr minmax(17rem,34rem); align-items: end; gap: 1.5rem; }
+      .finder h2, .content-head h2, .safe-box h2, .contact h2 { margin-bottom: .45rem; font-family: var(--serif); font-size: clamp(2rem,4vw,3.4rem); font-weight: 500; line-height: 1; letter-spacing: -.05em; }
+      .finder-head p, .content-head p { margin-bottom: 0; color: var(--muted); font-size: .92rem; }
+      .search { display: flex; align-items: center; margin-top: 1.25rem; border: 1px solid rgba(243,238,228,.28); border-radius: 5px; background: rgba(10,10,9,.45); overflow: hidden; }
+      .search-mark { width: 3.1rem; color: var(--copper-pale); text-align: center; font-size: 1.35rem; }
+      .search input { min-height: 3.45rem; border: 0; border-radius: 0; background: transparent; font-size: 1rem; }
+      .search input::placeholder { color: #999084; }
+      .filter-row { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1rem; }
+      .filter { cursor: pointer; min-height: 2.35rem; padding: 0 .82rem; border: 1px solid rgba(243,238,228,.2); border-radius: 999px; color: var(--mist); background: rgba(243,238,228,.025); font-size: .8rem; font-weight: 760; transition: .18s ease; }
+      .filter:hover, .filter[aria-pressed="true"] { border-color: var(--copper-pale); color: var(--ink); background: var(--copper-pale); }
+      .result-count { margin: .9rem 0 0; color: var(--muted); font-size: .84rem; }
+      .content { padding: 4rem 0 5.5rem; }
+      .content-head { display: grid; grid-template-columns: 1fr minmax(17rem,32rem); gap: 1.5rem; align-items: end; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+      .work-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-top: 1.25rem; }
+      .work { position: relative; min-height: 18rem; padding: 1.45rem; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: linear-gradient(148deg, rgba(47,41,35,.88), rgba(20,18,17,.85)); box-shadow: 0 16px 48px rgba(0,0,0,.17); cursor: pointer; transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+      .work[hidden] { display: none; }
+      .work:hover { border-color: var(--line-copper); box-shadow: 0 20px 52px rgba(0,0,0,.24); transform: translateY(-2px); }
+      .work:focus-within, .work.work--open { border-color: var(--copper); }
+      .work::after { content:""; pointer-events:none; position:absolute; right:-3rem; bottom:-3rem; width:9rem; height:9rem; border-radius:50%; background:radial-gradient(circle,rgba(198,154,99,.14),transparent 68%); }
+      .work-top { display:flex; align-items:start; justify-content:space-between; gap:.8rem; margin-bottom:.7rem; }
+      .work-index { color: var(--copper-pale); font-family: var(--mono); font-size: .74rem; font-weight: 800; letter-spacing: .11em; }
+      .badge { flex:0 0 auto; padding:.27rem .5rem; border:1px solid var(--line-copper); border-radius:999px; color:var(--mist); font-size:.64rem; font-weight:780; letter-spacing:.05em; text-transform:uppercase; }
+      .badge--self { color:#bed9c1; border-color:rgba(159,192,165,.45); background:rgba(159,192,165,.07); }
+      .badge--critical { color:#efc4b9; border-color:rgba(207,123,97,.48); background:rgba(207,123,97,.06); }
+      .work h3 { position:relative; z-index:1; max-width:24ch; margin-bottom:.6rem; font-family:var(--serif); font-size:1.72rem; font-weight:500; line-height:1.04; letter-spacing:-.035em; }
+      .work > p { position:relative; z-index:1; color:var(--mist); font-size:.95rem; }
+      .work-meta { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:.7rem 1rem; margin:1rem 0; padding:.88rem 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+      .work-meta h4 { margin-bottom:.31rem; color:var(--copper-pale); font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; }
+      .work-meta p { margin-bottom:0; color:var(--mist); font-size:.82rem; line-height:1.45; }
+      .work-link { position:relative; z-index:1; display:inline-flex; gap:.45rem; align-items:center; border-bottom:1px solid rgba(224,189,137,.62); padding-bottom:.18rem; color:var(--porcelain); font-size:.74rem; font-weight:800; letter-spacing:.055em; text-transform:uppercase; }
+      .work-link:hover { color:var(--copper-pale); }
+      .guide { position:relative; z-index:1; margin-top:1rem; border-top:1px solid var(--line); cursor:default; }
+      .guide summary { cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:.8rem; padding-top:.9rem; color:var(--copper-pale); font-family:var(--mono); font-size:.7rem; font-weight:800; letter-spacing:.08em; list-style:none; text-transform:uppercase; }
+      .guide summary::-webkit-details-marker { display:none; }
+      .guide summary::after { content:"+"; flex:0 0 auto; font-size:1.1rem; font-weight:400; }
+      .guide[open] summary::after { content:"–"; }
+      .guide-body { padding-top:.85rem; color:var(--mist); font-size:.89rem; }
+      .guide-body p { margin-bottom:.68rem; }
+      .guide-body ol, .guide-body ul { display:grid; gap:.45rem; margin:.2rem 0 .9rem; padding-left:1.1rem; }
+      .guide-body li::marker { color:var(--copper-pale); }
+      .guide-body strong { color:var(--porcelain); }
+      .roadmap { margin-top: 4rem; }
+      .roadmap-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.15rem; }
+      .roadmap-card { padding:1.25rem; border-top:1px solid var(--line-copper); background:linear-gradient(160deg,rgba(47,41,35,.36),rgba(20,18,17,.25)); }
+      .roadmap-card .number { display:block; margin-bottom:.7rem; color:var(--copper-pale); font-family:var(--mono); font-size:.71rem; font-weight:800; letter-spacing:.1em; }
+      .roadmap-card h3 { margin-bottom:.45rem; font-family:var(--serif); font-size:1.55rem; font-weight:500; line-height:1.08; }
+      .roadmap-card p { margin-bottom:0; color:var(--mist); font-size:.9rem; }
+      .safe-box { margin-top:4rem; padding:clamp(1.35rem,3vw,2.15rem); border:1px solid rgba(207,123,97,.48); border-radius:9px; background:linear-gradient(115deg,rgba(126,58,40,.19),rgba(26,23,20,.72)); box-shadow:var(--shadow); }
+      .safe-box-grid { display:grid; grid-template-columns:1fr minmax(18rem,34rem); gap:1.5rem; align-items:end; }
+      .safe-box p { margin-bottom:0; color:var(--mist); }
+      .safety-list { display:grid; grid-template-columns:1fr 1fr; gap:.55rem 1.2rem; margin:0; padding-left:1.05rem; color:var(--mist); font-size:.9rem; }
+      .safety-list li::marker { color:var(--danger); }
+      .contact { display:grid; grid-template-columns:1fr auto; align-items:center; gap:1.5rem; margin-top:3.8rem; padding:clamp(1.4rem,4vw,2.35rem); border:1px solid var(--line-copper); border-radius:9px; background:linear-gradient(114deg,rgba(198,154,99,.15),rgba(35,30,25,.64)); box-shadow:var(--shadow); }
+      .contact p { max-width:65ch; margin-bottom:0; color:var(--mist); }
+      .buttons { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.65rem; }
+      .button { display:inline-flex; min-height:2.9rem; align-items:center; justify-content:center; padding:.68rem .95rem; border-radius:3px; font-size:.72rem; font-weight:800; letter-spacing:.075em; text-transform:uppercase; white-space:nowrap; }
+      .button--gold { color:var(--ink); border:1px solid var(--copper-pale); background:var(--copper-pale); }
+      .button--gold:hover { border-color:#edcd99; background:#edcd99; }
+      .button--quiet { border:1px solid rgba(243,238,228,.4); color:var(--porcelain); }
+      .button--quiet:hover { border-color:var(--copper); color:var(--copper-pale); }
+      footer { padding:1.55rem 0 2.3rem; border-top:1px solid var(--line); }
+      .footer-inner { display:flex; justify-content:space-between; gap:1rem; color:var(--muted); font-size:.8rem; }
+      .footer-links { display:flex; flex-wrap:wrap; gap:1rem; }
+      .footer-links a:hover { color:var(--porcelain); }
+      @media (max-width:1000px) { .nav { display:none; } .hero-grid,.finder-head,.content-head,.safe-box-grid,.contact { grid-template-columns:1fr; } .vehicle-media,.vehicle-media figcaption { min-height:14rem; } .contact .buttons { justify-content:flex-start; } }
+      @media (max-width:700px) { .shell { width:min(100% - 32px,1210px); } .header-inner { min-height:4.5rem; } .brand img { width:7.75rem; } .header-contact { padding:.55rem .65rem; font-size:.65rem; } .hero { padding-top:4rem; } h1 { font-size:clamp(3rem,14vw,4.55rem); } .vehicle-media,.vehicle-media figcaption { min-height:10.75rem; } .vehicle-media figcaption { padding-inline:1rem; } .form-grid,.work-grid,.roadmap-grid,.triage-grid,.safety-list { grid-template-columns:1fr; } .triage-item,.triage-item + .triage-item { padding:1rem 0; border-left:0; } .triage-item + .triage-item { border-top:1px solid var(--line); } .work-meta { grid-template-columns:1fr; gap:.7rem; } .footer-inner { flex-direction:column; } }
+      @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .work,.vehicle-media img { transition:none; } .work:hover { transform:none; } }
+    </style>
+  <style id="6006-global-search-navigation">
+html{scroll-padding-top:1.25rem}
+.enhanced-search-box{display:flex!important;align-items:center;gap:.45rem}
+.enhanced-search-box input[type=search]{min-width:0!important;flex:1 1 auto!important;width:100%!important}
+.enhanced-search-box .search-go-btn{flex:0 0 auto;min-height:2.65rem;padding:0 .8rem;border:1px solid #c69a63;background:#c69a63;color:#211811;border-radius:5px;font:700 .84rem system-ui,sans-serif;cursor:pointer;touch-action:manipulation}
+.enhanced-search-box .search-go-btn:focus-visible{outline:2px solid white;outline-offset:3px}
+.search-feedback{font:600 .82rem system-ui,sans-serif;color:#e0bd89;margin:.65rem 0;line-height:1.5}
+.search-target-active{outline:2px solid rgba(198,154,99,.75);outline-offset:6px;scroll-margin-top:1.75rem}
+@media(max-width:420px){.enhanced-search-box{gap:.3rem}.enhanced-search-box .search-go-btn{padding:0 .55rem;min-width:3.65rem}}
+</style><link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" /></head>
+  <body>
+    <a class="skip-link" id="skip-link" href="#arbeiten">Direkt zu den Reparaturthemen</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="../" aria-label="Zur Startseite von 6006 Performance"><img src="/assets/6006-primary-white.png" alt="6006 Performance" /></a>
+        <nav class="nav" id="repair-nav" aria-label="Hauptnavigation">
+          <a href="../#aracin" data-nav-key="stage">Stage 1</a>
+          <a href="../#teshis" data-nav-key="quick">Schnellsuche</a>
+          <a href="../fehlercodes/" data-nav-key="faults">Fehlercode-Wissen</a>
+          <a href="../technik/" data-nav-key="tech">Technik-Ratgeber</a>
+          <a href="#arbeiten" data-nav-key="repair" aria-current="page">Reparatur &amp; Wartung</a>
+        </nav>
+        <a class="header-contact" id="repair-contact" href="../#iletisim">Kontakt</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="shell hero-grid">
+          <div>
+            <p class="eyebrow" id="repair-eyebrow">6006 Performance · Reparaturwissen</p>
+            <h1 id="repair-title">Jede Arbeit braucht das <em>richtige</em> Fahrzeug.</h1>
+            <p class="lead" id="repair-lead">Bremsen, Fahrwerk, Motor, Getriebe, Elektrik, Klima, Abgas und Wartung: Diese Bibliothek bündelt die wichtigsten Reparaturbereiche für Pkw, Transporter und Lkw direkt auf der Seite. Nicht mit gefährlichen Pauschalwerten, sondern mit der konkreten Fahrzeugvariante als Ausgangspunkt.</p>
+            <p class="position-note" id="repair-note">Ein Modellname allein reicht bei vielen Arbeiten nicht aus. Motorcode, Baujahr, Achs- oder PR-Code und teils die VIN entscheiden über Teil, Betriebsstoff, Drehmoment und Ablauf.</p>
+          </div>
+          <aside class="data-card vehicle-panel" aria-labelledby="data-title">
+            <figure class="vehicle-media">
+              <img src="../assets/workshop-catalog-hero.png" alt="" />
+              <figcaption>
+                <span class="vehicle-media-kicker" id="vehicle-media-kicker">Fahrzeugdaten zuerst</span>
+                <strong class="vehicle-media-title" id="vehicle-media-title">Passende Daten. Klarer Start.</strong>
+              </figcaption>
+            </figure>
+            <h2 id="data-title">Dein Fahrzeug wählen.</h2>
+            <p id="picker-copy">Marke, Modell, Baujahr und Motor bleiben auf diesem Gerät. Die Auswahl öffnet direkt den Fahrzeugkatalog — ohne Formular und ohne Chat.</p>
+            <div class="form-grid" id="vehicle-picker">
+              <div class="field"><label for="repair-brand" data-picker-key="brand">Marke</label><select id="repair-brand"><option value="">Marke wählen</option></select></div>
+              <div class="field"><label for="repair-model" data-picker-key="model">Modell</label><select id="repair-model" disabled><option value="">Erst Marke wählen</option></select></div>
+              <div class="field field--wide" id="manual-brand-field" hidden><label for="repair-brand-manual" data-picker-key="manualBrand">Marke manuell eingeben</label><input id="repair-brand-manual" autocomplete="off" placeholder="z. B. Saab" /></div>
+              <div class="field field--wide" id="manual-model-field" hidden><label for="repair-model-manual" data-picker-key="manualModel">Modell manuell eingeben</label><input id="repair-model-manual" autocomplete="off" placeholder="z. B. 9-3" /></div>
+              <div class="field"><label for="repair-year" data-picker-key="year">Baujahr</label><select id="repair-year"><option value="">Baujahr wählen</option></select></div>
+              <div class="field"><label for="repair-powertrain" data-picker-key="powertrain">Kraftstoff / Antrieb</label><select id="repair-powertrain"><option value="">Bitte wählen</option><option value="petrol">Benzin</option><option value="diesel">Diesel</option><option value="hybrid">Hybrid / Plug-in-Hybrid</option><option value="electric">Elektro</option><option value="lpg">Erdgas / LPG</option></select></div>
+              <div class="field field--wide"><label for="repair-engine" data-picker-key="engine">Motor / Motorcode (optional)</label><input id="repair-engine" autocomplete="off" placeholder="z. B. 1.5 dCi K9K oder 2.0 TDI EA288" /></div>
+            </div>
+            <button class="primary" id="apply-vehicle" type="button">Fahrzeugkatalog öffnen</button>
+            <p class="form-note" id="picker-note">Die Auswahl wird nur lokal im Browser gespeichert. Exakte Teile-, Öl- und Torkwerte erscheinen erst nach passender Fahrzeug-/Motorzuordnung.</p>
+            <p class="vehicle-status" id="vehicle-status" hidden></p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="triage">
+        <div class="shell triage-grid" aria-label="Arbeitsprinzip">
+          <div class="triage-item"><strong>01 · Identifizieren</strong><span>Das richtige Fahrzeug, den Motor und die betroffene Baugruppe festlegen.</span></div>
+          <div class="triage-item"><strong>02 · Abgleichen</strong><span>Nur Teile, Flüssigkeiten und Werte für genau diese Variante verwenden.</span></div>
+          <div class="triage-item"><strong>03 · Sicher handeln</strong><span>Bei sicherheitskritischen Systemen nicht improvisieren, sondern qualifiziert prüfen lassen.</span></div>
+        </div>
+      </section>
+
+      <section class="shell finder" aria-labelledby="finder-title">
+        <div class="finder-head"><div><p class="section-kicker">Arbeitsbereiche</p><h2 id="finder-title">Nicht nur Fehlercodes. Die ganze Werkstattlogik.</h2></div><p>Suche nach einem Bauteil, einer Arbeit oder einem Symptom. Die Übersicht zeigt den passenden Bereich und welche Daten für eine genaue Anleitung benötigt werden.</p></div>
+        <div class="search"><span class="search-mark" aria-hidden="true">⌕</span><input id="work-search" type="search" autocomplete="off" placeholder="z. B. Bremsscheiben, Kupplung, Steuerkette, Klimaanlage, Radlager …" aria-label="Reparaturthema suchen" /></div>
+        <div class="filter-row" aria-label="Arbeitsbereich filtern">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">Alle Bereiche</button>
+          <button class="filter" type="button" data-filter="wartung" aria-pressed="false">Wartung</button>
+          <button class="filter" type="button" data-filter="sicherheit" aria-pressed="false">Bremsen &amp; Fahrwerk</button>
+          <button class="filter" type="button" data-filter="antrieb" aria-pressed="false">Motor &amp; Antrieb</button>
+          <button class="filter" type="button" data-filter="elektrik" aria-pressed="false">Elektrik &amp; Komfort</button>
+          <button class="filter" type="button" data-filter="nutzfahrzeug" aria-pressed="false">Nutzfahrzeug</button>
+        </div>
+        <p class="result-count" id="work-count" aria-live="polite">10 Arbeitsbereiche werden angezeigt.</p>
+      </section>
+
+      <section class="content" id="arbeiten">
+        <div class="shell">
+          <div class="content-head"><div><p class="section-kicker">Reparatur &amp; Wartung</p><h2>Von der Kleinigkeit bis zur Baugruppe.</h2></div><p>Jede Karte enthält einen direkten Leitfaden auf dieser Seite. Für ein konkretes Fahrzeug werden Werte und Teile erst nach eindeutiger Zuordnung veröffentlicht.</p></div>
+          <div class="work-grid">
+            <article class="work" data-kind="wartung" data-search="wartung inspektion öl ölwechsel motoröl ölfilter luftfilter innenraumfilter pollenfilter zündkerzen kraftstofffilter flüssigkeit service yağ değişimi yağ bakımı yağ filtresi motor yağı oil change oil service oil filter maintenance">
+              <div class="work-top"><span class="work-index">W01</span><span class="badge badge--self">Basiswartung</span></div>
+              <h3>Inspektion, Filter &amp; Betriebsstoffe</h3>
+              <p>Öl- und Filterservice, Luft- und Innenraumfilter, Zündkerzen, Kraftstofffilter, Flüssigkeiten und Wartungsintervalle. Der richtige Ölstandard ist wichtiger als ein pauschaler Markenname.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Modell, Baujahr, Motorcode, Serviceintervall und bei Öl die Herstellerfreigabe.</p></div><div><h4>Prüfen vorab</h4><p>Füllmenge, Ablass- und Filterausführung sowie Entsorgungsweg.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>So ordnest du einen Service richtig ein:</strong> Nicht „5W-30“ allein wählen. Entscheidend sind die im Handbuch geforderte Herstellerfreigabe, Motorvariante, Longlife-/Festintervall und die zulässige Ölmenge.</p><ol><li>Wartungsanzeige, Motorcode und vorhandene Freigabe aus Betriebsanleitung oder Serviceheft abgleichen.</li><li>Ölstand nur mit dem vorgesehenen Messverfahren prüfen; Fahrzeug muss waagerecht stehen und die im Handbuch genannte Wartezeit einhalten.</li><li>Beim Filterwechsel auf die genaue Filtervariante und neue Dichtungen achten.</li><li>Altöl und Filter über eine Annahmestelle entsorgen; niemals nach Gefühl überfüllen.</li></ol><p><strong>Für exakte Werte:</strong> Motorkennbuchstabe, Baujahr und Herstellerfreigabe werden benötigt.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="sicherheit" data-search="bremse bremsen beläge bremsbeläge bremsscheiben bremssattel bremsschlauch bremsflüssigkeit abs esp handbremse parkbremse scheibe fren frenler balata disk fren diski fren hidroliği brake brakes brake pads brake discs">
+              <div class="work-top"><span class="work-index">R02</span><span class="badge badge--critical">Sicherheitskritisch</span></div>
+              <h3>Bremsen, ABS &amp; Parkbremse</h3>
+              <p>Beläge, Scheiben, Sättel, Leitungen, Bremsflüssigkeit, ABS-Sensorik und elektrische Parkbremsen. Bremsanlage und Drehmomente können sich selbst innerhalb einer Modellreihe stark unterscheiden.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>VIN/PR-Code oder Bremscode, Achse, Motorisierung und vorhandene Bremsanlage.</p></div><div><h4>Grenze</h4><p>Keine pauschale DIY-Anleitung für Bremsarbeiten oder Entlüftung ohne Herstellerdaten.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Typische Anzeichen:</strong> Schleifen, Rubbeln beim Bremsen, einseitiger Belagverschleiß, weiches Pedal, rote Bremswarnung oder ABS/ESP-Meldung. Eine Warnung bedeutet nicht automatisch, dass nur Beläge fällig sind.</p><ol><li>Bei roter Bremswarnung, Flüssigkeitsverlust oder deutlich verändertem Pedalweg nicht weiterfahren.</li><li>Die genaue Bremsanlage vor Teilebestellung über Fahrzeugdaten und Achse identifizieren; gleiche Modellreihe kann unterschiedliche Scheiben und Sättel haben.</li><li>Vor jeder Arbeit Verschleißbild, Scheibenzustand, Führungen, Leitungen und Bremsflüssigkeitsstand fachgerecht prüfen.</li><li>Nach dem Bremsservice Herstellerablauf für Parkbremse, Entlüftung, Einbremsen und eventuelle Diagnosefunktionen beachten.</li></ol><p><strong>Wichtig:</strong> Befestigungswerte, Dehnschrauben und Entlüftungsablauf sind ausschließlich dem konkreten Herstellerdatensatz zu entnehmen.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="sicherheit" data-search="fahrwerk stoßdämpfer federn querlenker traggelenk radlager achse lenkung spurstange spurvermessung reifen räder radschrauben süspansiyon amortisör rulman direksiyon lastik wheel bearing suspension steering tyres">
+              <div class="work-top"><span class="work-index">R03</span><span class="badge badge--critical">Fahrdynamik</span></div>
+              <h3>Fahrwerk, Lenkung &amp; Radlager</h3>
+              <p>Stoßdämpfer, Federn, Querlenker, Lager, Spurstangen, Radlager, Reifen und Räder. Nach Arbeiten an Achse oder Lenkung können Einstell- und Kalibrierarbeiten nötig sein.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Achsausführung, Antrieb, Fahrwerkcode, Rad-/Reifenmaß und je nach Arbeit PR-Code.</p></div><div><h4>Wichtig</h4><p>Keine Drehmomente raten; Klemmschrauben und Dehnschrauben sind variantenspezifisch.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Typische Anzeichen:</strong> Poltern, Ziehen, Vibrationen, ungleichmäßiger Reifenabrieb, schwammiges Lenken oder mahlende Geräusche mit der Geschwindigkeit.</p><ol><li>Reifenluftdruck und sichtbare Beschädigungen zuerst nach Herstelleraufkleber prüfen.</li><li>Geräusch, Geschwindigkeit, Lenkeinschlag und Fahrbahnsituation dokumentieren; das trennt oft Radlager, Reifen und Gelenkspiel.</li><li>Fahrwerksteile nur am korrekt angehobenen und gesicherten Fahrzeug prüfen.</li><li>Nach Eingriffen an Lenkung/Achse Spur, Lenkwinkelsensor oder Assistenzkalibrierung nach Herstellervorgabe berücksichtigen.</li></ol><p><strong>Teilebestellung:</strong> Achslast, Antrieb und Fahrwerkcode können entscheidend sein; äußerlich ähnliche Teile passen nicht zwingend.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="antrieb" data-search="motor steuerkette zahnriemen steuertrieb keilriemen wasserpumpe ventildeckel dichtung zylinderkopf glühkerze zündkerze kompression turbo turbolader ansaugung motor triger zincir kayış su pompası turbo engine timing chain timing belt water pump">
+              <div class="work-top"><span class="work-index">M04</span><span class="badge badge--critical">Motorintern</span></div>
+              <h3>Motor, Steuertrieb &amp; Turbo</h3>
+              <p>Zahnriemen, Steuerkette, Nebenaggregate, Wasserpumpe, Dichtungen, Zündung, Glühsystem, Einspritzung, Ansaugung und Turbo. Ein falscher Ablauf kann zu schwerem Motorschaden führen.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Exakter Motorcode, Baujahr, Leistung, Motornummern- oder Softwarebereich wenn relevant.</p></div><div><h4>Vorher prüfen</h4><p>Fehlerspeicher, Leckagen, Live-Daten und die Ursache – nicht nur das sichtbare Teil.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Steuertrieb:</strong> Rasseln beim Kaltstart, Serviceüberschreitung oder unklarer Vorbesitz sind kein Anlass zum Raten. Intervall, Werkzeugsatz, Markierungen und Wechselumfang richten sich nach dem Motorcode.</p><p><strong>Turbo/Ladedruck:</strong> Vor Turbotausch Ansaug- und Druckstrecke, Unterdruck/Ansteuerung, Sensorwerte, Ölversorgung und Fehlerdaten prüfen. Ein P0299 oder P0234 bedeutet nicht automatisch „Turbo kaputt“.</p><ol><li>Motorcode und genaue Leistung bestimmen.</li><li>Vollständige Fehlercodes und Live-Daten sichern.</li><li>Nur mit vorgeschriebenen Arretier-/Spezialwerkzeugen und Herstellerschritten arbeiten.</li><li>Nach einer Reparatur Ölversorgung, Dichtheit und Fehlerspeicher nach Vorgabe kontrollieren.</li></ol></div></details>
+            </article>
+
+            <article class="work" data-kind="antrieb" data-search="kupplung zweimassenschwungrad dsg getriebe automatik schaltgetriebe ölwechsel getriebeöl antriebswelle differential allrad quattro xdrive 4matic debriyaj şanzıman vites otomatik manuel şanzıman yağı clutch gearbox transmission">
+              <div class="work-top"><span class="work-index">A05</span><span class="badge badge--critical">Antriebsstrang</span></div>
+              <h3>Kupplung, Getriebe &amp; Allrad</h3>
+              <p>Kupplung, Zweimassenschwungrad, Schalt- und Automatikgetriebe, DSG/DCT, Verteilergetriebe, Differenzial und Antriebswellen. Öl, Befüllniveau, Temperaturfenster und Adaptionsablauf sind nicht universal.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Getriebecode, Motor, Antriebskonzept, Baujahr und vorhandene Fehler-/Messwerte.</p></div><div><h4>Grenze</h4><p>Kein Getriebeölwechsel oder Adaptionsvorgang nach allgemeiner Internetanleitung.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Symptome richtig trennen:</strong> Schleifen beim Anfahren, Drehzahlschwankungen, Schaltstoß, Verzögerung beim Einlegen oder ein Heulen unter Last können unterschiedliche Ursachen haben: Kupplung, Schwungrad, Hydraulik, Ölstand, Mechatronik oder Antriebswelle.</p><ol><li>Getriebecode und Wartungshistorie vor Teile- oder Ölentscheidung ermitteln.</li><li>Bei Automatik/DSG: Fehlercodes, Öltemperatur und Herstellervorgabe zum Befüllniveau beachten.</li><li>Bei Vibrationen auch Motorlager, Gelenkwellen und Rad-/Reifenproblem ausschließen.</li><li>Adaptions- und Grundeinstellprozesse nur mit dem vorgesehenen Diagnoseablauf durchführen.</li></ol><p><strong>Nie universell übernehmen:</strong> Öltyp, Menge, Temperaturfenster und Schraubenwerte.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="elektrik" data-search="batterie lichtmaschine anlasser sicherung elektrik kabel masse startprobleme can bus steuergerät sensor lampe beleuchtung xenon led komfort schlüssel akü şarj dinamo marş sigorta elektrik battery alternator starter electrical">
+              <div class="work-top"><span class="work-index">E06</span><span class="badge badge--self">Diagnose zuerst</span></div>
+              <h3>Batterie, Laden &amp; Fahrzeugelektrik</h3>
+              <p>12/24-V-Batterie, Generator, Starter, Massepunkte, Sicherungen, Beleuchtung, Sensorik, CAN-Kommunikation und Komfortfunktionen. Mehrere Fehler können eine gemeinsame Spannungsursache haben.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Fahrzeugspannung, Baujahr, Ausstattung, Fehlercodes und Verlauf des Fehlers.</p></div><div><h4>Sicher selbst</h4><p>Dokumentieren, Sichtkontrolle und herstellerkonforme Batteriespezifikation – keine Kabelbrücken.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Viele Warnungen gleichzeitig?</strong> Erst Spannungsversorgung prüfen. Eine alternde Batterie oder schlechte Masseverbindung kann zahlreiche, scheinbar unabhängige Steuergerätefehler erzeugen.</p><ol><li>Zeitpunkt und Reihenfolge der Warnungen notieren; besonders nach Starthilfe, Batteriewechsel oder langer Standzeit.</li><li>Nur eine Batterie mit passender Technologie, Kapazität und Kaltstartleistung einsetzen; bei vielen Fahrzeugen ist eine Anmeldung/Codierung erforderlich.</li><li>Sichtbar auf lose Klemmen, Korrosion oder beschädigte Kabel achten – nicht mit Draht oder falschen Sicherungen überbrücken.</li><li>Wiederkehrende Sicherungsauslösung, warme Kabel oder CAN-Fehler sind Diagnosefälle.</li></ol></div></details>
+            </article>
+
+            <article class="work" data-kind="wartung" data-search="kühlung kühlmittel thermostat wasserpumpe heizung klimaanlage klima kältemittel kompressor lüfter überhitzung hararet temperatur soğutma antifriz klima hararet coolant overheating air conditioning">
+              <div class="work-top"><span class="work-index">K07</span><span class="badge badge--critical">Temperatur &amp; Druck</span></div>
+              <h3>Kühlung, Heizung &amp; Klimaanlage</h3>
+              <p>Kühlmittel, Thermostat, Wasserpumpe, Lüfter, Heizungswärmetauscher, Klimakompressor und Kältemittelkreislauf. Kühlmittel- und Kältemittelspezifikationen dürfen nicht vermischt oder geschätzt werden.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Motor, Baujahr, vorhandene Kühlmittelangabe, Klimaausstattung und Fehlerspeicher.</p></div><div><h4>Keine Eigenarbeit</h4><p>Keine heißen Deckel öffnen und keine Klimaanlage ohne qualifiziertes Equipment entleeren.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Bei Überhitzung:</strong> sicher anhalten, Motor abstellen und vollständig abkühlen lassen. Ein heißer Kühlkreislauf steht unter Druck; Deckel nie heiß öffnen.</p><ol><li>Wortlaut der Temperaturwarnung, Lüfterverhalten und sichtbaren Dampf dokumentieren.</li><li>Erst bei kaltem Motor auf sichtbare Leckspuren und den vorgeschriebenen Kühlmittelstand prüfen.</li><li>Kühlmittel nur verwenden, wenn die Freigabe für die konkrete Variante bestätigt ist; Farben sind kein verlässliches Auswahlkriterium.</li><li>Bei Klima: Kältemittel, Ölmenge und Füllmenge gehören in einen qualifizierten Kreislaufservice.</li></ol><p><strong>Nicht weiterfahren:</strong> rote Temperaturwarnung, Dampf, rasch steigende Temperatur oder leerer Kühlkreislauf.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="antrieb" data-search="kraftstoff benzin diesel einspritzung injektor hochdruckpumpe raildruck dpf egr agr adblue scr nox katalysator lambdasonde abgas yakıt enjektör egzoz exhaust fuel injection">
+              <div class="work-top"><span class="work-index">D08</span><span class="badge badge--critical">Legal &amp; OEM</span></div>
+              <h3>Kraftstoff, Abgas &amp; Diagnose</h3>
+              <p>Einspritzung, Hochdrucksysteme, DPF, AGR/EGR, SCR/AdBlue, NOx, Katalysator und Sensoren. Diese Systeme brauchen vollständige Codes, Umgebungsdaten und eine legale OEM-orientierte Instandsetzung.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Vollständige DTCs, Freeze-Frame/Live-Daten, Motorcode, Symptom und Fahrprofil.</p></div><div><h4>Klarer Rahmen</h4><p>Keine Abschaltung, Entfernung oder Umgehung emissionsrelevanter Systeme.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>DPF/AdBlue/SCR:</strong> Warnung, Reichweite bis Startsperre, Fehlercodes und Fahrprofil sichern. Häufige Ursachen liegen nicht zwingend im sichtbaren Bauteil, sondern etwa in Sensorik, Heizung, Dosierung, Leckage oder Betriebsbedingungen.</p><ol><li>Vollständigen Code inklusive Untercode und Freeze-Frame sichern; nicht sofort löschen.</li><li>Nur normgerechten Kraftstoff/AdBlue nach Herstellervorgabe verwenden.</li><li>Bei Leistungsverlust, Warnung oder Regenerationsproblem relevante Live-Werte nach Herstellerablauf vergleichen.</li><li>Kein Emulator, keine Abschaltung und keine Manipulation von DPF, AGR/EGR oder SCR.</li></ol><p>Für konkrete Code-Erklärungen steht der <a class="work-link" href="../fehlercodes/">Fehlercode-Leitfaden</a> direkt auf dieser Website bereit.</p></div></details>
+            </article>
+
+            <article class="work" data-kind="elektrik" data-search="karosserie tür fensterheber wischer waschanlage spiegel sitz schloss schlüssel zentralverriegelung kamera radar adas parkhilfe kapı cam kriko ayna merkezi kilit body door window regulator mirror">
+              <div class="work-top"><span class="work-index">C09</span><span class="badge">Komfort &amp; ADAS</span></div>
+              <h3>Karosserie, Komfort &amp; Assistenz</h3>
+              <p>Türen, Schlösser, Fensterheber, Wischer, Waschanlage, Spiegel, Sitze, Kameras, Radar, Parkhilfe und Fahrerassistenz. Nach Glas-, Stoßfänger- oder Achsarbeiten kann eine Kalibrierung erforderlich sein.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Ausstattung, Baujahr, Fehlercode, betroffene Seite und Auslöser des Problems.</p></div><div><h4>Wichtig</h4><p>Airbag-, Kamera- und Radarsysteme nicht öffnen, messen oder „wegcodieren“.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Wischer, Waschanlage, Schloss oder Fensterheber:</strong> Sicherungen nur durch identischen Typ und identischen Wert ersetzen. Vor dem Ausbau prüfen, ob der Fehler nach Feuchtigkeit, Batterieproblem oder einer Reparatur aufgetreten ist.</p><p><strong>Assistenzsysteme:</strong> Kamera, Radar und Parksensoren können nach Scheiben-, Stoßfänger-, Fahrwerks- oder Achsarbeiten eine Kalibrierung benötigen. Eine sichtbare Fehlermeldung sollte zuerst dokumentiert werden.</p><ul><li>Betroffene Seite und Funktion notieren.</li><li>Fehlercodes und Warntexte sichern.</li><li>Keine gelben Airbag-Stecker, Kameras oder Radarmodule öffnen.</li><li>Nach jeder Reparatur eine Funktionsprüfung nach Herstellerablauf vorsehen.</li></ul></div></details>
+            </article>
+
+            <article class="work" data-kind="nutzfahrzeug" data-search="lkw transporter truck nutzfahrzeug druckluft bremse ebs abs ecas luftfederung anhänger 24v spn fmi j1939 tachograph kamyon ticari araç hava freni tır commercial vehicle air brake">
+              <div class="work-top"><span class="work-index">N10</span><span class="badge badge--critical">Nutzfahrzeug</span></div>
+              <h3>Lkw, Druckluft &amp; Anhänger</h3>
+              <p>24-V-Elektrik, Druckluftversorgung, EBS/ABS, ECAS, Anhänger-Verbindung, SPN/FMI, SCR und Nutzfahrzeugantrieb. Bei Lkw entscheidet zusätzlich die genaue Fahrzeug- und Aufbauvariante.</p>
+              <div class="work-meta"><div><h4>Benötigt</h4><p>Hersteller, Modell, Motor, SPN/FMI, Warnstatus, Anhänger und Aufbau-/Achsdaten.</p></div><div><h4>Grenze</h4><p>Druckluftbremse, Tachograf, Sicherheits- und Abgassysteme sind keine DIY-Arbeiten.</p></div></div>
+              <details class="guide"><summary>Anleitung auf der Seite lesen</summary><div class="guide-body"><p><strong>Bei Druckluft-/EBS-Warnung:</strong> Druckanzeige, Warntext, Anhängerstatus und vollständige SPN/FMI-Einträge sichern. Ein Lkw darf bei fehlender Bremsfreigabe, unzureichendem Druck oder EBS-Störung nicht weiterfahren.</p><ol><li>Fahrzeug sicher abstellen und Betriebsanleitung/Fuhrparkvorgabe beachten.</li><li>Hörbare Leckagen und sichtbar beschädigte Leitungen nur aus sicherem Abstand dokumentieren.</li><li>Keine Druckluftleitung lösen und niemals an Federspeicherbremsen arbeiten.</li><li>Bei 24-V- oder CAN-Fehlern Versorgung, Masse und Steuergerätedaten fachgerecht prüfen lassen.</li></ol></div></details>
+            </article>
+          </div>
+
+          <section class="roadmap" aria-labelledby="quality-title">
+            <div class="content-head"><div><p class="section-kicker">Qualitätsstandard</p><h2 id="quality-title">So wird aus einer Suche eine brauchbare Anleitung.</h2></div><p>Keine automatisch vervielfältigten Seiten mit geratenen Angaben. Jede fahrzeugbezogene Seite folgt denselben technischen Kontrollpunkten.</p></div>
+            <div class="roadmap-grid">
+              <article class="roadmap-card"><span class="number">01 · Fahrzeugmatch</span><h3>Variante eindeutig machen.</h3><p>Marke, Modell, Baujahr, Motorcode, Getriebe und bei Bedarf VIN-/PR-/Achsangaben werden vor dem technischen Inhalt abgeglichen.</p></article>
+              <article class="roadmap-card"><span class="number">02 · Technik prüfen</span><h3>Werte nur mit Quelle.</h3><p>Ölnorm, Füllmenge, Teile, Drehmoment und Winkelanzug gehören nur dann in eine Anleitung, wenn sie der konkreten Variante zugeordnet und geprüft sind.</p></article>
+              <article class="roadmap-card"><span class="number">03 · Arbeit richtig begrenzen</span><h3>DIY klar von Facharbeit trennen.</h3><p>Eine Anleitung benennt Werkzeug, Risiko, Vorbedingungen und die Stelle, an der qualifiziertes Personal übernehmen muss.</p></article>
+            </div>
+          </section>
+
+          <section class="safe-box" aria-labelledby="safe-title">
+            <div class="safe-box-grid"><div><p class="section-kicker">Sicherheitsgrenze</p><h2 id="safe-title">Nicht jeder Defekt ist ein Heimwerkerprojekt.</h2><p>Für folgende Bereiche veröffentlicht 6006 Performance keine pauschale Schritt-für-Schritt-Reparatur, weil falsche Arbeit Menschen gefährden oder das Fahrzeug unzulässig machen kann. Hier hilft die Seite beim Einordnen und beim Sammeln der richtigen Daten für eine Fachdiagnose.</p></div><ul class="safety-list"><li>Bremsen, Lenkung und Fahrwerks-Sicherheitsbauteile</li><li>Airbag, Gurtstraffer und pyrotechnische Systeme</li><li>Hochvolt, CNG/LPG und Hochdruck-Kraftstoff</li><li>Klimaanlagen-Kältemittel und Drucksysteme</li><li>Lkw-Druckluftbremse, EBS und Anhängersicherheit</li><li>DPF, AGR/EGR, SCR/AdBlue oder Manipulationsanfragen</li></ul></div>
+          </section>
+
+          <section class="roadmap" aria-labelledby="library-title">
+            <div class="content-head"><div><p class="section-kicker">Lesen statt weitergeleitet werden</p><h2 id="library-title">Die Reparaturbibliothek bleibt auf der Seite.</h2></div><p>Jede Karte oben enthält ihren Leitfaden direkt zum Aufklappen. Neue Modell- und Motorvarianten werden erst dann einzeln ergänzt, wenn die technischen Daten geprüft sind.</p></div>
+            <div class="roadmap-grid">
+              <article class="roadmap-card"><span class="number">SUCHEN</span><h3>Bauteil oder Symptom eingeben.</h3><p>Zum Beispiel „Bremsscheiben“, „Ladedruck“, „Kühlmittel“, „Kupplung“ oder „SPN FMI“. Die Filter führen zum passenden Bereich.</p></article>
+              <article class="roadmap-card"><span class="number">LESEN</span><h3>Ursache und Vorgehen einordnen.</h3><p>Der Besucher erhält typische Symptome, sichere Erstprüfungen, Arbeitsschritte und die Daten, die für die konkrete Variante wichtig sind.</p></article>
+              <article class="roadmap-card"><span class="number">ABGLEICHEN</span><h3>Erst dann Teil und Wert wählen.</h3><p>Teilenummern, Betriebsstoffe und Drehmomente dürfen nur gegen das passende Handbuch oder einen geprüften Fahrzeugdatensatz abgeglichen werden.</p></article>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="shell footer-inner"><span>© 2026 6006 Performance · Technische Orientierung, keine Ferndiagnose.</span><nav class="footer-links" aria-label="Fußnavigation"><a href="../">Startseite</a><a href="../fehlercodes/">Fehlercode-Wissen</a><a href="../technik/">Technik-Ratgeber</a><a href="../#iletisim">Kontakt</a><a href="mailto:6006performance@gmail.com">6006performance@gmail.com</a></nav></div></footer>
+
+    <script defer src="../assets/6006-language-bridge.js"></script>
+    <script>
+      (() => {
+        const search = document.querySelector('#work-search');
+        const cards = [...document.querySelectorAll('.work')];
+        const filters = [...document.querySelectorAll('[data-filter]')];
+        const counter = document.querySelector('#work-count');
+        const brand = document.querySelector('#repair-brand');
+        const model = document.querySelector('#repair-model');
+        const year = document.querySelector('#repair-year');
+        const powertrain = document.querySelector('#repair-powertrain');
+        const engine = document.querySelector('#repair-engine');
+        const manualBrandField = document.querySelector('#manual-brand-field');
+        const manualBrand = document.querySelector('#repair-brand-manual');
+        const manualModelField = document.querySelector('#manual-model-field');
+        const manualModel = document.querySelector('#repair-model-manual');
+        const applyVehicle = document.querySelector('#apply-vehicle');
+        const vehicleStatus = document.querySelector('#vehicle-status');
+        let currentFilter = 'all';
+
+        const browserLanguages = Array.isArray(navigator.languages) && navigator.languages.length
+          ? navigator.languages
+          : [navigator.language || 'de'];
+        const language = (["tr","de","en"].includes(localStorage.getItem("6006-language")) && localStorage.getItem("6006-language")) || browserLanguages
+          .map((value) => String(value).toLowerCase().split('-')[0])
+          .find((value) => ['de', 'tr', 'en'].includes(value)) || 'en';
+        document.documentElement.lang = language;
+
+        const copy = {
+          de: {
+            eyebrow: '6006 Performance · Reparaturwissen',
+            skip: 'Direkt zu den Reparaturthemen',
+            nav: { label: 'Hauptnavigation', stage: 'Stage 1', quick: 'Schnellsuche', faults: 'Fehlercode-Wissen', tech: 'Technik-Ratgeber', repair: 'Reparatur & Wartung', contact: 'Kontakt' },
+            title: ['Jede Arbeit braucht das ', 'richtige', ' Fahrzeug.'],
+            lead: 'Bremsen, Fahrwerk, Motor, Getriebe, Elektrik, Klima, Abgas und Wartung: Diese Bibliothek bündelt die wichtigsten Reparaturbereiche für Pkw, Transporter und Lkw direkt auf der Seite. Nicht mit gefährlichen Pauschalwerten, sondern mit der konkreten Fahrzeugvariante als Ausgangspunkt.',
+            note: 'Ein Modellname allein reicht bei vielen Arbeiten nicht aus. Motorcode, Baujahr, Achs- oder PR-Code und teils die VIN entscheiden über Teil, Betriebsstoff, Drehmoment und Ablauf.',
+            pickerTitle: 'Dein Fahrzeug wählen.',
+            pickerCopy: 'Marke, Modell, Baujahr und Motor bleiben auf diesem Gerät. Die Auswahl öffnet direkt den Fahrzeugkatalog — ohne Formular und ohne Chat.',
+            vehicleMedia: { kicker: 'Fahrzeugdaten zuerst', title: 'Passende Daten. Klarer Start.' },
+            labels: { brand: 'Marke', model: 'Modell', manualBrand: 'Marke manuell eingeben', manualModel: 'Modell manuell eingeben', year: 'Baujahr', powertrain: 'Kraftstoff / Antrieb', engine: 'Motor / Motorcode (optional)' },
+            placeholders: { brand: 'Marke wählen', model: 'Modell wählen', modelEmpty: 'Erst Marke wählen', manualBrand: 'z. B. Saab', manualModel: 'z. B. 9-3', manualModelOption: 'Modell manuell eingeben', year: 'Baujahr wählen', powertrain: 'Bitte wählen', engine: 'z. B. 1.5 dCi K9K oder 2.0 TDI EA288' },
+            powertrains: { petrol: 'Benzin', diesel: 'Diesel', hybrid: 'Hybrid / Plug-in-Hybrid', electric: 'Elektro', lpg: 'Erdgas / LPG' },
+            otherBrand: 'Andere Marke eingeben',
+            action: 'Fahrzeugkatalog öffnen',
+            pickerNote: 'Die Auswahl wird nur lokal im Browser gespeichert. Exakte Teile-, Öl- und Torkwerte erscheinen erst nach passender Fahrzeug-/Motorzuordnung.',
+            required: 'Bitte Marke, Modell und Baujahr auswählen bzw. manuell eingeben.',
+            cardSummary: 'Leitfaden auf dieser Seite öffnen / schließen',
+            cardLabel: (title) => `Leitfaden für ${title} öffnen oder schließen`,
+            finderKicker: 'Arbeitsbereiche',
+            finderTitle: 'Nicht nur Fehlercodes. Die ganze Werkstattlogik.',
+            finderCopy: 'Suche nach einem Bauteil, einer Arbeit oder einem Symptom. Die Übersicht zeigt den passenden Bereich und welche Daten für eine genaue Anleitung benötigt werden.',
+            search: 'z. B. Bremsscheiben, Kupplung, Steuerkette, Klimaanlage, Radlager …',
+            searchLabel: 'Reparaturthema suchen',
+            filters: { all: 'Alle Bereiche', wartung: 'Wartung', sicherheit: 'Bremsen & Fahrwerk', antrieb: 'Motor & Antrieb', elektrik: 'Elektrik & Komfort', nutzfahrzeug: 'Nutzfahrzeug' },
+            count: (value) => value === 1 ? '1 Arbeitsbereich wird angezeigt.' : `${value} Arbeitsbereiche werden angezeigt.`
+          },
+          tr: {
+            eyebrow: '6006 Performance · Tamir ve bakım bilgisi',
+            skip: 'Doğrudan tamir konularına git',
+            nav: { label: 'Ana menü', stage: 'Stage 1', quick: 'Hızlı arama', faults: 'Hata kodu rehberi', tech: 'Teknik rehber', repair: 'Tamir ve bakım', contact: 'İletişim' },
+            title: ['Her iş ', 'doğru', ' araçla başlar.'],
+            lead: 'Fren, süspansiyon, motor, şanzıman, elektrik, klima, egzoz ve bakım: Bu kütüphane otomobil, ticari araç ve kamyon için temel tamir alanlarını doğrudan sitenin içinde toplar. Genel ve riskli tahminler yerine seçtiğin araç varyantını başlangıç noktası alır.',
+            note: 'Birçok işlemde yalnızca model adı yeterli değildir. Motor kodu, üretim yılı, aks veya PR kodu ve bazen şasi numarası; parça, sıvı, tork ve işlem sırasını belirler.',
+            pickerTitle: 'Aracını seç.',
+            pickerCopy: 'Marka, model, üretim yılı ve motor bilgisi bu cihazda kalır. Seçim doğrudan araç kataloğunu açar — form ve sohbet yok.',
+            vehicleMedia: { kicker: 'Araç verisi önce', title: 'Doğru veri. Net başlangıç.' },
+            labels: { brand: 'Marka', model: 'Model', manualBrand: 'Markayı elle gir', manualModel: 'Modeli elle gir', year: 'Üretim yılı', powertrain: 'Yakıt / tahrik', engine: 'Motor / motor kodu (isteğe bağlı)' },
+            placeholders: { brand: 'Marka seç', model: 'Model seç', modelEmpty: 'Önce marka seç', manualBrand: 'Örn. Saab', manualModel: 'Örn. 9-3', manualModelOption: 'Modeli elle gir', year: 'Üretim yılını seç', powertrain: 'Lütfen seç', engine: 'Örn. 1.5 dCi K9K veya 2.0 TDI EA288' },
+            powertrains: { petrol: 'Benzin', diesel: 'Dizel', hybrid: 'Hibrit / plug-in hibrit', electric: 'Elektrik', lpg: 'Doğalgaz / LPG' },
+            otherBrand: 'Başka marka gir',
+            action: 'Araç kataloğunu aç',
+            pickerNote: 'Seçim yalnızca tarayıcıda tutulur. Kesin parça, yağ ve tork değerleri doğru araç/motor varyantı eşleştiğinde gösterilir.',
+            required: 'Lütfen marka, model ve üretim yılını seç veya elle gir.',
+            cardSummary: 'Bu sayfadaki rehberi aç / kapat',
+            cardLabel: (title) => `${title} rehberini aç veya kapat`,
+            finderKicker: 'Çalışma alanları',
+            finderTitle: 'Sadece hata kodları değil. Tüm atölye mantığı.',
+            finderCopy: 'Bir parça, işlem veya belirti ara. Bu alan, doğru bölümü ve kesin bir rehber için hangi araç verilerinin gerektiğini gösterir.',
+            search: 'Örn. fren diski, debriyaj, triger zinciri, klima, rulman …',
+            searchLabel: 'Tamir konusu ara',
+            filters: { all: 'Tüm alanlar', wartung: 'Bakım', sicherheit: 'Fren ve süspansiyon', antrieb: 'Motor ve aktarma', elektrik: 'Elektrik ve konfor', nutzfahrzeug: 'Ticari araç' },
+            count: (value) => value === 1 ? '1 çalışma alanı gösteriliyor.' : `${value} çalışma alanı gösteriliyor.`
+          },
+          en: {
+            eyebrow: '6006 Performance · Repair knowledge',
+            skip: 'Skip to repair topics',
+            nav: { label: 'Main navigation', stage: 'Stage 1', quick: 'Quick search', faults: 'Fault-code guide', tech: 'Technical guide', repair: 'Repair & maintenance', contact: 'Contact' },
+            title: ['Every job needs the ', 'right', ' vehicle.'],
+            lead: 'Brakes, suspension, engine, transmission, electrics, air conditioning, exhaust and servicing: this library keeps the main repair areas for cars, vans and trucks on the website. It starts with the specific vehicle variant, not risky generic values.',
+            note: 'For many jobs, a model name alone is not enough. Engine code, model year, axle or PR code and sometimes the VIN determine the part, fluid, torque and procedure.',
+            pickerTitle: 'Choose your vehicle.',
+            pickerCopy: 'Make, model, model year and engine stay on this device. Your choice opens the vehicle catalogue directly — no form and no chat.',
+            vehicleMedia: { kicker: 'Vehicle data first', title: 'The right data. A clear start.' },
+            labels: { brand: 'Make', model: 'Model', manualBrand: 'Enter make manually', manualModel: 'Enter model manually', year: 'Model year', powertrain: 'Fuel / drivetrain', engine: 'Engine / engine code (optional)' },
+            placeholders: { brand: 'Choose make', model: 'Choose model', modelEmpty: 'Choose a make first', manualBrand: 'For example Saab', manualModel: 'For example 9-3', manualModelOption: 'Enter model manually', year: 'Choose model year', powertrain: 'Please choose', engine: 'For example 1.5 dCi K9K or 2.0 TDI EA288' },
+            powertrains: { petrol: 'Petrol', diesel: 'Diesel', hybrid: 'Hybrid / plug-in hybrid', electric: 'Electric', lpg: 'Natural gas / LPG' },
+            otherBrand: 'Enter another make',
+            action: 'Open vehicle catalogue',
+            pickerNote: 'The choice is stored only in this browser. Exact parts, oil and torque values are shown only after the correct vehicle/engine variant is matched.',
+            required: 'Please choose or enter a make and model, then choose the model year.',
+            cardSummary: 'Open / close the guide on this page',
+            cardLabel: (title) => `Open or close the guide for ${title}`,
+            finderKicker: 'Work areas',
+            finderTitle: 'Not just fault codes. The whole workshop logic.',
+            finderCopy: 'Search for a component, job or symptom. The overview shows the relevant area and which vehicle data are needed for an accurate guide.',
+            search: 'For example brake discs, clutch, timing chain, air conditioning, wheel bearing …',
+            searchLabel: 'Search repair topic',
+            filters: { all: 'All areas', wartung: 'Maintenance', sicherheit: 'Brakes & suspension', antrieb: 'Engine & drivetrain', elektrik: 'Electrics & comfort', nutzfahrzeug: 'Commercial vehicle' },
+            count: (value) => value === 1 ? '1 work area is shown.' : `${value} work areas are shown.`
+          }
+        };
+        const ui = copy[language];
+        const setEmphasized = (element, parts) => {
+          const emphasis = document.createElement('em');
+          emphasis.textContent = parts[1];
+          element.replaceChildren(document.createTextNode(parts[0]), emphasis, document.createTextNode(parts[2]));
+        };
+        document.querySelector('#repair-eyebrow').textContent = ui.eyebrow;
+        document.querySelector('#skip-link').textContent = ui.skip;
+        document.querySelector('#repair-nav').setAttribute('aria-label', ui.nav.label);
+        document.querySelectorAll('[data-nav-key]').forEach((link) => { link.textContent = ui.nav[link.dataset.navKey]; });
+        document.querySelector('#repair-contact').textContent = ui.nav.contact;
+        setEmphasized(document.querySelector('#repair-title'), ui.title);
+        document.querySelector('#repair-lead').textContent = ui.lead;
+        document.querySelector('#repair-note').textContent = ui.note;
+        document.querySelector('#data-title').textContent = ui.pickerTitle;
+        document.querySelector('#picker-copy').textContent = ui.pickerCopy;
+        document.querySelector('#vehicle-media-kicker').textContent = ui.vehicleMedia.kicker;
+        document.querySelector('#vehicle-media-title').textContent = ui.vehicleMedia.title;
+        document.querySelectorAll('[data-picker-key]').forEach((label) => { label.textContent = ui.labels[label.dataset.pickerKey]; });
+        document.querySelector('#picker-note').textContent = ui.pickerNote;
+        applyVehicle.textContent = ui.action;
+        document.querySelector('#finder-title').textContent = ui.finderTitle;
+        document.querySelector('.finder .section-kicker').textContent = ui.finderKicker;
+        document.querySelector('.finder-head > p').textContent = ui.finderCopy;
+        search.placeholder = ui.search;
+        search.setAttribute('aria-label', ui.searchLabel);
+        filters.forEach((button) => { button.textContent = ui.filters[button.dataset.filter]; });
+
+        const MANUAL_MODEL_VALUE = '__manual_model__';
+        const OTHER_BRAND_VALUE = '__other_brand__';
+        const modelsByBrand = {
+          Abarth: ['500', '595', '695', 'Grande Punto'],
+          'Alfa Romeo': ['MiTo', 'Giulietta', 'Giulia', 'Stelvio', 'Tonale'],
+          Audi: ['A1', 'A3', 'A4', 'A6', 'Q2', 'Q3', 'Q5', 'Q7'],
+          BMW: ['1er', '2er', '3er', '4er', '5er', 'X1', 'X3', 'X5'],
+          BYD: ['Dolphin', 'Atto 3', 'Seal', 'Seal U', 'Tang'],
+          Chevrolet: ['Spark', 'Cruze', 'Captiva', 'Camaro', 'Corvette'],
+          Citroën: ['C3', 'C4', 'C5 Aircross', 'Berlingo', 'Jumpy', 'Jumper'],
+          Cupra: ['Leon', 'Formentor', 'Born', 'Ateca', 'Terramar'],
+          Dacia: ['Sandero', 'Duster', 'Logan', 'Jogger', 'Dokker'],
+          DAF: ['LF', 'XD', 'XF', 'XG', 'XG+'],
+          'DS Automobiles': ['DS 3', 'DS 4', 'DS 7', 'DS 9'],
+          Fiat: ['500', 'Panda', 'Tipo', '500X', 'Doblò', 'Ducato'],
+          Ford: ['Fiesta', 'Focus', 'Mondeo', 'Puma', 'Kuga', 'Ranger', 'Transit', 'Transit Custom'],
+          Honda: ['Jazz', 'Civic', 'HR-V', 'CR-V', 'ZR-V'],
+          Hyundai: ['i10', 'i20', 'i30', 'Tucson', 'Kona', 'Santa Fe'],
+          Isuzu: ['D-Max', 'N-Series', 'F-Series'],
+          Iveco: ['Daily', 'Eurocargo', 'S-Way', 'X-Way'],
+          Jaguar: ['XE', 'XF', 'E-Pace', 'F-Pace', 'I-Pace'],
+          Jeep: ['Avenger', 'Renegade', 'Compass', 'Wrangler', 'Grand Cherokee'],
+          Kia: ['Picanto', 'Ceed', 'Niro', 'Sportage', 'Sorento', 'EV6'],
+          'Land Rover': ['Defender', 'Discovery', 'Discovery Sport', 'Range Rover Evoque', 'Range Rover Sport'],
+          Lexus: ['UX', 'NX', 'RX', 'ES', 'LS'],
+          MAN: ['TGE', 'TGL', 'TGM', 'TGS', 'TGX'],
+          Mazda: ['2', '3', '6', 'CX-30', 'CX-5', 'CX-60'],
+          'Mercedes-Benz': ['A-Klasse', 'C-Klasse', 'E-Klasse', 'GLA', 'GLC', 'Vito', 'Sprinter', 'Actros'],
+          MINI: ['One', 'Cooper', 'Countryman', 'Clubman', 'Aceman'],
+          Mitsubishi: ['Space Star', 'ASX', 'Eclipse Cross', 'Outlander', 'L200'],
+          Nissan: ['Micra', 'Juke', 'Qashqai', 'X-Trail', 'Navara', 'Townstar'],
+          Opel: ['Corsa', 'Astra', 'Insignia', 'Mokka', 'Grandland', 'Vivaro', 'Movano'],
+          Peugeot: ['208', '308', '3008', '5008', 'Partner', 'Rifter', 'Boxer'],
+          Polestar: ['Polestar 2', 'Polestar 3', 'Polestar 4'],
+          Porsche: ['Macan', 'Cayenne', 'Panamera', 'Taycan', '911'],
+          Renault: ['Clio', 'Captur', 'Mégane', 'Scénic', 'Austral', 'Trafic', 'Master'],
+          'Renault Trucks': ['D', 'D Wide', 'C', 'T', 'K'],
+          Scania: ['P-Serie', 'G-Serie', 'R-Serie', 'S-Serie'],
+          SEAT: ['Ibiza', 'Leon', 'Arona', 'Ateca', 'Tarraco'],
+          Škoda: ['Fabia', 'Scala', 'Octavia', 'Superb', 'Kamiq', 'Karoq', 'Kodiaq'],
+          smart: ['fortwo', 'forfour', '#1', '#3'],
+          Subaru: ['Impreza', 'Crosstrek', 'Forester', 'Outback', 'BRZ'],
+          Suzuki: ['Swift', 'Ignis', 'Vitara', 'S-Cross', 'Jimny'],
+          Tesla: ['Model 3', 'Model Y', 'Model S', 'Model X', 'Cybertruck'],
+          Toyota: ['Yaris', 'Corolla', 'C-HR', 'RAV4', 'Land Cruiser', 'Hilux'],
+          Volkswagen: ['up!', 'Polo', 'Golf', 'Passat', 'T-Roc', 'Tiguan', 'Touran', 'Caddy', 'Transporter'],
+          Volvo: ['EX30', 'XC40', 'XC60', 'XC90', 'V60', 'V90'],
+          'Volvo Trucks': ['FL', 'FE', 'FM', 'FMX', 'FH']
+        };
+        const legacyPowertrain = {
+          Benzin: 'petrol', Petrol: 'petrol', Diesel: 'diesel', Dizel: 'diesel',
+          'Hybrid / Plug-in-Hybrid': 'hybrid', 'Hibrit / plug-in hibrit': 'hybrid',
+          Elektro: 'electric', Elektrik: 'electric', Electric: 'electric',
+          'Erdgas / LPG': 'lpg', 'Doğalgaz / LPG': 'lpg', 'Natural gas / LPG': 'lpg'
+        };
+
+        const hasBrand = (name) => Object.prototype.hasOwnProperty.call(modelsByBrand, name);
+        const updateManualFields = () => {
+          const needsManualBrand = brand.value === OTHER_BRAND_VALUE;
+          const needsManualModel = Boolean(brand.value) && (needsManualBrand || model.value === MANUAL_MODEL_VALUE);
+          manualBrandField.hidden = !needsManualBrand;
+          manualBrand.required = needsManualBrand;
+          manualModelField.hidden = !needsManualModel;
+          manualModel.required = needsManualModel;
+        };
+        const populateBrandOptions = () => {
+          const selected = brand.value;
+          brand.replaceChildren(new Option(ui.placeholders.brand, ''));
+          Object.keys(modelsByBrand).forEach((name) => brand.append(new Option(name, name)));
+          brand.append(new Option(ui.otherBrand, OTHER_BRAND_VALUE));
+          if (hasBrand(selected) || selected === OTHER_BRAND_VALUE) brand.value = selected;
+        };
+        const setModelOptions = (selected = '') => {
+          model.replaceChildren();
+          const blank = document.createElement('option');
+          blank.value = '';
+          blank.textContent = brand.value ? ui.placeholders.model : ui.placeholders.modelEmpty;
+          model.append(blank);
+          (modelsByBrand[brand.value] || []).forEach((name) => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            model.append(option);
+          });
+          if (brand.value) model.append(new Option(ui.placeholders.manualModelOption, MANUAL_MODEL_VALUE));
+          model.disabled = !brand.value;
+          if (!selected) {
+            manualModel.value = '';
+          } else if (hasBrand(brand.value) && modelsByBrand[brand.value].includes(selected)) {
+            model.value = selected;
+          } else if (brand.value) {
+            model.value = MANUAL_MODEL_VALUE;
+            manualModel.value = selected;
+          }
+          if (brand.value === OTHER_BRAND_VALUE) model.value = MANUAL_MODEL_VALUE;
+          updateManualFields();
+        };
+
+        populateBrandOptions();
+        year.options[0].textContent = ui.placeholders.year;
+        powertrain.options[0].textContent = ui.placeholders.powertrain;
+        [...powertrain.options].forEach((option) => {
+          if (option.value && ui.powertrains[option.value]) option.textContent = ui.powertrains[option.value];
+        });
+        engine.placeholder = ui.placeholders.engine;
+        manualBrand.placeholder = ui.placeholders.manualBrand;
+        manualModel.placeholder = ui.placeholders.manualModel;
+
+        for (let value = 2026; value >= 1990; value -= 1) {
+          const option = document.createElement('option');
+          option.value = String(value);
+          option.textContent = String(value);
+          year.append(option);
+        }
+
+        const selectedVehicle = () => ({
+          brand: (brand.value === OTHER_BRAND_VALUE ? manualBrand.value : brand.value).trim(),
+          model: (model.value === MANUAL_MODEL_VALUE ? manualModel.value : model.value).trim(),
+          year: year.value,
+          powertrain: powertrain.value,
+          engine: engine.value.trim()
+        });
+
+        const openCatalog = () => {
+          const selection = selectedVehicle();
+          if (!selection.brand || !selection.model || !selection.year) {
+            vehicleStatus.hidden = false;
+            vehicleStatus.textContent = ui.required;
+            const invalidField = !selection.brand
+              ? (brand.value === OTHER_BRAND_VALUE ? manualBrand : brand)
+              : !selection.model
+                ? (model.value === MANUAL_MODEL_VALUE ? manualModel : model)
+                : year;
+            invalidField.focus();
+            return;
+          }
+          try {
+            localStorage.setItem('6006-repair-vehicle', JSON.stringify(selection));
+          } catch {}
+          const query = new URLSearchParams();
+          Object.entries(selection).forEach(([key, value]) => {
+            if (value) query.set(key, value);
+          });
+          window.location.assign(`../fahrzeug/?${query.toString()}`);
+        };
+
+        const clearSelectionError = () => { vehicleStatus.hidden = true; vehicleStatus.textContent = ''; };
+        brand.addEventListener('change', () => {
+          manualModel.value = '';
+          if (brand.value !== OTHER_BRAND_VALUE) manualBrand.value = '';
+          setModelOptions();
+          clearSelectionError();
+        });
+        model.addEventListener('change', () => {
+          if (model.value !== MANUAL_MODEL_VALUE) manualModel.value = '';
+          updateManualFields();
+          clearSelectionError();
+        });
+        [year, powertrain].forEach((field) => field.addEventListener('change', clearSelectionError));
+        [engine, manualBrand, manualModel].forEach((field) => field.addEventListener('input', clearSelectionError));
+        [engine, manualBrand, manualModel].forEach((field) => field.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') { event.preventDefault(); openCatalog(); }
+        }));
+        applyVehicle.addEventListener('click', openCatalog);
+
+        const updateCards = () => {
+          const terms = search.value.trim().toLocaleLowerCase(language).split(/\s+/).filter(Boolean);
+          let visible = 0;
+          cards.forEach((card) => {
+            const matchesFilter = currentFilter === 'all' || card.dataset.kind === currentFilter;
+            const haystack = `${card.dataset.search} ${card.textContent}`.toLocaleLowerCase(language);
+            const matchesSearch = !terms.length || terms.every((term) => haystack.includes(term));
+            card.hidden = !(matchesFilter && matchesSearch);
+            if (!card.hidden) visible += 1;
+          });
+          counter.textContent = ui.count(visible);
+        };
+
+        search.addEventListener('input', updateCards);
+        filters.forEach((button) => button.addEventListener('click', () => {
+          currentFilter = button.dataset.filter;
+          filters.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          updateCards();
+        }));
+
+        cards.forEach((card) => {
+          const guide = card.querySelector('details.guide');
+          const summary = guide?.querySelector('summary');
+          const heading = card.querySelector('h3')?.textContent?.trim() || '';
+          if (!guide || !summary) return;
+          card.tabIndex = 0;
+          card.setAttribute('aria-label', ui.cardLabel(heading));
+          summary.textContent = ui.cardSummary;
+          const syncOpenState = () => card.classList.toggle('work--open', guide.open);
+          guide.addEventListener('toggle', syncOpenState);
+          syncOpenState();
+          const toggleGuide = () => {
+            guide.open = !guide.open;
+            if (guide.open) requestAnimationFrame(() => guide.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' }));
+          };
+          card.addEventListener('click', (event) => {
+            if (event.target.closest('a, summary, details')) return;
+            toggleGuide();
+          });
+          card.addEventListener('keydown', (event) => {
+            if (event.target !== card || !['Enter', ' '].includes(event.key)) return;
+            event.preventDefault();
+            toggleGuide();
+          });
+        });
+
+        const hydrateSelection = (selection) => {
+          if (!selection || !String(selection.brand || '').trim()) return false;
+          const savedBrand = String(selection.brand).trim().slice(0, 90);
+          const savedModel = String(selection.model || '').trim().slice(0, 90);
+          if (hasBrand(savedBrand)) {
+            brand.value = savedBrand;
+          } else {
+            brand.value = OTHER_BRAND_VALUE;
+            manualBrand.value = savedBrand;
+          }
+          setModelOptions(savedModel);
+          year.value = String(selection.year || '');
+          powertrain.value = legacyPowertrain[selection.powertrain] || selection.powertrain || '';
+          engine.value = String(selection.engine || '');
+          return true;
+        };
+
+        const querySelection = Object.fromEntries(new URLSearchParams(location.search).entries());
+        if (!hydrateSelection(querySelection)) try {
+          const saved = JSON.parse(localStorage.getItem('6006-repair-vehicle') || 'null');
+          hydrateSelection(saved);
+        } catch {}
+        setModelOptions(model.value);
+        updateCards();
+
+      })();
+    </script>
+  <script id="6006-global-search-navigation-script">
+(function(){
+  "use strict";
+  const labels = {tr:{search:"Ara",empty:"Eşleşen sonuç bulunamadı.",found:"Eşleşen sonuç açıldı."},de:{search:"Suchen",empty:"Keine passenden Ergebnisse gefunden.",found:"Passender Treffer geöffnet."},en:{search:"Search",empty:"No matching results found.",found:"Matching result opened."}};
+  const lang = () => {const v=(document.documentElement.lang||"de").slice(0,2).toLowerCase();return labels[v]?v:"de";};
+  const label = key => labels[lang()][key];
+  const dest = el => el && (el.getBoundingClientRect().height || el.offsetParent !== null) && !el.hidden && !el.closest("[hidden]");
+  function go(el){
+    if(!el)return;
+    el.classList.add("search-target-active");
+    if(!el.id)el.id="search-result-"+Array.from(el.parentNode.children).indexOf(el);
+    try{history.replaceState(null,"",location.pathname+location.search+"#"+encodeURIComponent(el.id));}catch(_){}
+    el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
+    el.setAttribute("tabindex","-1");
+    el.focus({preventScroll:true});
+  }
+  function status(input,content){let n=input.parentNode.parentNode.querySelector(".search-feedback");if(!n){n=document.createElement("p");n.className="search-feedback";n.setAttribute("role","status");input.parentNode.insertAdjacentElement("afterend",n);}n.textContent=content;}
+  function enhance(fieldId,cardSelector){
+    const input=document.getElementById(fieldId);if(!input)return;
+    const box=input.parentNode;if(!box)return;
+    box.classList.add("enhanced-search-box");
+    input.setAttribute("enterkeyhint","search");
+    const button=document.createElement("button");button.type="button";button.className="search-go-btn";button.textContent=label("search");button.setAttribute("aria-label",label("search"));box.appendChild(button);
+    const refresh=()=>{button.textContent=label("search");button.setAttribute("aria-label",label("search"));};
+    new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+    const preferred = new URLSearchParams(location.search);
+    if(preferred.has("q")){input.value=preferred.get("q")||"";input.dispatchEvent(new Event("input",{bubbles:true}));}
+    const candidates=()=>Array.from(document.querySelectorAll(cardSelector)).filter(dest);
+    function execute(){
+      input.dispatchEvent(new Event("input",{bubbles:true}));
+      input.blur();
+      const visible=candidates();
+      if(visible.length){status(input,visible.length+" · "+label("found"));go(visible[0]);}
+      else{status(input,label("empty"));input.scrollIntoView({behavior:"smooth",block:"center"});}
+    }
+    button.addEventListener("click",execute);
+    input.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();execute();}});
+    const filters=Array.from(document.querySelectorAll("button[data-filter]"));
+    if(preferred.has("category")){const option=filters.find(x=>x.dataset.filter===preferred.get("category"));if(option)option.click();}
+    filters.forEach(f=>f.addEventListener("click",()=>requestAnimationFrame(()=>{const visible=candidates();if(visible.length)go(visible[0]);else status(input,label("empty"));})));
+    if(preferred.has("q")||preferred.has("category")){requestAnimationFrame(()=>requestAnimationFrame(execute));}
+    else if(location.hash.length>1){const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target){requestAnimationFrame(()=>go(target));}}
+  }
+  const homeInput=document.getElementById("faultSearch");
+  if(homeInput){
+    const box=homeInput.parentNode;box.classList.add("enhanced-search-box");
+    homeInput.setAttribute("enterkeyhint","search");
+    const btn=document.createElement("button");btn.type="button";btn.className="search-go-btn";btn.textContent=label("search");btn.setAttribute("aria-label",label("search"));box.appendChild(btn);
+    new MutationObserver(()=>{btn.textContent=label("search");btn.setAttribute("aria-label",label("search"));}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+    function openResults(params){
+      homeInput.blur();
+      const q=homeInput.value.trim();
+      const url=new URL("fehlercodes/",location.href);
+      if(q)url.searchParams.set("q",q);
+      if(params&&params.category&&params.category!=="all")url.searchParams.set("category",params.category);
+      url.hash="codes";
+      location.assign(url.href);
+    }
+    btn.addEventListener("click",()=>openResults({}));
+    homeInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();openResults({});}});
+    const groups={"Hava/Turbo":"luft","Yakıt":"kraftstoff","Egzoz & Emisyon":"abgas","Şanzıman":"antrieb","all":"all"};
+    document.querySelectorAll(".code-finder button[data-category]").forEach(b=>b.addEventListener("click",()=>openResults({category:groups[b.dataset.category]||"all"})));
+  }
+  enhance("code-search",".code-card");
+  enhance("topic-search",".topic");
+  enhance("work-search",".work");
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script></body>
+</html>
