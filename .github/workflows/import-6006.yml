@@ -1,0 +1,44 @@
+name: Import verified 6006 Performance source
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-6006.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out dedicated 6006coding repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download and SHA256-verify source ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --max-time 90 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/f91d31a5-67eb-472f-81e4-2c9536dd607d-6006coding-github-source.zip' -o /tmp/6006coding-source.zip
+          echo "c3cf857b8df6786eda324569285a630dbed32219609ccd2d853e81bf0fa22c60  /tmp/6006coding-source.zip" | sha256sum --check
+          mkdir -p /tmp/6006coding-import
+          unzip -q /tmp/6006coding-source.zip -d /tmp/6006coding-import
+      - name: Extract existing site into repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -a /tmp/6006coding-import/. .
+          # The import must not modify other workflow files with the Actions token.
+          rm -f .github/workflows/site-tests.yml
+          npm test
+      - name: Commit website source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name '6006coding Importer'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat: add verified 6006 Performance website sources'
+            git push origin HEAD:main
+          fi
