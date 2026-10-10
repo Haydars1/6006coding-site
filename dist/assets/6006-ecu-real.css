@@ -79,24 +79,32 @@
   transform:translate3d(-50%,var(--ecu-graph-rise),0);
   width:min(85%,790px);max-width:790px;z-index:8;
   opacity:var(--ecu-graph-alpha);pointer-events:none;
-  will-change:transform,opacity
+  isolation:isolate;will-change:transform,opacity
 }
+/* Soft ambient contrast only under the graph, not a box or second panel. */
+.ecu-real__chart::before{
+  content:"";position:absolute;pointer-events:none;z-index:-1;
+  inset:-12% -7% -16%;
+  background:radial-gradient(ellipse at 50% 53%,rgba(12,11,11,.87) 0%,rgba(14,12,11,.76) 42%,rgba(14,12,11,.40) 67%,transparent 84%);
+}
+.ecu-real__chart>*{position:relative;z-index:1}
+
 .ecu-real__chart-head{
   display:flex;justify-content:space-between;align-items:center;gap:8px;
   margin:0 0 14px;
   font:700 10px/1.6 ui-monospace,monospace;letter-spacing:.14em;
-  color:#e1b887
+  color:#f2d6ae;text-shadow:0 1px 5px rgba(0,0,0,.92)
 }
-.ecu-real__chart-head span+span{color:#9d8b7b}
+.ecu-real__chart-head span+span{color:#e3c9a9}
 .ecu-real__plot{width:100%;height:auto;display:block;overflow:visible}
-.ecu-real__plot-grid{fill:none;stroke:rgba(208,170,121,.21);stroke-width:.85}
+.ecu-real__plot-grid{fill:none;stroke:rgba(232,211,181,.27);stroke-width:.9}
 .ecu-real__plot-stock,.ecu-real__plot-tuned{
-  fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;
+  fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
   stroke-dasharray:750;stroke-dashoffset:var(--ecu-draw-stock);
 }
 .ecu-real__plot-stock{stroke:#80b8d7}
 .ecu-real__plot-tuned{stroke:#e97664;stroke-dashoffset:var(--ecu-draw-tuned)}
-.ecu-real__legend{display:flex;align-items:center;gap:22px;font:600 12px/1.4 system-ui,sans-serif;color:#dbccc0}
+.ecu-real__legend{display:flex;align-items:center;gap:22px;font:700 12px/1.4 system-ui,sans-serif;color:#f9eee0;text-shadow:0 2px 4px rgba(0,0,0,.96)}
 .ecu-real__legend span::before{
   content:"";display:inline-block;width:18px;height:3px;
   background:#80b8d7;vertical-align:middle;margin-right:8px;
@@ -109,15 +117,15 @@
 }
 .ecu-real__gain strong{
   display:block;font:400 clamp(2.15rem,5.1vw,4.8rem)/1.05 Georgia,serif;
-  color:#f8ebdb;letter-spacing:-.05em;white-space:nowrap
+  color:#fff4e8;text-shadow:0 2px 12px rgba(0,0,0,.95);letter-spacing:-.05em;white-space:nowrap
 }
 .ecu-real__gain small{
   display:block;margin-top:6px;font:600 9px/1.4 ui-monospace,monospace;
-  color:#d9ad7f;letter-spacing:.12em
+  color:#e9c493;text-shadow:0 2px 5px rgba(0,0,0,.85);letter-spacing:.12em
 }
 .ecu-real__note{
   font:400 11px/1.55 system-ui,sans-serif;
-  margin-top:17px;color:#c4b1a0;opacity:var(--ecu-gain-alpha)
+  margin-top:17px;color:#f1ddc7;text-shadow:0 2px 5px rgba(0,0,0,.95);opacity:var(--ecu-gain-alpha)
 }
 @media(max-width:760px){
  .ecu-real{height:166svh;min-height:995px}
@@ -128,7 +136,7 @@
  .ecu-real__chart{top:69%;width:89%}
  .ecu-real__chart-head{font-size:9px;margin-bottom:7px}
  .ecu-real__values{padding-top:13px;margin-top:13px;gap:18px}
- .ecu-real__gain strong{font-size:clamp(2rem,9vw,3.2rem)}
+ .ecu-real__gain strong{font-size:clamp(2.15rem,10vw,3.25rem)}
  .ecu-real__gain small{font-size:8px}
  .ecu-real__note{font-size:10px;margin-top:10px}
 }
