@@ -6,6 +6,31 @@
  const root=document.getElementById('ecu-journey');
  if(!root)return;
  const $=s=>root.querySelector(s);
+ const pulsePath=$('.ecub__ribbon-active');
+ const pulseDots=[...root.querySelectorAll('.ecub__signal-head')];
+ const stockCurve=$('.ecub__chart-stock'),tunedCurve=$('.ecub__chart-tuned');
+ const stockMarker=$('.ecub__chart-marker--stock'),tunedMarker=$('.ecub__chart-marker--tuned');
+ const graphCursor=$('.ecub__chart-cursor');
+ const lengthOf=(path,fallback)=>{
+   try{const length=path&&typeof path.getTotalLength==='function'?path.getTotalLength():0;return Number.isFinite(length)&&length>0?length:fallback}
+   catch(_error){return fallback}
+ };
+ const pulseLength=lengthOf(pulsePath,1300),stockLength=lengthOf(stockCurve,800),tunedLength=lengthOf(tunedCurve,800);
+ root.style.setProperty('--ecub-path-length',pulseLength.toFixed(2));
+ root.style.setProperty('--ecub-stock-length',stockLength.toFixed(2));
+ root.style.setProperty('--ecub-tuned-length',tunedLength.toFixed(2));
+ function pointOn(path,length,fraction){
+   if(!path||typeof path.getPointAtLength!=='function')return null;
+   try{return path.getPointAtLength(length*fraction)}catch(_error){return null}
+ }
+ function followCurve(path,length,progress,circle){
+   const pt=pointOn(path,length,progress);
+   if(pt&&circle){
+     circle.setAttribute('cx',pt.x.toFixed(2));
+     circle.setAttribute('cy',pt.y.toFixed(2));
+   }
+   return pt;
+ }
  const i18n={
    tr:{eyebrow:'6006 / STAGE 1',skip:'Doğrudan araç seç ↓',stepA:'01 / ECU KAPAĞI',stepB:'02 / DEVRE ANALİZİ',stepC:'03 / GÜÇ EĞRİSİ',readout:'CAN / ECU',readoutDetail:'VERİ AKIŞI',chart:'ÖRNEK GÜÇ ANALİZİ',orig:'Orijinal',stage:'Stage 1',gainPS:'ÖRNEK GÜÇ ARTIŞI',gainNM:'ÖRNEK TORK ARTIŞI',note:'+30 PS / +60 Nm yalnızca örnektir. Kesin değer araç ve motor verilerine bağlıdır.'},
    de:{eyebrow:'6006 / STAGE 1',skip:'Direkt zur Fahrzeugwahl ↓',stepA:'01 / ECU-GEHÄUSE',stepB:'02 / SCHALTUNGSANALYSE',stepC:'03 / LEISTUNGSKURVE',readout:'CAN / ECU',readoutDetail:'DATENFLUSS',chart:'BEISPIEL LEISTUNGSANALYSE',orig:'Serie',stage:'Stage 1',gainPS:'BEISPIEL LEISTUNGSPLUS',gainNM:'BEISPIEL DREHMOMENTPLUS',note:'+30 PS / +60 Nm sind nur Beispielwerte. Tatsächliche Werte hängen von Fahrzeug und Motor ab.'},
@@ -42,20 +67,35 @@
    const mobile=window.innerWidth<=760;
    const travel=Math.min((window.innerHeight||800)*(mobile?.43:.47),mobile?365:440);
    set('progress',(p*100).toFixed(2)+'%');
-   set('screw-turn',screw*490,'deg');set('screws',1-screw);
+   set('screw-turn',screw*490,'deg');set('screw-lift',-9*screw,'px');set('screws',1-screw);
    set('lid-angle',-111*lid,'deg');set('lid-y',-15*lid,'px');set('lid-opacity',1-ease(.23,.37,p));
    set('board-drop',detach*travel,'px');set('board-scale',1+detach*(mobile?.18:.30));
    set('board-opacity',1-deviceHide*.98);
    set('housing',1-ease(.28,.56,p));
    set('circuit-opacity',data);set('circuit-dash',650*(1-data));
+   set('leds-opacity',data*(1-ease(.74,.91,p)));
    set('ribbon-opacity',path);
-   set('ribbon-dash',2700*(1-path));
+   set('ribbon-dash',pulseLength*(1-path));
+   set('signal-opacity',ease(.32,.44,p)*(1-ease(.91,1,p)));
+   const movingSignal=pointOn(pulsePath,pulseLength,path);
+   if(movingSignal)for(const dot of pulseDots){
+     dot.setAttribute('cx',movingSignal.x.toFixed(2));
+     dot.setAttribute('cy',movingSignal.y.toFixed(2));
+   }
    set('data-opacity',data*(1-ease(.63,.87,p)));
    set('data-y',(1-data)*25,'px');
    set('ring-scale',.84+.16*data);
    set('graph-opacity',chart);
    set('graph-rise',(1-chart)*35,'px');
-   set('stock-dash',800*(1-graphLines));set('tuned-dash',800*(1-graphLines));
+   set('stock-dash',stockLength*(1-graphLines));set('tuned-dash',tunedLength*(1-graphLines));
+   set('marker-opacity',graphLines);
+   const stockPoint=followCurve(stockCurve,stockLength,graphLines,stockMarker);
+   const tunedPoint=followCurve(tunedCurve,tunedLength,graphLines,tunedMarker);
+   const cursorX=tunedPoint?tunedPoint.x:(stockPoint?stockPoint.x:null);
+   if(cursorX!==null&&graphCursor){
+     graphCursor.setAttribute('x1',cursorX.toFixed(2));
+     graphCursor.setAttribute('x2',cursorX.toFixed(2));
+   }
    set('gains-opacity',result);set('gains-y',(1-result)*14,'px');
    const nextPS=Math.round(30*result),nextNM=Math.round(60*result);
    if(nextPS!==lastPS){ps.textContent='+'+nextPS;lastPS=nextPS}
