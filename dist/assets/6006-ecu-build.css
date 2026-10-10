@@ -1,11 +1,11 @@
 
 /* 6006 Performance · Full-bleed ECU build as a travelling page illustration.
    No sticky area, no fixed animation frame, no stack of illustrated cards. */
-.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:197svh;min-height:1180px;color:#f3e9df;background:radial-gradient(ellipse at 50% 27%,#25201b 0%,#171616 43%,#121314 82%);overflow:clip;isolation:isolate}
+.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:197svh;min-height:1180px;color:#f3e9df;background:transparent;overflow:clip;isolation:isolate}
 .ecub *{box-sizing:border-box}
 .ecub__world{position:relative;width:min(100%,1200px);height:100%;margin:0 auto}
-.ecub__world::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.43;background-image:linear-gradient(90deg,rgba(204,170,125,.055) 1px,transparent 1px),linear-gradient(rgba(204,170,125,.055) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(180deg,transparent,black 12%,black 83%,transparent)}
-.ecub__light{position:absolute;left:50%;top:18%;width:min(78vw,800px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(213,144,69,.12),transparent 67%)}
+.ecub__world::before{content:none}
+.ecub__light{display:none}
 .ecub__eyebrow{position:absolute;top:3.1%;left:clamp(19px,5vw,75px);z-index:4;margin:0;color:var(--gold);font:600 11px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.2em}
 .ecub__hint{position:absolute;top:3.1%;right:clamp(19px,5vw,75px);z-index:4;color:#a59789;font:600 10px/1.5 ui-monospace,monospace;letter-spacing:.12em}
 .ecub__assembly{position:absolute;top:13%;left:50%;width:min(76%,655px);aspect-ratio:1.48;transform:translateX(-50%);perspective:1200px;transform-style:preserve-3d}
