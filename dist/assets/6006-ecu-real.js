@@ -40,8 +40,8 @@
   const leaveOpen=smooth(.34,.41,p);
   const enterSplit=smooth(.46,.54,p);
   const boardLift=smooth(.55,.74,p);
-  const exitUnit=smooth(.78,.92,p);
-  const chartIn=smooth(.71,.84,p);
+  const exitUnit=smooth(.79,.855,p);
+  const chartIn=smooth(.78,.90,p);
   const draw=smooth(.76,.95,p);
   const gains=smooth(.87,1,p);
 
