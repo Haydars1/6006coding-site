@@ -60,7 +60,7 @@
    const closedFade=ease(.085,.27,p);
    const openFade=ease(.36,.54,p);
    const opened=ease(.10,.26,p)*(1-openFade);
-   const exploded=ease(.37,.55,p)*(1-ease(.68,.88,p));
+   const exploded=ease(.37,.55,p)*(1-ease(.60,.82,p));
    const data=ease(.30,.68,p);
    const path=ease(.28,.90,p);
    const chart=ease(.65,.88,p);
@@ -82,7 +82,7 @@
    const releaseC=Math.min(viewportHeight*.20,176)*ease(.60,.89,p);
    const leave=Math.min(viewportHeight*.13,110)*ease(.84,1,p);
    set('object-y',travelWithScroll+releaseA+releaseB+releaseC+leave,'px');
-   set('object-scale',1+.03*opening+.03*detach-.12*ease(.67,.92,p));
+   set('object-scale',1+.03*opening+.02*detach-.23*ease(.48,.84,p));
    set('closed-y',0,'px');
    set('closed-scale',1);
    set('open-y',-13*opening,'px');
