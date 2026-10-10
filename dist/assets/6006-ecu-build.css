@@ -1,7 +1,7 @@
 
 /* 6006 Performance · Full-bleed ECU build as a travelling page illustration.
    No sticky area, no fixed animation frame, no stack of illustrated cards. */
-.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:167svh;min-height:1030px;color:#f3e9df;background:transparent;overflow:clip;isolation:isolate}
+.ecub{--gold:#d7ac7a;--red:#e96e62;--blue:#86afd5;position:relative;height:151svh;min-height:980px;color:#f3e9df;background:transparent;overflow:clip;isolation:isolate}
 .ecub *{box-sizing:border-box}
 .ecub__world{position:relative;width:min(100%,1200px);height:100%;margin:0 auto}
 .ecub__world::before{content:none}
@@ -45,7 +45,7 @@
 .ecub__stats b{color:#e2b784;font-weight:700}
 .ecub__arc{position:absolute;top:42%;left:50%;width:42vw;max-width:560px;aspect-ratio:1;border:1px solid rgba(218,169,106,.14);border-radius:50%;transform:translate(-50%,-50%) scale(var(--ecub-ring-scale,1));opacity:var(--ecub-data-opacity,0);pointer-events:none}
 .ecub__arc:before{content:"";position:absolute;inset:19%;border:1px dashed rgba(211,175,129,.19);border-radius:50%}
-.ecub__graph{position:absolute;top:66%;left:50%;transform:translate(-50%,var(--ecub-graph-rise,36px));width:min(84%,770px);opacity:var(--ecub-graph-opacity,0);z-index:4;pointer-events:none}
+.ecub__graph{position:absolute;top:63%;left:50%;transform:translate(-50%,var(--ecub-graph-rise,36px));width:min(84%,770px);opacity:var(--ecub-graph-opacity,0);z-index:4;pointer-events:none}
 .ecub__graph-head{display:flex;justify-content:space-between;gap:15px;align-items:center;color:#d1ac7d;font:600 10px/1.6 ui-monospace,monospace;letter-spacing:.15em;margin-bottom:14px}
 .ecub__graph-head span+span{color:#92867a}
 .ecub__chart{display:block;width:100%;height:auto}
@@ -67,7 +67,7 @@
 .ecub__micro--b{top:39%;right:clamp(20px,7vw,110px);opacity:var(--ecub-data-opacity,0)}
 .ecub__micro--c{top:70%;left:clamp(19px,5vw,75px);opacity:var(--ecub-graph-opacity,0)}
 @media(max-width:760px){
- .ecub{height:172svh;min-height:1060px}
+ .ecub{height:151svh;min-height:970px}
  .ecub__eyebrow{top:3%;font-size:9px;letter-spacing:.09em}
  .ecub__hint{display:none}
  .ecub__skip{top:4.7%;font-size:10px}
@@ -83,7 +83,7 @@
  .ecub__readout{top:52%;left:5%;font-size:9px}
  .ecub__stats{top:60%;right:5%;font-size:9px}
  .ecub__arc{top:46%;width:74vw}
- .ecub__graph{top:65%;width:87%}
+ .ecub__graph{top:63%;width:87%}
  .ecub__graph-head{font-size:9px;margin-bottom:6px}
  .ecub__figures{margin-top:15px;padding-top:14px;gap:28px}
  .ecub__figures strong{font-size:clamp(2.3rem,10.4vw,3.6rem)}
@@ -94,7 +94,7 @@
  .ecub__micro--c{top:69%}
 }
 @media(max-width:380px){
- .ecub{min-height:1010px}
+ .ecub{min-height:950px}
  .ecub__assembly{top:13%}
  .ecub__readout{font-size:8px}
  .ecub__stats{font-size:8px}
@@ -179,7 +179,7 @@
   transform:translate3d(0,var(--ecub-exploded-y,0px),0) scale(var(--ecub-exploded-scale,1));
 }
 @media(max-width:760px){
-  .ecub__real-ecu{top:16%;width:min(80vw,430px)}
+  .ecub__real-ecu{top:16%;width:min(77vw,410px)}
   .ecub__real-ecu-img{object-position:center}
 }
 @media(max-width:380px){.ecub__real-ecu{top:16%}}
