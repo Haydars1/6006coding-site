@@ -1134,13 +1134,13 @@ html{scroll-padding-top:1.25rem}
       @media(max-width:760px){.quick-access-grid{grid-template-columns:1fr}.quick-access-card{min-height:6.7rem;gap:.6rem}.real-home-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.real-home-card{max-width:none;min-width:0;min-height:118px}.real-home-heading{flex-wrap:wrap}.hero-copy h1{font-size:clamp(2.6rem,11vw,4.1rem)}}
       @media(prefers-reduced-motion:reduce){.quick-access-card,.button-primary,.button-quiet{transition:none!important;transform:none!important}}
     </style>
-      <link rel="stylesheet" href="/assets/6006-ecu-build.css?v=20261010rollback1" />
 <style id="6006-ecu-transparent-background">
 /* Transparent animation backdrop; must override any stale cached animation stylesheet. */
 .ecub{background:transparent!important}
 .ecub__world::before{content:none!important}
 .ecub__light{display:none!important}
 </style>
+  <link rel="stylesheet" href="/assets/6006-ecu-real.css?v=20261010pcb1"/>
 </head>
   <body>
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
@@ -1222,76 +1222,38 @@ html{scroll-padding-top:1.25rem}
       
       
       
-      <section class="ecub" id="ecu-journey" aria-label="Sayfa ile ilerleyen ECU açılış animasyonu">
-        <div class="ecub__world">
-          <div class="ecub__light" aria-hidden="true"></div>
-          <p class="ecub__eyebrow" data-ecub-i18n="eyebrow">6006 / STAGE 1</p>
-          <a class="ecub__skip" href="#aracin" data-ecub-i18n="skip">Doğrudan araç seç ↓</a>
-          <div class="ecub__progress" aria-hidden="true"></div>
-          <span class="ecub__micro ecub__micro--a" data-ecub-i18n="stepA">01 / ECU KAPAĞI</span>
-          <span class="ecub__micro ecub__micro--b" data-ecub-i18n="stepB">02 / DEVRE ANALİZİ</span>
-          <span class="ecub__micro ecub__micro--c" data-ecub-i18n="stepC">03 / GÜÇ EĞRİSİ</span>
-          <svg class="ecub__ribbon" viewBox="0 0 1000 1900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="ecubGradient" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d8b17c"/><stop offset=".49" stop-color="#d47e57"/><stop offset="1" stop-color="#e37363"/></linearGradient>
-            </defs>
-            <path class="ecub__ribbon-base" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
-            <path class="ecub__ribbon-active" d="M500 405 C500 565 380 622 489 788 S622 992 501 1199 S445 1288 500 1420"/>
-            <circle cx="500" cy="1420" r="5"/>
-          </svg>
-          <div class="ecub__assembly" aria-hidden="true">
-            <div class="ecub__socket ecub__socket--a"></div>
-            <div class="ecub__socket ecub__socket--b"></div>
-            <div class="ecub__socket ecub__socket--c"></div>
-            <div class="ecub__housing"></div>
-            <div class="ecub__pcb">
-              <svg class="ecub__traces" viewBox="0 0 620 390" preserveAspectRatio="none" focusable="false">
-                <g>
-                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 175H134L173 197H220M0 270H102L162 232H220M0 349H125L165 284H218"/>
-                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 230H502L454 210H400M620 325H508L431 285H402"/>
-                  <path d="M130 0V55L217 120M280 0V60L295 96M458 0V60L407 110M150 390V318L220 275M285 390V324L294 289M470 390V312L410 275"/>
-                  <path d="M56 22H145L211 67M53 212H93L167 235M570 23H512L442 65M584 377H501L437 321"/>
-                </g>
-                <g class="ecub__signal">
-                  <path d="M0 44H110L164 95H222M0 95H80L155 155H222M0 349H125L165 284H218"/>
-                  <path d="M620 46H511L438 91H401M620 133H514L449 163H402M620 325H508L431 285H402"/>
-                  <path d="M130 0V55L217 120M470 390V312L410 275"/>
-                </g>
-                <g fill="#c49e6d" opacity=".6">
-                  <circle cx="110" cy="44" r="5"/><circle cx="501" cy="230" r="5"/>
-                  <rect x="95" y="205" width="38" height="19" rx="2"/><rect x="497" y="268" width="30" height="20" rx="2"/>
-                </g>
-              </svg>
-              <div class="ecub__component ecub__component--a"></div>
-              <div class="ecub__component ecub__component--b"></div>
-              <div class="ecub__component ecub__component--c"></div>
-              <div class="ecub__component ecub__component--d"></div>
-              <div class="ecub__chip">6006<small>ECU · CORE</small></div>
+      
+      <section class="ecu-real" id="ecu-journey" aria-label="Stage 1 - gerçekçi ECU açılışı ve kart çıkarma animasyonu">
+        <div class="ecu-real__space">
+          <p class="ecu-real__heading" data-ecu-real-i18n="brand">6006 · STAGE 1 / ECU</p>
+          <a class="ecu-real__skip" href="#aracin" data-ecu-real-i18n="skip">Doğrudan araç seç ↓</a>
+          <div class="ecu-real__unit" aria-hidden="true">
+            <img class="ecu-real__photo ecu-real__photo--closed" src="/assets/ecu/ecu2026-closed.webp" alt="" width="1000" height="750" decoding="async" loading="lazy" />
+            <img class="ecu-real__photo ecu-real__photo--open" src="/assets/ecu/ecu2026-open.webp" alt="" width="1000" height="750" decoding="async" loading="lazy" />
+            <img class="ecu-real__photo ecu-real__photo--exploded" src="/assets/ecu/ecu2026-exploded.webp" alt="" width="1000" height="750" decoding="async" loading="lazy" />
+            <div class="ecu-real__split">
+              <img class="ecu-real__photo ecu-real__photo--base" src="/assets/ecu/ecu2026-base.webp" alt="" width="1000" height="750" decoding="async" loading="lazy" />
+              <img class="ecu-real__photo ecu-real__photo--board" src="/assets/ecu/ecu2026-board.webp" alt="" width="1000" height="750" decoding="async" loading="lazy" />
             </div>
-            <span class="ecub__screw ecub__screw--a"></span><span class="ecub__screw ecub__screw--b"></span>
-            <span class="ecub__screw ecub__screw--c"></span><span class="ecub__screw ecub__screw--d"></span>
-            <div class="ecub__lid"><div class="ecub__lid-mark">6006<small>PERFORMANCE · ECU</small></div></div>
           </div>
-          <div class="ecub__arc" aria-hidden="true"></div>
-          <div class="ecub__rail-glow" aria-hidden="true"></div>
-          <div class="ecub__readout" aria-hidden="true"><span data-ecub-i18n="readout">CAN / ECU</span><span data-ecub-i18n="readoutDetail">VERİ AKIŞI</span></div>
-          <div class="ecub__stats" aria-hidden="true">BOOST <b>01</b> / TORQUE <b>02</b> / FUEL <b>03</b></div>
-          <div class="ecub__graph">
-            <div class="ecub__graph-head"><span data-ecub-i18n="chart">ÖRNEK GÜÇ ANALİZİ</span><span>ECU · STAGE 1</span></div>
-            <svg class="ecub__chart" viewBox="0 0 760 300" role="img" aria-label="Orijinal ve Stage 1 güç eğrileri örnek karşılaştırması">
-              <g class="ecub__chart-grid">
-                <path d="M12 19H748M12 72H748M12 125H748M12 178H748M12 231H748M12 282H748"/>
-                <path d="M120 10V285M245 10V285M370 10V285M495 10V285M620 10V285"/>
+          <div class="ecu-real__caption"><span data-ecu-real-phase>ECU KAPAĞI AÇILIYOR</span></div>
+          <div class="ecu-real__conduit" aria-hidden="true"></div>
+          <div class="ecu-real__chart">
+            <div class="ecu-real__chart-head"><span data-ecu-real-i18n="graph">ÖRNEK PERFORMANS GRAFİĞİ</span><span>6006 · STAGE 1</span></div>
+            <svg class="ecu-real__plot" viewBox="0 0 760 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Örnek orijinal ve Stage 1 güç eğrileri">
+              <g class="ecu-real__plot-grid">
+                <path d="M12 18H747M12 68H747M12 118H747M12 168H747M12 218H747M12 268H747"/>
+                <path d="M125 13V270M248 13V270M371 13V270M494 13V270M617 13V270"/>
               </g>
-              <path class="ecub__chart-stock" d="M17 268C98 264 145 254 209 221S315 161 389 142S502 95 590 111S701 141 742 154"/>
-              <path class="ecub__chart-tuned" d="M17 267C96 262 146 237 211 194S313 122 386 101S504 47 595 61S708 83 743 97"/>
+              <path class="ecu-real__plot-stock" d="M18 260C95 255 143 247 211 214S316 166 392 146S512 101 591 117S706 138 744 147"/>
+              <path class="ecu-real__plot-tuned" d="M18 259C96 254 143 232 210 189S320 116 389 95S500 43 591 57S708 81 744 94"/>
             </svg>
-            <div class="ecub__graph-key"><span data-ecub-i18n="orig">Orijinal</span><span data-ecub-i18n="stage">Stage 1</span></div>
-            <div class="ecub__figures">
-              <div><strong><span data-ecub-ps>+0</span> PS</strong><small data-ecub-i18n="gainPS">ÖRNEK GÜÇ ARTIŞI</small></div>
-              <div><strong><span data-ecub-nm>+0</span> Nm</strong><small data-ecub-i18n="gainNM">ÖRNEK TORK ARTIŞI</small></div>
+            <div class="ecu-real__legend"><span data-ecu-real-i18n="stock">Orijinal</span><span data-ecu-real-i18n="tuned">Stage 1</span></div>
+            <div class="ecu-real__values">
+              <div class="ecu-real__gain"><strong><span data-ecu-real-power>+0</span> PS</strong><small data-ecu-real-i18n="power">ÖRNEK GÜÇ ARTIŞI</small></div>
+              <div class="ecu-real__gain"><strong><span data-ecu-real-torque>+0</span> Nm</strong><small data-ecu-real-i18n="torque">ÖRNEK TORK ARTIŞI</small></div>
             </div>
-            <p class="ecub__note" data-ecub-i18n="note">+30 PS / +60 Nm yalnızca örnektir. Kesin değer araç ve motor verilerine bağlıdır.</p>
+            <p class="ecu-real__note" data-ecu-real-i18n="note">Gösterilen +30 PS / +60 Nm yalnızca örnektir; gerçek sonuç araca ve motor durumuna bağlıdır.</p>
           </div>
         </div>
       </section>
@@ -2504,6 +2466,7 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>      <script defer src="/assets/6006-ecu-build.js?v=20261010rollback1"></script>
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>
+  <script defer src="/assets/6006-ecu-real.js?v=20261010pcb1"></script>
 </body>
 </html>
