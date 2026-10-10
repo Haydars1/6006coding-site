@@ -1,0 +1,65 @@
+name: Refine metallic ECU inner tray
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/retouch-ecu-tray.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Build photographed ECU inner metal finish
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet Pillow==11.3.0 numpy==2.3.3
+          python - <<'PY'
+          from PIL import Image, ImageDraw, ImageChops
+          import numpy as np
+          from pathlib import Path
+          target=Path("dist/assets/ecu/ecu-split-base-v2.webp")
+          source=Image.open("dist/assets/ecu/ecu-split-base.webp").convert("RGBA")
+          pixels=np.array(source)
+          h,w=pixels.shape[:2]
+          yy,xx=np.mgrid[0:h,0:w]
+          # Locate ONLY the flat, near-solid #0f1b1b interior inserted
+          # by the previous workflow. Preserve all photographic metalwork.
+          cavity=(pixels[:,:,0]>=12)&(pixels[:,:,0]<=23)&(pixels[:,:,1]>=23)&(pixels[:,:,1]<=34)&(pixels[:,:,2]>=22)&(pixels[:,:,2]<=34)&(pixels[:,:,3]>205)
+          rng=np.random.default_rng(6006)
+          noise=rng.normal(0,2.2,(h,w))
+          cast=69+0.019*(xx-500)-0.022*(yy-425)+4.5*np.sin(xx/170)+1.15*np.sin(xx*.62)+noise
+          alloy=np.clip(np.stack([cast+1,cast+3.9,cast+4.2],axis=-1),0,255).astype('uint8')
+          pixels[:,:,:3][cavity]=alloy[cavity]
+          layer=Image.new("RGBA",(w,h),(0,0,0,0))
+          d=ImageDraw.Draw(layer)
+          for i in range(7):
+              y=354+i*40
+              d.line([(168,y),(882,y+175)],fill=(164,174,162,28),width=4)
+              d.line([(168,y+5),(882,y+180)],fill=(15,20,20,29),width=3)
+          for x,y in [(210,352),(830,488),(805,638),(317,480)]:
+              d.ellipse((x-11,y-8,x+11,y+8),fill=(30,36,38,180),outline=(150,156,151,155),width=2)
+              d.line((x-5,y,x+5,y),fill=(164,168,165,180),width=2)
+          matte=Image.fromarray((cavity*255).astype('uint8'),'L')
+          layer.putalpha(ImageChops.multiply(layer.getchannel("A"),matte))
+          output=Image.alpha_composite(Image.fromarray(pixels,"RGBA"),layer)
+          output.save(target,"WEBP",quality=86,method=5,exact=True)
+          print(f"Refined {int(cavity.sum())} tray pixels; wrote {target}")
+          PY
+      - name: Commit corrected ECU tray
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 Website Builder"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-split-base-v2.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: replace flat black ECU cavity with subtle machined metal"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
