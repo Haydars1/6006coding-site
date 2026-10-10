@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: 6006coding
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    autoDeployTrigger: commit
