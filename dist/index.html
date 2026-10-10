@@ -1134,7 +1134,7 @@ html{scroll-padding-top:1.25rem}
       @media(max-width:760px){.quick-access-grid{grid-template-columns:1fr}.quick-access-card{min-height:6.7rem;gap:.6rem}.real-home-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.real-home-card{max-width:none;min-width:0;min-height:118px}.real-home-heading{flex-wrap:wrap}.hero-copy h1{font-size:clamp(2.6rem,11vw,4.1rem)}}
       @media(prefers-reduced-motion:reduce){.quick-access-card,.button-primary,.button-quiet{transition:none!important;transform:none!important}}
     </style>
-  <link rel="stylesheet" href="/assets/6006-ecu-journey.css?v=20261010b" />
+    <link rel="stylesheet" href="/assets/6006-ecu-flow.css?v=20261010c" />
 </head>
   <body>
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
@@ -1213,70 +1213,90 @@ html{scroll-padding-top:1.25rem}
 <section class="real-home-feature" aria-label="Araç sistemleri"><div class="shell"><div class="real-home-heading"><strong>Sistemlere göz at</strong><a href="fehlercodes/">Tüm kodları gör →</a></div><div class="real-home-rail"><a href="fehlercodes/?category=turbo#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/turbo.webp" alt="" /><span>Turbo / Hava</span></a><a href="fehlercodes/?category=dpf#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/dpf.webp" alt="" /><span>DPF / Egzoz</span></a><a href="fehlercodes/?category=adblue#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/adblue.webp" alt="" /><span>AdBlue / SCR</span></a><a href="fehlercodes/?category=egr#arama" class="real-home-card"><img loading="lazy" decoding="async" src="assets/realparts/egr.webp" alt="" /><span>EGR Sistemi</span></a></div></div></section>
 
       
-      <section class="ecu-journey" id="ecu-journey" aria-labelledby="ecuJourneyHeading" data-phase="0">
-        <div class="ecu-journey__pin">
-          <div class="ecu-journey__copy">
-            <p class="ecu-journey__eyebrow" data-ecu-i18n="eyebrow">STAGE 1 / NASIL ÇALIŞIR?</p>
-            <h2 id="ecuJourneyHeading"><span data-ecu-i18n="titleFirst">ECU açılır.</span> <em data-ecu-i18n="titleSecond">Güç şekillenir.</em></h2>
-            <p data-ecu-i18n="intro">Kaydırdıkça ECU kapağı açılır; yazılım analizi ve örnek güç eğrisi ortaya çıkar.</p>
-            <a class="ecu-journey__skip" href="#aracin"><span data-ecu-i18n="skip">Doğrudan araç seç</span> <span aria-hidden="true">↓</span></a>
-          </div>
-          <div class="ecu-journey__machine" aria-label="Stage 1 ECU ve güç analizi örnek animasyonu">
-            <div class="ecu-journey__machine-head"><span class="ecu-journey__live"><i aria-hidden="true"></i>6006 · ECU SYSTEM</span><span data-ecu-step-label>01 / 03</span></div>
-            <div class="ecu-journey__unit" aria-hidden="true">
-              <div class="ecu-journey__case">
-                <div class="ecu-journey__board">
-                  <svg viewBox="0 0 440 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
-                    <defs>
-                      <pattern id="ecuCopperPads" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="#c48a52" opacity=".5"/></pattern>
-                    </defs>
-                    <rect width="440" height="300" fill="url(#ecuCopperPads)"/>
-                    <g class="ecu-journey__trace">
-                      <path d="M0 40H95L139 84H181M0 85H72L143 154H179M0 216H55L114 190H176M0 265H110L150 213H184"/>
-                      <path d="M440 35H338L301 83H255M440 98H361L307 147H256M440 227H337L285 188H256M440 275H320L279 226H250"/>
-                      <path d="M122 0V45L180 100M331 0V51L260 105M143 300V265L186 219M290 300V272L260 224"/>
-                    </g>
-                    <g fill="#af916e" opacity=".76">
-                      <rect x="49" y="114" width="42" height="19" rx="2"/><rect x="359" y="148" width="38" height="17" rx="2"/>
-                      <rect x="65" y="236" width="17" height="25"/><rect x="343" y="52" width="23" height="16"/>
-                    </g>
-                  </svg>
-                  <div class="ecu-journey__board-light"></div>
-                  <div class="ecu-journey__chip"><strong>6006</strong><small>ECU CORE</small></div>
+      
+      <section class="ecu-flow" id="ecu-journey" aria-label="ECU ve Stage 1 animasyonlu süreç">
+        <div class="ecu-flow__inner">
+          <p class="ecu-flow__eyebrow" data-ecu-flow-text="kicker">6006 / STAGE 1 SÜRECİ</p>
+          <div class="ecu-flow__steps">
+            <div class="ecu-flow__step" data-ecu-scene="1" style="--step-p:0">
+              <div class="ecu-flow__step-copy">
+                <span class="ecu-flow__number">01 / 03</span>
+                <h3 data-ecu-flow-text="step1">ECU kapağı</h3>
+                <p data-ecu-flow-text="sub1">Kapağı kaydırdıkça aç.</p>
+              </div>
+              <div class="ecu-flow__art" aria-hidden="true">
+                <div class="ecu-flow__art-top"><span class="ecu-flow__led">6006 · ECU</span><span>01 · OPEN</span></div>
+                <div class="ecu-flow__module">
+                  <div class="ecu-flow__module-base">
+                    <svg viewBox="0 0 400 255" preserveAspectRatio="xMidYMid meet">
+                      <g class="ecu-flow__trace">
+                        <path d="M0 29H99L149 70H185M0 85H66L139 126H180M0 182H81L147 166H185M0 224H99L143 193H187"/>
+                        <path d="M400 32H309L260 69H224M400 93H338L266 115H220M400 183H304L258 164H220M400 224H309L262 192H219"/>
+                        <path d="M112 0V35L170 68M295 0V35L235 68M117 255V223L171 191M291 255V218L232 195"/>
+                      </g>
+                      <g fill="#d4a875" opacity=".52">
+                        <rect x="38" y="103" width="23" height="20" rx="2"/>
+                        <rect x="326" y="144" width="24" height="22" rx="2"/>
+                        <rect x="89" y="206" width="31" height="10" rx="2"/>
+                      </g>
+                    </svg>
+                    <div class="ecu-flow__chip">6006<small>ECU CORE</small></div>
+                  </div>
+                  <div class="ecu-flow__lid"><div class="ecu-flow__lid-logo">6006<small>PERFORMANCE · ECU</small></div></div>
                 </div>
-              </div>
-              <div class="ecu-journey__lid">
-                <span class="ecu-journey__screw ecu-journey__screw--a"></span>
-                <span class="ecu-journey__screw ecu-journey__screw--b"></span>
-                <span class="ecu-journey__screw ecu-journey__screw--c"></span>
-                <span class="ecu-journey__screw ecu-journey__screw--d"></span>
-                <span class="ecu-journey__lid-emblem"><strong>6006</strong><small>PERFORMANCE ECU</small></span>
+                <div class="ecu-flow__art-foot"><span>ECU · MODULE</span><span>6006 PERFORMANCE</span></div>
               </div>
             </div>
-            <div class="ecu-journey__analysis" aria-hidden="true">
-              <div class="ecu-journey__graph-title"><span data-ecu-i18n="graph">GÜÇ EĞRİSİ / ÖRNEK GÖSTERİM</span><span>STAGE 1</span></div>
-              <svg class="ecu-journey__graph" viewBox="0 0 440 190" preserveAspectRatio="xMidYMid meet" focusable="false">
-                <g class="ecu-journey__graph-grid"><path d="M14 20H430M14 58H430M14 96H430M14 134H430M14 172H430M86 10V174M167 10V174M248 10V174M329 10V174M410 10V174"/></g>
-                <path class="ecu-journey__graph-base" d="M15 165C70 162 95 152 135 130S208 99 251 83S346 66 419 72"/>
-                <path class="ecu-journey__graph-tuned" d="M15 163C70 159 93 138 135 112S207 69 251 48S340 28 419 38"/>
-              </svg>
-              <div class="ecu-journey__legend"><span><i></i><span data-ecu-i18n="stock">Orijinal</span></span><span><i></i><span data-ecu-i18n="tuned">Stage 1</span></span></div>
-              <div class="ecu-journey__gains">
-                <div class="ecu-journey__gain"><strong><span data-ecu-power>+0</span> PS</strong><small data-ecu-i18n="power">ÖRNEK GÜÇ ARTIŞI</small></div>
-                <div class="ecu-journey__gain"><strong><span data-ecu-torque>+0</span> Nm</strong><small data-ecu-i18n="torque">ÖRNEK TORK ARTIŞI</small></div>
+            <div class="ecu-flow__step" data-ecu-scene="2" style="--step-p:0">
+              <div class="ecu-flow__step-copy">
+                <span class="ecu-flow__number">02 / 03</span>
+                <h3 data-ecu-flow-text="step2">İç devreler</h3>
+                <p data-ecu-flow-text="sub2">Analiz çizgileri aşağı indikçe ilerler.</p>
               </div>
-              <p class="ecu-journey__gain-note" data-ecu-i18n="note">+30 PS / +60 Nm yalnızca animasyon örneğidir. Gerçek değer araç ve motor verileriyle belirlenir.</p>
+              <div class="ecu-flow__art" aria-hidden="true">
+                <div class="ecu-flow__art-top"><span class="ecu-flow__led">6006 · ECU</span><span>02 · SCAN</span></div>
+                <div class="ecu-flow__detail">
+                  <svg viewBox="0 0 420 280" preserveAspectRatio="xMidYMid meet">
+                    <g class="ecu-flow__pulse">
+                      <path d="M0 37H99L144 93H173M0 112H68L121 140H173M0 233H84L141 188H177"/>
+                      <path d="M420 47H324L269 93H238M420 149H337L281 140H239M420 230H330L270 186H239"/>
+                      <path d="M112 0V57L177 111M304 0V50L240 112M100 280V226L178 171M308 280V218L238 171"/>
+                      <circle cx="78" cy="100" r="14"/><circle cx="349" cy="184" r="9"/>
+                    </g>
+                    <g fill="#bb8f5f" opacity=".48"><rect x="39" y="169" width="26" height="26" rx="3"/><rect x="338" y="89" width="32" height="16" rx="2"/></g>
+                  </svg>
+                  <div class="ecu-flow__core">6006<span>DATA / ECU</span></div>
+                </div>
+                <div class="ecu-flow__art-foot"><span>CALIBRATION · DATA</span><span>6006 PERFORMANCE</span></div>
+              </div>
             </div>
-            <div class="ecu-journey__phase-label" data-ecu-phase-label>ECU kapağı açılıyor</div>
-            <div class="ecu-journey__markers">
-              <span data-ecu-marker>ECU KAPAĞI AÇILIYOR</span>
-              <span data-ecu-marker>VERİ ANALİZİ</span>
-              <span data-ecu-marker>ÖRNEK SONUÇ</span>
+            <div class="ecu-flow__step" data-ecu-scene="3" style="--step-p:0">
+              <div class="ecu-flow__step-copy">
+                <span class="ecu-flow__number">03 / 03</span>
+                <h3 data-ecu-flow-text="step3">Güç eğrisi</h3>
+                <p data-ecu-flow-text="sub3">Örnek güç ve tork eğrisinin oluşumunu izle.</p>
+              </div>
+              <div class="ecu-flow__art">
+                <div class="ecu-flow__art-top"><span class="ecu-flow__led">6006 · STAGE 1</span><span>03 · DYNO</span></div>
+                <div class="ecu-flow__graph-block">
+                  <svg class="ecu-flow__graph" viewBox="0 0 440 180" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Illustrative stock versus Stage 1 performance curves">
+                    <g class="ecu-flow__gridlines"><path d="M12 18H431M12 57H431M12 96H431M12 135H431M12 174H431M96 14V174M180 14V174M264 14V174M348 14V174"/></g>
+                    <path class="ecu-flow__stock" d="M12 164C76 163 90 146 137 125S213 97 265 78S361 59 427 66"/>
+                    <path class="ecu-flow__tuned" d="M12 164C76 161 92 127 137 106S220 64 265 46S355 24 427 36"/>
+                  </svg>
+                  <div class="ecu-flow__graph-labels"><span data-ecu-flow-text="stock">Orijinal</span><span data-ecu-flow-text="tuned">Stage 1</span></div>
+                  <div class="ecu-flow__gains" aria-label="Örnek güç ve tork artışı">
+                    <div class="ecu-flow__gain"><strong><span data-ecu-gain-ps>+0</span> PS</strong><small data-ecu-flow-text="power">ÖRNEK GÜÇ ARTIŞI</small></div>
+                    <div class="ecu-flow__gain"><strong><span data-ecu-gain-nm>+0</span> Nm</strong><small data-ecu-flow-text="torque">ÖRNEK TORK ARTIŞI</small></div>
+                  </div>
+                  <p class="ecu-flow__fineprint" data-ecu-flow-text="caution">+30 PS ve +60 Nm yalnızca animasyon örneğidir.</p>
+                </div>
+                <div class="ecu-flow__art-foot"><span data-ecu-flow-text="visual">TEMSİLÎ GÖSTERİM</span><span>6006 PERFORMANCE</span></div>
+              </div>
             </div>
-            <div class="ecu-journey__bar" aria-hidden="true"></div>
           </div>
+          <div class="ecu-flow__go"><span>6006 · STAGE 1</span><a href="#aracin" data-ecu-flow-text="go">Aracımı seç ve gerçek değerleri incele</a></div>
         </div>
-        <div class="ecu-journey__footer" aria-hidden="true"><b>6006 PERFORMANCE</b><span data-ecu-i18n="illustration">TEMSİLÎ ANİMASYON</span></div>
       </section>
 
       <section class="vehicle-section" id="aracin" aria-labelledby="vehicle-title">
@@ -1352,6 +1372,13 @@ html{scroll-padding-top:1.25rem}
               </div>
             </section>
           </div>
+        </div>
+      </section>
+
+      <section class="ecu-after" id="ecu-summary" aria-labelledby="ecuAfterTitle">
+        <div class="ecu-after__inner">
+          <h2 id="ecuAfterTitle"><span data-ecu-flow-text="summaryA">ECU açılır.</span> <em data-ecu-flow-text="summaryB">Güç şekillenir.</em></h2>
+          <p data-ecu-flow-text="summary">Gerçek Stage 1 sonucu yalnızca aracın motor kodu, mevcut durumu ve doğrulanmış verilerle değerlendirilir.</p>
         </div>
       </section>
 
@@ -2480,6 +2507,6 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>  <script defer src="/assets/6006-ecu-journey.js?v=20261010b"></script>
+})();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>    <script defer src="/assets/6006-ecu-flow.js?v=20261010c"></script>
 </body>
 </html>
