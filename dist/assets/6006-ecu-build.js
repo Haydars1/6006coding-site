@@ -6,31 +6,6 @@
  const root=document.getElementById('ecu-journey');
  if(!root)return;
  const $=s=>root.querySelector(s);
- const pulsePath=$('.ecub__ribbon-active');
- const pulseDots=[...root.querySelectorAll('.ecub__signal-head')];
- const stockCurve=$('.ecub__chart-stock'),tunedCurve=$('.ecub__chart-tuned');
- const stockMarker=$('.ecub__chart-marker--stock'),tunedMarker=$('.ecub__chart-marker--tuned');
- const graphCursor=$('.ecub__chart-cursor');
- const lengthOf=(path,fallback)=>{
-   try{const length=path&&typeof path.getTotalLength==='function'?path.getTotalLength():0;return Number.isFinite(length)&&length>0?length:fallback}
-   catch(_error){return fallback}
- };
- const pulseLength=lengthOf(pulsePath,1300),stockLength=lengthOf(stockCurve,800),tunedLength=lengthOf(tunedCurve,800);
- root.style.setProperty('--ecub-path-length',pulseLength.toFixed(2));
- root.style.setProperty('--ecub-stock-length',stockLength.toFixed(2));
- root.style.setProperty('--ecub-tuned-length',tunedLength.toFixed(2));
- function pointOn(path,length,fraction){
-   if(!path||typeof path.getPointAtLength!=='function')return null;
-   try{return path.getPointAtLength(length*fraction)}catch(_error){return null}
- }
- function followCurve(path,length,progress,circle){
-   const pt=pointOn(path,length,progress);
-   if(pt&&circle){
-     circle.setAttribute('cx',pt.x.toFixed(2));
-     circle.setAttribute('cy',pt.y.toFixed(2));
-   }
-   return pt;
- }
  const i18n={
    tr:{eyebrow:'6006 / STAGE 1',skip:'Doğrudan araç seç ↓',stepA:'01 / ECU KAPAĞI',stepB:'02 / DEVRE ANALİZİ',stepC:'03 / GÜÇ EĞRİSİ',readout:'CAN / ECU',readoutDetail:'VERİ AKIŞI',chart:'ÖRNEK GÜÇ ANALİZİ',orig:'Orijinal',stage:'Stage 1',gainPS:'ÖRNEK GÜÇ ARTIŞI',gainNM:'ÖRNEK TORK ARTIŞI',note:'+30 PS / +60 Nm yalnızca örnektir. Kesin değer araç ve motor verilerine bağlıdır.'},
    de:{eyebrow:'6006 / STAGE 1',skip:'Direkt zur Fahrzeugwahl ↓',stepA:'01 / ECU-GEHÄUSE',stepB:'02 / SCHALTUNGSANALYSE',stepC:'03 / LEISTUNGSKURVE',readout:'CAN / ECU',readoutDetail:'DATENFLUSS',chart:'BEISPIEL LEISTUNGSANALYSE',orig:'Serie',stage:'Stage 1',gainPS:'BEISPIEL LEISTUNGSPLUS',gainNM:'BEISPIEL DREHMOMENTPLUS',note:'+30 PS / +60 Nm sind nur Beispielwerte. Tatsächliche Werte hängen von Fahrzeug und Motor ab.'},
@@ -50,80 +25,38 @@
    for(const el of translated){const value=i18n[l][el.dataset.ecubI18n];if(value)el.textContent=value}
    root.setAttribute('aria-label',l==='tr'?'Sayfa ile ilerleyen ECU açılış animasyonu':l==='en'?'Scrolling ECU assembly animation':'ECU-Aufbauanimation beim Scrollen');
  }
- function paint(progress,scrollRange,viewportHeight){
+ function paint(progress){
    const p=clamp(reduced.matches?1:progress);
    language();
    if(Math.abs(p-lastP)<.0007)return;
    lastP=p;
-
-   // One scroll timeline: ECU holds the visual center while the cover opens.
-   // After that the whole assembly is released into the ordinary page flow.
-   // Unlike the old code, there is no uncontrolled downward 'fall'.
-   const scroll=p*scrollRange;
-   const hold=Math.min(scroll,scrollRange*.55);
-   const lidOpening=ease(.12,.32,p);
-   const revealBoard=ease(.46,.56,p);
-   const separate=ease(.54,.80,p);
-   const returnToFlow=ease(.55,1,p);
-
-   // Crossfade images briefly only at the exact changeover.
-   const closedAlpha=1-ease(.195,.275,p);
-   const openAlpha=ease(.225,.30,p)*(1-ease(.45,.54,p));
-   const splitAlpha=revealBoard*(1-ease(.78,.91,p));
-
-   const lidDistance=Math.min(viewportHeight*.055,49);
-   const boardDistance=Math.min(viewportHeight*.165,148);
-   const lidDrop=lidDistance*separate;
-   const boardDrop=boardDistance*separate;
-
+   const screw=ease(.005,.095,p);
+   const lid=ease(.085,.29,p);
+   const detach=ease(.21,.62,p);
+   const data=ease(.30,.68,p);
+   const path=ease(.28,.90,p);
+   const chart=ease(.65,.88,p);
+   const graphLines=ease(.67,.97,p);
+   const result=ease(.85,1,p);
+   const deviceHide=ease(.62,.88,p);
+   const mobile=window.innerWidth<=760;
+   const travel=Math.min((window.innerHeight||800)*(mobile?.43:.47),mobile?365:440);
    set('progress',(p*100).toFixed(2)+'%');
-   set('object-y',hold,'px');
-   set('object-scale',.94+.022*lidOpening-.08*ease(.70,.92,p));
-   set('closed-alpha',closedAlpha);
-   set('open-alpha',openAlpha);
-   set('exploded-alpha',splitAlpha);
-   set('closed-y',0,'px');
-   set('closed-scale',1);
-   set('open-y',-4*lidOpening,'px');
-   set('open-scale',1);
-   set('exploded-scale',1);
-   set('lid-separate-y',lidDrop,'px');
-   set('board-separate-y',boardDrop,'px');
-
-   // Actual data trails connect the opened board to the dyno further down.
-   const data=ease(.38,.74,p);
-   const path=ease(.47,.93,p);
-   const chart=ease(.77,.91,p);
-   const graphLines=ease(.78,.96,p);
-   const result=ease(.87,1,p);
-   set('circuit-opacity',data);
-   set('circuit-dash',650*(1-data));
-   set('leds-opacity',data*(1-ease(.80,.95,p)));
+   set('screw-turn',screw*490,'deg');set('screws',1-screw);
+   set('lid-angle',-111*lid,'deg');set('lid-y',-15*lid,'px');set('lid-opacity',1-ease(.23,.37,p));
+   set('board-drop',detach*travel,'px');set('board-scale',1+detach*(mobile?.18:.30));
+   set('board-opacity',1-deviceHide*.98);
+   set('housing',1-ease(.28,.56,p));
+   set('circuit-opacity',data);set('circuit-dash',650*(1-data));
    set('ribbon-opacity',path);
-   set('ribbon-dash',pulseLength*(1-path));
-   set('signal-opacity',ease(.48,.57,p)*(1-ease(.94,1,p)));
-   const movingSignal=pointOn(pulsePath,pulseLength,path);
-   if(movingSignal)for(const dot of pulseDots){
-     dot.setAttribute('cx',movingSignal.x.toFixed(2));
-     dot.setAttribute('cy',movingSignal.y.toFixed(2));
-   }
-   set('data-opacity',data*(1-ease(.77,.94,p)));
-   set('data-y',(1-data)*22,'px');
+   set('ribbon-dash',2700*(1-path));
+   set('data-opacity',data*(1-ease(.63,.87,p)));
+   set('data-y',(1-data)*25,'px');
    set('ring-scale',.84+.16*data);
    set('graph-opacity',chart);
-   set('graph-rise',(1-chart)*28,'px');
-   set('stock-dash',stockLength*(1-graphLines));
-   set('tuned-dash',tunedLength*(1-graphLines));
-   set('marker-opacity',graphLines);
-   const stockPoint=followCurve(stockCurve,stockLength,graphLines,stockMarker);
-   const tunedPoint=followCurve(tunedCurve,tunedLength,graphLines,tunedMarker);
-   const cursorX=tunedPoint?tunedPoint.x:(stockPoint?stockPoint.x:null);
-   if(cursorX!==null&&graphCursor){
-     graphCursor.setAttribute('x1',cursorX.toFixed(2));
-     graphCursor.setAttribute('x2',cursorX.toFixed(2));
-   }
-   set('gains-opacity',result);
-   set('gains-y',(1-result)*12,'px');
+   set('graph-rise',(1-chart)*35,'px');
+   set('stock-dash',800*(1-graphLines));set('tuned-dash',800*(1-graphLines));
+   set('gains-opacity',result);set('gains-y',(1-result)*14,'px');
    const nextPS=Math.round(30*result),nextNM=Math.round(60*result);
    if(nextPS!==lastPS){ps.textContent='+'+nextPS;lastPS=nextPS}
    if(nextNM!==lastNM){nm.textContent='+'+nextNM;lastNM=nextNM}
@@ -134,8 +67,7 @@
    const rect=root.getBoundingClientRect();
    const vh=window.innerHeight||document.documentElement.clientHeight||800;
    if(!reduced.matches&&(rect.bottom<0||rect.top>vh))return;
-   const scrollRange=Math.max(1,rect.height-vh);
-   paint(-rect.top/scrollRange,scrollRange,vh);
+   paint(-rect.top/Math.max(1,rect.height-vh));
  }
  function schedule(){if(!raf)raf=requestAnimationFrame(update)}
  window.addEventListener('scroll',schedule,{passive:true});
