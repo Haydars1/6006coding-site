@@ -60,6 +60,7 @@
  .ecu-flow__step-copy h3{max-width:none;font-size:clamp(1.45rem,5.8vw,2.2rem)}
  .ecu-flow__step-copy p{max-width:48ch;font-size:.85rem;line-height:1.46}
  .ecu-flow__art{min-height:0;height:clamp(245px,68vw,375px);border-radius:12px}
+ .ecu-flow__step[data-ecu-scene="3"] .ecu-flow__art{min-height:335px}
  .ecu-flow__art-top{top:12px}.ecu-flow__art-foot{bottom:10px}
  .ecu-flow__module{width:min(69%,310px)}
  .ecu-flow__detail{width:min(73%,345px)}
