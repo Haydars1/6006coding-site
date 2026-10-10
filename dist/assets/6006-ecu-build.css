@@ -145,7 +145,7 @@
    WebP files reside in this GitHub repository; no external asset dependency. */
 .ecub__real-ecu{
   position:absolute;
-  top:11.6%;
+  top:15%;
   left:50%;
   width:min(91%,770px);
   aspect-ratio:4/3;
@@ -179,12 +179,12 @@
   transform:translate3d(0,var(--ecub-exploded-y,0px),0) scale(var(--ecub-exploded-scale,1));
 }
 @media(max-width:760px){
-  .ecub__real-ecu{top:12.1%;width:min(100%,565px)}
+  .ecub__real-ecu{top:18%;width:min(96%,530px)}
   .ecub__real-ecu-img{object-position:center}
 }
-@media(max-width:380px){.ecub__real-ecu{top:12.4%}}
+@media(max-width:380px){.ecub__real-ecu{top:18.5%}}
 @media(prefers-reduced-motion:reduce){
-  .ecub__real-ecu{top:12%;transform:translateX(-50%) scale(1)}
+  .ecub__real-ecu{top:18%;transform:translateX(-50%) scale(1)}
   .ecub__real-ecu-img--closed,.ecub__real-ecu-img--exploded{opacity:0!important}
   .ecub__real-ecu-img--open{opacity:1!important;transform:none!important}
 }
