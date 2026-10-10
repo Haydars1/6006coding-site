@@ -1,0 +1,70 @@
+name: Import realistic ECU animation layers
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-ecu-components-6006.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  prepare-ecu-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download user-approved source illustrations and verify SHA256
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 2 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/7d0579fb-8967-4f45-a309-0ab94f3166f4-6006-ecu-photoreal-closed.png' -o '/tmp/ecu-closed.png'
+          echo 'a55c1cd730dc67970259481b3101e93abd82e30a3965b0e24bf9cfbdd9be11c9  /tmp/ecu-closed.png' | sha256sum --check
+          curl --fail --location --retry 2 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/1ec2b18e-4ffd-44b8-b84f-0095bc4bc6aa-6006-ecu-photoreal-open.png' -o '/tmp/ecu-open.png'
+          echo 'fd10eded00f227467c67ce29e5a1519c7d01c326ddb06307e630b18626a1af86  /tmp/ecu-open.png' | sha256sum --check
+          curl --fail --location --retry 2 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/0b14c6fd-9e95-4ec3-983f-3845f7b6039e-6006-ecu-photoreal-exploded.png' -o '/tmp/ecu-exploded.png'
+          echo 'e478b0ec24fb815f756e4f076aba89193f8bd9a87944420bda37e3d7d0bef4ae  /tmp/ecu-exploded.png' | sha256sum --check
+      - name: Render optimised transparent ECU layers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet Pillow==11.3.0
+          mkdir -p dist/assets/ecu
+          python - <<'PY'
+          from PIL import Image, ImageDraw, ImageFilter
+          from pathlib import Path
+          output=Path("dist/assets/ecu")
+          images={k:Image.open(f"/tmp/ecu-{k}.png").convert("RGBA") for k in ("closed","open","exploded")}
+          if any(im.size!=(1448,1086) for im in images.values()):
+              raise RuntimeError("Unexpected dimensions for generated ECU assets")
+          expl=images["exploded"]
+          polygon=[(174,475),(232,450),(342,415),(520,390),(710,364),(869,343),(1077,325),(1143,370),(1217,458),(1230,536),(1186,570),(982,600),(795,626),(617,655),(452,680),(336,694),(252,662),(194,563)]
+          mask=Image.new("L",expl.size,0)
+          ImageDraw.Draw(mask).polygon(polygon,fill=255)
+          mask=mask.filter(ImageFilter.GaussianBlur(1.2))
+          pcb=expl.copy()
+          pcb.putalpha(Image.composite(expl.getchannel("A"),Image.new("L",expl.size,0),mask))
+          # Retain the metal housing and lid; mask the board cavity with a
+          # dark recessed aluminium tray to prevent a duplicate PCB ghost.
+          recess=Image.new("RGBA",expl.size,(0,0,0,0))
+          dr=ImageDraw.Draw(recess)
+          dr.polygon(polygon,fill=(14,19,20,255))
+          dr.line(polygon+[polygon[0]],fill=(76,82,80,255),width=7,joint="curve")
+          base=Image.alpha_composite(expl,recess)
+          images.update({"base":base,"board":pcb})
+          for key,img in images.items():
+              img.thumbnail((1000,750),Image.Resampling.LANCZOS)
+              img.save(output/f"ecu2026-{key}.webp","WEBP",quality=84,method=5,exact=True)
+          PY
+      - name: Commit permanent production assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 Performance Assets"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu2026-closed.webp dist/assets/ecu/ecu2026-open.webp dist/assets/ecu/ecu2026-exploded.webp dist/assets/ecu/ecu2026-base.webp dist/assets/ecu/ecu2026-board.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "feat(stage1): import realistic ECU and independently liftable PCB images"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
