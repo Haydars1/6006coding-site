@@ -60,9 +60,9 @@
   opacity:var(--ecu-split);background:linear-gradient(90deg,transparent,#d5ae80,transparent)
 }
 .ecu-real__caption{
-  position:absolute;left:50%;top:calc(50svh + min(29vw,238px));
+  position:absolute;left:50%;top:calc(50svh + min(40vw,290px));
   width:92%;max-width:560px;
-  z-index:7;text-align:center;transform:translateX(-50%);
+  z-index:7;text-align:center;transform:translateX(-50%) translate3d(0,var(--ecu-hold),0);
   font:600 10px/1.5 ui-monospace,SFMono-Regular,monospace;
   color:#d2a777;letter-spacing:.16em;pointer-events:none;
 }
@@ -123,7 +123,7 @@
  .ecu-real__heading{top:5svh;font-size:9px;letter-spacing:.12em}
  .ecu-real__skip{top:5svh;font-size:10px}
  .ecu-real__unit{width:min(90vw,475px)}
- .ecu-real__caption{top:calc(50svh + 33vw);font-size:9px}
+ .ecu-real__caption{top:calc(50svh + 39vw);font-size:9px}
  .ecu-real__chart{top:71%;width:89%}
  .ecu-real__chart-head{font-size:9px;margin-bottom:7px}
  .ecu-real__values{padding-top:13px;margin-top:13px;gap:18px}
