@@ -17,28 +17,28 @@
 .ecu-flow__art-top,.ecu-flow__art-foot{position:absolute;left:19px;right:19px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;color:#bca184;font:600 10px/1.3 ui-monospace,monospace;letter-spacing:.1em}
 .ecu-flow__art-top{top:17px}.ecu-flow__art-foot{bottom:16px;font-size:9px;color:#887c6f}
 .ecu-flow__led{display:inline-flex;align-items:center;gap:7px}.ecu-flow__led::before{content:"";width:5px;height:5px;border-radius:50%;background:#dc7966}
-.ecu-flow__module{position:relative;width:min(66%,380px);aspect-ratio:1.48;filter:drop-shadow(0 21px 18px rgba(0,0,0,.48));perspective:900px;transform:translateY(calc((1 - var(--step-p))*12px))}
+.ecu-flow__module{position:relative;width:min(66%,380px);aspect-ratio:1.48;filter:drop-shadow(0 21px 18px rgba(0,0,0,.48));perspective:900px;transform:translateY(var(--step-translate,12px))}
 .ecu-flow__module-base{position:absolute;inset:0;border:9px solid #68635a;border-radius:13px;background:linear-gradient(125deg,#14514a,#102c29 60%,#092622);box-shadow:inset 0 0 0 3px #0c1616}
 .ecu-flow__module-base svg{width:100%;height:100%}
-.ecu-flow__trace{stroke:#dab176;stroke-width:2.2;fill:none;opacity:calc(.25 + var(--step-p)*.75);stroke-dasharray:310;stroke-dashoffset:calc((1 - var(--step-p))*310px)}
+.ecu-flow__trace{stroke:#dab176;stroke-width:2.2;fill:none;opacity:var(--trace-opacity,.25);stroke-dasharray:310;stroke-dashoffset:var(--trace-310,310px)}
 .ecu-flow__chip{position:absolute;left:33%;top:30%;width:34%;height:40%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:#eddac2;letter-spacing:.2em;font:700 clamp(.69rem,1.2vw,1.2rem)/1 ui-monospace,monospace;border:2px solid #94704c;background:#151b19;box-shadow:0 0 0 4px #112723}
 .ecu-flow__chip small{font-size:8px;color:#c09665}
-.ecu-flow__lid{position:absolute;inset:0;z-index:1;transform-origin:center 1%;transform:rotateX(calc(var(--step-p)*-108deg));backface-visibility:hidden;border:3px solid #98918a;border-radius:11px;background:repeating-linear-gradient(90deg,#353a39 0 6px,#303534 6px 11px,#424746 11px 14px);box-shadow:inset 0 0 0 18px rgba(28,29,27,.5),0 10px 16px rgba(0,0,0,.5);display:grid;place-items:center}
+.ecu-flow__lid{position:absolute;inset:0;z-index:1;transform-origin:center 1%;transform:rotateX(var(--step-angle,0deg));backface-visibility:hidden;border:3px solid #98918a;border-radius:11px;background:repeating-linear-gradient(90deg,#353a39 0 6px,#303534 6px 11px,#424746 11px 14px);box-shadow:inset 0 0 0 18px rgba(28,29,27,.5),0 10px 16px rgba(0,0,0,.5);display:grid;place-items:center}
 .ecu-flow__lid-logo{font:700 clamp(1.1rem,2vw,2rem)/1 ui-monospace,monospace;letter-spacing:.15em;text-shadow:0 2px 10px black;color:#f4e4d2;text-align:center}.ecu-flow__lid-logo small{display:block;color:#d2ae88;font-size:9px;margin-top:10px;letter-spacing:.21em}
-.ecu-flow__detail{position:relative;width:min(76%,440px);aspect-ratio:1.5;display:flex;align-items:center;justify-content:center;border-radius:13px;border:9px solid #665b50;background:radial-gradient(ellipse at 48% 45%,#163f39,#0b2724 75%);transform:scale(calc(.94 + var(--step-p)*.06));filter:drop-shadow(0 21px 15px rgba(0,0,0,.38))}
+.ecu-flow__detail{position:relative;width:min(76%,440px);aspect-ratio:1.5;display:flex;align-items:center;justify-content:center;border-radius:13px;border:9px solid #665b50;background:radial-gradient(ellipse at 48% 45%,#163f39,#0b2724 75%);transform:scale(var(--step-scale,.94));filter:drop-shadow(0 21px 15px rgba(0,0,0,.38))}
 .ecu-flow__detail svg{position:absolute;inset:0;width:100%;height:100%}
-.ecu-flow__pulse{stroke:#dfb27b;fill:none;stroke-width:2;stroke-dasharray:390;stroke-dashoffset:calc((1 - var(--step-p))*390px);opacity:calc(.26 + var(--step-p)*.74)}
-.ecu-flow__core{position:relative;width:34%;height:46%;z-index:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#fff0d8;background:linear-gradient(160deg,#222625,#0c0e0d);border:2px solid #c19967;border-radius:5px;box-shadow:0 0 calc(3px + var(--step-p)*25px) rgba(218,143,76,.4);font:700 clamp(.76rem,1.5vw,1.2rem)/1 ui-monospace,monospace}
+.ecu-flow__pulse{stroke:#dfb27b;fill:none;stroke-width:2;stroke-dasharray:390;stroke-dashoffset:var(--trace-390,390px);opacity:var(--pulse-opacity,.26)}
+.ecu-flow__core{position:relative;width:34%;height:46%;z-index:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#fff0d8;background:linear-gradient(160deg,#222625,#0c0e0d);border:2px solid #c19967;border-radius:5px;box-shadow:0 0 13px rgba(218,143,76,.28);font:700 clamp(.76rem,1.5vw,1.2rem)/1 ui-monospace,monospace}
 .ecu-flow__core span{font-size:9px;letter-spacing:.13em;color:#ccac7d}
 .ecu-flow__graph-block{position:relative;z-index:1;width:min(86%,490px);display:grid;gap:12px;align-content:center;padding-top:15px}
 .ecu-flow__graph{width:100%;height:auto;max-height:205px}
 .ecu-flow__gridlines{stroke:#78695b;stroke-width:.75;opacity:.38;fill:none}
-.ecu-flow__stock{stroke:var(--ecu-ice);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:calc((1 - var(--step-p))*700px)}
-.ecu-flow__tuned{stroke:var(--ecu-red);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:calc((1 - var(--step-p))*700px)}
+.ecu-flow__stock{stroke:var(--ecu-ice);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:var(--trace-700,700px)}
+.ecu-flow__tuned{stroke:var(--ecu-red);stroke-width:3.6;fill:none;stroke-linecap:round;stroke-dasharray:700;stroke-dashoffset:var(--trace-700,700px)}
 .ecu-flow__graph-labels{display:flex;gap:20px;flex-wrap:wrap;color:#d0c1b1;font:600 11px/1.3 system-ui,sans-serif}
 .ecu-flow__graph-labels span::before{content:"";display:inline-block;vertical-align:middle;width:17px;height:3px;margin-right:7px;background:var(--ecu-ice)}
 .ecu-flow__graph-labels span+span::before{background:var(--ecu-red)}
-.ecu-flow__gains{display:grid;grid-template-columns:1fr 1fr;gap:16px;opacity:var(--step-p);transform:translateY(calc((1 - var(--step-p))*12px))}
+.ecu-flow__gains{display:grid;grid-template-columns:1fr 1fr;gap:16px;opacity:var(--step-p);transform:translateY(var(--step-translate,12px))}
 .ecu-flow__gain strong{display:block;color:#f8e9d4;font:500 clamp(1.85rem,3.2vw,3rem)/1 Georgia,serif;white-space:nowrap}
 .ecu-flow__gain small{display:block;margin-top:7px;color:#cda97e;font:600 9px/1.4 ui-monospace,monospace;letter-spacing:.09em}
 .ecu-flow__fineprint{font:400 11px/1.45 system-ui,sans-serif;color:#b7a698;margin:0;max-width:440px}
