@@ -71,6 +71,14 @@
       const last=Number(scene.dataset.ecuLastProgress||-1);
       if(Math.abs(last-p)<.006)continue;
       scene.style.setProperty('--step-p',p.toFixed(3));
+      scene.style.setProperty('--step-angle',(-108*p).toFixed(1)+'deg');
+      scene.style.setProperty('--step-translate',((1-p)*12).toFixed(1)+'px');
+      scene.style.setProperty('--step-scale',(.94+p*.06).toFixed(3));
+      scene.style.setProperty('--trace-310',((1-p)*310).toFixed(1)+'px');
+      scene.style.setProperty('--trace-390',((1-p)*390).toFixed(1)+'px');
+      scene.style.setProperty('--trace-700',((1-p)*700).toFixed(1)+'px');
+      scene.style.setProperty('--trace-opacity',(.25+p*.75).toFixed(3));
+      scene.style.setProperty('--pulse-opacity',(.26+p*.74).toFixed(3));
       scene.dataset.ecuLastProgress=String(p);
       if(scene.dataset.ecuScene==='3'){
         const show=clamp((p-.35)/.65);
