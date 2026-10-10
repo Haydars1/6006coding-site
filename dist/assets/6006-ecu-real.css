@@ -8,7 +8,7 @@
   --ecu-split:0;--ecu-lid-lift:0px;--ecu-board-drop:0px;--ecu-caption-alpha:1;--ecu-unit-alpha:1;
   --ecu-graph-alpha:0;--ecu-draw-stock:750;--ecu-draw-tuned:750;
   --ecu-gain-alpha:0;--ecu-graph-rise:25px;
-  position:relative;height:173svh;min-height:1030px;width:100%;
+  position:relative;height:167svh;min-height:1000px;width:100%;
   background:transparent;color:#f5eadc;overflow:clip;isolation:isolate;
 }
 .ecu-real *{box-sizing:border-box}
@@ -75,7 +75,7 @@
   pointer-events:none
 }
 .ecu-real__chart{
-  position:absolute;top:71%;left:50%;
+  position:absolute;top:69%;left:50%;
   transform:translate3d(-50%,var(--ecu-graph-rise),0);
   width:min(85%,790px);max-width:790px;z-index:8;
   opacity:var(--ecu-graph-alpha);pointer-events:none;
@@ -120,12 +120,12 @@
   margin-top:17px;color:#c4b1a0;opacity:var(--ecu-gain-alpha)
 }
 @media(max-width:760px){
- .ecu-real{height:171svh;min-height:1015px}
+ .ecu-real{height:166svh;min-height:995px}
  .ecu-real__heading{top:5svh;font-size:9px;letter-spacing:.12em}
  .ecu-real__skip{top:5svh;font-size:10px}
  .ecu-real__unit{width:min(90vw,475px)}
  .ecu-real__caption{top:calc(50svh + 39vw);font-size:9px}
- .ecu-real__chart{top:71%;width:89%}
+ .ecu-real__chart{top:69%;width:89%}
  .ecu-real__chart-head{font-size:9px;margin-bottom:7px}
  .ecu-real__values{padding-top:13px;margin-top:13px;gap:18px}
  .ecu-real__gain strong{font-size:clamp(2rem,9vw,3.2rem)}
@@ -133,7 +133,7 @@
  .ecu-real__note{font-size:10px;margin-top:10px}
 }
 @media(max-width:375px){
- .ecu-real{min-height:975px}
+ .ecu-real{min-height:950px}
  .ecu-real__chart{width:93%;top:70%}
  .ecu-real__gain strong{font-size:1.92rem}
 }
