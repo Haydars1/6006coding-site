@@ -55,55 +55,65 @@
    language();
    if(Math.abs(p-lastP)<.0007)return;
    lastP=p;
-   const opening=ease(.08,.30,p);
-   const detach=ease(.34,.63,p);
-   const closedFade=ease(.195,.225,p);
-   const openFade=ease(.45,.48,p);
-   const opened=ease(.20,.23,p)*(1-openFade);
-   const exploded=ease(.455,.485,p)*(1-ease(.635,.735,p));
-   const data=ease(.30,.68,p);
-   const path=ease(.28,.90,p);
-   const chart=ease(.625,.755,p);
-   const graphLines=ease(.69,.94,p);
-   const result=ease(.82,.97,p);
-   const mobile=window.innerWidth<=760;
+
+   // One scroll timeline: ECU holds the visual center while the cover opens.
+   // After that the whole assembly is released into the ordinary page flow.
+   // Unlike the old code, there is no uncontrolled downward 'fall'.
+   const scroll=p*scrollRange;
+   const hold=Math.min(scroll,scrollRange*.55);
+   const lidOpening=ease(.12,.32,p);
+   const revealBoard=ease(.46,.56,p);
+   const separate=ease(.54,.80,p);
+   const returnToFlow=ease(.55,1,p);
+
+   // Crossfade images briefly only at the exact changeover.
+   const closedAlpha=1-ease(.195,.275,p);
+   const openAlpha=ease(.225,.30,p)*(1-ease(.45,.54,p));
+   const splitAlpha=revealBoard*(1-ease(.78,.91,p));
+
+   const lidDistance=Math.min(viewportHeight*.055,49);
+   const boardDistance=Math.min(viewportHeight*.165,148);
+   const lidDrop=lidDistance*separate;
+   const boardDrop=boardDistance*separate;
+
    set('progress',(p*100).toFixed(2)+'%');
-   /* Photographic model: keep the same ECU registered as the lid opens, then lift the PCB. */
-   set('closed-alpha',1-closedFade);
-   set('open-alpha',opened);
-   set('exploded-alpha',exploded);
-   // Keep the physical ECU within the phone's usable viewport instead of
-   // accumulating hundreds of pixels of downward movement. Translating by
-   // the section scroll cancels the upward page movement, while the bounded
-   // release introduces a clear, controlled downward progression.
-   // Near the dyno transition the image fades BEFORE it can be clipped.
-   // Natural page-flow parallax: the ECU follows only 45% of the page's
-   // movement. It rises gently relative to the viewport instead of falling
-   // down or remaining pinned in place. No abrupt extra release.
-   set('object-y',p*scrollRange*.45,'px');
-   set('object-scale',.94+.025*opening+.025*detach-.055*ease(.62,.79,p));
+   set('object-y',hold,'px');
+   set('object-scale',.94+.022*lidOpening-.08*ease(.70,.92,p));
+   set('closed-alpha',closedAlpha);
+   set('open-alpha',openAlpha);
+   set('exploded-alpha',splitAlpha);
    set('closed-y',0,'px');
    set('closed-scale',1);
-   set('open-y',-3*opening,'px');
+   set('open-y',-4*lidOpening,'px');
    set('open-scale',1);
-   set('exploded-y',6*detach,'px');
    set('exploded-scale',1);
-   set('circuit-opacity',data);set('circuit-dash',650*(1-data));
-   set('leds-opacity',data*(1-ease(.74,.91,p)));
+   set('lid-separate-y',lidDrop,'px');
+   set('board-separate-y',boardDrop,'px');
+
+   // Actual data trails connect the opened board to the dyno further down.
+   const data=ease(.38,.74,p);
+   const path=ease(.47,.93,p);
+   const chart=ease(.77,.91,p);
+   const graphLines=ease(.78,.96,p);
+   const result=ease(.87,1,p);
+   set('circuit-opacity',data);
+   set('circuit-dash',650*(1-data));
+   set('leds-opacity',data*(1-ease(.80,.95,p)));
    set('ribbon-opacity',path);
    set('ribbon-dash',pulseLength*(1-path));
-   set('signal-opacity',ease(.32,.44,p)*(1-ease(.91,1,p)));
+   set('signal-opacity',ease(.48,.57,p)*(1-ease(.94,1,p)));
    const movingSignal=pointOn(pulsePath,pulseLength,path);
    if(movingSignal)for(const dot of pulseDots){
      dot.setAttribute('cx',movingSignal.x.toFixed(2));
      dot.setAttribute('cy',movingSignal.y.toFixed(2));
    }
-   set('data-opacity',data*(1-ease(.63,.87,p)));
-   set('data-y',(1-data)*25,'px');
+   set('data-opacity',data*(1-ease(.77,.94,p)));
+   set('data-y',(1-data)*22,'px');
    set('ring-scale',.84+.16*data);
    set('graph-opacity',chart);
-   set('graph-rise',(1-chart)*35,'px');
-   set('stock-dash',stockLength*(1-graphLines));set('tuned-dash',tunedLength*(1-graphLines));
+   set('graph-rise',(1-chart)*28,'px');
+   set('stock-dash',stockLength*(1-graphLines));
+   set('tuned-dash',tunedLength*(1-graphLines));
    set('marker-opacity',graphLines);
    const stockPoint=followCurve(stockCurve,stockLength,graphLines,stockMarker);
    const tunedPoint=followCurve(tunedCurve,tunedLength,graphLines,tunedMarker);
@@ -112,7 +122,8 @@
      graphCursor.setAttribute('x1',cursorX.toFixed(2));
      graphCursor.setAttribute('x2',cursorX.toFixed(2));
    }
-   set('gains-opacity',result);set('gains-y',(1-result)*14,'px');
+   set('gains-opacity',result);
+   set('gains-y',(1-result)*12,'px');
    const nextPS=Math.round(30*result),nextNM=Math.round(60*result);
    if(nextPS!==lastPS){ps.textContent='+'+nextPS;lastPS=nextPS}
    if(nextNM!==lastNM){nm.textContent='+'+nextNM;lastNM=nextNM}
