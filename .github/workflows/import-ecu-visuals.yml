@@ -1,0 +1,50 @@
+name: Import authentic ECU visuals
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-ecu-visuals.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download source images and verify bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/9e17acb7-327c-4723-a3e3-29254538fae3-ecu-6006-closed.png' -o '/tmp/6006-ecu-closed.png'
+          echo '69af24e6261b24eb2e4c1b964ad4a00e00ab67e7d811c98ecd66e11ff21b6c92  /tmp/6006-ecu-closed.png' | sha256sum --check
+          curl --fail --location --retry 3 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/c40c3bab-e416-43bb-a891-57a598e7583b-ecu-6006-open.png' -o '/tmp/6006-ecu-open.png'
+          echo '6595615d9389ae074f64882c0974a1d161d550a9c85c5a4cf258f7a05ff9be41  /tmp/6006-ecu-open.png' | sha256sum --check
+          curl --fail --location --retry 3 --max-time 100 --silent --show-error 'https://6006-performance.floot.app/_cdn/static/4665c572-b7e1-4e71-8847-66d56a1a5742-ecu-6006-exploded.png' -o '/tmp/6006-ecu-exploded.png'
+          echo '63bc611c1a86f81036edebdabd5138371c4fb6b28afe51b384dfa4d3a5093fd7  /tmp/6006-ecu-exploded.png' | sha256sum --check
+      - name: Optimize transparent graphics for web
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet Pillow==11.3.0
+          mkdir -p dist/assets/ecu
+          python - <<'PY'
+          from PIL import Image
+          for name in ("closed", "open", "exploded"):
+              src=Image.open(f"/tmp/6006-ecu-{name}.png").convert("RGBA")
+              src.thumbnail((1120,900),Image.Resampling.LANCZOS)
+              src.save(f"dist/assets/ecu/ecu-{name}.webp", "WEBP", quality=80, method=5)
+          PY
+      - name: Commit website-owned ECU images
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 Performance Assets"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-closed.webp dist/assets/ecu/ecu-open.webp dist/assets/ecu/ecu-exploded.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "feat(assets): add optimized realistic ECU open and closed visuals"
+            git push origin HEAD:main
+          fi
