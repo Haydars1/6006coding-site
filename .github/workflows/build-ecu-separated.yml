@@ -1,0 +1,86 @@
+name: Build separated ECU layers
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/build-ecu-separated.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Build four aligned ECU photo layers from existing real ECU
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet Pillow==11.3.0
+          python - <<'PY'
+          from PIL import Image, ImageDraw, ImageChops
+          from pathlib import Path
+          source=Path("dist/assets/ecu/ecu-exploded.webp")
+          closed=Path("dist/assets/ecu/ecu-closed.webp")
+          assert source.exists() and closed.exists()
+          img=Image.open(source).convert("RGBA")
+          w,h=img.size
+          if (w,h)!=(1120,840):
+              raise ValueError(f"Unexpected ECU image size: {(w,h)}")
+          lid=[(0,0),(w,0),(w,472),(1080,473),(1040,463),(1002,469),
+               (960,460),(929,460),(902,453),(885,433),(865,424),
+               (826,420),(801,414),(765,412),(710,401),(660,394),
+               (611,382),(560,365),(514,355),(473,342),(425,328),
+               (380,313),(333,302),(294,285),(259,278),(227,269),
+               (191,260),(170,253),(137,249),(104,260),(0,260)]
+          board=[(145,328),(181,308),(217,288),(257,291),(294,300),
+                 (350,312),(413,328),(468,350),(537,370),(616,393),
+                 (682,407),(751,423),(823,433),(865,439),(900,464),
+                 (933,491),(938,533),(918,582),(887,633),(852,656),
+                 (819,679),(798,694),(771,689),(714,669),(666,656),
+                 (617,642),(564,624),(502,603),(443,582),(390,562),
+                 (331,542),(272,522),(225,508),(189,493),(166,476),
+                 (149,444),(139,412)]
+          def mask(points):
+              result=Image.new("L",(w,h),0)
+              ImageDraw.Draw(result).polygon(points, fill=255)
+              return result
+          ml=mask(lid)
+          mb=ImageChops.subtract(mask(board),ml)
+          mbase=ImageChops.subtract(ImageChops.subtract(Image.new("L",(w,h),255),ml),mb)
+          alpha=img.getchannel("A")
+          parts={}
+          for key,m in [("lid",ml),("board",mb),("base",mbase)]:
+              part=img.copy()
+              part.putalpha(ImageChops.multiply(alpha,m))
+              parts[key]=part
+          # Recess visible after extracting the electronics. Layer beneath
+          # both the cover and the board, not a duplicate PCB.
+          cavity=Image.new("RGBA",(w,h),(0,0,0,0))
+          d=ImageDraw.Draw(cavity)
+          recess=[(149,325),(216,296),(300,304),(429,340),(602,398),
+                  (759,426),(891,454),(927,492),(917,562),(858,649),
+                  (798,687),(603,634),(424,567),(243,512),(159,460)]
+          d.polygon(recess, fill=(15,26,27,255))
+          d.line(recess+[recess[0]],fill=(84,96,90,220),width=6)
+          parts["base"]=Image.alpha_composite(cavity,parts["base"])
+          parts["closed"]=Image.open(closed).convert("RGBA")
+          out=Path("dist/assets/ecu")
+          for key,im in parts.items():
+              im.save(out/f"ecu-split-{key}.webp","WEBP",quality=85,method=5,exact=True)
+          print("Prepared:",*[f"{k}={v.size}" for k,v in parts.items()])
+          PY
+      - name: Commit generated website assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 Website Builder"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-split-closed.webp dist/assets/ecu/ecu-split-lid.webp dist/assets/ecu/ecu-split-board.webp dist/assets/ecu/ecu-split-base.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: add aligned separate real ECU body, lid and PCB"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
