@@ -30,39 +30,35 @@
   locale();
   if(Math.abs(p-last)<.0006&&lastPhase!==-1)return;
   last=p;
-  // Keep the ECU at the screen's center while the metal lid opens.
-  // After the board is released, ordinary page scrolling carries it upward.
-  const traveled=p*range;
-  const hold=Math.min(traveled,range*.56);
-  const enterOpen=smooth(.08,.16,p);
-  const leaveClosed=smooth(.105,.175,p);
-  const enterExploded=smooth(.32,.405,p);
-  const leaveOpen=smooth(.34,.41,p);
-  const enterSplit=smooth(.46,.54,p);
-  const boardLift=smooth(.55,.74,p);
-  const exitUnit=smooth(.79,.855,p);
-  const chartIn=smooth(.78,.90,p);
-  const draw=smooth(.76,.95,p);
-  const gains=smooth(.87,1,p);
-
+  // Preserve the case in the visual centre as the cover and PCB separate.
+  // After separation, the entire section returns naturally to normal scroll.
+  const scroll=p*range;
+  const hold=Math.min(scroll,range*.76);
+  const reveal=smooth(.07,.18,p);
+  const lidTravel=smooth(.20,.46,p);
+  const boardTravel=smooth(.48,.75,p);
+  const fade=smooth(.79,.88,p);
+  const graphIn=smooth(.79,.93,p);
+  const draw=smooth(.82,.97,p);
+  const gains=smooth(.89,1,p);
   toCss('hold',hold,'px');
-  toCss('scale',.97+.03*smooth(.09,.32,p)-.065*smooth(.70,.89,p));
-  toCss('closed',1-leaveClosed);
-  toCss('open',enterOpen*(1-leaveOpen));
-  toCss('exploded',enterExploded*(1-enterSplit));
-  toCss('split',enterSplit);
-  // PCB lifts UP from the deep metal case. Cover remains visibly OPEN.
-  toCss('board-lift',-Math.min(vh*.19,164)*boardLift,'px');
-  toCss('unit-alpha',1-exitUnit);
-  toCss('graph-alpha',chartIn);
-  toCss('graph-rise',25*(1-chartIn),'px');
+  toCss('scale',.98-.035*smooth(.70,.88,p));
+  // Only a short initial reveal; actual separation uses distinct DOM layers.
+  toCss('closed',1-reveal);
+  toCss('split',reveal);
+  toCss('lid-lift',-Math.min(vh*.105,94)*lidTravel,'px');
+  toCss('board-drop',Math.min(vh*.095,86)*boardTravel,'px');
+  toCss('caption-alpha',1-smooth(.73,.83,p));
+  toCss('unit-alpha',1-fade);
+  toCss('graph-alpha',graphIn);
+  toCss('graph-rise',26*(1-graphIn),'px');
   toCss('draw-stock',750*(1-draw));
   toCss('draw-tuned',750*(1-draw));
   toCss('gain-alpha',gains);
   const ps=Math.round(30*gains),nm=Math.round(60*gains);
   if(ps!==lastPS){power.textContent='+'+ps;lastPS=ps}
   if(nm!==lastNM){torque.textContent='+'+nm;lastNM=nm}
-  const phase=p<.32?'open':p<.74?'board':p<.86?'scan':'graph';
+  const phase=p<.49?'open':p<.78?'board':'graph';
   if(phase!==lastPhase){phaseLabel.textContent=labels[lang][phase];lastPhase=phase}
  }
  function redraw(){
