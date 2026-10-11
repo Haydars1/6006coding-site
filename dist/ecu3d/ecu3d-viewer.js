@@ -92,7 +92,7 @@ document.addEventListener('visibilitychange',schedule);
 if(reduced.addEventListener)reduced.addEventListener('change',schedule);
 if(renderer){
  const loader=new THREE.TextureLoader();
- Promise.all(stages.map(stage=>new Promise((resolve,reject)=>{
+ Promise.all(stages.map((stage,index)=>new Promise((resolve,reject)=>{
   loader.load(stage.url,tex=>{
    tex.colorSpace=THREE.SRGBColorSpace;
    const material=new THREE.MeshBasicMaterial({
@@ -100,7 +100,7 @@ if(renderer){
     toneMapped:false,side:THREE.DoubleSide
    });
    const plane=new THREE.Mesh(new THREE.PlaneGeometry(11.2,8.4),material);
-   plane.visible=false;unit.add(plane);planes.push(plane);resolve();
+   plane.visible=false;unit.add(plane);planes[index]=plane;resolve();
   },undefined,reject);
  }))).then(()=>{
   ready=true;
