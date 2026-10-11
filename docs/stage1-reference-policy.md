@@ -22,3 +22,11 @@ Canlı veri: `dist/assets/6006-stage1-references.json`. Her satır kaynak adresi
 `manualOnly` türünde `manualEngineContains` zorunludur, kullanıcıdan motor kodu ve stok güç/tork değerleri beklenir. Veriler ziyaretçi aksiyonu olmadan dış servise aktarılmaz.
 
 İşletmeye ait doğrulanmış dyno kayıtları daha sonra **ayrı bir veri türü** ve kaynak/sahip onayıyla yönetilmelidir; bunları üçüncü taraf örneklerinin içine karıştırmayın.
+
+## 12 Ekim 2026 genişletmesi
+
+**12 ayrı kaynaklı ilan örneği / 9 marka:** BMW, Volkswagen, Audi, Renault, Opel, SEAT, Škoda, Peugeot ve Mercedes-Benz.
+
+Katalog kaynağı bir otomobil markasının bütün motorlarını temsil etmez. Doğrudan eşleştirme yalnızca jenerasyon, stok motor HP/Nm, yakıt türü, üretim yılı ve motor etiketinin tümü uyuşursa açılır. Referans motor modeli katalogda bulunamıyorsa `manualOnly` girilerek motor adı + stok PS/Nm + yıl + yakıt ayrı doğrulanmalıdır. Üçüncü taraf ilanları bağımsız olarak güncellenebilir ve bu değerler 6006 Performance'ın ölçümü değildir.
+
+Manuel örneklerin bir kısmında kaynakta motor/ECU yazılım numarası olmadığından doğrudan ECU/harita uyumluluğu çıkarılamaz. Araç sağlığı, emisyon ve yol uygunluğu ayrı kontrol edilmeden kullanıcıya kesin sonuç veya Almanya'da izin garantisi verilmez.
