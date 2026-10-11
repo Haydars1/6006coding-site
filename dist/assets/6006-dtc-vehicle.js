@@ -23,6 +23,7 @@ wrap.innerHTML='<h2 id="dtc-car-head"></h2><p id="dtc-car-help"></p><form id="dt
 +'<label><span data-dtc-label="gear"></span><select id="dtc-car-gear"><option value="">—</option><option value="Manuel">Schaltgetriebe</option><option value="Otomatik">Automatik</option><option value="DSG/DCT">DSG / DCT</option><option value="CVT">CVT</option></select></label></div>'
 +'<button type="submit" class="dtc-car-save" id="dtc-car-save"></button></form><div class="dtc-car-result" id="dtc-car-result" role="status" aria-live="polite"></div><p class="dtc-car-note" id="dtc-car-note"></p>';
 const style=document.createElement("style");style.textContent='.dtc-car-panel{border:1px solid #806142;background:linear-gradient(135deg,#2c241b,#161410);margin:1.4rem 0;padding:1.35rem;border-radius:7px}.dtc-car-panel h2{font-size:1.5rem;margin:0 0 .3rem}.dtc-car-panel p{color:#cbbba8;font-size:.86rem;margin:.25rem 0 1rem}.dtc-car-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}.dtc-car-grid label{min-width:0;font-size:.72rem;color:#e1bf90;display:block}.dtc-car-grid label span{display:block;margin-bottom:.3rem}.dtc-car-grid input,.dtc-car-grid select{width:100%;min-width:0;min-height:2.9rem;padding:.5rem .6rem;border:1px solid #745a40;border-radius:3px;background:#151310;color:#f5eee5;font-size:.87rem}.dtc-car-save{margin:1rem 0 0;background:#c49a67;color:#1c1208;border:0;padding:.72rem 1rem;cursor:pointer;font-weight:800;border-radius:3px}.dtc-car-result:not(:empty){margin-top:.7rem;padding:.8rem;border:1px solid #746049;border-radius:4px}.dtc-car-result a{display:inline-block;margin:.45rem .8rem .2rem 0;color:#efd4a9}.dtc-car-note{font-size:.72rem!important;color:#c3a982!important}@media(max-width:800px){.dtc-car-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){.dtc-car-grid{grid-template-columns:1fr}}';document.head.append(style);
+const advanced=document.createElement("a");advanced.id="dtc-car-advanced";advanced.href="/fahrzeug/#vehicle-selector-6006";advanced.style.cssText="display:inline-flex;padding:10px 14px;border:1px solid #b68d59;border-radius:6px;color:#f3d4ab;font-size:.82rem;font-weight:750;text-decoration:none;margin-top:8px";wrap.append(advanced);
 const keys=["make","model","year","fuel","engine","ps","gear"];
 const make=$("dtc-car-make"),model=$("dtc-car-model");
 const source={make:"dtc-car-make",model:"dtc-car-model",year:"dtc-car-year",fuel:"dtc-car-fuel",engine:"dtc-car-engine",ps:"dtc-car-ps",gear:"dtc-car-gear"};
@@ -34,6 +35,7 @@ function updateText(){
  $("dtc-car-head").textContent=t("headline");$("dtc-car-help").textContent=t("help");$("dtc-car-note").textContent=t("all");$("dtc-car-save").textContent=t("find");
  keys.forEach(k=>wrap.querySelector('[data-dtc-label="'+k+'"]').textContent=t(k));
  make.placeholder=t("makePlaceholder");model.placeholder=t("modelPlaceholder");
+ advanced.textContent=lang()==="tr"?"VIN ve motor ile gelişmiş araç seçimi →":lang()==="de"?"Fahrzeug und Motor mit VIN finden →":"Advanced VIN and engine finder →";
 }
 function p(){const v=new URLSearchParams();keys.forEach(k=>{const s=$(source[k]).value.trim();if(s)v.set(({make:"brand",model:"model",year:"year",fuel:"powertrain",engine:"engine",ps:"ps",gear:"gearbox"})[k],s);});return v;}
 function show(){
@@ -57,6 +59,8 @@ $("dtc-car-form").addEventListener("submit",e=>{e.preventDefault();show();});
 let initial={};try{initial=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"{}");}catch(_){}
 const q=new URLSearchParams(location.search);
 for(const k of keys){const property={make:"brand",model:"model",year:"year",fuel:"powertrain",engine:"engine",ps:"ps",gear:"gearbox"}[k];const value=q.get(property)||initial[property]||"";if(value)$(source[k]).value=value;}
+wrap.addEventListener("input",()=>advanced.href="/fahrzeug/?"+p().toString()+"#vehicle-selector-6006");
+wrap.addEventListener("change",()=>advanced.href="/fahrzeug/?"+p().toString()+"#vehicle-selector-6006");
 fillMakes();fillModels();updateText();
 if(make.value&&model.value)show();
 new MutationObserver(updateText).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
