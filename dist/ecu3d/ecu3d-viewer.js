@@ -1,92 +1,182 @@
-/* 6006 Performance ECU3D - real geometry, not stacked photographs. */
-import * as THREE from "three";
-import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
-const host=document.querySelector("#ecu3d-story");
-const canvas=document.querySelector("#ecu3d-canvas");
-const phase=document.querySelector("#ecu3d-caption");
-const status=document.querySelector("#ecu3d-status");
-const fallback=document.querySelector("#ecu3d-fallback");
-const graph=document.querySelector("#ecu3d-chart");
-if (!host || !canvas) throw Error("Missing ECU3D preview markup");
-const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
-const smooth=(a,b,p)=>{const x=THREE.MathUtils.clamp((p-a)/(b-a),0,1);return x*x*(3-2*x)};
+/* 6006 Performance: photographic 2.5D ECU assembly.
+   Source: the ORIGINAL 3-socket ECU photography, not a plastic procedural GLB.
+   Independent image-textured cover, circuit board, metal tray, and connectors.
+   The real source photo is projected onto separate WebGL planes, with 3D depth.
+*/
+import * as THREE from 'three';
+const host = document.querySelector('#ecu3d-story');
+const canvas = document.querySelector('#ecu3d-canvas');
+const phase = document.querySelector('#ecu3d-caption');
+const status = document.querySelector('#ecu3d-status');
+const fallback = document.querySelector('#ecu3d-fallback');
+const graph = document.querySelector('#ecu3d-chart');
+if (!host || !canvas) throw Error('Missing ECU3D viewer');
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+const clamp = x => Math.min(1, Math.max(0, x));
+const ease = (a,b,x) => {let p=clamp((x-a)/(b-a));return p*p*(3-2*p)};
+
+/* Coordinates traced against dist/assets/ecu/ecu-exploded.webp (1120 × 840).
+   Masks are restricted INSIDE the real hardware -- never a solid slab over sockets.
+   Every texture comes from the same original photographic image. */
+const lidOutline = [
+ [65,256],[92,222],[112,189],[160,155],[226,116],[278,90],
+ [316,62],[355,28],[402,8],[469,0],[550,0],[650,15],
+ [757,24],[852,57],[951,90],[1035,114],[1096,146],
+ [1115,197],[1112,246],[1080,305],[1042,350],[998,379],
+ [963,409],[934,422],[900,427],[856,415],[820,402],
+ [765,384],[694,359],[620,340],[544,316],[474,299],
+ [413,282],[344,269],[290,251],[245,244],[195,237],
+ [159,232],[118,245]
+];
+const boardOutline = [
+ [220,324],[290,292],[357,295],[432,310],[535,333],
+ [651,356],[780,389],[881,416],[957,441],[995,476],
+ [1002,525],[972,580],[943,622],[886,654],[826,633],
+ [729,609],[628,580],[524,558],[416,530],[317,506],
+ [223,477],[181,450],[187,400]
+];
+function polygon(ctx, points, inset=0){
+ ctx.beginPath();
+ points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+ ctx.closePath();
+}
+function maskPhoto(img, part){
+ const out=document.createElement('canvas');out.width=1120;out.height=840;
+ const c=out.getContext('2d',{willReadFrequently:false});
+ c.clearRect(0,0,1120,840);
+ c.drawImage(img,0,0,1120,840);
+ if(part==='lid'||part==='board'){
+  c.globalCompositeOperation='destination-in';
+  polygon(c,part==='lid'?lidOutline:boardOutline);c.fill();
+  if(part==='board'){
+   c.globalCompositeOperation='destination-out';
+   polygon(c,lidOutline);c.fill();
+  }
+ }else if(part==='case'){
+  c.globalCompositeOperation='destination-out';
+  polygon(c,lidOutline);c.fill();
+  polygon(c,boardOutline);c.fill();
+  c.globalCompositeOperation='destination-over';
+  c.save();
+  polygon(c,boardOutline);c.clip();
+  // Recess is beneath the actual circuit board, not a rectangular overlay.
+  const g=c.createLinearGradient(180,325,940,640);
+  g.addColorStop(0,'#36393b');g.addColorStop(.48,'#555a5c');g.addColorStop(1,'#25282a');
+  c.fillStyle=g;c.fillRect(180,280,860,430);
+  c.strokeStyle='rgba(183,190,188,.12)';c.lineWidth=1;
+  for(let y=310;y<710;y+=18){c.beginPath();c.moveTo(170,y);c.lineTo(1050,y+82);c.stroke();}
+  c.restore();
+ }
+ c.globalCompositeOperation='source-over';
+ const texture=new THREE.CanvasTexture(out);
+ texture.colorSpace=THREE.SRGBColorSpace;
+ texture.minFilter=THREE.LinearMipmapLinearFilter;
+ texture.magFilter=THREE.LinearFilter;
+ texture.generateMipmaps=true;
+ return texture;
+}
 let renderer;
 try{
- renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"low-power"});
-}catch(err){
- if(status) status.textContent="3D bu cihazda açılamıyor";
+ renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'low-power'});
+ renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));
+ renderer.outputColorSpace=THREE.SRGBColorSpace;
+}catch(e){
+ if(status)status.textContent='Fotoğraf dokulu 3D burada açılamadı.';
  if(fallback)fallback.hidden=false;
- throw err;
+ throw e;
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.65;
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(38,1,.1,60);
-camera.position.set(8,7.7,11.5);
-camera.lookAt(0,.35,.4);
-scene.add(new THREE.HemisphereLight(0xffffff,0x373137,2.5));
-function light(color,power,pos){
- const l=new THREE.DirectionalLight(color,power);
- l.position.set(...pos);scene.add(l);
+const camera=new THREE.OrthographicCamera(-6.2,6.2,6,-6,.1,90);
+camera.position.set(0,0,24);
+camera.lookAt(0,0,0);
+const unit=new THREE.Group();
+scene.add(unit);
+const materials=[];
+const textureLoader=new THREE.TextureLoader();
+let closed,base,pcb,lid,ready=false,visible=false,dirty=false,scrollP=0;
+function makePlane(texture,depth){
+ const material=new THREE.MeshBasicMaterial({
+  map:texture,transparent:true,alphaTest:.025,depthWrite:false,
+  side:THREE.DoubleSide,toneMapped:false
+ });
+ materials.push(material);
+ const mesh=new THREE.Mesh(new THREE.PlaneGeometry(11.2,8.4),material);
+ mesh.position.z=depth;
+ mesh.renderOrder=Math.round(depth*100);
+ unit.add(mesh);return mesh;
 }
-light(0xfff2da,4,[3,9,8]);
-light(0xffffff,3,[-7,6,-5]);
-light(0xe9a473,1.4,[5,3,-3]);
-const model=new THREE.Group(),lid=new THREE.Group(),board=new THREE.Group();
-scene.add(model);model.add(lid,board);
-let hasModel=false,onscreen=false,dirty=false,p=0;
+function photoLoaded(img){
+ // Photoshop-style original real ECU images use transparency and the same 1120 × 840 canvas.
+ const original=new THREE.TextureLoader().load('/assets/ecu/ecu-closed.webp',()=>{
+  ready=true;if(status)status.remove();if(fallback)fallback.hidden=true;onScroll();
+ },undefined,()=>{if(status)status.textContent='Fotoğraf yüklenemedi';if(fallback)fallback.hidden=false;});
+ original.colorSpace=THREE.SRGBColorSpace;
+ closed=makePlane(original,.50);
+ base=makePlane(maskPhoto(img,'case'),.10);
+ pcb=makePlane(maskPhoto(img,'board'),.25);
+ lid=makePlane(maskPhoto(img,'lid'),.45);
+}
+textureLoader.load('/assets/ecu/ecu-exploded.webp',t=>{
+ const img=t.image;
+ if(!img){if(status)status.textContent='ECU fotoğrafı okunamadı';return;}
+ photoLoaded(img);
+},undefined,()=>{if(status)status.textContent='Gerçek ECU fotoğrafı yüklenemedi';if(fallback)fallback.hidden=false;});
 function resize(){
  const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);
- if(canvas.width!==Math.floor(w*renderer.getPixelRatio()) || canvas.height!==Math.floor(h*renderer.getPixelRatio())){
-  renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<600?43:36;camera.updateProjectionMatrix();
+ if(canvas.width!==Math.floor(w*renderer.getPixelRatio())||canvas.height!==Math.floor(h*renderer.getPixelRatio())){
+  renderer.setSize(w,h,false);
+  const horiz=12.15,vert=horiz*h/w;
+  camera.left=-horiz/2;camera.right=horiz/2;
+  camera.top=vert/2;camera.bottom=-vert/2;camera.updateProjectionMatrix();
  }
 }
 function draw(){
  dirty=false;
- if(!hasModel||!onscreen||document.hidden)return;
+ if(!ready||!visible||document.hidden)return;
  resize();
- const t=reduced.matches?.70:p;
- lid.position.y=1.72*smooth(.11,.39,t);
- lid.rotation.z=.035*smooth(.12,.4,t);
- board.position.y=.94*smooth(.43,.73,t);
- board.rotation.z=-.015*smooth(.46,.76,t);
- model.rotation.y=-.11+.18*smooth(.1,.75,t);
- model.position.y=-.15;
- const label=t<.12?"KAPALI ECU":t<.43?"KAPAK YÜKSELİYOR":t<.77?"DEVRE KARTI ÇIKIYOR":"ECU İÇ YAPISI";
- if(phase&&phase.textContent!==label)phase.textContent=label;
- if(graph){const g=smooth(.83,.97,t);graph.style.opacity=String(g);graph.style.transform="translateY("+Math.round(20*(1-g))+"px)";}
+ const p=reduce.matches?.76:scrollP;
+ // One and only one version visible. No transparent crossfades of different ECUs.
+ const isClosed=p<.14;
+ closed.visible=isClosed;
+ base.visible=pcb.visible=lid.visible=!isClosed;
+ if(!isClosed){
+  // Authentic photo-textured layers move in world 3D; fixed casing/3 sockets do not.
+  const opening=ease(.14,.42,p);
+  const extraction=ease(.45,.78,p);
+  lid.position.y=-.42+1.45*opening;
+  lid.position.z=.45+.22*opening;
+  lid.rotation.z=-.022*opening;
+  pcb.position.y=.68*extraction;
+  pcb.position.z=.25+.26*extraction;
+  pcb.rotation.x=-.045*extraction;
+ }
+ unit.rotation.y=.026*ease(.33,.78,p);
+ unit.rotation.x=-.015*ease(.40,.78,p);
+ unit.position.y=-.12;
+ if(phase){
+  const name=p<.14?'KAPALI GERÇEK ECU':p<.44?'METAL KAPAK AYRILIYOR':p<.80?'ELEKTRONİK KART KALKIYOR':'ECU İÇ YAPISI';
+  if(phase.textContent!==name)phase.textContent=name;
+ }
+ if(graph){
+  const opacity=ease(.85,.98,p);
+  graph.style.opacity=String(opacity);
+  graph.style.transform='translateY('+Math.round(24*(1-opacity))+'px)';
+ }
  renderer.render(scene,camera);
 }
-function schedule(){if(!dirty){dirty=true;requestAnimationFrame(draw)}}
-function scroll(){
- const b=host.getBoundingClientRect(),travel=Math.max(1,b.height-window.innerHeight);
- p=THREE.MathUtils.clamp(-b.top/travel,0,1);schedule();
+function schedule(){if(!dirty){dirty=true;requestAnimationFrame(draw);}}
+function onScroll(){
+ const box=host.getBoundingClientRect();
+ const range=Math.max(1,box.height-innerHeight);
+ scrollP=clamp(-box.top/range);schedule();
 }
-new IntersectionObserver(es=>{onscreen=es.some(e=>e.isIntersecting);if(onscreen)scroll()},{rootMargin:"180px 0px"}).observe(host);
-window.addEventListener("scroll",scroll,{passive:true});
-window.addEventListener("resize",schedule,{passive:true});
-window.addEventListener("pageshow",schedule,{passive:true});
-document.addEventListener("visibilitychange",schedule);
-if(reduced.addEventListener)reduced.addEventListener("change",schedule);
-new GLTFLoader().load("./ecu-6006-3port.glb", gltf=>{
- const meshes=[];gltf.scene.traverse(n=>{if(n.isMesh)meshes.push(n)});
- const num={"LID":0,"PCB":0,"BASE":0,"CONNECTORS":0};
- for(const obj of meshes){
-  const name=(obj.name||"").toUpperCase();
-  const part=name.split("_")[0];
-  if(part in num)num[part]++;
-  if(part==="LID")lid.attach(obj);
-  else if(part==="PCB")board.attach(obj);
-  else model.attach(obj);
- }
- if(Object.values(num).some(n=>n===0))throw Error("ECU GLB must contain independent BASE/CONNECTORS/PCB/LID meshes");
- hasModel=true;
- if(status)status.remove();if(fallback)fallback.hidden=true;
- scroll();
-},undefined,err=>{
- if(status)status.textContent="3D model yüklenemedi";
- if(fallback)fallback.hidden=false;
- console.warn("[ECU3D] GLB error",err);
-});
+new IntersectionObserver(es=>{
+ visible=es.some(e=>e.isIntersecting);
+ if(visible)onScroll();
+},{rootMargin:'120px 0px'}).observe(host);
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',schedule,{passive:true});
+window.addEventListener('pageshow',schedule,{passive:true});
+document.addEventListener('visibilitychange',schedule);
+if(reduce.addEventListener)reduce.addEventListener('change',schedule);
