@@ -1,0 +1,67 @@
+name: ECU TripoSR independent 3D parts experiment
+on:
+  push:
+    branches: [experiment/ecu-triposr-separated-parts]
+    paths:
+      - 'scripts/experimental_ecu_triposr_prepare.py'
+      - '.github/workflows/ecu-triposr-experiment.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare original three socket ECU images
+        run: |
+          python -m pip install --quiet 'pillow==10.1.0' 'numpy==1.26.4'
+          python scripts/experimental_ecu_triposr_prepare.py
+      - name: Install MIT-licensed TripoSR (CPU only, no paid API)
+        run: |
+          python -m pip install --upgrade 'pip<26' wheel setuptools
+          python -m pip install --quiet 'torch==2.3.1' 'torchvision==0.18.1' --index-url https://download.pytorch.org/whl/cpu
+          git clone --depth 1 https://github.com/VAST-AI-Research/TripoSR.git /tmp/TripoSR
+          cd /tmp/TripoSR
+          python -m pip install --quiet -r requirements.txt
+      - name: Build source-grounded photographic ECU 3D candidates
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+          HF_HUB_ENABLE_HF_TRANSFER: '0'
+          CUDA_VISIBLE_DEVICES: ''
+          OMP_NUM_THREADS: '4'
+        run: |
+          cd /tmp/TripoSR
+          python run.py \
+            "${GITHUB_WORKSPACE}/output/ecu-triposr/lid.png" \
+            "${GITHUB_WORKSPACE}/output/ecu-triposr/pcb.png" \
+            "${GITHUB_WORKSPACE}/output/ecu-triposr/closed.png" \
+            --device cpu --no-remove-bg --mc-resolution 96 \
+            --chunk-size 1024 --model-save-format glb \
+            --output-dir "${GITHUB_WORKSPACE}/output/ecu-triposr/meshes"
+      - name: Validate real 3D output files (not rendered acceptance)
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import trimesh
+          d=Path('output/ecu-triposr/meshes')
+          for i,part in enumerate(('lid','pcb','closed')):
+            f=d/str(i)/'mesh.glb'
+            assert f.exists() and f.stat().st_size>10000,(part,f)
+            mesh=trimesh.load(f,force='scene')
+            assert len(mesh.geometry)>0,(part,'empty scene')
+            print(part, f.stat().st_size, 'bytes', sum(len(g.faces) for g in mesh.geometry.values()),'triangles')
+          print('Provisional GLB meshes generated; not visually approved for production.')
+          PY
+      - name: Store research input and mesh files for visual QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecu-triposr-research-only
+          path: output/ecu-triposr/
+          if-no-files-found: warn
+          retention-days: 5
