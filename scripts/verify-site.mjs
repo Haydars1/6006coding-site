@@ -92,7 +92,7 @@ assert(allPages.generatedCodePages>=11000,'Missing individual DTC pages');
 assert(allPages.generatedCodePages+allPages.curated===allPages.uniqueCodes,'Code page/curated coverage mismatch');
 const codePages=path.join(ROOT,'fehlercodes');
 const dirs=fs.readdirSync(codePages,{withFileTypes:true}).filter(item=>item.isDirectory()&&/^[pbcu][0-9a-f]{4}$/i.test(item.name));
-assert(dirs.length===allPages.generatedCodePages,'Some code paths were not written');
+assert(dirs.length===allPages.uniqueCodes,'Some code paths were not written');
 const allCodes=new Set(db.defs.map(row=>row[0]));
 for(const code of allCodes){
  const url='/fehlercodes/'+code.toLowerCase()+'/';
