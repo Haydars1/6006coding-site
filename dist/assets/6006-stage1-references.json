@@ -402,6 +402,26 @@
       "publisher": "BR-Performance",
       "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/43-peugeot/4083-208/10877-10-2019-2024/12737-1-2-puretech/",
       "note": "Peugeot 208 II 1.2 PureTech naturally aspirated 75/118. 2019-2023 5-door open-data record only, no general turbo claims."
+    },
+    {
+      "id": "bmw-3series-gt-f34-320d190-brp",
+      "classification": "third-party-advertised",
+      "make": "BMW",
+      "model": "3 Series Gran Turismo",
+      "yearFrom": 2016,
+      "yearTo": 2019,
+      "fuel": "Diesel",
+      "enginePrefix": "320d ",
+      "generationContains": "3 Series Gran Turismo (2016)",
+      "sourceStockHp": 190,
+      "sourceStockNm": 400,
+      "publishedStockPs": 190,
+      "publishedStockNm": 400,
+      "publishedStage1Ps": 220,
+      "publishedStage1Nm": 440,
+      "publisher": "BR-Performance",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/5-bmw/5685-serie-3-gt/8645-f34-lci-07-2016-01-2020/8650-320d/",
+      "note": "Dedicated BMW 3 Series GT F34 LCI 320d public advertised values; intentionally separate from generic 3 Series F3x entries."
     }
   ]
 }
