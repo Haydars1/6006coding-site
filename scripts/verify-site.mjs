@@ -42,7 +42,7 @@ assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-se
 assert(fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8').includes('dtc-car-advanced'),'Vehicle catalog cross-link missing');
 const brandChipsCSS=fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8');
 assert(brandChipsCSS.includes('.vin6006-brand-chips'),'Multi-brand selector layout missing');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-engine-quality'),'Latest VIN and engine asset cache key missing');
+
 const vinCode=fs.readFileSync(vinJs,'utf8');
 assert(vinCode.includes('WVW')&&vinCode.includes('vin6-vin')&&vinCode.includes('stockPower(v)'),'VIN manufacturer resolver or horsepower validation missing');
 assert(vinCode.includes('finder.engineVariants')&&vinCode.includes('relatedCodes()'),'Motor and DTC lookup missing');
@@ -60,10 +60,22 @@ assert(vinCode.includes('stockNeedsReview(v)')&&vinCode.includes('referencePower
 assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified universal Stage 1 estimates must not be shown as calibration targets');
 assert(vinCode.includes('sameSavedVehicle'),'Vehicle memory must not leak specifications across different models');
 assert(vinCode.includes('familyWarning'),'Model-family matches must carry explicit uncertainty');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-engine-quality'),'Motor finder version must bust caches');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-stage1-request'),'VIN and quote module version must bust caches');
 const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
 assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
 console.log('PASS: Full engine matching, fuel categorization, data provenance and Stage 1 safety');
+const quoteSection=vinCode.slice(vinCode.indexOf('const quoteCopy='),vinCode.indexOf('const popularMakes='));
+assert(quoteSection.length>2000,'Stage 1 quote request module missing');
+assert(quoteSection.includes('https://wa.me/')&&quoteSection.includes('mailto:'),'Both business contact channels missing');
+assert(quoteSection.includes('6006performance@gmail.com')&&quoteSection.includes('491788354756'),'Business contact targets changed');
+assert(quoteSection.includes('Number.isSafeInteger(mileage)')&&quoteSection.includes('mileage<=2000000'),'Vehicle mileage mishandled');
+assert(quoteSection.includes('contactWaNumber')&&quoteSection.includes('encodeURIComponent(message)'),'Quote message is not encoded safely');
+assert(!quoteSection.includes('document.getElementById("vin6-vin")')&&!quoteSection.includes('$("vin")'),'Full VIN must not be included in contact message');
+assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(make.value&&model.value&&engineCode)'),'Quote actions must require an engine');
+assert(quoteSection.includes('stockNeedsReview(selected)'),'Unverified engine values must be marked in quote');
+assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Stage 1 quote form CSS not found');
+console.log('PASS: Multi-language Stage 1 inquiry, correct business contacts, user-initiated handoff and VIN privacy');
+
 
 console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback, iPhone controls');
 const videoCode=fs.readFileSync(videoJs,'utf8');
