@@ -16,7 +16,7 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js'];
+const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-ecu-real.js'];
 for(const f of javascript){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing JS ${f}`);
  execFileSync(process.execPath,['--check',path.join(ROOT,f)],{stdio:'pipe'});
@@ -35,4 +35,5 @@ for(const page of pages){
    checked++;
  }
 }
+execFileSync(process.execPath,['scripts/test-ecu-motion.mjs'],{stdio:'inherit'});
 console.log(`PASS: ${pages.length} pages, ${db.defs.length} DTC definitions, ${categories.length} part visuals, ${checked} local links, ${javascript.length} JS files`);
