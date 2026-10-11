@@ -40,7 +40,7 @@ lid_photo.save(OUT/'ecu-lid-texture.webp','WEBP',quality=90,method=6)
 board_photo=ImageEnhance.Brightness(board_photo).enhance(.96)
 board_photo.save(OUT/'ecu-pcb-texture.webp','WEBP',quality=91,method=6)
 # Native textured aluminum from the actual ECU lid
-metal_src=src_closed.crop((390,220,738,385)).convert('RGB')
+metal_src=src_closed.crop((530,202,648,284)).convert('RGB')
 metal_src=ImageOps.fit(metal_src,(600,330),method=Image.Resampling.LANCZOS)
 metal_src=ImageEnhance.Contrast(metal_src).enhance(.83)
 metal_src=ImageEnhance.Brightness(metal_src).enhance(.78)
