@@ -8,9 +8,9 @@
  const $=selector=>root.querySelector(selector);
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
  const labels={
-  tr:{brand:'6006 · STAGE 1 / ECU',skip:'Doğrudan araç seç ↓',open:'ECU KAPAĞI AÇILIYOR',board:'ELEKTRONİK KART YERİNDEN ÇIKIYOR',scan:'VERİLER ANALİZ EDİLİYOR',graph:'ÖRNEK PERFORMANS GRAFİĞİ',stock:'Orijinal',tuned:'Stage 1',power:'ÖRNEK GÜÇ ARTIŞI',torque:'ÖRNEK TORK ARTIŞI',note:'Gösterilen +30 PS / +60 Nm yalnızca örnektir; gerçek sonuç araca ve motor durumuna bağlıdır.'},
-  de:{brand:'6006 · STAGE 1 / ECU',skip:'Direkt zur Fahrzeugwahl ↓',open:'ECU-GEHÄUSE WIRD GEÖFFNET',board:'LEITERPLATTE WIRD AUSGEBAUT',scan:'DATEN WERDEN ANALYSIERT',graph:'BEISPIELHAFTE LEISTUNGSKURVE',stock:'Serie',tuned:'Stage 1',power:'BEISPIEL LEISTUNGSPLUS',torque:'BEISPIEL DREHMOMENTPLUS',note:'+30 PS / +60 Nm sind nur Beispielwerte; tatsächliche Ergebnisse hängen vom Fahrzeug und Motorzustand ab.'},
-  en:{brand:'6006 · STAGE 1 / ECU',skip:'Skip to vehicle selection ↓',open:'ECU COVER OPENING',board:'CIRCUIT BOARD LIFTING OUT',scan:'ANALYSING ECU DATA',graph:'ILLUSTRATIVE POWER CURVE',stock:'Stock',tuned:'Stage 1',power:'EXAMPLE POWER GAIN',torque:'EXAMPLE TORQUE GAIN',note:'+30 PS / +60 Nm are illustrative only; actual gains depend on vehicle and engine condition.'}
+  tr:{brand:'6006 · STAGE 1 / ECU',skip:'Doğrudan araç seç ↓',open:'ECU KAPAĞI AÇILIYOR',board:'ELEKTRONİK KART GÖRÜNTÜLENİYOR',scan:'VERİLER ANALİZ EDİLİYOR',graph:'ÖRNEK PERFORMANS GRAFİĞİ',stock:'Orijinal',tuned:'Stage 1',power:'ÖRNEK GÜÇ ARTIŞI',torque:'ÖRNEK TORK ARTIŞI',note:'Gösterilen +30 PS / +60 Nm yalnızca örnektir; gerçek sonuç araca ve motor durumuna bağlıdır.'},
+  de:{brand:'6006 · STAGE 1 / ECU',skip:'Direkt zur Fahrzeugwahl ↓',open:'ECU-GEHÄUSE WIRD GEÖFFNET',board:'LEITERPLATTE WIRD SICHTBAR',scan:'DATEN WERDEN ANALYSIERT',graph:'BEISPIELHAFTE LEISTUNGSKURVE',stock:'Serie',tuned:'Stage 1',power:'BEISPIEL LEISTUNGSPLUS',torque:'BEISPIEL DREHMOMENTPLUS',note:'+30 PS / +60 Nm sind nur Beispielwerte; tatsächliche Ergebnisse hängen vom Fahrzeug und Motorzustand ab.'},
+  en:{brand:'6006 · STAGE 1 / ECU',skip:'Skip to vehicle selection ↓',open:'ECU COVER OPENING',board:'ECU CIRCUIT BOARD REVEALED',scan:'ANALYSING ECU DATA',graph:'ILLUSTRATIVE POWER CURVE',stock:'Stock',tuned:'Stage 1',power:'EXAMPLE POWER GAIN',torque:'EXAMPLE TORQUE GAIN',note:'+30 PS / +60 Nm are illustrative only; actual gains depend on vehicle and engine condition.'}
  };
  const captions=[...root.querySelectorAll('[data-ecu-real-i18n]')],phaseLabel=$('[data-ecu-real-phase]');
  const power=$('[data-ecu-real-power]'),torque=$('[data-ecu-real-torque]');
@@ -34,19 +34,24 @@
   // Do not synthesize a fake metal PCB-floor from source-image cutouts.
   const scroll=p*range;
   const hold=Math.min(scroll,range*.74);
-  const opened=smooth(.12,.29,p);
-  const extracted=smooth(.45,.66,p);
+  // Never opacity-blend differently posed ECU photographs:
+  // iPhone scroll recording showed transparent double cases, sockets and floating ghost covers.
+  // Display exactly ONE coherent three-connector frame per scroll phase.
+  const showClosed=p<.28;
+  const showOpen=p>=.28&&p<.64;
+  const showExploded=p>=.64;
   const exit=smooth(.80,.91,p);
-  const fade=smooth(.83,.92,p);
+  // Hide a complete ECU scene before revealing the chart: no transparent ghost.
+  const fade=p>=.915?1:0;
   const graphIn=smooth(.92,.985,p);
   const draw=smooth(.93,.998,p);
   const gains=smooth(.94,.998,p);
   toCss('hold',hold,'px');
   toCss('scale',.98+.015*smooth(.45,.70,p)-.04*smooth(.77,.90,p));
-  toCss('closed',1-opened);
-  toCss('open',opened*(1-extracted));
-  toCss('exploded',extracted);
-  toCss('photo-lift',-14*smooth(.48,.76,p),'px');
+  toCss('closed',showClosed?1:0);
+  toCss('open',showOpen?1:0);
+  toCss('exploded',showExploded?1:0);
+  toCss('photo-lift',0,'px');
   toCss('unit-exit',-Math.min(vh*.12,125)*exit,'px');
   toCss('caption-alpha',1-smooth(.77,.87,p));
   toCss('unit-alpha',1-fade);
@@ -58,7 +63,7 @@
   const ps=Math.round(30*gains),nm=Math.round(60*gains);
   if(ps!==lastPS){power.textContent='+'+ps;lastPS=ps}
   if(nm!==lastNM){torque.textContent='+'+nm;lastNM=nm}
-  const phase=p<.45?'open':p<.88?'board':'graph';
+  const phase=p<.64?'open':p<.915?'board':'graph';
   if(phase!==lastPhase){phaseLabel.textContent=labels[lang][phase];lastPhase=phase}
  }
  function redraw(){
