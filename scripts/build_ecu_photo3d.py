@@ -59,9 +59,9 @@ def socket_texture(points,name):
     pic.save(OUT/name,'WEBP',quality=92,method=6)
     return pic
 socket_textures=[
-    socket_texture([(110,444),(83,573),(250,625),(248,485)],'ecu-socket-left.webp'),
-    socket_texture([(303,518),(287,652),(514,705),(515,568)],'ecu-socket-middle.webp'),
-    socket_texture([(572,601),(556,726),(772,790),(772,649)],'ecu-socket-right.webp')
+    socket_texture([(114,436),(69,584),(269,660),(288,495)],'ecu-socket-left.webp'),
+    socket_texture([(323,504),(282,674),(548,760),(550,555)],'ecu-socket-middle.webp'),
+    socket_texture([(589,588),(556,764),(814,834),(818,658)],'ecu-socket-right.webp')
 ]
 parts=defaultdict(list)
 PBR={
@@ -208,7 +208,7 @@ def textured_top(part,name,picture,w,d,y,cx=0,cz=0):
 
 def textured_front(idx,x,picture):
     # A real photographic connector-face decal placed onto physical socket mesh.
-    w,h,z=1.49,.47,3.096
+    w,h,z=1.59,.53,3.112
     cy=-.39
     vertices=np.array([[x-w/2,cy-h/2,z],[x+w/2,cy-h/2,z],[x+w/2,cy+h/2,z],[x-w/2,cy+h/2,z]])
     uv=np.array([[0,0],[1,0],[1,1],[0,1]])
