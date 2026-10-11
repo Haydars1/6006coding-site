@@ -20,7 +20,7 @@ try{
  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;
- renderer.toneMappingExposure=1.28;
+ renderer.toneMappingExposure=1.05;
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.65));
 }catch(err){
  if(photo)photo.hidden=false;
@@ -29,20 +29,20 @@ try{
 }
 const scene=new THREE.Scene();
 const camera=new THREE.OrthographicCamera(-5.5,5.5,5,-5,.1,90);
-camera.position.set(7.8,7.0,12);
+camera.position.set(7.2,6.7,12.5);
 camera.lookAt(0,.38,0);
-const ambient=new THREE.HemisphereLight(0xffffff,0x39312a,3.0);scene.add(ambient);
+const ambient=new THREE.HemisphereLight(0xffffff,0x39312a,1.45);scene.add(ambient);
 function light(color,intensity,x,y,z){const l=new THREE.DirectionalLight(color,intensity);l.position.set(x,y,z);scene.add(l)}
-light(0xfff3e3,3.2,4,9,8);
-light(0xffffff,1.9,-6,5,-4);
-light(0xe5a36a,.85,8,3,-2);
+light(0xfff3e3,1.7,4,9,8);
+light(0xffffff,.85,-6,5,-4);
+light(0xe5a36a,.45,8,3,-2);
 const root=new THREE.Group(),lid=new THREE.Group(),pcb=new THREE.Group();
 scene.add(root);root.add(lid,pcb);
 let ready=false,onscreen=true,dirty=false,scrollProgress=0,forced=null;
 function resize(){
  const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);
  renderer.setSize(w,h,false);
- const halfWidth=w<700?4.85:5.15;
+ const halfWidth=w<700?3.93:4.85;
  camera.left=-halfWidth;camera.right=halfWidth;
  const halfHeight=halfWidth*h/w;
  camera.top=halfHeight;camera.bottom=-halfHeight;
@@ -62,7 +62,7 @@ function draw(){
  pcb.rotation.z=-.02*pcbAmt;
  root.rotation.y=-.12+.15*ease(.10,.85,p);
  root.rotation.x=.025*ease(.40,.78,p);
- root.position.y=-.24;
+ root.position.y=-.19;
  const title=p<.14?'KAPALI ECU':p<.47?'METAL KAPAK AÇILIYOR':p<.83?'ELEKTRONİK KART YÜKSELİYOR':'ECU İÇ YAPISI';
  if(phase&&phase.textContent!==title)phase.textContent=title;
  for(const button of buttons){
