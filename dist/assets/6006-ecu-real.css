@@ -5,7 +5,7 @@
 .ecu-real{
   --ecu-p:0;--ecu-hold:0px;--ecu-scale:1;
   --ecu-closed:1;--ecu-open:0;--ecu-exploded:0;
-  --ecu-split:0;--ecu-lid-lift:0px;--ecu-board-drop:0px;--ecu-caption-alpha:1;--ecu-unit-alpha:1;
+  --ecu-split:0;--ecu-lid-lift:0px;--ecu-board-rise:0px;--ecu-board-depth:1;--ecu-caption-alpha:1;--ecu-unit-alpha:1;
   --ecu-graph-alpha:0;--ecu-draw-stock:750;--ecu-draw-tuned:750;
   --ecu-gain-alpha:0;--ecu-graph-rise:25px;
   position:relative;height:167svh;min-height:1000px;width:100%;
@@ -46,10 +46,10 @@
   position:absolute;inset:0;opacity:var(--ecu-split);z-index:6;
   pointer-events:none;
 }
-/* These are physically separate masked WebP layers of the SAME ECU. */
+/* Same ECU photograph, accurately extracted three parts: only board and lid move. The case and all three electrical ports stay put. */
 .ecu-real__photo--base{z-index:1}
 .ecu-real__photo--board{
- z-index:2;transform:translate3d(0,var(--ecu-board-drop),0);
+ z-index:2;transform:translate3d(0,var(--ecu-board-rise),0) scale(var(--ecu-board-depth));
  will-change:transform;
 }
 .ecu-real__photo--lid{
@@ -153,7 +153,7 @@
  .ecu-real__photo--closed{opacity:0!important}
  .ecu-real__split{opacity:1!important}
  .ecu-real__photo--lid{transform:translate3d(0,-85px,0)!important}
- .ecu-real__photo--board{transform:translate3d(0,76px,0)!important}
+ .ecu-real__photo--board{transform:translate3d(0,-35px,0) scale(1.03)!important}
  .ecu-real__caption{position:relative;left:auto;top:auto;transform:none}
  .ecu-real__chart{position:relative;top:auto;left:auto;transform:none;opacity:1;width:90%;pointer-events:auto}
  .ecu-real__plot-stock,.ecu-real__plot-tuned{stroke-dashoffset:0}
