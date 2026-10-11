@@ -50,6 +50,7 @@
 .ecu-real__photo--base{z-index:1}
 .ecu-real__photo--board{
  z-index:2;transform:translate3d(0,var(--ecu-board-rise),0) scale(var(--ecu-board-depth));
+ filter:drop-shadow(0 5px 6px rgba(0,0,0,.26));
  will-change:transform;
 }
 .ecu-real__photo--lid{
