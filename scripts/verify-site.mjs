@@ -36,4 +36,22 @@ for(const page of pages){
  }
 }
 execFileSync(process.execPath,['scripts/test-ecu-motion.mjs'],{stdio:'inherit'});
+// Photo-derived 3D ECU is a separate preview; guard assets and interactive code
+// without changing the existing homepage or its other business content.
+const photo3dRoot=path.join(ROOT,'ecu3d-real');
+for(const f of ['index.html','viewer.js','ecu-photo-3d.glb',
+ 'ecu-lid-texture.webp','ecu-pcb-texture.webp',
+ 'ecu-socket-left.webp','ecu-socket-middle.webp','ecu-socket-right.webp']){
+ assert(fs.existsSync(path.join(photo3dRoot,f)),'Missing ECU 3D preview asset '+f);
+}
+const model=fs.readFileSync(path.join(photo3dRoot,'ecu-photo-3d.glb'));
+assert(model.toString('ascii',0,4)==='glTF','Invalid binary glTF magic');
+assert(model.length<6_000_000,'3D ECU too heavy for mobile');
+const viewer=fs.readFileSync(path.join(photo3dRoot,'viewer.js'),'utf8');
+assert(viewer.includes('GLTFLoader'),'Missing model renderer');
+assert(viewer.includes('lid.position.y')&&viewer.includes('pcb.position.y'),'Missing independently moving lid/PCB');
+assert(viewer.includes('pointermove'),'Missing touch-based model inspection');
+execFileSync(process.execPath,['--check',path.join(photo3dRoot,'viewer.js')],{stdio:'pipe'});
+const previewHtml=fs.readFileSync(path.join(photo3dRoot,'index.html'),'utf8');
+assert(previewHtml.includes('ecu-3d-story')&&previewHtml.includes('ecu-3d-canvas'),'Missing standalone preview scene');
 console.log(`PASS: ${pages.length} pages, ${db.defs.length} DTC definitions, ${categories.length} part visuals, ${checked} local links, ${javascript.length} JS files`);
