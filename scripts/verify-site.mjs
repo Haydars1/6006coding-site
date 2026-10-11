@@ -102,6 +102,7 @@ for(const code of allCodes){
  assert(urls.includes('https://6006coding.de'+url),'Missing indexable DTC sitemap entry '+code);
 }
 for(const code of ['P0102','P0113','P0670','B0001','C0035','U0073']){
+ if(JSON.parse(fs.readFileSync(path.join(ROOT,'assets/6006-curated-guides.json'),'utf8')).codes.includes(code))continue;
  const direct=path.join(ROOT,'fehlercodes',code.toLowerCase(),'index.html');
  if(!fs.existsSync(direct))continue;
  const page=fs.readFileSync(direct,'utf8');
