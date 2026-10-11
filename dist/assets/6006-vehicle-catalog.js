@@ -130,6 +130,39 @@ function install(){
  grid.insertAdjacentElement("afterend",extraBox);
  const styles=document.createElement("style");styles.id="vehicle-discovery-css";styles.textContent=".vehicle-discovery{padding:.5rem 0 0}.vehicle-find{margin:0 0 1rem}.vehicle-find-row{display:flex;gap:.5rem}.vehicle-discovery input{width:100%;min-width:0;min-height:3.05rem;padding:.6rem .7rem;border:1px solid rgba(242,238,229,.3);border-radius:3px;background:#171816;color:#f3eee4;font-size:.8rem}.vehicle-discovery label{display:block;margin:0 0 .42rem;color:#dfbd8a;font-size:.68rem}.vehicle-discovery button{flex-shrink:0;min-height:3rem;padding:0 .85rem;background:#c69a63;color:#161310;border:0;border-radius:3px;font-size:.7rem;font-weight:700;cursor:pointer}.vehicle-discovery button:hover{background:#e0bd89}.vehicle-extra{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:.25rem 0 1rem}.vehicle-extra .field{min-width:0}.vehicle-manual{margin:.35rem 0}.vehicle-note,.vehicle-find small{display:block;min-height:1.2rem;margin:.4rem 0;color:#c6bbab;font-size:.68rem;line-height:1.55}.vehicle-note{margin:.55rem 0 1rem}.vehicle-find-row input{flex:1}@media(max-width:600px){.vehicle-extra{grid-template-columns:1fr}.vehicle-find-row button{padding:0 .55rem;font-size:.64rem}}";document.head.append(styles);
  const year=document.getElementById("yearSelect");for(let y=new Date().getFullYear()+1;y>=1950;y--){const option=new Option(String(y),String(y));year.add(option);}
+ const motorSamples={
+   "Volkswagen":["1.0 TSI","1.2 TSI","1.4 TSI","1.5 TSI","1.6 TDI","2.0 TDI","2.0 TSI","3.0 TDI"],
+   "Audi":["1.4 TFSI","1.5 TFSI","2.0 TFSI","1.6 TDI","2.0 TDI","3.0 TDI"],
+   "BMW":["B47 2.0d","B48 2.0i","B57 3.0d","B58 3.0i","N47 2.0d","N57 3.0d"],
+   "Mercedes-Benz":["OM651 2.1 CDI","OM654 2.0 d","OM656 3.0 d","M254 2.0 Benzin","M256 3.0 Benzin","M177 4.0 V8"],
+   "Ford":["1.0 EcoBoost","1.5 EcoBlue","2.0 EcoBlue","2.0 EcoBoost"],
+   "Opel":["1.4 Turbo","1.5 Diesel","1.6 CDTI","2.0 CDTI"],
+   "Peugeot":["1.2 PureTech","1.5 BlueHDi","2.0 BlueHDi"],
+   "Toyota":["1.8 Hybrid","2.0 Hybrid","2.8 D-4D"]
+ };
+ const engines=document.createElement("datalist");engines.id="vehicle-engine-examples";document.body.append(engines);
+ document.getElementById("engineInput").setAttribute("list",engines.id);
+ function engineSuggestions(){engines.replaceChildren();(motorSamples[brand.value]||[]).forEach(value=>engines.append(new Option(value,value)));}
+ brand.addEventListener("change",engineSuggestions);
+ const tech=document.createElement("section");tech.id="vehicle-stage-verification";tech.style.cssText="margin:1rem 0;padding:1rem;border:1px solid rgba(198,154,99,.43);background:#1b1a18;font-size:.76rem;line-height:1.68;color:#f0e9df";
+ tech.setAttribute("aria-live","polite");
+ extraBox.insertAdjacentElement("afterend",tech);
+ function stageAdvice(){
+  const modelName=model.value,make=brand.value,engine=field("engineInput"),fuel=field("fuelSelect"),power=field("powerInput");
+  if(!make||!modelName){tech.hidden=true;return;}
+  tech.hidden=false;
+  const langCode=lang();
+  const electrical=/^(Electric)$/i.test(fuel)||/\\b(EV|Elektro)\\b/i.test(engine);
+  const copy=langCode==="tr"
+   ?{head:"Stage 1 · araç özelinde ön değerlendirme",selected:"Seçim",unknown:"Güç artışı henüz doğrulanmadı.",task:"Kontrol sırası",steps:["Motor kodu ve ECU yazılım sürümünü doğrula.","Önce DTC, canlı veriler, turbo / yakıt ve sıcaklık değerlerini incele.","Şanzımanın tork limitlerini ve mekanik durumunu kontrol et.","TÜV, sigorta ve emisyon kuralları için uygunluğu doğrula."],ev:"Elektrikli araçlarda klasik içten yanmalı motor Stage 1 işlemi uygulanmaz; üretici desteği ayrıca doğrulanmalıdır.",estimate:"Tahmini PS/Nm verilmez: aynı modelin farklı motor ve şanzımanları olabilir."}
+   :langCode==="de"
+   ?{head:"Stage 1 · fahrzeugspezifische Vorprüfung",selected:"Auswahl",unknown:"Leistungssteigerung noch nicht bestätigt.",task:"Prüfreihenfolge",steps:["Motorkennbuchstabe und ECU-Softwarestand bestätigen.","Zuerst DTC, Live-Daten, Ladedruck/Kraftstoffsystem und Temperaturen prüfen.","Drehmomentgrenzen des Getriebes und technischen Zustand prüfen.","Zulässigkeit, TÜV, Versicherung und Abgasvorschriften klären."],ev:"Für Elektrofahrzeuge ist konventionelles Motor-Stage-1 nicht anwendbar; OEM-Unterstützung separat prüfen.",estimate:"Keine erfundenen PS/Nm: Das gleiche Modell kann zahlreiche Motor- und Getriebevarianten haben."}
+   :{head:"Stage 1 · vehicle-specific preliminary check",selected:"Selection",unknown:"Performance increase is not confirmed.",task:"Checklist",steps:["Confirm engine code and ECU software revision.","Review DTCs, live boost/fuel values and temperatures first.","Check gearbox torque limits and mechanical condition.","Confirm local road legality, insurance and emissions requirements."],ev:"Traditional combustion-engine Stage 1 does not apply to electric vehicles; manufacturer support must be checked.",estimate:"No invented power or torque figures: trim and engine versions vary."};
+  const safe=x=>String(x||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+  tech.innerHTML="<strong style='color:#e0bd89;display:block;font-size:.82rem'>"+copy.head+"</strong><p>"+copy.selected+": <b>"+safe(make+" "+modelName)+"</b> · "+safe(engine||fuel||copy.unknown)+(power?" · "+safe(power)+" PS":"")+"</p><strong>"+copy.task+"</strong><ol style='padding-left:1.2rem'>"+copy.steps.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>"+(electrical?copy.ev:copy.estimate)+"</p>";
+ }
+ [brand,model,...["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"].map(id=>document.getElementById(id))].forEach(e=>e.addEventListener("change",stageAdvice));
+ stageAdvice();engineSuggestions();
  function applyWords(){
    [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"],["customModelInput","missing"],["customBrandInput","missingBrand"],["vehicleQuickSearch","find"]].forEach(x=>document.querySelector('label[for="'+x[0]+'"]').textContent=tr(x[1]));
    document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");document.getElementById("customBrandButton").textContent=tr("addBrand");
@@ -146,7 +179,19 @@ function install(){
    feedback.textContent=tr("result")+": "+result.brand+" "+(result.model||"");loadModels(result.brand);
  }
  const quick=document.getElementById("vehicleQuickSearch");
- function search(){selectCar(match(quick.value));}
+ function parseHints(query) {
+   const year=String(query).match(/\b(19\d{2}|20\d{2})\b/);
+   const ps=String(query).match(/\b(\d{2,4})\s*(?:PS|HP|BG|bhp)\b/i);
+   const engine=String(query).match(/\b(\d[.,]\d\s*(?:TDI|TSI|TFSI|FSI|CDI|dCi|DCI|HDi|BlueHDi|EcoBlue|EcoBoost|PureTech|CRDi|JTD|Multijet|D-4D))\b/i);
+   const set=(id,value)=>{const e=document.getElementById(id);if(e&&value&&!e.value)e.value=value;};
+   set("yearSelect",year?.[1]);set("powerInput",ps?.[1]);set("engineInput",engine?.[1]);
+   if(/\b(DSG|DCT|S-TRONIC|PDK)\b/i.test(query))set("gearboxSelect","DSG/DCT");
+   else if(/\b(automatic|automatik|otomatik|tiptronic|9G-TRONIC)\b/i.test(query))set("gearboxSelect","Otomatik");
+   else if(/\b(manual|manuel|schaltgetriebe)\b/i.test(query))set("gearboxSelect","Manuel");
+   if(/\b(TDI|CDI|dCi|BlueHDi|HDi|EcoBlue|CRDi|D-4D|JTD|Multijet)\b/i.test(query))set("fuelSelect","Diesel");
+   else if(/\b(TSI|TFSI|FSI|EcoBoost|PureTech|Benzin|petrol|gasoline)\b/i.test(query))set("fuelSelect","Benzin");
+ }
+ function search(){selectCar(match(quick.value));parseHints(quick.value);model.dispatchEvent(new Event("change",{bubbles:true}));}
  document.getElementById("vehicleFindButton").addEventListener("click",search);
  quick.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search();}});
  function manual(){
