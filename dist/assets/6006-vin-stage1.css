@@ -64,3 +64,27 @@
 #vin6-lsearch{margin-top:9px;font-size:.74rem;font-weight:700;color:#ebc390}
 .vin6006-variant-count{margin:6px 0 0;color:#d4ba98;font-size:.78rem;line-height:1.5}
 @media(max-width:600px){#vin6-engine-search{font-size:16px!important}}
+
+
+/* Accessible, independent Stage 1 / ECU quotation handoff */
+.vin6006-quote{margin-top:24px;padding:clamp(16px,2.2vw,24px);border:1px solid rgba(203,157,98,.48);border-radius:12px;background:linear-gradient(150deg,#282018,#151410);color:#f3e8da}
+.vin6006-quote-top{margin-bottom:19px}
+.vin6006-quote-eyebrow{font-size:.68rem;letter-spacing:.12em;font-weight:800;color:#ddb47f;margin:0 0 6px}
+.vin6006-quote-top h4{margin:0 0 9px;font:500 clamp(1.35rem,2.8vw,1.9rem)/1.14 Georgia,serif;color:#f8e5cf}
+.vin6006-quote-top p{max-width:700px;font-size:.82rem;color:#d4c2ad;line-height:1.65;margin:0}
+.vin6006-quote-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vin6006-quote-grid .vin6006-field{min-width:0}
+.vin6006-quote-note{grid-column:1/-1}
+.vin6006-quote-note textarea{min-height:76px;max-height:160px;resize:vertical;width:100%;background:#0f100f;color:#f8eddf;border:1px solid #6e5841;border-radius:7px;padding:11px 12px;font:500 16px/1.45 system-ui,sans-serif}
+.vin6006-quote-note textarea:focus-visible{outline:2px solid #e0ac6d;outline-offset:1px}
+.vin6006-quote-state{font-size:.82rem;color:#e2b985;margin:15px 0 8px;line-height:1.5}
+.vin6006-quote-preview{padding:9px 11px;border-radius:6px;background:#1b1a17;border:1px solid #53412e;color:#d7c5ad;font-size:.8rem;line-height:1.6;overflow-wrap:anywhere}
+.vin6006-quote-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:16px}
+.vin6006-quote-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;min-width:180px;flex:1;box-sizing:border-box;border:1px solid #d4a979;border-radius:7px;padding:11px 14px;font-size:.81rem;font-weight:800;text-decoration:none;text-align:center;color:#18130e;background:#d5ae7d}
+.vin6006-quote-actions a:hover{background:#f0cc9b}
+.vin6006-quote-actions a:nth-child(2){background:transparent;color:#f1cf9f}
+.vin6006-quote-actions a:nth-child(2):hover{background:#342718}
+.vin6006-quote-actions a[aria-disabled=true]{opacity:.43;cursor:not-allowed;pointer-events:none}
+.vin6006-quote-actions a:focus-visible{outline:2px solid #f5e0b5;outline-offset:2px}
+.vin6006-quote-privacy{margin:12px 0 0;color:#baa992;font-size:.73rem;line-height:1.6}
+@media(max-width:600px){.vin6006-quote-grid{grid-template-columns:1fr}.vin6006-quote-note{grid-column:auto}.vin6006-quote-actions{flex-direction:column}.vin6006-quote-actions a{width:100%;min-width:0;flex:none}.vin6006-quote-grid .vin6006-field input{font-size:16px!important}}
