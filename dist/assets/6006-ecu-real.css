@@ -8,7 +8,7 @@
   --ecu-photo-lift:0px;--ecu-unit-exit:0px;--ecu-caption-alpha:1;--ecu-unit-alpha:1;
   --ecu-graph-alpha:0;--ecu-draw-stock:750;--ecu-draw-tuned:750;
   --ecu-gain-alpha:0;--ecu-graph-rise:25px;
-  position:relative;height:167svh;min-height:1000px;width:100%;
+  position:relative;height:200svh;min-height:1210px;width:100%;
   background:transparent;color:#f5eadc;overflow:clip;isolation:isolate;
 }
 .ecu-real *{box-sizing:border-box}
@@ -20,7 +20,7 @@
  * This stays inside the ECU section and doesn't alter background elsewhere. */
 .ecu-real::before{
  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
- background:linear-gradient(180deg,rgba(15,13,12,.76),rgba(13,12,12,.93) 45%,rgba(13,12,12,.87) 78%,rgba(15,13,12,.40));
+ background:linear-gradient(180deg,rgba(15,13,12,.94),rgba(13,12,12,.985) 45%,rgba(13,12,12,.97) 78%,rgba(15,13,12,.84));
 }
 .ecu-real__space::before{
  content:"";position:absolute;left:50%;top:50svh;z-index:1;
@@ -58,9 +58,9 @@
 .ecu-real__photo--open{opacity:var(--ecu-open);z-index:4}
 .ecu-real__photo--exploded{
  opacity:var(--ecu-exploded);z-index:5;
- transform:translate3d(0,var(--ecu-photo-lift),0);
+ transform:none;
  filter:drop-shadow(0 9px 10px rgba(0,0,0,.30));
- will-change:transform,opacity;
+ will-change:opacity;
 }
 .ecu-real__caption{
   position:absolute;left:50%;top:calc(50svh + min(40vw,290px));
@@ -130,10 +130,10 @@
   margin-top:17px;color:#f1ddc7;text-shadow:0 2px 5px rgba(0,0,0,.95);opacity:var(--ecu-gain-alpha)
 }
 @media(max-width:760px){
- .ecu-real{height:166svh;min-height:995px}
+ .ecu-real{height:200svh;min-height:1210px}
  .ecu-real__heading{top:5svh;font-size:9px;letter-spacing:.12em}
  .ecu-real__skip{top:5svh;font-size:10px}
- .ecu-real__unit{width:min(90vw,475px)}
+ .ecu-real__unit{width:min(108vw,540px)}
  .ecu-real__caption{top:calc(50svh + 39vw);font-size:9px}
  .ecu-real__chart{top:69%;width:89%}
  .ecu-real__chart-head{font-size:9px;margin-bottom:7px}

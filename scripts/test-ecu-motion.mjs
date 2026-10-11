@@ -11,7 +11,7 @@ const root={
  querySelector:()=>({textContent:''}),
  querySelectorAll:()=>[],
  style:{setProperty:(k,v)=>vars[k]=v},
- getBoundingClientRect(){return {top:-670*progress,bottom:1670-670*progress,height:1670}}
+ getBoundingClientRect(){return {top:-800*progress,bottom:1800-800*progress,height:1800}}
 };
 const document={documentElement:{lang:'tr',clientHeight:1000},getElementById:k=>k==='ecu-journey'?root:null};
 const window={innerHeight:1000,matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener:(k,fn)=>listeners.set(k,fn)};
@@ -22,22 +22,25 @@ function step(p){
  while(queue.length)queue.shift()();
  return Object.fromEntries(['closed','open','exploded','unit-alpha','graph-alpha'].map(k=>[k,Number(vars['--ecu-'+k])]));
 }
-const closed=step(0),open=step(.36),exploded=step(.75),leaving=step(.88),graph=step(.99);
-assert.deepEqual([closed.closed,closed.open,closed.exploded],[1,0,0],'Initially only closed ECU');
-assert.deepEqual([open.closed,open.open,open.exploded],[0,1,0],'Open photograph fully visible with actual PCB inside');
-assert.deepEqual([exploded.closed,exploded.open,exploded.exploded],[0,0,1],'Exploded photograph shows separate lid and raised PCB');
-assert.equal(exploded['unit-alpha'],1);
-assert.equal(exploded['graph-alpha'],0);
-assert.ok(leaving['graph-alpha']===0,'No ghosted graph on ECU during transition');
-assert.ok(graph['unit-alpha']<.01&&graph['graph-alpha']>.98,'Graph follows clean ECU fade');
-const photos=['closed','open','exploded'];
-for(const name of photos){
- const f='assets/ecu/ecu2026-'+name+'.webp';
- assert.ok(existsSync('dist/'+f),'Missing coherent realistic photo: '+f);
- assert.ok(html.includes('/'+f),'Photo absent from ECU markup: '+f);
+for(const p of [0,.15,.279,.28,.50,.639,.64,.75,.91,.915,.94,.99]){
+ const s=step(p);
+ const total=s.closed+s.open+s.exploded;
+ assert.equal(total,1,'Exactly one opaque ECU photo should be selected at '+p+'; got '+JSON.stringify(s));
+ if(p<.28)assert.equal(s.closed,1);
+ else if(p<.64)assert.equal(s.open,1);
+ else assert.equal(s.exploded,1);
+ if(p<.915){assert.equal(s['unit-alpha'],1,'No ghost ECU');assert.equal(s['graph-alpha'],0,'No graph overlay while ECU is visible')}
+ else assert.equal(s['unit-alpha'],0,'ECU must be fully hidden before chart appears');
+}
+const frames=['closed','open','exploded'];
+for(const name of frames){
+ const file='assets/ecu/ecu-'+name+'.webp';
+ assert.ok(existsSync('dist/'+file),file);
+ assert.ok(html.includes('/'+file),'Missing original three-plug frame '+file);
 }
 const scene=html.match(/<div class="ecu-real__unit"[^>]*>([\s\S]*?)<\/div>/)?.[1]||'';
-assert.equal((scene.match(/<img/g)||[]).length,3,'Only three source photographs must be used');
-assert.ok(!/ecu-v6-|ecu-v7-|ecu-split-|photo--board|photo--base|photo--lid/.test(scene),'Remove all fake composite and synthetic floor layers');
-assert.ok(!/--ecu-board-rise|--ecu-lid-lift|--ecu-split/.test(css),'No leftover independently translated fake cropped layers');
-console.log('PASS: photo-coherent closed/open/exploded ECU states without synthetic dark PCB filler');
+assert.equal((scene.match(/<img/g)||[]).length,3);
+assert.ok(!/ecu2026-|ecu-v6-|ecu-v7-|ecu-split-|photo--board|photo--base|photo--lid/.test(scene),'No fake slices or different ECU model');
+assert.ok(!/--ecu-board-rise|--ecu-lid-lift|--ecu-split/.test(css));
+assert.ok(css.includes('height:200svh'),'Allow enough mobile scroll distance for stages');
+console.log('PASS: full opaque three-connector ECU at all scroll states, no ghost blending, no fake case layers');
