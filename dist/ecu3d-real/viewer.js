@@ -2,6 +2,7 @@
    Not cut-out photos; casing and sockets are actual solid 3D geometries. */
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 const story=document.querySelector('#ecu-3d-story');
 const canvas=document.querySelector('#ecu-3d-canvas');
 const msg=document.querySelector('#ecu-3d-status');
@@ -20,7 +21,7 @@ try{
  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;
- renderer.toneMappingExposure=1.18;
+ renderer.toneMappingExposure=1.16;
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.65));
 }catch(err){
  if(photo)photo.hidden=false;
@@ -28,6 +29,11 @@ try{
  throw err;
 }
 const scene=new THREE.Scene();
+// Studio reflections reveal true physically modeled aluminum curvature.
+const pmrem=new THREE.PMREMGenerator(renderer);
+const studio=new RoomEnvironment();
+scene.environment=pmrem.fromScene(studio,0.04).texture;
+studio.dispose();pmrem.dispose();
 const camera=new THREE.OrthographicCamera(-5.5,5.5,5,-5,.1,90);
 camera.position.set(6.3,4.65,13.4);
 camera.lookAt(0,.04,0);
