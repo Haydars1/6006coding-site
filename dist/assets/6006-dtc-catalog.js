@@ -30,6 +30,7 @@ const mapped=outlines.tr;
 const groups={turbo:"luft",dpf:"abgas",adblue:"abgas",fuel:"kraftstoff",brake:"antrieb",network:"antrieb",transmission:"antrieb",cooling:"luft",oil:"luft",airbag:"antrieb",body:"antrieb",sensor:"luft",ignition:"luft",steering:"antrieb",generic:"all"};
 const aliases={tr:["tr"],de:["de"],en:["en"]};
 const state={data:[],all:[],query:"",brand:"ALL",family:"all",category:"all",limit:35,display:[],code:"",activeManufacturer:""};
+let curatedGuides = new Set();
 const html=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const L=()=>langMap[currentLanguage]||langMap.tr;
 let currentLanguage="tr";
@@ -357,17 +358,23 @@ function selectCode(row,scroll){
  const steps=[...d.checks];if(one)steps.splice(1,0,one[localeNum]);
  if(overrides[row[0]]&&currentLanguage==="tr")steps.splice(1,0,overrides[row[0]][1]);
  const banner=row[1]==="GENERIC"?L().generic:L().manufacturer+" · "+row[1];
+ const triage=window.DTCIntelligence6006?.explain(row[0],description,row[1],currentLanguage);
+ const targeted=triage?'<section class="dtc-targeted"><h3>'+html(triage.label)+'</h3><p><strong>'+html(triage.classification)+'</strong> · '+html(triage.family)+'</p><p class="small">'+html(triage.note)+'</p><ol>'+triage.checks.map(x=>'<li>'+html(x)+'</li>').join("")+'</ol><p><strong>'+html(currentLanguage==="tr"?"Hata türüne göre değerlendirilebilecek nedenler":currentLanguage==="de"?"Je nach Fehlerart mögliche Ursachen":"Possible causes by fault type")+'</strong></p><ul>'+triage.causes.map(x=>'<li>'+html(x)+'</li>').join("")+'</ul><p class="notice">'+html(triage.safety)+'</p></section>':'';
+ const curated=curatedGuides.has(row[0]),articleLink='/fehlercodes/'+row[0].toLowerCase()+'/';
+ const knowledge=curated?'<p><a class="dtc-more-guide" href="'+articleLink+'">'+html(currentLanguage==="tr"?"Bu kodun ayrıntılı teşhis rehberini aç":currentLanguage==="de"?"Ausführliche Diagnose zu diesem Code lesen":"Read detailed diagnosis guide")+' →</a></p>':'<p class="small">'+html(currentLanguage==="tr"?"Bu kod için özel onarım rehberi henüz yayımlanmadı; yukarıdaki kontroller sistem bazlı başlangıçtır.":currentLanguage==="de"?"Für diesen Code gibt es noch keinen einzeln geprüften Reparaturartikel; die obigen Schritte dienen zur Eingrenzung.":"No individually reviewed repair article for this code yet; the checks above are preliminary.")+'</p>';
+ const inquiry='https://wa.me/491788354756?text='+encodeURIComponent((currentLanguage==="tr"?"Merhaba 6006 Performance, "+row[0]+" arıza kodu için araç özelinde teşhis istiyorum.":currentLanguage==="de"?"Hallo 6006 Performance, ich möchte eine fahrzeugspezifische Diagnose für "+row[0]+" anfragen.":"Hello 6006 Performance, I would like vehicle-specific diagnosis for "+row[0]+".")+'\nMarka/Modell: \nMotor/Yıl: \nBelirtiler: ');
+ const service='<p class="dtc-help"><a href="'+html(inquiry)+'" rel="noopener noreferrer" target="_blank">'+html(currentLanguage==="tr"?"Bu arıza için teknik değerlendirme iste":currentLanguage==="de"?"Technische Beurteilung anfragen":"Request technical diagnosis")+' →</a></p>';
  $("detay").innerHTML=
   '<div class="detail-head"><span class="code-big">'+html(row[0])+'</span><span class="pill">'+html(banner)+'</span></div>'+
   '<h2>'+html(currentLanguage==="tr"&&overrides[row[0]]?overrides[row[0]][0]:d.name)+'</h2>'+
   '<p class="small">'+html(L().english)+'</p><p>'+html(description)+'</p>'+
   photoMain(row,type)+
   visualSchematic(row,type)+
-  '<div class="notice">'+html(L().verify)+'</div>'+
+  '<div class="notice">'+html(L().verify)+'</div>'+targeted+knowledge+
   '<h3>'+html(L().causes)+'</h3><ol>'+d.causes.map(s=>'<li>'+html(s)+'</li>').join("")+'</ol>'+
   '<h3>'+html(L().checks)+'</h3><ol>'+steps.map(s=>'<li>'+html(s)+'</li>').join("")+'</ol>'+
   (["brake","oil","steering","airbag","cooling"].includes(type)?'<p class="notice">'+html(L().attention)+'</p>':'')+
-  '<p class="small">'+html(L().origin)+'</p>'+
+  '<p class="small">'+html(L().origin)+'</p>'+service+
   '<div class="contact"><a id="copy-link" href="'+html(location.href)+'">'+html(L().copy)+'</a></div>';
  $("copy-link").addEventListener("click",ev=>{if(navigator.clipboard&&navigator.clipboard.writeText){ev.preventDefault();navigator.clipboard.writeText(location.href).then(()=>{$("copy-link").textContent="✓";}).catch(()=>{});}});
  recordRecent(row);
@@ -403,6 +410,7 @@ async function init(){
  $("count").textContent=L().loading;$("items").textContent=L().loading;
  const res=await fetch("../assets/6006-dtc-catalog.json",{cache:"force-cache"});if(!res.ok)throw Error("HTTP "+res.status);
  const data=await res.json();state.data=data;state.all=data.defs.filter(r=>r.length===3);
+ try {const guideRes=await fetch("../assets/6006-curated-guides.json",{cache:"force-cache"});if(guideRes.ok){const guideData=await guideRes.json();curatedGuides=new Set((guideData.codes||[]).filter(code=>/^[PBCU][0-9A-F]{4}$/.test(code)));}}catch(_){/* Catalogue remains usable when optional guide manifest cannot load. */}
  $("total-defs").textContent=state.all.length.toLocaleString();
  $("total-unique").textContent=new Set(state.all.map(r=>r[0])).size.toLocaleString();
  $("total-brands").textContent=data.manufacturers.filter(x=>x!=="GENERIC"&&x!=="OTHER").length;
