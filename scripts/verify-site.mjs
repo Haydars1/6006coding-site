@@ -74,7 +74,7 @@ assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
 const sitemap=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
-assert(urls.length>=12000,'SEO sitemap must cover all individual DTC reference pages');
+assert(urls.length>100,'SEO sitemap is unexpectedly empty');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
 for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p2015','p0562','p0741','u0415']){
@@ -96,10 +96,10 @@ assert(dirs.length===allPages.uniqueCodes,'Some code paths were not written');
 const allCodes=new Set(db.defs.map(row=>row[0]));
 for(const code of allCodes){
  const url='/fehlercodes/'+code.toLowerCase()+'/';
- if(fs.existsSync(path.join(ROOT,'fehlercodes',code.toLowerCase(),'index.html'))) continue; 
  const file=path.join(codePages,code.toLowerCase(),'index.html');
  assert(fs.existsSync(file),'No dedicated page for '+code);
- assert(urls.includes('https://6006coding.de'+url),'Missing indexable DTC sitemap entry '+code);
+ const html=fs.readFileSync(file,'utf8');
+ assert.equal(urls.includes('https://6006coding.de'+url),!html.includes('noindex'),'Sitemap/indexability mismatch '+code);
 }
 for(const code of ['P0102','P0113','P0670','B0001','C0035','U0073']){
  if(JSON.parse(fs.readFileSync(path.join(ROOT,'assets/6006-curated-guides.json'),'utf8')).codes.includes(code))continue;
@@ -110,7 +110,7 @@ for(const code of ['P0102','P0113','P0670','B0001','C0035','U0073']){
  assert(!page.includes('noindex'),'Unexpected noindex for '+code);
 }
 assert(fs.readFileSync(path.join(ROOT,'fehlercodes','verzeichnis','index.html'),'utf8').includes('Jeder Code hat eine eigene Informationsseite'),'Code directory not describing its detailed links');
-console.log('PASS: '+allPages.uniqueCodes+' distinct DTCs have their own accessible indexed HTML article or curated guide');
+console.log('PASS: '+allPages.uniqueCodes+' accessible DTC pages; sitemap agrees with indexability');
 
 // Every licensed fault-code definition must be discoverable in server-rendered HTML.
 const directoryRoot=path.join(ROOT,'fehlercodes','verzeichnis');
@@ -145,7 +145,13 @@ const detailEngine=exported.DTCIntelligence6006;
 assert(detailEngine&&typeof detailEngine.explain==='function','DTC triage engine not loaded');
 for(const row of db.defs.filter(r=>r.length===3)){
  const result=detailEngine.explain(row[0],row[2],row[1],'de');
- assert(result&&result.classification&&result.causes.length>=2&&result.checks.length>=2&&result.note,'Missing preliminary guidance for '+row[0]);
+ assert(result&&result.classification&&result.causes.length>=1&&result.checks.length>=2&&result.note,'Missing preliminary guidance for '+row[0]);
+}
+for(const language of ['tr','de','en']){
+ const pending=detailEngine.explain('P1000','OBD System Readiness Test Not Complete','FORD',language);
+ assert(pending.mode==='readiness'&&pending.limited,'Readiness misclassified in '+language);
+ const safety=detailEngine.explain('B0020','Airbag squib circuit open','GENERIC',language);
+ assert(safety.mode==='specialist'&&safety.limited,'Unsafe SRS checks in '+language);
 }
 for(const [code,desc,type] of [
  ['P0102','Mass airflow sensor circuit low','low'],
@@ -159,12 +165,12 @@ assert(fs.existsSync(path.join(ROOT,'assets','6006-curated-guides.json')),'Detai
 const detailCodes=JSON.parse(fs.readFileSync(path.join(ROOT,'assets','6006-curated-guides.json'),'utf8')).codes;
 assert(detailCodes.length>=76,'Curated guides manifest incomplete');
 assert(fs.readFileSync(path.join(ROOT,'fehlercodes','index.html'),'utf8').includes('6006-dtc-intelligence.js'),'Client does not load diagnostic intelligence');
-console.log('PASS: all '+db.defs.length+' source definitions receive typed triage, with '+detailCodes.length+' verified long-form article links');
+console.log('PASS: '+db.defs.length+' definitions covered; '+detailCodes.length+' detailed article links resolve (not OEM verification)');
 
 const guideFolder=path.join(ROOT,'fehlercodes');
 const guideCount=fs.readdirSync(guideFolder,{withFileTypes:true}).filter(e=>e.isDirectory() && /^[pbcu][0-9a-f]{4}$/i.test(e.name) && fs.existsSync(path.join(guideFolder,e.name,'index.html'))).length;
 assert(guideCount>=76,'Detailed code-specific troubleshooting guide count below 76: '+guideCount);
-console.log('PASS: '+guideCount+' independently authored diagnosis pages');
+console.log('PASS: '+detailCodes.length+' detailed guides and '+(guideCount-detailCodes.length)+' automatic reference pages');
 const vehicleIndexPath=path.join(ROOT,'assets/vehicle-data/index.json');
 assert(fs.existsSync(vehicleIndexPath),'Missing broad model/engine database');
 const vehicleIndex=JSON.parse(fs.readFileSync(vehicleIndexPath,'utf8'));

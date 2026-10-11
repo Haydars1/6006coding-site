@@ -91,6 +91,16 @@ function faultType(code,description){
 }
 function explain(code,description,manufacturer,language){
  const l=text[language]||text.de;
+ const limited=/airbag|srs|pretension|restraint|squib|high.voltage|hybrid|traction battery|pyrotechnic/i.test(description);
+ const pending=/(?:readiness|monitor testing|systems? test).*(?:not complete|not completed|incomplete)/i.test(description);
+ if(limited||pending){
+  const copy={
+   tr:pending?["OBD testi henüz tamamlanmadı","Bu kayıt tek başına parça arızası göstermez.","Hazırlık durumunu ve diğer kodları kaydet; hata silme işlemi test durumunu sıfırlayabilir.","Araç üreticisinin test koşullarını güvenli biçimde uygula; bu kayda dayanarak parça değiştirme."]:["Uzman incelemesi gereken güvenlik sistemi","Genel elektrik kontrolleri bu sisteme uygulanmamalıdır.","Tam kodu, alt kodu ve araç bilgilerini kaydet.","Piroteknik veya yüksek voltaj devrelerini ölçme; uygun eğitimli uzman ve üretici prosedürü gerekir."],
+   de:pending?["OBD-Prüfstatus unvollständig","Dieser Eintrag allein bestätigt keinen Bauteildefekt.","Readiness und weitere Fehler sichern; Löschen kann den Prüfstatus zurücksetzen.","Fahrzeugspezifische Prüfbedingungen sicher anwenden; aus diesem Eintrag keinen Teiletausch ableiten."]:["Sicherheitsrelevantes System: Fachprüfung","Allgemeine elektrische Tests sind hier nicht übertragbar.","Vollständigen Code, Untercode und Fahrzeugdaten sichern.","Pyrotechnische und Hochvolt-Kreise nicht selbst messen; qualifizierte Fachkräfte und Herstellerverfahren erforderlich."],
+   en:pending?["OBD monitor testing incomplete","This entry alone does not confirm a component failure.","Record readiness and other codes; clearing codes can reset monitor status.","Follow vehicle-specific monitor conditions safely; do not replace parts based on this entry."]:["Safety-critical system: specialist assessment","General electrical tests must not be applied to this system.","Record the complete code, subcode and vehicle details.","Do not probe pyrotechnic or high-voltage circuits; qualified personnel and manufacturer procedures are required."]
+  }[language]||null;
+  if(copy)return {mode:pending?'readiness':'specialist',limited:true,classification:copy[0],family:l.fam[String(code)[0]]||l.types.general.name,label:l.label,note:l.note,causes:[copy[1]],checks:copy.slice(2),safety:l.safety[String(code)[0]]||l.safety.P,manufacturer:manufacturer||'GENERIC'};
+ }
  const mode=faultType(code,description), type=l.types[mode]||l.types.general;
  const fam=l.fam[String(code||"")[0]]||l.types.general.name;
  return {mode,classification:type.name,family:fam,label:l.label,note:l.note,causes:[...type.causes],checks:[...type.checks],safety:l.safety[String(code||"")[0]]||l.safety.P,manufacturer:manufacturer||"GENERIC"};

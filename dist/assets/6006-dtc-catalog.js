@@ -342,7 +342,7 @@ const copyBtn=make(shelfLanguage("copy"),async()=>{
  try{if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("Clipboard");await navigator.clipboard.writeText(note);feedback.textContent=shelfLanguage("ok")}catch(e){feedback.textContent=shelfLanguage("error");const ta=document.createElement("textarea");ta.value=note;ta.style.width="100%";ta.setAttribute("aria-label","Copy report");actions.append(ta);ta.focus();ta.select()}
 });
 make(currentLanguage==="tr"?"Teşhis raporunu indir":currentLanguage==="de"?"Diagnosebericht herunterladen":"Download diagnostic report",()=>{
-const symptoms=(DIAGRAMS[kind(row)]||DIAGRAMS.generic).symptoms.map(x=>x[{tr:0,de:1,en:2}[currentLanguage]||0]);
+const symptoms=guide.limited?[]:(DIAGRAMS[kind(row)]||DIAGRAMS.generic).symptoms.map(x=>x[{tr:0,de:1,en:2}[currentLanguage]||0]);
 const note=["6006 Performance",new Date().toLocaleString(),row[0]+" · "+row[1],row[2],guide.name,"",visualLabel("symptoms"),...symptoms,"",L().causes,...guide.causes,"",L().checks,...steps,"",L().verify,location.href].join("\n");
 const link=document.createElement("a");link.href=URL.createObjectURL(new Blob(["\ufeff"+note],{type:"text/plain;charset=utf-8"}));link.download="6006-"+row[0]+"-"+currentLanguage+".txt";link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
 });
@@ -353,12 +353,13 @@ detail.append(actions);
 
 function selectCode(row,scroll){
  state.code=row[0];state.activeManufacturer=row[1];updateURL(row[0]);
- const type=kind(row);const chosen=currentLanguage==="tr"?mapped:(localeGuides[currentLanguage]||mapped);const d=chosen[type]||chosen.generic;const description=row[2];
+ const type=kind(row);const chosen=currentLanguage==="tr"?mapped:(localeGuides[currentLanguage]||mapped);const d={...(chosen[type]||chosen.generic)};const description=row[2];
  const one=codeSignal(description);const localeNum={tr:0,de:1,en:2}[currentLanguage]||0;
  const steps=[...d.checks];if(one)steps.splice(1,0,one[localeNum]);
  if(overrides[row[0]]&&currentLanguage==="tr")steps.splice(1,0,overrides[row[0]][1]);
  const banner=row[1]==="GENERIC"?L().generic:L().manufacturer+" · "+row[1];
  const triage=window.DTCIntelligence6006?.explain(row[0],description,row[1],currentLanguage);
+ if(triage?.limited){d.limited=true;d.name=triage.classification;d.causes=triage.causes;steps.splice(0,steps.length,...triage.checks);}
  const targeted=triage?'<section class="dtc-targeted"><h3>'+html(triage.label)+'</h3><p><strong>'+html(triage.classification)+'</strong> · '+html(triage.family)+'</p><p class="small">'+html(triage.note)+'</p><ol>'+triage.checks.map(x=>'<li>'+html(x)+'</li>').join("")+'</ol><p><strong>'+html(currentLanguage==="tr"?"Hata türüne göre değerlendirilebilecek nedenler":currentLanguage==="de"?"Je nach Fehlerart mögliche Ursachen":"Possible causes by fault type")+'</strong></p><ul>'+triage.causes.map(x=>'<li>'+html(x)+'</li>').join("")+'</ul><p class="notice">'+html(triage.safety)+'</p></section>':'';
  const curated=curatedGuides.has(row[0]),articleLink='/fehlercodes/'+row[0].toLowerCase()+'/';
  const knowledge=curated?'<p><a class="dtc-more-guide" href="'+articleLink+'">'+html(currentLanguage==="tr"?"Bu kodun ayrıntılı teşhis rehberini aç":currentLanguage==="de"?"Ausführliche Diagnose zu diesem Code lesen":"Read detailed diagnosis guide")+' →</a></p>':'<p class="small">'+html(currentLanguage==="tr"?"Bu kod için özel onarım rehberi henüz yayımlanmadı; yukarıdaki kontroller sistem bazlı başlangıçtır.":currentLanguage==="de"?"Für diesen Code gibt es noch keinen einzeln geprüften Reparaturartikel; die obigen Schritte dienen zur Eingrenzung.":"No individually reviewed repair article for this code yet; the checks above are preliminary.")+'</p>';
@@ -368,8 +369,7 @@ function selectCode(row,scroll){
   '<div class="detail-head"><span class="code-big">'+html(row[0])+'</span><span class="pill">'+html(banner)+'</span></div>'+
   '<h2>'+html(currentLanguage==="tr"&&overrides[row[0]]?overrides[row[0]][0]:d.name)+'</h2>'+
   '<p class="small">'+html(L().english)+'</p><p>'+html(description)+'</p>'+
-  photoMain(row,type)+
-  visualSchematic(row,type)+
+  (triage?.limited?'':photoMain(row,type)+visualSchematic(row,type))+
   '<div class="notice">'+html(L().verify)+'</div>'+targeted+knowledge+
   '<h3>'+html(L().causes)+'</h3><ol>'+d.causes.map(s=>'<li>'+html(s)+'</li>').join("")+'</ol>'+
   '<h3>'+html(L().checks)+'</h3><ol>'+steps.map(s=>'<li>'+html(s)+'</li>').join("")+'</ol>'+

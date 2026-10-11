@@ -30,7 +30,7 @@ const rootDir = '/fehlercodes/verzeichnis/';
 const folder = (g,page) => rootDir+g+'/'+(page===1?'':page+'/');
 const header = '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/">Fehlercode-Suche</a><a href="/fehlercodes/loesungen/">Diagnoseanleitungen</a><a href="/fahrzeug/">Fahrzeug wählen</a></nav></header>';
 function layout(title,desc,url,body){
-  const ld = {'@context':'https://schema.org','@type':'CollectionPage',name:title,description:desc,url,isPartOf:{'@type':'WebSite',name:'6006 Performance',url:base+'/'}};
+  const ld = {'@context':'https://schema.org','@type':'CollectionPage',name:title,description:desc,url:base+url,isPartOf:{'@type':'WebSite',name:'6006 Performance',url:base+'/'}};
   return '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
    +'<title>'+safe(title)+' | 6006 Performance</title><meta name="description" content="'+safe(desc)+'">'
    +'<meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+base+url+'">'
@@ -99,6 +99,6 @@ const xml=fs.readFileSync(sitemap,'utf8');
 assert(xml.includes('</urlset>'),'Sitemap is missing end tag');
 const stamp=new Date().toISOString().slice(0,10);
 const appended=urls.filter(u=>!xml.includes('<loc>'+base+u+'</loc>'))
- .map(u=>'  <url><loc>'+base+u+'</loc><lastmod>'+stamp+'</lastmod></url>').join('\n');
+ .map(u=>'  <url><loc>'+base+u+'</loc></url>').join('\n');
 fs.writeFileSync(sitemap,xml.replace('</urlset>',appended+'\n</urlset>'),'utf8');
 console.log('DTC DIRECTORY: '+written+' source definitions, '+groups.size+' prefixes, '+pages+' detail listing pages, '+urls.length+' directory sitemap URLs');

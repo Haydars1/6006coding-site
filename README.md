@@ -10,7 +10,13 @@ Bu depo **6006coding.de** için ayrı statik site kaynağıdır. JARVIS projesiy
 - **Render publish directory:** `dist`
 - **Render auto-deploy:** `main` dalındaki her güncelleme
 
-> `6006coding.de` hâlen ChatGPT Sites üzerindedir. Yeni Render adresindeki sayfalar, logo, telefon dili, arama, marka kataloğu, WhatsApp ve e-posta bağlantıları doğrulanmadan DNS kayıtlarını değiştirmeyin. E-posta MX ve TXT kayıtlarını koruyun.
+11 Ekim 2026 kontrolünde `6006coding.de` HTTP yanıtı Render/CDN üzerinden gelmektedir. GitHub test başarısı ile canlı yayın ayrı kontrol edilmelidir. DNS değişikliği bu geliştirme için gerekli değildir.
+
+## Otomatik sayfalarda kalite kontrolü
+
+Build, 76 ayrıntılı rehber ve 12.052 otomatik kod referansı üretir. Bu iki sayı ayrı raporlanır; referanslar OEM tarafından doğrulanmış onarım talimatı sayılmaz. Üretici açıklamaları ayrı ilk kontrol alanları içerir. Tamamlanmamış OBD testleri parça arızası olarak sunulmaz; SRS ve yüksek voltaj kayıtlarında genel elektrik testleri önerilmez.
+
+Yalnızca boş/ayrılmış tanımı bulunan kod sayfaları erişilebilir kalır, `noindex,follow` ile sitemap dışında tutulur. `lastmod` build tarihinden türetilmez. `verify-generated.mjs` tüm sitemap ve kod sayfalarını; canonical, tek H1, JSON-LD, yerel bağlantı, dosya ve fragment hedefleri açısından kontrol eder. Google indeksleme, sıralama ve AdSense geliri bu testlerle doğrulanamaz.
 
 ## Bir defalık kurulum
 
