@@ -33,23 +33,26 @@
   // Preserve the case in the visual centre as the cover and PCB separate.
   // After separation, the entire section returns naturally to normal scroll.
   const scroll=p*range;
-  const hold=Math.min(scroll,range*.76);
-  const reveal=smooth(.07,.18,p);
-  const lidTravel=smooth(.17,.44,p);
-  const boardTravel=smooth(.46,.71,p);
-  const fade=smooth(.775,.86,p);
-  const graphIn=smooth(.775,.885,p);
-  const draw=smooth(.80,.965,p);
-  const gains=smooth(.865,.98,p);
+  const hold=Math.min(scroll,range*.74);
+  // Four clearly separated scroll phases, with time to inspect the board on mobile.
+  const reveal=smooth(.05,.17,p);
+  const lidTravel=smooth(.16,.39,p);
+  const boardTravel=smooth(.42,.71,p);
+  const exit=smooth(.79,.93,p);
+  const fade=smooth(.83,.93,p);
+  const graphIn=smooth(.90,.98,p);
+  const draw=smooth(.91,.995,p);
+  const gains=smooth(.935,.995,p);
   toCss('hold',hold,'px');
   toCss('scale',.98-.035*smooth(.70,.88,p));
   // Only a short initial reveal; actual separation uses distinct DOM layers.
   toCss('closed',1-reveal);
   toCss('split',reveal);
-  toCss('lid-lift',-Math.min(vh*.12,105)*lidTravel,'px');
-  // The board lifts gently OUT of its original metal bed; connector sockets and housing remain fixed.
-  toCss('board-rise',-Math.min(vh*.017,14)*boardTravel,'px');
-  toCss('board-depth',1+.08*boardTravel);
+  // Lid and PCB are independent photo layers; fixed case/sockets NEVER move individually.
+  toCss('lid-lift',-Math.min(vh*.145,130)*lidTravel,'px');
+  toCss('board-rise',-Math.min(vh*.073,72)*boardTravel,'px');
+  toCss('board-depth',1+.055*boardTravel);
+  toCss('unit-exit',-Math.min(vh*.15,150)*exit,'px');
   toCss('caption-alpha',1-smooth(.73,.83,p));
   toCss('unit-alpha',1-fade);
   toCss('graph-alpha',graphIn);
@@ -60,7 +63,7 @@
   const ps=Math.round(30*gains),nm=Math.round(60*gains);
   if(ps!==lastPS){power.textContent='+'+ps;lastPS=ps}
   if(nm!==lastNM){torque.textContent='+'+nm;lastNM=nm}
-  const phase=p<.49?'open':p<.78?'board':'graph';
+  const phase=p<.42?'open':p<.86?'board':'graph';
   if(phase!==lastPhase){phaseLabel.textContent=labels[lang][phase];lastPhase=phase}
  }
  function redraw(){
