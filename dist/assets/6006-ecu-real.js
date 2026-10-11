@@ -35,8 +35,8 @@
   const scroll=p*range;
   const hold=Math.min(scroll,range*.76);
   const reveal=smooth(.07,.18,p);
-  const lidTravel=smooth(.20,.46,p);
-  const boardTravel=smooth(.48,.75,p);
+  const lidTravel=smooth(.17,.44,p);
+  const boardTravel=smooth(.46,.71,p);
   const fade=smooth(.775,.86,p);
   const graphIn=smooth(.775,.885,p);
   const draw=smooth(.80,.965,p);
@@ -46,8 +46,10 @@
   // Only a short initial reveal; actual separation uses distinct DOM layers.
   toCss('closed',1-reveal);
   toCss('split',reveal);
-  toCss('lid-lift',-Math.min(vh*.105,94)*lidTravel,'px');
-  toCss('board-drop',Math.min(vh*.095,86)*boardTravel,'px');
+  toCss('lid-lift',-Math.min(vh*.12,105)*lidTravel,'px');
+  // The board lifts gently OUT of its original metal bed; connector sockets and housing remain fixed.
+  toCss('board-rise',-Math.min(vh*.054,44)*boardTravel,'px');
+  toCss('board-depth',1+.035*boardTravel);
   toCss('caption-alpha',1-smooth(.73,.83,p));
   toCss('unit-alpha',1-fade);
   toCss('graph-alpha',graphIn);
