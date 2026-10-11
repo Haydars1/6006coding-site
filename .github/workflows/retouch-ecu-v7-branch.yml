@@ -1,0 +1,32 @@
+name: Generate ECU v7 recess for review
+on:
+  push:
+    branches: [fix/ecu-assembly-visual-v6]
+    paths:
+      - .github/workflows/retouch-ecu-v7-branch.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  retouch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Make realistic photographed metal ECU recess
+        run: |
+          python -m pip install --quiet Pillow==11.3.0 numpy==2.3.3
+          python scripts/retouch-ecu-v7.py
+      - name: Commit to review branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 ECU Visual QA"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-v7-housing.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(stage1): brushed metal ECU recess instead of dark filler"
+            git pull --rebase origin fix/ecu-assembly-visual-v6
+            git push origin HEAD:fix/ecu-assembly-visual-v6
+          fi
