@@ -13,6 +13,9 @@ const graph = document.querySelector('#ecu3d-chart');
 if (!host || !canvas) throw Error('Missing ECU3D viewer');
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+if(new URLSearchParams(location.search).has('inspect')){
+ document.body.classList.add('ecu-inspect');
+}
 const clamp = x => Math.min(1, Math.max(0, x));
 const ease = (a,b,x) => {let p=clamp((x-a)/(b-a));return p*p*(3-2*p)};
 
