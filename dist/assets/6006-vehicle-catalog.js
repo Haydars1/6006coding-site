@@ -136,7 +136,7 @@ function engineVariants(brand,model,year){
    if(y&&(y<first||y>last))continue;
    result.push({...engine,model:item.name});
  }
- return result.slice(0,500);
+ return result;
 }
 function loadModels(brand){
  if(!brand)return Promise.resolve();
