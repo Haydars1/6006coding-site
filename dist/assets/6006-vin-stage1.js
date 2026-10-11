@@ -66,7 +66,7 @@ function renderQuote(){
  const stockPS=numeric(ps.value)||(!selected?null:stockPower(selected));
  const stockNM=numeric(nm.value)||(!selected?null:stockTorque(selected));
  if(stockPS||stockNM)put(copy.stock,[stockPS?stockPS+" PS":"",stockNM?stockNM+" Nm":""].filter(Boolean).join(" / "));
- if(quoteControls.mileage.value&&numeric(quoteControls.mileage.value))put(copy.mileage,+quoteControls.mileage.value+" "+copy.mileageUnit);
+ const mileage=Number(quoteControls.mileage.value);if(quoteControls.mileage.value&&Number.isSafeInteger(mileage)&&mileage>=0&&mileage<=2000000)put(copy.mileage,mileage.toLocaleString(lang()==="de"?"de-DE":lang()==="tr"?"tr-TR":"en-US")+" "+copy.mileageUnit);
  put(copy.ecuVersion,quoteControls.ecu.value.trim().slice(0,90));
  put(copy.extra,quoteControls.note.value.trim().slice(0,400));
  const message=[copy.salutation,"",...details,"",copy.verification].join("\n");
