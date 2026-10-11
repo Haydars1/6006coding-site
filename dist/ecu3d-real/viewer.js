@@ -21,7 +21,7 @@ try{
  renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});
  renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;
- renderer.toneMappingExposure=1.16;
+ renderer.toneMappingExposure=.97;
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.65));
 }catch(err){
  if(photo)photo.hidden=false;
@@ -33,11 +33,12 @@ const scene=new THREE.Scene();
 const pmrem=new THREE.PMREMGenerator(renderer);
 const studio=new RoomEnvironment();
 scene.environment=pmrem.fromScene(studio,0.04).texture;
+scene.environmentIntensity=.22;
 studio.dispose();pmrem.dispose();
 const camera=new THREE.OrthographicCamera(-5.5,5.5,5,-5,.1,90);
 camera.position.set(6.3,4.65,13.4);
 camera.lookAt(0,.04,0);
-const ambient=new THREE.HemisphereLight(0xffffff,0x39312a,1.45);scene.add(ambient);
+const ambient=new THREE.HemisphereLight(0xffffff,0x39312a,1.15);scene.add(ambient);
 function light(color,intensity,x,y,z){const l=new THREE.DirectionalLight(color,intensity);l.position.set(x,y,z);scene.add(l)}
 light(0xfff3e3,1.7,4,9,8);
 light(0xffffff,.85,-6,5,-4);
