@@ -154,7 +154,7 @@ fillMakes();populateModels("");renderEngines("");
 $("decode").addEventListener("click",identify);
 $("vin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();identify();}});
 make.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";year.value="";makeChanged("");});
-model.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";modelChanged();});
+model.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";modelChanged();});
 year.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
 fuel.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
 engine.addEventListener("change",syncVariant);
