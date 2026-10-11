@@ -16,7 +16,7 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-ecu-real.js'];
+const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-ecu-real.js','assets/6006-ecu-cinema.js'];
 for(const f of javascript){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing JS ${f}`);
  execFileSync(process.execPath,['--check',path.join(ROOT,f)],{stdio:'pipe'});
@@ -36,6 +36,21 @@ for(const page of pages){
  }
 }
 execFileSync(process.execPath,['scripts/test-ecu-motion.mjs'],{stdio:'inherit'});
+// Cinematic original photo scene must not reintroduce rejected fake 3D material.
+const homepage=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+const cinematicCss=fs.readFileSync(path.join(ROOT,'assets/6006-ecu-cinema.css'),'utf8');
+const cinematicJs=fs.readFileSync(path.join(ROOT,'assets/6006-ecu-cinema.js'),'utf8');
+assert(homepage.includes('class="ecx" id="ecu-journey"'),'Stage 1 must use the cinematic original ECU section');
+assert(homepage.includes('6006-ecu-cinema.css')&&homepage.includes('6006-ecu-cinema.js'),'ECU animation assets not linked');
+for(const name of ['ecu-closed.webp','ecu-open.webp','ecu-exploded.webp']){
+ assert(homepage.includes('/assets/ecu/'+name),'Authentic ECU stage missing '+name);
+}
+assert(!homepage.includes('class="ecu-real" id="ecu-journey"'),'Outdated home scene still installed');
+assert(homepage.includes('class="vehicle-section" id="aracin"'),'Vehicle selector must remain unchanged');
+assert(cinematicCss.includes('ecx__active')&&cinematicJs.includes('classList.toggle'),'Missing deterministic opaque photo state switching');
+assert(cinematicJs.includes('Math.abs(p-.305)')&&cinematicJs.includes('Math.abs(p-.625)'),'Missing shutters between perspective changes');
+assert(cinematicJs.includes('graphAlpha')&&cinematicJs.includes("new MutationObserver"),'Scroll and language-reactive graph missing');
+console.log('PASS: original three-port ECU photo-based cinematic sequence and mobile stage controls');
 // Photo-derived 3D ECU is a separate preview; guard assets and interactive code
 // without changing the existing homepage or its other business content.
 const photo3dRoot=path.join(ROOT,'ecu3d-real');
