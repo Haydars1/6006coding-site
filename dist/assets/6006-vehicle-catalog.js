@@ -123,7 +123,7 @@ function engineVariants(brand,model,year){
  const entries=openModels.get(norm(brand))||[];
  const q=norm(model);
  if(!q)return [];
- const matched=entries.filter(x=>norm(x.name)===q||(q.length>=3&&norm(x.name).includes(q)));
+ const matched=entries.filter(x=>{const name=norm(x.name);return name===q||(q.length>=3&&(name.includes(q)||q.startsWith(name+" ")));});
  const y=Number(year)||0,result=[];
  for(const item of matched)for(const engine of item.engines||[]){
    const first=Number(engine.from)||Number(item.from)||0,last=Number(engine.to)||Number(item.to)||9999;
@@ -211,6 +211,7 @@ function install(){
    engineSuggestions();loadOpenBrand(brand.value).then(variantOptions);variantOptions();
  }
  variantSelect.addEventListener("change",()=>{
+   if(!variantSelect.value)return;
    const variant=selectedVariants[Number(variantSelect.value)];if(!variant)return;
    document.getElementById("engineInput").value=variant.engine;
    if(variant.hp)document.getElementById("powerInput").value=String(Math.round(variant.hp*1.01387));
@@ -236,7 +237,7 @@ function install(){
   if(!make||!modelName){tech.hidden=true;return;}
   tech.hidden=false;
   const langCode=lang();
-  const electrical=/^(Electric)$/i.test(fuel)||/\\b(EV|Elektro)\\b/i.test(engine);
+  const electrical=/^(Electric)$/i.test(fuel)||/\b(EV|Elektro)\b/i.test(engine);
   const copy=langCode==="tr"
    ?{head:"Stage 1 · araç özelinde ön değerlendirme",selected:"Seçim",unknown:"Güç artışı henüz doğrulanmadı.",task:"Kontrol sırası",steps:["Motor kodu ve ECU yazılım sürümünü doğrula.","Önce DTC, canlı veriler, turbo / yakıt ve sıcaklık değerlerini incele.","Şanzımanın tork limitlerini ve mekanik durumunu kontrol et.","TÜV, sigorta ve emisyon kuralları için uygunluğu doğrula."],ev:"Elektrikli araçlarda klasik içten yanmalı motor Stage 1 işlemi uygulanmaz; üretici desteği ayrıca doğrulanmalıdır.",estimate:"Tahmini PS/Nm verilmez: aynı modelin farklı motor ve şanzımanları olabilir."}
    :langCode==="de"
@@ -252,6 +253,7 @@ function install(){
    document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");document.getElementById("customBrandButton").textContent=tr("addBrand");
    document.getElementById("vehicleQuickSearch").placeholder=tr("hint");document.getElementById("vehicleDiscoveryNote").textContent=tr("notice");
    ["yearSelect","fuelSelect","gearboxSelect"].forEach(id=>document.getElementById(id).options[0].textContent=tr("choose"));
+   const variantLabel=document.getElementById("engineVariantLabel");if(variantLabel)variantLabel.textContent=lang()==="tr"?"Motor varyantı · açık veri":lang()==="de"?"Motorvariante · offene Fahrzeugdaten":"Engine variant · open reference data";
  }
  applyWords();new MutationObserver(applyWords).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  const feedback=document.getElementById("vehicleFindMessage");
