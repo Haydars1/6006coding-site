@@ -87,6 +87,73 @@ for(const control of [quoteControls.mileage,quoteControls.ecu,quoteControls.note
  control.addEventListener("input",renderQuote);
  control.addEventListener("change",renderQuote);
 }
+
+/* Public third-party tuning advertisements, never an ECU calibration or 6006 dyno promise. */
+const stageRefCopy={
+ tr:{title:"Yayımlanmış Stage 1 referansı",none:"Bu motor ve üretim yılı için güvenle eşleştirilebilen yayımlanmış bir örnek bulunamadı. Motor kodu ve ECU kontrolünden sonra özel teklif alın.",kind:"Üçüncü tarafın yayımladığı örnek — 6006 Performance tarafından ölçülmedi.",before:"İlan edilen orijinal",after:"İlan edilen Stage 1",warning:"Bunlar bu araca ait onaylanmış hedefler, garanti veya Almanya'da yasal kullanım onayı değildir. ECU sürümü, motor ve kondisyon doğrulanmalıdır.",source:"Kaynak ilanı incele ↗"},
+ de:{title:"Veröffentlichte Stage-1-Referenz",none:"Für diese genaue Motor-/Baujahr-Kombination liegt keine sicher zugeordnete Veröffentlichung vor. ECU und Motorkennung für ein individuelles Angebot prüfen.",kind:"Veröffentlichtes Beispiel eines Drittanbieters — keine Messung von 6006 Performance.",before:"Veröffentlichte Serie",after:"Veröffentlichte Stage 1",warning:"Keine geprüften Zielwerte, keine Garantie und keine Aussage über die Zulässigkeit in Deutschland. ECU-Stand, Motor und Fahrzeugzustand müssen geprüft werden.",source:"Veröffentlichung ansehen ↗"},
+ en:{title:"Published Stage 1 example",none:"No safely matched published example is available for this engine and year. Check the engine code and ECU before requesting a quote.",kind:"Third-party advertised example, not measured by 6006 Performance.",before:"Advertised stock",after:"Advertised Stage 1",warning:"Not a tested target for this vehicle, a guarantee or German road-legal approval. Confirm ECU version, engine and vehicle condition.",source:"View original publication ↗"}
+};
+const referenceBox=document.createElement("aside");referenceBox.className="vin6006-stage-reference";referenceBox.id="vin6-stage-reference";
+referenceBox.innerHTML='<h5 id="vin6-ref-title"></h5><p id="vin6-ref-description"></p><div id="vin6-ref-values" hidden></div><p id="vin6-ref-warning" hidden></p><a id="vin6-ref-source" rel="noopener noreferrer" target="_blank" hidden></a>';
+$("stage-note").insertAdjacentElement("afterend",referenceBox);
+let stage1Published=[];
+function matchPublishedStage(){
+ const selected=engine.value!==""?variants[Number(engine.value)]:null;
+ const selectedYear=Number(year.value);
+ if(!Number.isInteger(selectedYear)||selectedYear<1950||selectedYear>2100)return null;
+ for(const item of stage1Published){
+  if(clean(make.value)!==clean(item.make)||clean(model.value)!==clean(item.model))continue;
+  if(selectedYear<item.yearFrom||selectedYear>item.yearTo)continue;
+  if(fuel.value&&fuel.value!==item.fuel)continue;
+  if(item.manualOnly){
+   // A Passat B8 example must NOT be shown for loose generic Passat model-family matches.
+   if(selected||!clean(manual.value).includes(clean(item.manualEngineContains)))continue;
+   if(Number(ps.value)!==item.sourceStockHp||Number(nm.value)!==item.sourceStockNm)continue;
+  }else{
+   if(!selected||manuallyEditedStock||!String(selected.engine||"").toLowerCase().startsWith(String(item.enginePrefix||"").toLowerCase()))continue;
+   if(item.generationContains&&!String(selected.generation||"").includes(item.generationContains))continue;
+   if(Number(selected.hp)!==item.sourceStockHp||Number(selected.nm)!==item.sourceStockNm)continue;
+   if(readFuel(selected.fuel||selected.engine)!==item.fuel)continue;
+  }
+  return item;
+ }
+ return null;
+}
+function renderStageReference(){
+ const txt=stageRefCopy[lang()],match=matchPublishedStage();
+ const heading=$("ref-title"),desc=$("ref-description"),values=$("ref-values"),warning=$("ref-warning"),source=$("ref-source");
+ heading.textContent=txt.title;
+ values.hidden=!match;warning.hidden=!match;source.hidden=!match;
+ if(!match){desc.textContent=txt.none;values.replaceChildren();source.removeAttribute("href");return;}
+ desc.textContent=txt.kind;
+ values.replaceChildren();
+ for(const [title,psVal,nmVal] of [[txt.before,match.publishedStockPs,match.publishedStockNm],[txt.after,match.publishedStage1Ps,match.publishedStage1Nm]]){
+  const item=document.createElement("div");item.className="vin6006-ref-value";
+  const label=document.createElement("span");label.textContent=title;
+  const data=document.createElement("strong");data.textContent=psVal+" PS · "+nmVal+" Nm";
+  item.append(label,data);values.append(item);
+ }
+ warning.textContent=txt.warning+" · "+match.publisher;
+ source.textContent=txt.source;
+ source.href=match.sourceUrl;
+}
+async function loadPublishedStageReferences(){
+ try{
+  const response=await fetch("/assets/6006-stage1-references.json?v=20261012",{cache:"force-cache"});
+  if(!response.ok)return;
+  const data=await response.json();
+  if(data.schemaVersion!==1||!Array.isArray(data.examples))return;
+  stage1Published=data.examples.filter(x=>x?.classification==="third-party-advertised"&&
+   typeof x.make==="string"&&typeof x.model==="string"&&typeof x.publisher==="string"&&
+   typeof x.sourceUrl==="string"&&/^https:\/\//.test(x.sourceUrl)&&
+   Number.isInteger(x.yearFrom)&&Number.isInteger(x.yearTo)&&
+   [x.sourceStockHp,x.sourceStockNm,x.publishedStockPs,x.publishedStockNm,x.publishedStage1Ps,x.publishedStage1Nm]
+      .every(n=>Number.isInteger(n)&&n>0&&n<=1500));
+  if(make.value&&model.value)renderStageReference();
+ }catch(e){/* Missing upstream reference files must not break vehicle or quote search. */}
+}
+
 const popularMakes=["Volkswagen","BMW","Mercedes-Benz","Audi","Ford","Toyota","Renault","Peugeot","Hyundai","Kia","Opel","Škoda","Porsche","Fiat","Honda","Tesla","Volvo","Nissan"];
 const brandBar=document.createElement("div");brandBar.className="vin6006-brands";
 const brandCaption=document.createElement("p");brandCaption.className="vin6006-brand-caption";
@@ -155,6 +222,7 @@ if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
 engineSearchLabel.textContent=w[lang()].searchLabel;
 engineSearch.placeholder=w[lang()].searchLabel;
+renderStageReference();
 renderQuote();
 if(year.options.length)year.options[0].textContent=t("choose");
 if(report&&!report.hidden)renderReport();
@@ -256,6 +324,7 @@ for(const [label,original,forecast,unit]of [[t("hp"),basePS,plusPS,"PS"],[t("nm"
 const tr=document.createElement("tr");for(const value of [label,original?original+" "+unit:"—",forecast==="—"?"—":forecast+" "+unit]){const td=document.createElement("td");td.textContent=value;tr.append(td);}table.append(tr);
 }
 $("stage-note").textContent=t("noTune")+" "+(!basePS||!baseNM?t("noData"):"")+(v&&stockNeedsReview(v)?" "+w[lang()].reviewWarning:"");
+renderStageReference();
 const codes=$("code-list");codes.replaceChildren();
 relatedCodes().forEach(([code,description])=>{const a=document.createElement("a");const params=vehicleParams();params.set("code",code);a.href="/fehlercodes/?"+params.toString();const strong=document.createElement("strong"),span=document.createElement("span"),arrow=document.createElement("b");strong.textContent=code;span.textContent=description;arrow.textContent="›";a.append(strong,span,arrow);codes.append(a);});
 $("stage-link").href="/?"+vehicleParams().toString()+"#aracin";
@@ -366,4 +435,5 @@ translate();
 if(make.value){await makeChanged(initial.model);if(model.value){renderEngines("");const found=variants.findIndex(v=>clean(v.engine)===clean(initial.engine));if(found>=0){engine.value=String(found);manual.value="";syncVariant();}else renderReport();}}
 }
 restore();
+loadPublishedStageReferences();
 })();
