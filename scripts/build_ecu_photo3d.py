@@ -1,7 +1,7 @@
 """Photo-textured, physically separated 3-socket ECU.
 Source photography: dist/assets/ecu/ecu-closed.webp and ecu-exploded.webp.
 No cutout-photo case, no fake black slab, no composited empty holes.
-Run: python scripts/build_photo_ecu3d.py
+Run: python scripts/build_ecu_photo3d.py
 """
 from pathlib import Path
 from collections import defaultdict
