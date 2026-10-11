@@ -60,8 +60,17 @@ if(f&&readFuel(v.fuel||v.engine)!==f)return false;
 const key=clean(v.engine)+"|"+(v.ps||v.hp||"")+"|"+(v.nm||"");if(keys.has(key))return false;keys.add(key);return true;
 }).sort((a,b)=>String(a.engine).localeCompare(String(b.engine),"de",{numeric:true})).slice(0,450);
 }
+function stockPower(v){
+ if(!v)return null;
+ const stated=(String(v.engine||"").match(/\((\d{2,4})\s*HP\)/i)||[])[1];
+ const fromLabel=stated?numeric(Number(stated)*1.01387):null;
+ const fromCatalog=numeric(v.ps)||(v.hp?numeric(Number(v.hp)*1.01387):null);
+ // Refuse self-contradictory third-party rated power without a notice.
+ if(fromCatalog&&fromLabel&&Math.abs(fromCatalog-fromLabel)/fromLabel>0.08)return fromLabel;
+ return fromCatalog||fromLabel;
+}
 function renderEngines(preserve){
-variants=findVariants();const choices=variants.map((v,i)=>{const stock=v.ps||numeric(Number(v.hp)*1.01387);return[String(i),String(v.engine)+(stock?" · "+stock+" PS":"")+(numeric(v.nm)?" · "+Math.round(v.nm)+" Nm":"")];});
+variants=findVariants();const choices=variants.map((v,i)=>{const stock=stockPower(v);return[String(i),String(v.engine)+(stock?" · "+stock+" PS":"")+(numeric(v.nm)?" · "+Math.round(v.nm)+" Nm":"")];});
 fill(engine,choices,t("noneMotor"));if(preserve&&choices.some(x=>x[0]===preserve))engine.value=preserve;
 if(engine.value==="")showReport(false);
 }
@@ -86,7 +95,7 @@ function renderReport(){
 if(!make.value||!model.value){showReport(false);return;}
 showReport(true);
 const v=engine.value===""?null:variants[Number(engine.value)],name=manual.value.trim()||(v?.engine||"");
-const basePS=numeric(ps.value)||(v?(numeric(v.ps)||numeric(Number(v.hp)*1.01387)):null),baseNM=numeric(nm.value)||(v?numeric(v.nm):null);
+const basePS=numeric(ps.value)||(v?stockPower(v):null),baseNM=numeric(nm.value)||(v?numeric(v.nm):null);
 $("identity").textContent=[make.value,model.value,year.value,(!fuel.value?"":w[lang()].fuels[fuel.value]),name].filter(Boolean).join(" · ");
 const f=fuel.value||readFuel(name);
 const turbo=/(\bTDI\b|\bTSI\b|TFSI|CDI|CRDI|ECOBOOST|DIESEL|TURBO|BITURBO|TWINPOWER|BLUEHDI|DCI|T-JET|MULTIJET)/i.test(name);
@@ -132,7 +141,7 @@ make.dispatchEvent(new Event("change"));
 }
 function syncVariant(){
 const v=engine.value===""?null:variants[Number(engine.value)];
-if(v){manual.value="";ps.value=v.ps?Math.round(v.ps):(v.hp?Math.round(v.hp*1.01387):"");nm.value=v.nm||"";if(!fuel.value&&readFuel(v.fuel||v.engine))fuel.value=readFuel(v.fuel||v.engine);}
+if(v){manual.value="";ps.value=stockPower(v)||"";nm.value=v.nm||"";if(!fuel.value&&readFuel(v.fuel||v.engine))fuel.value=readFuel(v.fuel||v.engine);}
 renderReport();
 }
 async function makeChanged(keep){
