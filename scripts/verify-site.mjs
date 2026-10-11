@@ -17,7 +17,7 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
+const javascript=['assets/6006-dtc-intelligence.js','assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
 const fakeWindow={};
@@ -99,6 +99,32 @@ assert.equal(entries,db.defs.filter(r=>Array.isArray(r)&&r.length===3&&r.every(v
 assert(urls.includes('https://6006coding.de/fehlercodes/verzeichnis/'),'Directory hub missing from sitemap');
 assert(fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8').includes('/fehlercodes/verzeichnis/'),'Directory unlinked from diagnosis page');
 console.log('PASS: '+entries+' DTC definitions discoverable in '+directoryPages+' static pages');
+
+
+// All source DTCs now receive a fault-type-aware explanation in three languages.
+const intelligencePath=path.join(ROOT,'assets','6006-dtc-intelligence.js');
+const logic=fs.readFileSync(intelligencePath,'utf8');
+const exported={};
+vm.runInNewContext(logic,{window:exported},{timeout:2000});
+const detailEngine=exported.DTCIntelligence6006;
+assert(detailEngine&&typeof detailEngine.explain==='function','DTC triage engine not loaded');
+for(const row of db.defs.filter(r=>r.length===3)){
+ const result=detailEngine.explain(row[0],row[2],row[1],'de');
+ assert(result&&result.classification&&result.causes.length>=2&&result.checks.length>=2&&result.note,'Missing preliminary guidance for '+row[0]);
+}
+for(const [code,desc,type] of [
+ ['P0102','Mass airflow sensor circuit low','low'],
+ ['P0103','Mass airflow sensor high input','high'],
+ ['P0301','Cylinder 1 misfire detected','misfire'],
+ ['U0100','Lost communication with ECM','comm'],
+ ['P0420','Catalyst efficiency below threshold','efficiency'],
+ ['P0118','Coolant temperature circuit high','high']
+]) assert(detailEngine.explain(code,desc,'GENERIC','en').mode===type,'Incorrect diagnostic subtype '+code);
+assert(fs.existsSync(path.join(ROOT,'assets','6006-curated-guides.json')),'Detailed guide manifest missing');
+const detailCodes=JSON.parse(fs.readFileSync(path.join(ROOT,'assets','6006-curated-guides.json'),'utf8')).codes;
+assert(detailCodes.length>=76,'Curated guides manifest incomplete');
+assert(fs.readFileSync(path.join(ROOT,'fehlercodes','index.html'),'utf8').includes('6006-dtc-intelligence.js'),'Client does not load diagnostic intelligence');
+console.log('PASS: all '+db.defs.length+' source definitions receive typed triage, with '+detailCodes.length+' verified long-form article links');
 
 const guideFolder=path.join(ROOT,'fehlercodes');
 const guideCount=fs.readdirSync(guideFolder,{withFileTypes:true}).filter(e=>e.isDirectory() && /^[pbcu][0-9a-f]{4}$/i.test(e.name) && fs.existsSync(path.join(guideFolder,e.name,'index.html'))).length;

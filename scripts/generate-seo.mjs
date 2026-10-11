@@ -642,6 +642,7 @@ function article(r){
  +'</body></html>\n';
 }
 function write(file,content){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,content,'utf8');}
+write(path.join(ROOT,'assets','6006-curated-guides.json'),JSON.stringify({codes:rows.map(r=>r[0]),count:rows.length},null,2));
 for(const row of rows)write(path.join(ROOT,'fehlercodes',row[0].toLowerCase(),'index.html'),article(row));
 const sections=[
  '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
