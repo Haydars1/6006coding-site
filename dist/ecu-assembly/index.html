@@ -41,9 +41,9 @@ function makeSurface(coords,tex,sideColor,depth=.07){const geo=new THREE.Extrude
  return new THREE.Mesh(geo,[cap,side]);}
 function maskedCanvas(src,polygon,{hole=false}={}){const cv=document.createElement('canvas');cv.width=1120;cv.height=840;const c=cv.getContext('2d',{willReadFrequently:false});c.drawImage(src,0,0,1120,840);if(hole){ // Only replace the removed PCB region; retain real aluminium rim, screw sockets and printed connector photography.
  const points=polys.well; c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.save();c.clip();
- const g=c.createLinearGradient(160,350,1000,700);g.addColorStop(0,'#3c3c3d');g.addColorStop(.36,'#202124');g.addColorStop(.78,'#29282a');g.addColorStop(1,'#454547');c.fillStyle=g;c.fillRect(100,270,1030,500);
- c.globalAlpha=.17;c.lineWidth=.6;for(let y=300;y<730;y+=4){c.strokeStyle=y%12?'#d8d5cb':'#050403';c.beginPath();c.moveTo(120,y);c.lineTo(1070,y+195);c.stroke()};c.restore();
- c.strokeStyle='#737270';c.lineWidth=7;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.stroke();
+ const g=c.createLinearGradient(160,350,1000,700);g.addColorStop(0,'#696765');g.addColorStop(.36,'#585857');g.addColorStop(.78,'#505151');g.addColorStop(1,'#85817c');c.fillStyle=g;c.fillRect(100,270,1030,500);
+ c.globalAlpha=.10;c.lineWidth=.6;for(let y=300;y<730;y+=4){c.strokeStyle=y%12?'#d8d5cb':'#050403';c.beginPath();c.moveTo(120,y);c.lineTo(1070,y+195);c.stroke()};c.restore();
+ c.strokeStyle='#ada9a4';c.lineWidth=4;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.stroke();
  c.strokeStyle='#1b1c1c';c.lineWidth=3;c.stroke();}
  if(polygon){c.globalCompositeOperation='destination-in';c.beginPath();polygon.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fillStyle='#fff';c.fill();}
  return cv;}
@@ -51,10 +51,8 @@ function loadImg(src){return new Promise((resolve,reject)=>{let img=new Image();
 let lid,board,base;
 async function setup(){const [opened,closed]=await Promise.all([loadImg('/assets/ecu/ecu-exploded.webp'),loadImg('/assets/ecu/ecu-closed.webp')]);
  base=makeSurface(polys.base,textureFromCanvas(maskedCanvas(opened,polys.base,{hole:true})),'#66615a',.056);base.position.z=0;assembly.add(base);
- board=makeSurface(polys.board,textureFromCanvas(maskedCanvas(opened,polys.board)),'#00614f',.015);board.position.z=.18;assembly.add(board);
+ board=makeSurface(polys.board,textureFromCanvas(maskedCanvas(opened,polys.board)),'#226f56',.008);board.position.z=.18;assembly.add(board);
  lid=makeSurface(polys.lid,textureFromCanvas(maskedCanvas(opened,polys.lid)),'#a7a6a4',.072);lid.position.z=.48;assembly.add(lid);
- // Base shadow, soft transparent plane: the rest of the original photograph stays visible.
- const shadow=new THREE.Sprite(new THREE.SpriteMaterial({color:'#060503',opacity:.21,transparent:true,depthWrite:false}));shadow.scale.set(4.2,3.2,1);shadow.position.set(0,-.4,-.5);assembly.add(shadow);
  loadmsg.hidden=true;update(true);
 }
 scene.add(new THREE.HemisphereLight(0xffffff,0x262016,2));const k=new THREE.DirectionalLight(0xffffff,1.2);k.position.set(-2,4,7);scene.add(k);
@@ -71,7 +69,7 @@ function update(initial=false){if(!lid)return; if(initial)phase=goal;
  // Align the lid with actual photographed three-connector body at rest;
  // raise the photographic lid along a true rigid 3D axis during disassembly.
  lid.position.y=-.80+lidOpen*.80;lid.position.z=.50+lidOpen*.13;
- board.position.y=-.02+pcbRise*.25;board.position.z=.19+pcbRise*.42;
+ board.position.y=-.02+pcbRise*.13;board.position.z=.19+pcbRise*.22;
  // Prevent a duplicate board image under the lifted board: the base uses a recessed alloy well.
  assembly.rotation.x=rotationX;assembly.rotation.y=rotationY;
  assembly.scale.setScalar(scale);
