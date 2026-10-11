@@ -57,3 +57,10 @@
 .vin6006-brand-all{margin-top:9px;border-color:#d4a26d;background:#3e2c19;color:#f8d9b2}
 .vin6006-brand-all:hover{background:#654426}
 @media(max-width:600px){.vin6006-brands{padding:12px;margin:0 0 15px}.vin6006-brand-chips{gap:6px}.vin6006-brand-chips button{font-size:.72rem;padding:8px 10px;min-height:38px}}
+
+
+#vin6-engine-search{margin:5px 0 8px;min-height:46px;width:100%;border:1px solid #8c6c47;border-radius:7px;padding:11px 12px;background:#14120f;color:#f2e6d6;font-size:16px}
+#vin6-engine-search:focus-visible{outline:2px solid #e6b979;outline-offset:1px}
+#vin6-lsearch{margin-top:9px;font-size:.74rem;font-weight:700;color:#ebc390}
+.vin6006-variant-count{margin:6px 0 0;color:#d4ba98;font-size:.78rem;line-height:1.5}
+@media(max-width:600px){#vin6-engine-search{font-size:16px!important}}
