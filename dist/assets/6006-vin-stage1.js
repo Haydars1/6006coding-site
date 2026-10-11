@@ -3,9 +3,9 @@
 const finder=window.VehicleCatalog6006,main=document.querySelector("main"),tab=document.querySelector("#catalog");
 if(!finder||!main||!tab||document.getElementById("vehicle-selector-6006"))return;
 const w={
-tr:{kicker:"6006 / ARAÇ & MOTOR BULUCU",head:"Aracını seç, motorunu ve arıza kodlarını gör.",intro:"Şasi numarasından markayı belirle veya marka, model, yıl, yakıt ve motor seç. Mevcut katalogdaki motor verileri, Stage 1 ön değerlendirmesi ve ilgili OBD kodları tek ekranda.",all:"Tüm arıza kodları",vin:"Şasi numarası (VIN)",vinHelp:"17 karakterli VIN'in ilk üç karakterinden yalnızca üretici belirlenir. Tam VIN gönderilmez veya kaydedilmez; model ve motor bilgisi elle doğrulanmalıdır.",decode:"Markayı bul",invalid:"VIN 17 karakter olmalı ve I, O, Q içermemeli.",unsupported:"Bu VIN'den marka güvenilir biçimde belirlenemedi. Markayı listeden seçebilirsin.",found:"VIN'den belirlenen marka",make:"Marka",model:"Model",year:"Model yılı",fuel:"Yakıt",engine:"Motor / varyant",other:"Listede yoksa motor kodu",power:"Orijinal güç (PS)",torque:"Orijinal tork (Nm)",choose:"Seçin",allFuel:"Tümü",noneMotor:"Listede bulunmuyor / elle gir",loading:"Motor varyantları yükleniyor…",selected:"Seçilen araç",stage:"Stage 1 ön değerlendirmesi",old:"Orijinal",new:"Stage 1 (tahmini)",value:"Değer",hp:"Güç",nm:"Tork",noData:"Güç / tork verisi yok. Ruhsattaki veya üretici belgesindeki değerleri gir.",noTune:"Bu motor için güvenilir Stage 1 tahmini yok. Motor, ECU yazılımı ve şanzıman doğrulanarak teklif hazırlanmalı.",tuneCaution:"Stage 1 aralıkları turbo motorlarda yalnızca genel matematiksel örnektir; ölçüm, onaylı kalibrasyon, TÜV veya garanti değildir. Gerçek hedef ECU, şanzıman, kondisyon ve mevzuata bağlıdır.",common:"İlgili arıza kodları",codeCaution:"Bunlar bu araca özel arıza istatistiği değildir. Sisteme ilişkin kontrol edilebilecek örnek kodlardır; tanımlar üreticiye göre değişebilir.",open:"Teşhis kataloğunda aç",openStage:"Stage 1 sayfasına geç",empty:"Önce marka ve model seç. Motor varyantı varsa listeden seç; bulunamazsa elle ekle.",variant:"Açık araç veritabanı / örnek kayıt. OEM doğrulaması değildir.",manual:"Elle girilen değerler kullanıcı beyanıdır; üretici verisi olarak gösterilmez.",fuels:{Diesel:"Dizel",Benzin:"Benzin",Hybrid:"Hibrit",PHEV:"Şarj edilebilir hibrit",Electric:"Elektrik",LPG:"LPG",CNG:"CNG"}},
-de:{kicker:"6006 / FAHRZEUG & MOTORFINDER",head:"Fahrzeug wählen, Motor und Fehlercodes sehen.",intro:"Marke über VIN-Anfang bestimmen oder Marke, Modell, Baujahr, Kraftstoff und Motor manuell wählen. Motor-Referenzdaten, Stage-1-Vorprüfung und passende OBD-Themen auf einer Seite.",all:"Alle Fehlercodes",vin:"Fahrgestellnummer (FIN/VIN)",vinHelp:"Nur der Hersteller wird anhand der ersten drei Stellen ermittelt. Die vollständige FIN wird weder gesendet noch gespeichert. Modell und Motor müssen separat bestätigt werden.",decode:"Marke erkennen",invalid:"Die VIN muss 17 Zeichen haben und darf I, O, Q nicht enthalten.",unsupported:"Hersteller nicht sicher erkennbar. Bitte Marke manuell wählen.",found:"Aus VIN erkannte Marke",make:"Marke",model:"Modell",year:"Baujahr",fuel:"Kraftstoff",engine:"Motorvariante",other:"Motorkennbuchstabe, falls nicht gelistet",power:"Serienleistung (PS)",torque:"Seriendrehmoment (Nm)",choose:"Wählen",allFuel:"Alle",noneMotor:"Nicht gelistet / manuell eingeben",loading:"Motorvarianten werden geladen…",selected:"Ausgewähltes Fahrzeug",stage:"Stage 1 Vorprüfung",old:"Serie",new:"Stage 1 (Schätzung)",value:"Wert",hp:"Leistung",nm:"Drehmoment",noData:"Keine Leistungs-/Drehmomentwerte vorhanden. Werte bitte aus verlässlichen Fahrzeugpapieren prüfen.",noTune:"Für diesen Motor liegt keine verifizierte Stage-1-Prognose vor. Ein Angebot erfordert Motor-, Steuergerät- und Getriebeprüfung.",tuneCaution:"Die Stage-1-Spannen sind nur rechnerische Beispiele für Turbomotoren, keine Messung, geprüfte Kalibrierung, TÜV-Zusage oder Garantie. Zielwerte hängen von Softwarestand, Getriebe, Zustand und Rechtslage ab.",common:"Relevante Fehlercodes",codeCaution:"Keine statistisch nachgewiesenen typischen Defekte dieses Fahrzeugs. Es handelt sich um mögliche Prüfcodes; herstellerspezifische Bedeutungen können abweichen.",open:"Im Diagnosekatalog öffnen",openStage:"Stage-1-Seite öffnen",empty:"Bitte Marke und Modell wählen. Motorvariante auswählen oder fehlende Variante manuell ergänzen.",variant:"Offene Fahrzeugreferenz / Beispieldaten, keine OEM-Bestätigung.",manual:"Manuelle Daten werden nicht als Herstellerangabe dargestellt.",fuels:{Diesel:"Diesel",Benzin:"Benzin",Hybrid:"Hybrid",PHEV:"Plug-in-Hybrid",Electric:"Elektro",LPG:"Autogas (LPG)",CNG:"Erdgas (CNG)"}},
-en:{kicker:"6006 / VEHICLE & ENGINE FINDER",head:"Choose your vehicle, inspect engine and fault codes.",intro:"Identify manufacturer from VIN prefix, or choose make, model, year, fuel and engine. View engine reference data, preliminary Stage 1 guidance and related DTCs.",all:"All fault codes",vin:"Vehicle identification number (VIN)",vinHelp:"Only the manufacturer is inferred from the first three characters. The full VIN is neither sent nor saved. Confirm model and engine separately.",decode:"Find make",invalid:"VIN must have 17 characters and cannot contain I, O or Q.",unsupported:"Manufacturer could not be identified reliably. Please choose the make.",found:"Make identified from VIN",make:"Make",model:"Model",year:"Model year",fuel:"Fuel",engine:"Engine variant",other:"Engine code if missing",power:"Stock power (PS)",torque:"Stock torque (Nm)",choose:"Choose",allFuel:"All",noneMotor:"Not listed / enter manually",loading:"Loading engine variants…",selected:"Selected vehicle",stage:"Stage 1 preliminary assessment",old:"Stock",new:"Stage 1 (estimate)",value:"Value",hp:"Power",nm:"Torque",noData:"No stock power or torque data. Confirm them from reliable vehicle records.",noTune:"No verified Stage 1 forecast for this engine. The engine, ECU and gearbox must be checked before quotation.",tuneCaution:"Stage 1 ranges are generic mathematical examples for turbocharged engines only; not measured results, approved calibrations, road-legal promises or guarantees. Actual targets depend on ECU, gearbox, condition and regulations.",common:"Related fault codes",codeCaution:"These codes are examples to investigate, not established failure statistics for this vehicle. Manufacturer-specific meanings can differ.",open:"Open diagnosis catalog",openStage:"Open Stage 1 page",empty:"Choose make and model. Select an engine variant or enter one manually.",variant:"Open vehicle reference data / examples; not OEM verified.",manual:"Manually entered values are not presented as manufacturer specifications.",fuels:{Diesel:"Diesel",Benzin:"Petrol",Hybrid:"Hybrid",PHEV:"Plug-in hybrid",Electric:"Electric",LPG:"LPG",CNG:"CNG"}}};
+tr:{kicker:"6006 / ARAÇ & MOTOR BULUCU",head:"Aracını seç, motorunu ve arıza kodlarını gör.",intro:"Şasi numarasından markayı belirle veya marka, model, yıl, yakıt ve motor seç. Mevcut katalogdaki motor verileri, Stage 1 ön değerlendirmesi ve ilgili OBD kodları tek ekranda.",all:"Tüm arıza kodları",vin:"Şasi numarası (VIN)",vinHelp:"17 karakterli Önce yerel üretici kodlarına bakılır; tanınmazsa yalnızca ilk 3 karakter NHTSA'ya sorgulanır. Tam VIN gönderilmez veya kaydedilmez. Üretici/model/motor doğrulanmalıdır.",decode:"Markayı bul",invalid:"VIN 17 karakter olmalı ve I, O, Q içermemeli.",unsupported:"Bu VIN'den marka güvenilir biçimde belirlenemedi. Markayı listeden seçebilirsin.",found:"VIN'den belirlenen marka",make:"Marka",model:"Model",year:"Model yılı",fuel:"Yakıt",engine:"Motor / varyant",other:"Listede yoksa motor kodu",power:"Orijinal güç (PS)",torque:"Orijinal tork (Nm)",choose:"Seçin",allFuel:"Tümü",noneMotor:"Listede bulunmuyor / elle gir",loading:"Motor varyantları yükleniyor…",selected:"Seçilen araç",stage:"Stage 1 ön değerlendirmesi",old:"Orijinal",new:"Stage 1 (tahmini)",value:"Değer",hp:"Güç",nm:"Tork",noData:"Güç / tork verisi yok. Ruhsattaki veya üretici belgesindeki değerleri gir.",noTune:"Bu motor için güvenilir Stage 1 tahmini yok. Motor, ECU yazılımı ve şanzıman doğrulanarak teklif hazırlanmalı.",tuneCaution:"Stage 1 aralıkları turbo motorlarda yalnızca genel matematiksel örnektir; ölçüm, onaylı kalibrasyon, TÜV veya garanti değildir. Gerçek hedef ECU, şanzıman, kondisyon ve mevzuata bağlıdır.",common:"İlgili arıza kodları",codeCaution:"Bunlar bu araca özel arıza istatistiği değildir. Sisteme ilişkin kontrol edilebilecek örnek kodlardır; tanımlar üreticiye göre değişebilir.",open:"Teşhis kataloğunda aç",openStage:"Stage 1 sayfasına geç",empty:"Önce marka ve model seç. Motor varyantı varsa listeden seç; bulunamazsa elle ekle.",variant:"Açık araç veritabanı / örnek kayıt. OEM doğrulaması değildir.",manual:"Elle girilen değerler kullanıcı beyanıdır; üretici verisi olarak gösterilmez.",fuels:{Diesel:"Dizel",Benzin:"Benzin",Hybrid:"Hibrit",PHEV:"Şarj edilebilir hibrit",Electric:"Elektrik",LPG:"LPG",CNG:"CNG"}},
+de:{kicker:"6006 / FAHRZEUG & MOTORFINDER",head:"Fahrzeug wählen, Motor und Fehlercodes sehen.",intro:"Marke über VIN-Anfang bestimmen oder Marke, Modell, Baujahr, Kraftstoff und Motor manuell wählen. Motor-Referenzdaten, Stage-1-Vorprüfung und passende OBD-Themen auf einer Seite.",all:"Alle Fehlercodes",vin:"Fahrgestellnummer (FIN/VIN)",vinHelp:"Hersteller wird zuerst lokal gesucht; andernfalls werden nur die ersten 3 Stellen bei NHTSA abgefragt. Die vollständige FIN wird nicht versendet oder gespeichert. Fahrzeug und Motor separat bestätigen.",decode:"Marke erkennen",invalid:"Die VIN muss 17 Zeichen haben und darf I, O, Q nicht enthalten.",unsupported:"Hersteller nicht sicher erkennbar. Bitte Marke manuell wählen.",found:"Aus VIN erkannte Marke",make:"Marke",model:"Modell",year:"Baujahr",fuel:"Kraftstoff",engine:"Motorvariante",other:"Motorkennbuchstabe, falls nicht gelistet",power:"Serienleistung (PS)",torque:"Seriendrehmoment (Nm)",choose:"Wählen",allFuel:"Alle",noneMotor:"Nicht gelistet / manuell eingeben",loading:"Motorvarianten werden geladen…",selected:"Ausgewähltes Fahrzeug",stage:"Stage 1 Vorprüfung",old:"Serie",new:"Stage 1 (Schätzung)",value:"Wert",hp:"Leistung",nm:"Drehmoment",noData:"Keine Leistungs-/Drehmomentwerte vorhanden. Werte bitte aus verlässlichen Fahrzeugpapieren prüfen.",noTune:"Für diesen Motor liegt keine verifizierte Stage-1-Prognose vor. Ein Angebot erfordert Motor-, Steuergerät- und Getriebeprüfung.",tuneCaution:"Die Stage-1-Spannen sind nur rechnerische Beispiele für Turbomotoren, keine Messung, geprüfte Kalibrierung, TÜV-Zusage oder Garantie. Zielwerte hängen von Softwarestand, Getriebe, Zustand und Rechtslage ab.",common:"Relevante Fehlercodes",codeCaution:"Keine statistisch nachgewiesenen typischen Defekte dieses Fahrzeugs. Es handelt sich um mögliche Prüfcodes; herstellerspezifische Bedeutungen können abweichen.",open:"Im Diagnosekatalog öffnen",openStage:"Stage-1-Seite öffnen",empty:"Bitte Marke und Modell wählen. Motorvariante auswählen oder fehlende Variante manuell ergänzen.",variant:"Offene Fahrzeugreferenz / Beispieldaten, keine OEM-Bestätigung.",manual:"Manuelle Daten werden nicht als Herstellerangabe dargestellt.",fuels:{Diesel:"Diesel",Benzin:"Benzin",Hybrid:"Hybrid",PHEV:"Plug-in-Hybrid",Electric:"Elektro",LPG:"Autogas (LPG)",CNG:"Erdgas (CNG)"}},
+en:{kicker:"6006 / VEHICLE & ENGINE FINDER",head:"Choose your vehicle, inspect engine and fault codes.",intro:"Identify manufacturer from VIN prefix, or choose make, model, year, fuel and engine. View engine reference data, preliminary Stage 1 guidance and related DTCs.",all:"All fault codes",vin:"Vehicle identification number (VIN)",vinHelp:"Manufacturer is checked locally first; if unknown, only the 3-character prefix is sent to NHTSA. The full VIN is never transmitted or stored. Verify make, model and engine.",decode:"Find make",invalid:"VIN must have 17 characters and cannot contain I, O or Q.",unsupported:"Manufacturer could not be identified reliably. Please choose the make.",found:"Make identified from VIN",make:"Make",model:"Model",year:"Model year",fuel:"Fuel",engine:"Engine variant",other:"Engine code if missing",power:"Stock power (PS)",torque:"Stock torque (Nm)",choose:"Choose",allFuel:"All",noneMotor:"Not listed / enter manually",loading:"Loading engine variants…",selected:"Selected vehicle",stage:"Stage 1 preliminary assessment",old:"Stock",new:"Stage 1 (estimate)",value:"Value",hp:"Power",nm:"Torque",noData:"No stock power or torque data. Confirm them from reliable vehicle records.",noTune:"No verified Stage 1 forecast for this engine. The engine, ECU and gearbox must be checked before quotation.",tuneCaution:"Stage 1 ranges are generic mathematical examples for turbocharged engines only; not measured results, approved calibrations, road-legal promises or guarantees. Actual targets depend on ECU, gearbox, condition and regulations.",common:"Related fault codes",codeCaution:"These codes are examples to investigate, not established failure statistics for this vehicle. Manufacturer-specific meanings can differ.",open:"Open diagnosis catalog",openStage:"Open Stage 1 page",empty:"Choose make and model. Select an engine variant or enter one manually.",variant:"Open vehicle reference data / examples; not OEM verified.",manual:"Manually entered values are not presented as manufacturer specifications.",fuels:{Diesel:"Diesel",Benzin:"Petrol",Hybrid:"Hybrid",PHEV:"Plug-in hybrid",Electric:"Electric",LPG:"LPG",CNG:"CNG"}}};
 function lang(){const l=String(document.documentElement.lang||"").slice(0,2);return w[l]?l:"de";}
 function t(key){return w[lang()][key];}
 const section=document.createElement("section");section.id="vehicle-selector-6006";section.className="vin6006-wrap";
@@ -22,6 +22,39 @@ section.innerHTML='<div class="vin6006-frame"><div class="vin6006-head"><div><p 
 tab.insertAdjacentElement("beforebegin",section);
 const $=id=>document.getElementById("vin6-"+id);
 const make=$("make"),model=$("model"),year=$("year"),fuel=$("fuel"),engine=$("engine"),manual=$("manual"),ps=$("ps"),nm=$("nm"),report=$("result"),feedback=$("feedback");
+// Quick links show that the finder is not limited to Volkswagen.
+// The native make dropdown remains the complete catalogue, not the buttons below.
+const popularMakes=["Volkswagen","BMW","Mercedes-Benz","Audi","Ford","Toyota","Renault","Peugeot","Hyundai","Kia","Opel","Škoda","Porsche","Fiat","Honda","Tesla","Volvo","Nissan"];
+const brandBar=document.createElement("div");brandBar.className="vin6006-brands";
+const brandCaption=document.createElement("p");brandCaption.className="vin6006-brand-caption";
+const brandChips=document.createElement("div");brandChips.className="vin6006-brand-chips";
+const otherBrands=document.createElement("button");otherBrands.type="button";otherBrands.className="vin6006-brand-all";
+brandBar.append(brandCaption,brandChips,otherBrands);
+section.querySelector(".vin6006-head").insertAdjacentElement("afterend",brandBar);
+const brandText={
+tr:{title:"Popüler markalar · Tüm diğer markalar listede",all:"Tüm markaları seç",checking:"VIN üretici kodu kontrol ediliyor…",noMatch:"Üretici bu VIN kodundan doğrulanamadı. Marka listesinden seçebilirsiniz."},
+de:{title:"Beliebte Marken · Alle weiteren im Auswahlmenü",all:"Alle Marken wählen",checking:"VIN-Herstellercode wird geprüft…",noMatch:"Hersteller nicht eindeutig zuordenbar. Bitte Marke im Menü auswählen."},
+en:{title:"Popular makes · All other makes in the selector",all:"Select from all makes",checking:"Checking VIN manufacturer prefix…",noMatch:"Make not confirmed by VIN prefix. Please select a make manually."}
+};
+function normalizeMake(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");}
+function renderMakeButtons(){
+ const txt=brandText[lang()];
+ brandCaption.textContent=txt.title;otherBrands.textContent=txt.all;
+ brandChips.replaceChildren();
+ const all=[...make.options].map(o=>o.value).filter(Boolean);
+ for(const name of popularMakes){
+   const matched=all.find(v=>normalizeMake(v)===normalizeMake(name));
+   if(!matched)continue;
+   const button=document.createElement("button");button.type="button";button.textContent=name;
+   button.setAttribute("aria-pressed",String(make.value===matched));
+   button.addEventListener("click",()=>{
+    make.value=matched;make.dispatchEvent(new Event("change",{bubbles:true}));
+    renderMakeButtons();make.scrollIntoView({behavior:"smooth",block:"center"});
+   });
+   brandChips.append(button);
+ }
+}
+otherBrands.addEventListener("click",()=>{make.scrollIntoView({behavior:"smooth",block:"center"});make.focus({preventScroll:true});});
 const fuelKeys=["","Diesel","Benzin","Hybrid","PHEV","Electric","LPG","CNG"];
 let variants=[],busy=0,memory={};
 const preferred=new URLSearchParams(location.search);
@@ -34,12 +67,13 @@ function clean(value){return String(value||"").trim().toLowerCase().replace(/[()
 function translate(){
 const labels={kicker:"kicker",heading:"head",intro:"intro",all:"all", "vin-label":"vin",decode:"decode","vin-help":"vinHelp",lmake:"make",lmodel:"model",lyear:"year",lfuel:"fuel",lengine:"engine",lmanual:"other",lps:"power",lnm:"torque","result-head":"selected",stagehead:"stage",codehead:"common",th1:"value",th2:"old",th3:"new","code-note":"codeCaution","stage-link":"openStage","dtc-link":"open"};
 for(const [id,key]of Object.entries(labels)){$(id).textContent=t(key);}
+renderMakeButtons();
 if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));fuel.value=value;}
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
 if(year.options.length)year.options[0].textContent=t("choose");
 if(report&&!report.hidden)renderReport();
 }
-function fillMakes(){const current=make.value;const list=finder.brands().filter(Boolean).sort((a,b)=>a.localeCompare(b,"de"));fill(make,list.map(b=>[b,b]));if(current&&list.includes(current))make.value=current;}
+function fillMakes(){const current=make.value;const list=finder.brands().filter(Boolean).sort((a,b)=>a.localeCompare(b,"de"));fill(make,list.map(b=>[b,b]));if(current&&list.includes(current))make.value=current;renderMakeButtons();}
 function populateModels(keep){const list=finder.models(make.value).filter(Boolean);fill(model,list.map(n=>[n,n]));if(keep&&list.includes(keep))model.value=keep;else if(keep){option(model,keep,keep);model.value=keep;}}
 function sampleVariants(){
 const makeName=clean(make.value),modelName=clean(model.value),y=Number(year.value);
@@ -127,17 +161,45 @@ const wmi={
 "YV1":"Volvo","YV4":"Volvo","YS3":"Saab","WP0":"Porsche","WP1":"Porsche","SJN":"Nissan",
 "JHM":"Honda","SHH":"Honda","JH4":"Acura","JM1":"Mazda","JMZ":"Mazda","JMB":"Mitsubishi",
 "4T1":"Toyota","5TD":"Toyota","JT2":"Toyota","1G1":"Chevrolet","2G1":"Chevrolet","3GN":"Chevrolet",
-"1C4":"Jeep","1J4":"Jeep","1HG":"Honda","1N4":"Nissan","5N1":"Nissan","3N1":"Nissan"
+"1C4":"Jeep","1J4":"Jeep","1HG":"Honda","1N4":"Nissan","5N1":"Nissan","3N1":"Nissan",
+"5YJ":"Tesla","7SA":"Tesla","JTH":"Lexus","NMT":"Toyota","JS1":"Suzuki","KM8":"Hyundai","KMT":"Genesis","LDC":"Peugeot"
 };
-function identify(){
-const full=$("vin").value.trim().replace(/\s|-/g,"").toUpperCase();$("vin").value=full;
-if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(full)){feedback.textContent=t("invalid");return;}
-const brand=wmi[full.slice(0,3)];
-if(!brand){feedback.textContent=t("unsupported");return;}
-const present=[...make.options].find(o=>clean(o.value)===clean(brand));
-if(!present){option(make,brand,brand);}
-make.value=present?.value||brand;feedback.textContent=t("found")+": "+make.value;
-make.dispatchEvent(new Event("change"));
+function selectManufacturer(raw){
+ const aliases={MERCEDESBENZ:"Mercedes-Benz",MERCEDESAMG:"Mercedes-Amg",VOLKSWAGEN:"Volkswagen",SKODA:"Škoda",SEAT:"SEAT",CHEVROLET:"Chevrolet",LANDROVER:"Land Rover",TOYOTAMOTOR:"Toyota",BMW:"BMW",ROLLSROYCE:"Rolls-Royce",ALFAROMEO:"Alfa Romeo"};
+ const name=aliases[normalizeMake(raw).toUpperCase()]||raw;
+ const normalized=normalizeMake(name);
+ const matched=[...make.options].find(o=>normalizeMake(o.value)===normalized);
+ if(!matched&&!name)return false;
+ if(!matched)option(make,name,name);
+ make.value=matched?.value||name;
+ feedback.textContent=t("found")+": "+make.value;
+ make.dispatchEvent(new Event("change",{bubbles:true}));
+ renderMakeButtons();
+ return true;
+}
+let lookupId=0;
+async function identify(){
+ const full=$("vin").value.trim().replace(/\s|-/g,"").toUpperCase();
+ $("vin").value=full;const token=++lookupId;
+ if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(full)){feedback.textContent=t("invalid");return;}
+ const prefix=full.slice(0,3);
+ if(wmi[prefix]){selectManufacturer(wmi[prefix]);return;}
+ feedback.textContent=brandText[lang()].checking;
+ // NHTSA's WMI endpoint sees the *three-character manufacturer prefix only*.
+ // It does not receive the full VIN; European domestic-only makes may not be found.
+ try{
+  const controller=new AbortController(),abortId=setTimeout(()=>controller.abort(),7000);
+  let response;
+  try{response=await fetch("https://vpic.nhtsa.dot.gov/api/vehicles/DecodeWMI/"+encodeURIComponent(prefix)+"?format=json",{signal:controller.signal});}
+  finally{clearTimeout(abortId);}
+  if(!response.ok)throw Error("WMI response "+response.status);
+  const data=await response.json();
+  if(token!==lookupId)return;
+  const records=Array.isArray(data.Results)?data.Results:[];
+  const identified=records.find(x=>x&&x.Make&&String(x.Make).trim());
+  if(identified&&selectManufacturer(String(identified.Make).trim()))return;
+ }catch(e){if(token!==lookupId)return;}
+ if(token===lookupId)feedback.textContent=brandText[lang()].noMatch;
 }
 function syncVariant(){
 const v=engine.value===""?null:variants[Number(engine.value)];
@@ -162,7 +224,7 @@ fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));
 fillMakes();populateModels("");renderEngines("");
 $("decode").addEventListener("click",identify);
 $("vin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();identify();}});
-make.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";year.value="";makeChanged("");});
+make.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";year.value="";makeChanged("");renderMakeButtons();});
 model.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";modelChanged();});
 year.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
 fuel.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
