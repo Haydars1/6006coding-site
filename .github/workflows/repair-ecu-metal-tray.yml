@@ -1,0 +1,74 @@
+name: Repair ECU metal tray image
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-ecu-metal-tray.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render-ecu-tray:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Sharp
+        shell: bash
+        run: |
+          npm install sharp@0.34.4 --prefix /tmp/ecu-image-tools --no-audit --no-fund
+      - name: Remove vertical filler and restore shallow metal floor
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import fs from "node:fs";
+          const sharp=(await import("/tmp/ecu-image-tools/node_modules/sharp/lib/index.js")).default;
+          const path="dist/assets/ecu/";
+          const raw=fs.readFileSync(path+"ecu-split-base-v2.webp");
+          const {data,info}=await sharp(raw).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+          if(info.width!==1120||info.height!==840)throw Error("Incorrect source geometry");
+          // Remove only the incorrect neutral-grey filler panel. Keep the
+          // photographed cast-aluminium walls, fasteners and sockets.
+          const outline=[[125,299],[175,270],[265,275],[395,295],[540,345],
+            [700,383],[841,415],[938,464],[924,532],[886,613],[810,687],
+            [719,675],[604,653],[440,608],[290,563],[198,521],[142,460]];
+          function inside(x,y){
+            let c=false,j=outline.length-1;
+            for(let k=0;k<outline.length;k++){
+              const [a,b]=outline[k],[d,e]=outline[j];
+              if((b>y)!==(e>y) && x<(d-a)*(y-b)/(e-b)+a)c=!c;
+              j=k;
+            }
+            return c;
+          }
+          let removed=0;
+          for(let y=266;y<699;y++)for(let x=120;x<946;x++){
+            if(!inside(x,y))continue;
+            const i=(y*info.width+x)*4;
+            const r=data[i],g=data[i+1],b=data[i+2],a=data[i+3];
+            if(a>15&&r>=40&&r<145&&Math.max(r,g,b)-Math.min(r,g,b)<24){
+              data[i+3]=0;removed++;
+            }
+          }
+          if(removed<100000)throw Error("Photo mask did not remove the filler");
+          // A low, shallow aluminium floor occupies the actual case cavity,
+          // instead of the former upright black rectangular plate.
+          const floor='<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="840"><defs><linearGradient id="m" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#353b3b"/><stop offset="0.45" stop-color="#898f8c"/><stop offset="1" stop-color="#41484b"/></linearGradient></defs><path d="M145 366L260 320 720 411 921 462 920 533 818 640 283 518 159 461Z" fill="#6f7472" stroke="#a0a8a5" stroke-width="8"/><path d="M173 383L267 343 713 426 893 482 887 525 808 606 294 499 181 451Z" fill="url(#m)" stroke="#292e30" stroke-width="6"/><path d="M199 385L264 358 699 439 867 487" stroke="#d9dfd9" stroke-opacity=".35" stroke-width="3" fill="none"/></svg>';
+          const keep=await sharp(data,{raw:info}).png().toBuffer();
+          const output=await sharp(Buffer.from(floor)).composite([{input:keep}])
+            .webp({quality:86,effort:4}).toBuffer();
+          fs.writeFileSync(path+"ecu-split-base-v3.webp",output);
+          console.log("Removed filler pixels:",removed,"new bytes:",output.length);
+          JS
+      - name: Commit corrected only ECU image
+        shell: bash
+        run: |
+          git config user.name "6006 Performance Assets"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-split-base-v3.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(stage1): replace fake vertical filler with realistic recessed ECU tray"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
