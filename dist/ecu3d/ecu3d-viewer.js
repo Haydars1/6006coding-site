@@ -28,7 +28,7 @@ scene.add(unit);
 const stages=[
  {name:'KAPALI ECU',url:'/assets/ecu/ecu-closed.webp'},
  {name:'METAL KAPAK AÇILMIŞ',url:'/assets/ecu/ecu-open.webp'},
- {name:'AYRILMIŞ KAPAK VE DEVRE KARTI',url:'/assets/ecu/ecu-exploded.webp'}
+ {name:'KAPAK AYRI · DEVRE KARTI GÖRÜNÜR',url:'/assets/ecu/ecu-exploded.webp'}
 ];
 const planes=[];
 function makeFallback(msg){
