@@ -1,0 +1,43 @@
+name: Import successful ECU 3D research artifacts
+on:
+  push:
+    branches: [experiment/ecu-triposr-separated-parts]
+    paths:
+      - '.github/workflows/ecu-triposr-import-artifact.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: experiment/ecu-triposr-separated-parts
+          persist-credentials: true
+      - name: Download generated CPU AI ECU GLBs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run download 38145655217 --repo Haydars1/6006coding-site --name ecu-triposr-research-only --dir /tmp/ecu-ai
+          test -s /tmp/ecu-ai/meshes/0/mesh.glb
+          test -s /tmp/ecu-ai/meshes/1/mesh.glb
+          test -s /tmp/ecu-ai/meshes/2/mesh.glb
+          mkdir -p dist/ecu3d-ai-candidate
+          cp /tmp/ecu-ai/meshes/0/mesh.glb dist/ecu3d-ai-candidate/lid.glb
+          cp /tmp/ecu-ai/meshes/1/mesh.glb dist/ecu3d-ai-candidate/pcb.glb
+          cp /tmp/ecu-ai/meshes/2/mesh.glb dist/ecu3d-ai-candidate/closed.glb
+          cp /tmp/ecu-ai/lid.png dist/ecu3d-ai-candidate/lid-input.png
+          cp /tmp/ecu-ai/pcb.png dist/ecu3d-ai-candidate/pcb-input.png
+          cp /tmp/ecu-ai/closed.png dist/ecu3d-ai-candidate/closed-input.png
+      - name: Save models only on isolated experiment branch
+        run: |
+          git config user.name "6006 ECU Research"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/ecu3d-ai-candidate
+          if ! git diff --cached --quiet; then
+            git commit -m 'research(ecu): store three AI mesh candidates for visual review ONLY'
+            git pull --rebase origin experiment/ecu-triposr-separated-parts
+            git push origin HEAD:experiment/ecu-triposr-separated-parts
+          fi
