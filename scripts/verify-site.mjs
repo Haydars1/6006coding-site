@@ -17,7 +17,7 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js'];
+const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
 const fakeWindow={};
@@ -43,6 +43,25 @@ for(const [input,brand,model] of [
 assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
 assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
+const sitemap=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
+const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
+assert(urls.length>=30,'SEO sitemap should contain at least 30 accessible pages');
+assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
+assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
+for(const code of ['p0299','p0401','p2002','p20ee','u0100']){
+  const pathname=path.join(ROOT,'fehlercodes',code,'index.html');
+  assert(fs.existsSync(pathname),'Missing curated troubleshooting article: '+code);
+  const html=fs.readFileSync(pathname,'utf8');
+  assert(html.includes('<h1>')&&html.includes('rel="canonical"')&&!html.includes('noindex'),'Fault article not indexable: '+code);
+  assert(urls.includes('https://6006coding.de/fehlercodes/'+code+'/'),'Missing sitemap entry: '+code);
+}
+const vehicleIndexPath=path.join(ROOT,'assets/vehicle-data/index.json');
+assert(fs.existsSync(vehicleIndexPath),'Missing broad model/engine database');
+const vehicleIndex=JSON.parse(fs.readFileSync(vehicleIndexPath,'utf8'));
+assert(vehicleIndex.makes.length>=150 && vehicleIndex.totalModels>=2300 && vehicleIndex.totalEngines>=27000,'Vehicle reference database incomplete');
+assert(vehicleIndex.license==='ODbL-1.0'&&vehicleIndex.databaseLicense,'Vehicle data lacks ODbL attribution');
+assert(fs.existsSync(path.join(ROOT,'assets/vehicle-data/volkswagen.json')),'Volkswagen engine variants missing');
+console.log('PASS: '+vehicleIndex.makes.length+' vehicle make groups, '+vehicleIndex.totalModels+' models, '+vehicleIndex.totalEngines+' engines; '+urls.length+' sitemap URLs');
 
 for(const f of javascript){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing JS ${f}`);
