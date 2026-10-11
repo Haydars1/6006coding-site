@@ -30,30 +30,25 @@
   locale();
   if(Math.abs(p-last)<.0006&&lastPhase!==-1)return;
   last=p;
-  // Preserve the case in the visual centre as the cover and PCB separate.
-  // After separation, the entire section returns naturally to normal scroll.
+  // Display only coherent photographs of the SAME ECU model: closed -> opened -> exploded.
+  // Do not synthesize a fake metal PCB-floor from source-image cutouts.
   const scroll=p*range;
   const hold=Math.min(scroll,range*.74);
-  // Four clearly separated scroll phases, with time to inspect the board on mobile.
-  const reveal=smooth(.05,.17,p);
-  const lidTravel=smooth(.16,.39,p);
-  const boardTravel=smooth(.42,.71,p);
-  const exit=smooth(.79,.93,p);
-  const fade=smooth(.83,.93,p);
-  const graphIn=smooth(.90,.98,p);
-  const draw=smooth(.91,.995,p);
-  const gains=smooth(.935,.995,p);
+  const opened=smooth(.12,.29,p);
+  const extracted=smooth(.45,.66,p);
+  const exit=smooth(.80,.91,p);
+  const fade=smooth(.83,.92,p);
+  const graphIn=smooth(.92,.985,p);
+  const draw=smooth(.93,.998,p);
+  const gains=smooth(.94,.998,p);
   toCss('hold',hold,'px');
-  toCss('scale',.98-.035*smooth(.70,.88,p));
-  // Only a short initial reveal; actual separation uses distinct DOM layers.
-  toCss('closed',1-reveal);
-  toCss('split',reveal);
-  // Lid and PCB are independent photo layers; fixed case/sockets NEVER move individually.
-  toCss('lid-lift',-Math.min(vh*.145,130)*lidTravel,'px');
-  toCss('board-rise',-Math.min(vh*.073,72)*boardTravel,'px');
-  toCss('board-depth',1+.055*boardTravel);
-  toCss('unit-exit',-Math.min(vh*.15,150)*exit,'px');
-  toCss('caption-alpha',1-smooth(.73,.83,p));
+  toCss('scale',.98+.015*smooth(.45,.70,p)-.04*smooth(.77,.90,p));
+  toCss('closed',1-opened);
+  toCss('open',opened*(1-extracted));
+  toCss('exploded',extracted);
+  toCss('photo-lift',-14*smooth(.48,.76,p),'px');
+  toCss('unit-exit',-Math.min(vh*.12,125)*exit,'px');
+  toCss('caption-alpha',1-smooth(.77,.87,p));
   toCss('unit-alpha',1-fade);
   toCss('graph-alpha',graphIn);
   toCss('graph-rise',26*(1-graphIn),'px');
@@ -63,7 +58,7 @@
   const ps=Math.round(30*gains),nm=Math.round(60*gains);
   if(ps!==lastPS){power.textContent='+'+ps;lastPS=ps}
   if(nm!==lastNM){torque.textContent='+'+nm;lastNM=nm}
-  const phase=p<.42?'open':p<.86?'board':'graph';
+  const phase=p<.45?'open':p<.88?'board':'graph';
   if(phase!==lastPhase){phaseLabel.textContent=labels[lang][phase];lastPhase=phase}
  }
  function redraw(){
