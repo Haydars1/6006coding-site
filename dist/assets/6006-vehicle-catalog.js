@@ -324,6 +324,9 @@ function install(){
  const feedback=document.getElementById("vehicleFindMessage");
  function selectCar(result){
    if(!result||!result.brand){feedback.textContent=tr("error");confirmation.hidden=true;return;}
+   if(brand.value!==result.brand||model.value!==(result.model||"")){
+     for(const id of ["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"]){const e=document.getElementById(id);if(e)e.value="";}
+   }
    if(![...brand.options].some(x=>x.value===result.brand))brand.add(new Option(result.brand,result.brand));
    brand.value=result.brand;brand.dispatchEvent(new Event("change",{bubbles:true}));
    if(result.model){if(![...model.options].some(x=>x.value===result.model))model.add(new Option(result.model,result.model));model.value=result.model;model.dispatchEvent(new Event("change",{bubbles:true}));}
