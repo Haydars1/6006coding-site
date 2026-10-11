@@ -77,7 +77,7 @@ function maskPhoto(img, part){
   };
   fillWell(lidOutline,[
    [0,'#878d8f'],[.23,'#b7bcbd'],[.50,'#8c9397'],
-   [.74,'#b0b4b5'],[1,'#777e82' ]);
+   [.74,'#b0b4b5'],[1,'#777e82']]);
   fillWell(boardOutline,[
    [0,'#464f4d'],[.25,'#65716a'],[.52,'#535d58'],
    [.72,'#616c66'],[1,'#3b4440']]);
