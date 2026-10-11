@@ -151,10 +151,10 @@ fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));
 fillMakes();populateModels("");renderEngines("");
 $("decode").addEventListener("click",identify);
 $("vin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();identify();}});
-make.addEventListener("change",()=>makeChanged(""));
-model.addEventListener("change",modelChanged);
-year.addEventListener("change",()=>{renderEngines("");renderReport();});
-fuel.addEventListener("change",()=>{renderEngines("");renderReport();});
+make.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";year.value="";makeChanged("");});
+model.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";modelChanged();});
+year.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
+fuel.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
 engine.addEventListener("change",syncVariant);
 for(const e of [manual,ps,nm]){e.addEventListener("change",renderReport);e.addEventListener("input",renderReport);}
 window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMakes();if(current&&!make.value){option(make,current,current);make.value=current;}});
