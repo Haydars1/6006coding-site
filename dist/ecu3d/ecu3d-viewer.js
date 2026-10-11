@@ -57,31 +57,30 @@ function maskPhoto(img, part){
    polygon(c,lidOutline);c.fill();
   }
  }else if(part==='case'){
-  // Remove the moved parts from the stationary three-port chassis photo.
-  // The newly exposed inner bay is a brushed-metal RECESS, never an opaque
-  // flat black bar over the connector rail.
+  // When the metal lid and PCB rise, reconstruct the TWO hidden recessed
+  // surfaces underneath them. Leaving the lid hole unfilled exposed an
+  // enormous black void on mobile (user screenshot 09:51).
   c.globalCompositeOperation='destination-out';
   polygon(c,lidOutline);c.fill();
   polygon(c,boardOutline);c.fill();
   c.globalCompositeOperation='destination-over';
-  c.save();
-  polygon(c,boardOutline);c.clip();
-  const tray=c.createLinearGradient(150,300,1040,640);
-  tray.addColorStop(0,'#767d81');
-  tray.addColorStop(.20,'#adb3b6');
-  tray.addColorStop(.42,'#737a7e');
-  tray.addColorStop(.70,'#92999d');
-  tray.addColorStop(1,'#5a6266');
-  c.fillStyle=tray;
-  c.fillRect(155,270,920,440);
-  c.strokeStyle='rgba(228,230,228,.12)';
-  c.lineWidth=1.2;
-  for(let y=318;y<690;y+=11){
-   c.beginPath();c.moveTo(195,y);c.lineTo(1010,y+42);c.stroke();
-  }
-  c.restore();
-  // A small natural shadow is provided by the raised physical PCB mesh.
-  // No dark panel or mask is added at the front lip.
+  const fillWell=(outline,start)=>{
+    c.save();polygon(c,outline);c.clip();
+    const g=c.createLinearGradient(145,255,1010,650);
+    for(const [p,color] of start)g.addColorStop(p,color);
+    c.fillStyle=g;c.fillRect(85,0,1050,760);
+    c.strokeStyle='rgba(255,255,255,.13)';c.lineWidth=1.1;
+    for(let y=155;y<735;y+=13){
+      c.beginPath();c.moveTo(90,y);c.lineTo(1100,y+43);c.stroke();
+    }
+    c.restore();
+  };
+  fillWell(lidOutline,[
+   [0,'#878d8f'],[.23,'#b7bcbd'],[.50,'#8c9397'],
+   [.74,'#b0b4b5'],[1,'#777e82' ]);
+  fillWell(boardOutline,[
+   [0,'#464f4d'],[.25,'#65716a'],[.52,'#535d58'],
+   [.72,'#616c66'],[1,'#3b4440']]);
   c.globalCompositeOperation='source-over';
  }
  c.globalCompositeOperation='source-over';
@@ -163,11 +162,11 @@ function draw(){
   // Authentic photo-textured layers move in world 3D; fixed casing/3 sockets do not.
   const opening=ease(.14,.42,p);
   const extraction=ease(.45,.78,p);
-  lid.position.y=-.12+1.10*opening;
+  lid.position.y=-.12+.80*opening;
   lid.position.z=.45+.22*opening;
   lid.rotation.z=-.022*opening;
-  pcb.position.y=.39*extraction;
-  pcb.position.z=.25+.26*extraction;
+  pcb.position.y=.17*extraction;
+  pcb.position.z=.25+.22*extraction;
   pcb.rotation.x=-.035*extraction;
  }
  unit.rotation.y=.026*ease(.33,.78,p);
