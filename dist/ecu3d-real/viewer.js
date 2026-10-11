@@ -38,7 +38,7 @@ light(0xffffff,.85,-6,5,-4);
 light(0xe5a36a,.45,8,3,-2);
 const root=new THREE.Group(),lid=new THREE.Group(),pcb=new THREE.Group();
 scene.add(root);root.add(lid,pcb);
-let ready=false,onscreen=true,dirty=false,scrollProgress=0,forced=null;
+let ready=false,onscreen=true,dirty=false,scrollProgress=0,forced=null,orbitYaw=0,dragStart=null;
 function resize(){
  const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);
  renderer.setSize(w,h,false);
@@ -60,7 +60,7 @@ function draw(){
  pcb.position.y=.80*pcbAmt;
  pcb.position.z=.10*pcbAmt;
  pcb.rotation.z=-.02*pcbAmt;
- root.rotation.y=-.12+.15*ease(.10,.85,p);
+ root.rotation.y=-.12+.15*ease(.10,.85,p)+orbitYaw;
  root.rotation.x=.025*ease(.40,.78,p);
  root.position.y=-.19;
  const title=p<.14?'KAPALI ECU':p<.47?'METAL KAPAK AÇILIYOR':p<.83?'ELEKTRONİK KART YÜKSELİYOR':'ECU İÇ YAPISI';
@@ -85,6 +85,24 @@ function scroll(){
  scrollProgress=clamp(-b.top/travel);
  schedule();
 }
+// Allow gentle horizontal inspection without stealing vertical page scroll.
+canvas.addEventListener('pointerdown',e=>{
+ dragStart={x:e.clientX,y:e.clientY,yaw:orbitYaw};
+ if(e.pointerType==='mouse')canvas.setPointerCapture(e.pointerId);
+},{passive:true});
+canvas.addEventListener('pointermove',e=>{
+ if(!dragStart)return;
+ const dx=e.clientX-dragStart.x,dy=e.clientY-dragStart.y;
+ if(Math.abs(dx)>Math.abs(dy)*1.25&&Math.abs(dx)>7){
+  orbitYaw=THREE.MathUtils.clamp(dragStart.yaw+dx/360,-.28,.28);
+  schedule();
+ }
+},{passive:true});
+canvas.addEventListener('pointerup',()=>{dragStart=null},{passive:true});
+canvas.addEventListener('pointercancel',()=>{dragStart=null},{passive:true});
+window.addEventListener('wheel',()=>{if(forced!==null){forced=null;scroll()}},{passive:true});
+window.addEventListener('touchmove',()=>{if(forced!==null){forced=null;scroll()}},{passive:true});
+
 buttons.forEach(button=>button.addEventListener('click',()=>{
  forced=Number(button.dataset.progress);
  story.scrollIntoView({behavior:'smooth',block:'start'});schedule();
