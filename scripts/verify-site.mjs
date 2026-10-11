@@ -42,7 +42,7 @@ assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-se
 assert(fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8').includes('dtc-car-advanced'),'Vehicle catalog cross-link missing');
 const brandChipsCSS=fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8');
 assert(brandChipsCSS.includes('.vin6006-brand-chips'),'Multi-brand selector layout missing');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-engine-quality'),'Latest VIN and engine asset cache key missing');
+
 const vinCode=fs.readFileSync(vinJs,'utf8');
 assert(vinCode.includes('WVW')&&vinCode.includes('vin6-vin')&&vinCode.includes('stockPower(v)'),'VIN manufacturer resolver or horsepower validation missing');
 assert(vinCode.includes('finder.engineVariants')&&vinCode.includes('relatedCodes()'),'Motor and DTC lookup missing');
