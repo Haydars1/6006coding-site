@@ -45,10 +45,10 @@ assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
 const sitemap=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
-assert(urls.length>=30,'SEO sitemap should contain at least 30 accessible pages');
+assert(urls.length>=80,'SEO sitemap should contain at least 80 accessible pages');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
-for(const code of ['p0299','p0401','p2002','p20ee','u0100']){
+for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p2015','p0562','p0741','u0415']){
   const pathname=path.join(ROOT,'fehlercodes',code,'index.html');
   assert(fs.existsSync(pathname),'Missing curated troubleshooting article: '+code);
   const html=fs.readFileSync(pathname,'utf8');
@@ -79,6 +79,10 @@ assert(urls.includes('https://6006coding.de/fehlercodes/verzeichnis/'),'Director
 assert(fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8').includes('/fehlercodes/verzeichnis/'),'Directory unlinked from diagnosis page');
 console.log('PASS: '+entries+' DTC definitions discoverable in '+directoryPages+' static pages');
 
+const guideFolder=path.join(ROOT,'fehlercodes');
+const guideCount=fs.readdirSync(guideFolder,{withFileTypes:true}).filter(e=>e.isDirectory() && /^[pbcu][0-9a-f]{4}$/i.test(e.name) && fs.existsSync(path.join(guideFolder,e.name,'index.html'))).length;
+assert(guideCount>=76,'Detailed code-specific troubleshooting guide count below 76: '+guideCount);
+console.log('PASS: '+guideCount+' independently authored diagnosis pages');
 const vehicleIndexPath=path.join(ROOT,'assets/vehicle-data/index.json');
 assert(fs.existsSync(vehicleIndexPath),'Missing broad model/engine database');
 const vehicleIndex=JSON.parse(fs.readFileSync(vehicleIndexPath,'utf8'));
