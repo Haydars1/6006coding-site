@@ -47,9 +47,7 @@ metal_src=ImageEnhance.Brightness(metal_src).enhance(.78)
 metal_src.save(OUT/'ecu-cast-alloy.webp','WEBP',quality=89,method=6)
 cavity=metal_src.resize((1024,600),Image.Resampling.LANCZOS).convert('RGB')
 cavity=ImageEnhance.Brightness(cavity).enhance(.46)
-cd=ImageDraw.Draw(cavity,'RGBA')
-for yy in range(52,590,28):
-    cd.line((30,yy,990,yy+17),fill=(185,190,183,36),width=2)
+# No synthetic parallel white ribs: just genuine fine cast-metal texture.
 cavity.save(OUT/'ecu-bay-metal.webp','WEBP',quality=88,method=6)
 
 def socket_texture(points,name):
@@ -134,9 +132,7 @@ for x in [-3.27,3.27]:
 for x in [-2.65,2.65]:
     for z in [-1.44,1.44]:
         cyl('BASE','cast',x,-.10,z,.14,.18)
-# Shallow machined cast ribs under the lifted PCB.
-for x in np.linspace(-2.6,2.6,7):
-    rounded_box('BASE','edge',float(x),-.159,-.65,.03,.018,2.20,.012,bevel=.004)
+# Avoid invented repetitive cast floor rails; retain actual mounting bosses.
 for x in (-3.32,3.32):
     for z in (-1.75,1.75):
         cyl('BASE','cast_high',x,-.310,z,.20,.040,20)
