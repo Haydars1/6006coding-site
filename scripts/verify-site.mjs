@@ -45,16 +45,44 @@ assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
 const sitemap=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
-assert(urls.length>=30,'SEO sitemap should contain at least 30 accessible pages');
+assert(urls.length>=80,'SEO sitemap should contain at least 80 accessible pages');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
-for(const code of ['p0299','p0401','p2002','p20ee','u0100']){
+for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p2015','p0562','p0741','u0415']){
   const pathname=path.join(ROOT,'fehlercodes',code,'index.html');
   assert(fs.existsSync(pathname),'Missing curated troubleshooting article: '+code);
   const html=fs.readFileSync(pathname,'utf8');
   assert(html.includes('<h1>')&&html.includes('rel="canonical"')&&!html.includes('noindex'),'Fault article not indexable: '+code);
   assert(urls.includes('https://6006coding.de/fehlercodes/'+code+'/'),'Missing sitemap entry: '+code);
 }
+
+// Every licensed fault-code definition must be discoverable in server-rendered HTML.
+const directoryRoot=path.join(ROOT,'fehlercodes','verzeichnis');
+assert(fs.existsSync(path.join(directoryRoot,'index.html')),'Full code directory missing');
+const groups=fs.readdirSync(directoryRoot,{withFileTypes:true}).filter(x=>x.isDirectory());
+let entries=0, directoryPages=0;
+for(const group of groups) {
+ const groupDir=path.join(directoryRoot,group.name);
+ const pages=[path.join(groupDir,'index.html'),...fs.readdirSync(groupDir,{withFileTypes:true}).filter(x=>x.isDirectory()).map(x=>path.join(groupDir,x.name,'index.html'))];
+ for(const file of pages){
+   assert(fs.existsSync(file),'Broken directory page: '+file);
+   const html=fs.readFileSync(file,'utf8');
+   entries += [...html.matchAll(/data-dtc-row="1"/g)].length;
+   assert(html.includes('name="robots" content="index,follow')&&html.includes('rel="canonical"'),'Unindexable directory page: '+file);
+   const url='https://6006coding.de/'+path.relative(ROOT,path.dirname(file)).replace(/\\/g,'/')+'/';
+   assert(urls.includes(url),'Missing sitemap link for '+url);
+   directoryPages++;
+ }
+}
+assert.equal(entries,db.defs.filter(r=>Array.isArray(r)&&r.length===3&&r.every(v=>typeof v==='string'&&v.trim())).length,'Not all DTC definitions are in static HTML');
+assert(urls.includes('https://6006coding.de/fehlercodes/verzeichnis/'),'Directory hub missing from sitemap');
+assert(fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8').includes('/fehlercodes/verzeichnis/'),'Directory unlinked from diagnosis page');
+console.log('PASS: '+entries+' DTC definitions discoverable in '+directoryPages+' static pages');
+
+const guideFolder=path.join(ROOT,'fehlercodes');
+const guideCount=fs.readdirSync(guideFolder,{withFileTypes:true}).filter(e=>e.isDirectory() && /^[pbcu][0-9a-f]{4}$/i.test(e.name) && fs.existsSync(path.join(guideFolder,e.name,'index.html'))).length;
+assert(guideCount>=76,'Detailed code-specific troubleshooting guide count below 76: '+guideCount);
+console.log('PASS: '+guideCount+' independently authored diagnosis pages');
 const vehicleIndexPath=path.join(ROOT,'assets/vehicle-data/index.json');
 assert(fs.existsSync(vehicleIndexPath),'Missing broad model/engine database');
 const vehicleIndex=JSON.parse(fs.readFileSync(vehicleIndexPath,'utf8'));
