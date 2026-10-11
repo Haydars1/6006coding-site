@@ -26,7 +26,7 @@ for(const row of defs){
 }
 const codes=[...groups.keys()].sort();
 const descClean=s=>s.replace(/\s+/g," ").trim();
-const slug=code=>"/fehlercodes/code/"+code.toLowerCase()+"/";
+const slug=code=>"/fehlercodes/"+code.toLowerCase()+"/";
 const codeUrl=code=>curated.has(code)?"/fehlercodes/"+code.toLowerCase()+"/":slug(code);
 const known = [
  {id:"turbo",re:/turbo|boost|charge air|wastegate|supercharg|underboost|overboost/i,title:"Ladedruck und Turbolader",why:"Undichtigkeit der Ladeluftstrecke, fehlerhafte Regelung, Stellglied oder Sensorabweichung.",check:"Ladedruck Soll/Ist unter gleichen Bedingungen vergleichen; Schläuche, Drucksensor und Ansteuerung je nach Motortyp prüfen."},
@@ -99,7 +99,7 @@ let generated=0;
 for(let i=0;i<codes.length;i++){
  const code=codes[i];
  if(curated.has(code))continue;
- const file=path.join(root,"fehlercodes","code",code.toLowerCase(),"index.html");
+ const file=path.join(root,"fehlercodes",code.toLowerCase(),"index.html");
  fs.mkdirSync(path.dirname(file),{recursive:true});
  fs.writeFileSync(file,article(code,groups.get(code),codes[(i+codes.length-1)%codes.length],codes[(i+1)%codes.length]),"utf8");
  allUrls.push(slug(code));
@@ -109,7 +109,7 @@ const sitemapPath=path.join(root,"sitemap.xml"), xml=fs.readFileSync(sitemapPath
 assert(xml.includes("</urlset>"),"Missing base sitemap");
 const appended=allUrls.filter(u=>!xml.includes("<loc>"+base+u+"</loc>")).map(u=>"  <url><loc>"+base+u+"</loc><lastmod>"+stamp+"</lastmod></url>").join("\n");
 fs.writeFileSync(sitemapPath,xml.replace("</urlset>",appended+"\n</urlset>"),"utf8");
-const summary={uniqueCodes:codes.length,manufacturerDefinitions:defs.length,curated:curated.size,generatedCodePages:generated,generatedSitemapUrls:allUrls.length,route:"/fehlercodes/code/{code}/",status:"Automatic per-code reference, not OEM repair manual"};
+const summary={uniqueCodes:codes.length,manufacturerDefinitions:defs.length,curated:curated.size,generatedCodePages:generated,generatedSitemapUrls:allUrls.length,route:"/fehlercodes/{code}/",status:"Automatic per-code reference, not OEM repair manual"};
 fs.writeFileSync(path.join(root,"assets","6006-all-dtc-pages.json"),JSON.stringify(summary,null,2)+"\n");
 assert(codes.length===curated.size+generated,"Missing or duplicate code URLs");
 console.log("DTC ALL-CODES: "+codes.length+" unique codes, "+generated+" code-reference pages, "+curated.size+" detailed guides, "+defs.length+" manufacturer definitions");

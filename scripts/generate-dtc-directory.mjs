@@ -24,7 +24,7 @@ for (const rows of groups.values()) rows.sort((a,b)=>a[0].localeCompare(b[0])||a
 const groupNames = [...groups.keys()].sort((a,b)=>a.localeCompare(b,'de'));
 const editorial=new Set(JSON.parse(fs.readFileSync(path.join(root,'assets/6006-curated-guides.json'),'utf8')).codes);
 const hasGuide = code => editorial.has(code) && fs.existsSync(path.join(root,'fehlercodes',code.toLowerCase(),'index.html'));
-const codeHref = code => hasGuide(code)?'/fehlercodes/'+code.toLowerCase()+'/':'/fehlercodes/code/'+code.toLowerCase()+'/';
+const codeHref = code => hasGuide(code)?'/fehlercodes/'+code.toLowerCase()+'/':'/fehlercodes/'+code.toLowerCase()+'/';
 const save = (relative,html) => {const filename = path.join(root,relative);fs.mkdirSync(path.dirname(filename),{recursive:true});fs.writeFileSync(filename,html,'utf8');};
 const rootDir = '/fehlercodes/verzeichnis/';
 const folder = (g,page) => rootDir+g+'/'+(page===1?'':page+'/');

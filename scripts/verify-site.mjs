@@ -90,19 +90,20 @@ assert(allPages.uniqueCodes===codes.size,'Unique DTC coverage changed unexpected
 assert(allPages.manufacturerDefinitions===db.defs.length,'Manufacturer definition count mismatch');
 assert(allPages.generatedCodePages>=11000,'Missing individual DTC pages');
 assert(allPages.generatedCodePages+allPages.curated===allPages.uniqueCodes,'Code page/curated coverage mismatch');
-const codePages=path.join(ROOT,'fehlercodes','code');
+const codePages=path.join(ROOT,'fehlercodes');
 const dirs=fs.readdirSync(codePages,{withFileTypes:true}).filter(item=>item.isDirectory()&&/^[pbcu][0-9a-f]{4}$/i.test(item.name));
-assert(dirs.length===allPages.generatedCodePages,'Some code paths were not written');
+assert(dirs.length===allPages.uniqueCodes,'Some code paths were not written');
 const allCodes=new Set(db.defs.map(row=>row[0]));
 for(const code of allCodes){
- const url='/fehlercodes/code/'+code.toLowerCase()+'/';
+ const url='/fehlercodes/'+code.toLowerCase()+'/';
  if(fs.existsSync(path.join(ROOT,'fehlercodes',code.toLowerCase(),'index.html'))) continue; 
  const file=path.join(codePages,code.toLowerCase(),'index.html');
  assert(fs.existsSync(file),'No dedicated page for '+code);
  assert(urls.includes('https://6006coding.de'+url),'Missing indexable DTC sitemap entry '+code);
 }
 for(const code of ['P0102','P0113','P0670','B0001','C0035','U0073']){
- const direct=path.join(ROOT,'fehlercodes','code',code.toLowerCase(),'index.html');
+ if(JSON.parse(fs.readFileSync(path.join(ROOT,'assets/6006-curated-guides.json'),'utf8')).codes.includes(code))continue;
+ const direct=path.join(ROOT,'fehlercodes',code.toLowerCase(),'index.html');
  if(!fs.existsSync(direct))continue;
  const page=fs.readFileSync(direct,'utf8');
  assert(page.includes('<h1>'+code+' Fehlercode')&&page.includes('name="description"')&&page.includes('rel="canonical"')&&page.includes('Mögliche Ursache')&&page.includes('Diagnose und Prüfablauf'),'Incomplete code detail '+code);
