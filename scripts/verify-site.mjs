@@ -17,6 +17,14 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
+const stageFinderJS=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
+assert(stageFinderJS.includes('vehicleQuickConfirmation'),'Stage 1 search does not show visible confirmation');
+assert(stageFinderJS.includes('vehicleQuickNext'),'Stage 1 search is missing a next step');
+assert(stageFinderJS.includes('font-size:16px!important'),'iPhone field font size causes unwanted zoom');
+assert(stageFinderJS.includes('quick.blur()'),'Find button does not dismiss keyboard');
+assert(stageFinderJS.includes('yearSelect')&&stageFinderJS.includes('engineVariantSelect'),'Missing engine navigation');
+assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('20261011-searchaction'),'Homepage missing asset version');
+console.log('PASS: Mobile Find Vehicle visibly confirms choice and navigates to engine');
 const javascript=['assets/6006-dtc-intelligence.js','assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
@@ -59,7 +67,7 @@ assert(passatSuggestions.some(x=>x.model.includes('Passat B8')),'Passat B8 sugge
 const quickScript=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
 assert(quickScript.includes('vehicleQuickResults')&&quickScript.includes('aria-expanded')&&quickScript.includes('chooseSuggestion(item)'),'Mobile dropdown UI missing');
 const homeSearch=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
-assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261011-searchfix'),'Homepage must cache-bust vehicle search');
+assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261011-searchaction'),'Homepage must cache-bust vehicle search');
 console.log('PASS: Golf / Passat model-only search, variants, mobile suggestions and cache bust');
 assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
 assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
