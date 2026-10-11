@@ -40,6 +40,27 @@ for(const [input,brand,model] of [
   const found=finder.match(input);
   assert(found && found.brand===brand && found.model===model,'Vehicle matching failed: '+input);
 }
+// Regression: users commonly enter a model without its brand on a phone.
+for(const [input,expectedBrand,expectedModel] of [
+ ['Golf','Volkswagen','Golf'],['Passat','Volkswagen','Passat'],
+ ['pAsSaT','Volkswagen','Passat'],['X5','BMW','X5'],
+ ['Passat B8','Volkswagen','Passat B8']
+]){
+ const selected=finder.match(input);
+ assert(selected && selected.brand===expectedBrand && selected.model===expectedModel,'Model-only matching regression: '+input);
+}
+assert(typeof finder.searchModels==='function','Quick-search suggestion API missing');
+const golfSuggestions=finder.searchModels('Golf');
+assert(golfSuggestions.some(x=>x.brand==='Volkswagen'&&x.model==='Golf'),'Golf suggestions missing');
+assert(golfSuggestions.some(x=>x.brand==='Volkswagen'&&/Golf (VII|VIII|7|8)/.test(x.model)),'Golf variant suggestions missing');
+const passatSuggestions=finder.searchModels('Passat');
+assert(passatSuggestions.some(x=>x.model==='Passat'),'Passat suggestions missing');
+assert(passatSuggestions.some(x=>x.model.includes('Passat B8')),'Passat B8 suggestion missing');
+const quickScript=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
+assert(quickScript.includes('vehicleQuickResults')&&quickScript.includes('aria-expanded')&&quickScript.includes('chooseSuggestion(item)'),'Mobile dropdown UI missing');
+const homeSearch=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261011-searchfix'),'Homepage must cache-bust vehicle search');
+console.log('PASS: Golf / Passat model-only search, variants, mobile suggestions and cache bust');
 assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
 assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
