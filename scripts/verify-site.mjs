@@ -42,7 +42,7 @@ assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-se
 assert(fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8').includes('dtc-car-advanced'),'Vehicle catalog cross-link missing');
 const brandChipsCSS=fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8');
 assert(brandChipsCSS.includes('.vin6006-brand-chips'),'Multi-brand selector layout missing');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-allbrands'),'Multi-brand asset cache key missing');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-engine-quality'),'Latest VIN and engine asset cache key missing');
 const vinCode=fs.readFileSync(vinJs,'utf8');
 assert(vinCode.includes('WVW')&&vinCode.includes('vin6-vin')&&vinCode.includes('stockPower(v)'),'VIN manufacturer resolver or horsepower validation missing');
 assert(vinCode.includes('finder.engineVariants')&&vinCode.includes('relatedCodes()'),'Motor and DTC lookup missing');
@@ -50,6 +50,21 @@ assert(vinCode.includes('popularMakes=[\"Volkswagen\",\"BMW\",\"Mercedes-Benz\"'
 assert(vinCode.includes('DecodeWMI/')&&vinCode.includes('encodeURIComponent(prefix)'),'Prefix-only NHTSA WMI fallback missing');
 assert(!vinCode.includes('encodeURIComponent(full)'),'Full VIN must not leave browser');
 assert(vinCode.includes('let lookupId=0')&&vinCode.includes('AbortController'),'WMI response timeout/stale-state guard missing');
+const catalogCode=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
+assert(!catalogCode.includes('return result.slice(0,500);'),'Engine results must not be silently limited to 500');
+assert(vinCode.includes('id="vin6-engine-search"')||vinCode.includes('engineSearch.id="vin6-engine-search"'),'Engine text filter missing');
+assert(vinCode.includes('matchesFuel(v,fuel.value)'),'Make-independent fuel matching not installed');
+assert(vinCode.includes('Gasoline')||vinCode.includes('gasoline'),'Gasoline must be classified as petrol');
+assert(vinCode.includes('Natural Gas')||vinCode.includes('natural gas'),'CNG model classification missing');
+assert(vinCode.includes('stockNeedsReview(v)')&&vinCode.includes('referencePowerNeedsReview'),'Reference power cross-check missing');
+assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified universal Stage 1 estimates must not be shown as calibration targets');
+assert(vinCode.includes('sameSavedVehicle'),'Vehicle memory must not leak specifications across different models');
+assert(vinCode.includes('familyWarning'),'Model-family matches must carry explicit uncertainty');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-engine-quality'),'Motor finder version must bust caches');
+const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
+assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
+console.log('PASS: Full engine matching, fuel categorization, data provenance and Stage 1 safety');
+
 console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback, iPhone controls');
 const videoCode=fs.readFileSync(videoJs,'utf8');
 assert(videoCode.includes('dtc-video-suggest')&&videoCode.includes('P0335'),'Instant fault-code suggestions missing');
