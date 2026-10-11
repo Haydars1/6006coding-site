@@ -1,0 +1,35 @@
+name: 6006 ECU Mobile WebGL Test
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "dist/ecu-atelier/**"
+      - "scripts/test-ecu-mobile.mjs"
+      - ".github/workflows/ecu-atelier-mobile.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-webgl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test ECU on simulated iPhone and Android mobile viewports
+        run: |
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory dist >/tmp/ecu-http.log 2>&1 &
+          node scripts/test-ecu-mobile.mjs
+      - name: Store mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecu-mobile-browser-screenshots
+          path: artifacts/ecu-mobile/
+          if-no-files-found: ignore
