@@ -54,19 +54,32 @@ function maskPhoto(img, part){
    polygon(c,lidOutline);c.fill();
   }
  }else if(part==='case'){
+  // Remove the moved parts from the stationary three-port chassis photo.
+  // The newly exposed inner bay is a brushed-metal RECESS, never an opaque
+  // flat black bar over the connector rail.
   c.globalCompositeOperation='destination-out';
   polygon(c,lidOutline);c.fill();
   polygon(c,boardOutline);c.fill();
   c.globalCompositeOperation='destination-over';
   c.save();
   polygon(c,boardOutline);c.clip();
-  // Recess is beneath the actual circuit board, not a rectangular overlay.
-  const g=c.createLinearGradient(180,325,940,640);
-  g.addColorStop(0,'#36393b');g.addColorStop(.48,'#555a5c');g.addColorStop(1,'#25282a');
-  c.fillStyle=g;c.fillRect(180,280,860,430);
-  c.strokeStyle='rgba(183,190,188,.12)';c.lineWidth=1;
-  for(let y=310;y<710;y+=18){c.beginPath();c.moveTo(170,y);c.lineTo(1050,y+82);c.stroke();}
+  const tray=c.createLinearGradient(150,300,1040,640);
+  tray.addColorStop(0,'#767d81');
+  tray.addColorStop(.20,'#adb3b6');
+  tray.addColorStop(.42,'#737a7e');
+  tray.addColorStop(.70,'#92999d');
+  tray.addColorStop(1,'#5a6266');
+  c.fillStyle=tray;
+  c.fillRect(155,270,920,440);
+  c.strokeStyle='rgba(228,230,228,.12)';
+  c.lineWidth=1.2;
+  for(let y=318;y<690;y+=11){
+   c.beginPath();c.moveTo(195,y);c.lineTo(1010,y+42);c.stroke();
+  }
   c.restore();
+  // A small natural shadow is provided by the raised physical PCB mesh.
+  // No dark panel or mask is added at the front lip.
+  c.globalCompositeOperation='source-over';
  }
  c.globalCompositeOperation='source-over';
  const texture=new THREE.CanvasTexture(out);
@@ -135,7 +148,10 @@ function draw(){
  dirty=false;
  if(!ready||!visible||document.hidden)return;
  resize();
- const p=reduce.matches?.76:scrollP;
+ // Fixed checkpoints are for visual QA only; normal visitors use real scroll.
+ const inspect=new URLSearchParams(location.search).get('inspect');
+ const inspectP=inspect===null?NaN:Number(inspect);
+ const p=Number.isFinite(inspectP)?clamp(inspectP):(reduce.matches?.76:scrollP);
  // One and only one version visible. No transparent crossfades of different ECUs.
  const isClosed=p<.14;
  closed.visible=isClosed;
@@ -144,12 +160,12 @@ function draw(){
   // Authentic photo-textured layers move in world 3D; fixed casing/3 sockets do not.
   const opening=ease(.14,.42,p);
   const extraction=ease(.45,.78,p);
-  lid.position.y=-.42+1.45*opening;
+  lid.position.y=-.12+1.10*opening;
   lid.position.z=.45+.22*opening;
   lid.rotation.z=-.022*opening;
-  pcb.position.y=.68*extraction;
+  pcb.position.y=.39*extraction;
   pcb.position.z=.25+.26*extraction;
-  pcb.rotation.x=-.045*extraction;
+  pcb.rotation.x=-.035*extraction;
  }
  unit.rotation.y=.026*ease(.33,.78,p);
  unit.rotation.x=-.015*ease(.40,.78,p);
