@@ -75,6 +75,25 @@ assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(ma
 assert(quoteSection.includes('stockNeedsReview(selected)'),'Unverified engine values must be marked in quote');
 assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Stage 1 quote form CSS not found');
 console.log('PASS: Multi-language Stage 1 inquiry, correct business contacts, user-initiated handoff and VIN privacy');
+
+const missingRequestJs=path.join(ROOT,'assets/6006-missing-request.js');
+const missingRequestCss=path.join(ROOT,'assets/6006-missing-request.css');
+assert(fs.existsSync(missingRequestJs)&&fs.existsSync(missingRequestCss),'Missing vehicle / engine request files not published');
+execFileSync(process.execPath,['--check',missingRequestJs],{stdio:'pipe'});
+const missingCode=fs.readFileSync(missingRequestJs,'utf8');
+assert(missingCode.includes('vin6-missing-toggle')&&missingCode.includes('vin6-missing-fields'),'Missing vehicle request not available or expandable');
+assert(missingCode.includes('document.getElementById("vehicle-selector-6006")'),'Missing request not connected to vehicle finder');
+assert(missingCode.includes('https://wa.me/491788354756')&&missingCode.includes('mailto:6006performance@gmail.com'),'Business contact channels must match 6006 Performance');
+assert(missingCode.includes('encodeURIComponent(msg)')&&missingCode.includes('valid=Boolean(make&&model&&(year||engine))'),'Missing request validation / URL safety not installed');
+assert(missingCode.includes('lang')&&missingCode.includes('tr:')&&missingCode.includes('de:')&&missingCode.includes('en:'),'Missing vehicle request requires TR / DE / EN');
+assert(!missingCode.includes('vin6-vin')&&!missingCode.includes('fetch(')&&!missingCode.includes('localStorage'),'Request must not upload or save full VIN, personal form inputs or contact messages');
+assert(missingCode.includes('aria-disabled')&&missingCode.includes('removeAttribute("href")'),'Invalid requests must not open contact links');
+assert(missingCode.includes('report a missing')||missingCode.includes('Report a missing'),'Missing motor information must be visibly discoverable');
+assert(fs.readFileSync(missingRequestCss,'utf8').includes('@media(max-width:600px)'),'Missing request iPhone layout not configured');
+assert(carPage.includes('/assets/6006-missing-request.js?v=20261012-missing-engine')&&carPage.includes('/assets/6006-missing-request.css?v=20261012-missing-engine'),'Missing engine form not mounted with cache version');
+assert(fs.existsSync('docs/missing-engine-request-policy.md'),'Manual approval policy for reported catalogue entries missing');
+console.log('PASS: Privacy-safe missing make/model/engine requests, translated UI, working business contacts');
+
 const stageRefFile=path.join(ROOT,'assets/6006-stage1-references.json');
 assert(fs.existsSync(stageRefFile),'Stage 1 published references missing');
 const stageRefDb=JSON.parse(fs.readFileSync(stageRefFile,'utf8'));
