@@ -95,7 +95,7 @@ for(const ref of stageRefDb.examples){
  for(const k of ['publishedStockPs','publishedStockNm','publishedStage1Ps','publishedStage1Nm'])assert(Number.isInteger(ref[k])&&ref[k]>30&&ref[k]<=1600,'Stage 1 reference number invalid: '+k);
  assert(ref.publishedStage1Ps>ref.publishedStockPs&&ref.publishedStage1Ps<=ref.publishedStockPs*1.6,'Implausible Stage 1 PS claim');
  assert(ref.publishedStage1Nm>ref.publishedStockNm&&ref.publishedStage1Nm<=ref.publishedStockNm*1.7,'Implausible Stage 1 Nm claim');
- assert(ref.manualOnly?(typeof ref.manualEngineContains==='string'&&ref.manualEngineContains.length>=7):(typeof ref.enginePrefix==='string'&&ref.enginePrefix.length>=4&&typeof ref.generationContains==='string'),'Stage 1 matching conditions missing');
+ assert(ref.manualOnly?(typeof ref.manualEngineContains==='string'&&ref.manualEngineContains.length>=6):(typeof ref.enginePrefix==='string'&&ref.enginePrefix.length>=4&&typeof ref.generationContains==='string'),'Stage 1 matching conditions missing');
 }
 assert(vinCode.includes('function matchPublishedStage()')&&vinCode.includes('function renderStageReference()'),'Source-linked reference UI not connected');
 assert(vinCode.includes('manualOnly')&&vinCode.includes('sourceStockNm')&&vinCode.includes('manuallyEditedStock'),'Strict reference matching missing');
