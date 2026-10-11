@@ -16,7 +16,7 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-ecu-real.js','assets/6006-ecu-cinema.js'];
+const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js'];
 for(const f of javascript){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing JS ${f}`);
  execFileSync(process.execPath,['--check',path.join(ROOT,f)],{stdio:'pipe'});
@@ -49,5 +49,12 @@ for(const token of [
 assert(homepage.includes('class="vehicle-section" id="aracin"'),'Vehicle selector removed unexpectedly');
 assert(homepage.includes('class="real-home-feature"'),'Existing home systems list removed unexpectedly');
 console.log('PASS: ECU scene, photo controls, 3D links and animation assets are absent from homepage');
+for(const folder of ['ecu-final','ecu3d','ecu3d-real']){
+ assert(!fs.existsSync(path.join(ROOT,folder)),'Retired ECU preview still publicly published: '+folder);
+}
+for(const asset of fs.readdirSync(path.join(ROOT,'assets'))){
+ assert(!/^6006-ecu-.*\\.(js|css)$/.test(asset),'Retired ECU script still public: '+asset);
+}
+console.log('PASS: all retired ECU previews and animation scripts removed from publication');
 
 console.log(`PASS: ${pages.length} pages, ${db.defs.length} DTC definitions, ${categories.length} part visuals, ${checked} local links, ${javascript.length} JS files`);
