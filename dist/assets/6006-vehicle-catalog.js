@@ -61,8 +61,10 @@ const seed={};Object.keys(extras).forEach(k=>seed[k]=extras[k].split(","));
 const makes=new Set(Object.keys(seed)), remote=new Map(), pending=new Map();
 const alias={"vw":"Volkswagen","mercedes":"Mercedes-Benz","benz":"Mercedes-Benz","skoda":"Škoda","citroen":"Citroën","range rover":"Land Rover","landrover":"Land Rover","chevy":"Chevrolet","vauxhall":"Opel","ds":"DS Automobiles","seat":"SEAT"};
 const norm=s=>String(s||"").toLowerCase().replace(/ı/g,"i").replace(/ß/g,"ss").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
-const brands=()=>[...makes];
-const models=brand=>[...new Set([...(seed[brand]||[]),...(remote.get(brand)||[])])].sort((a,b)=>a.localeCompare(b,"de",{numeric:true}));
+const homeDirectory=()=>typeof vehicleDirectory==="undefined"?{}:vehicleDirectory;
+const homeExamples=()=>typeof vehicles==="undefined"?[]:vehicles;
+const brands=()=>[...new Set([...makes,...Object.keys(homeDirectory())])];
+const models=brand=>[...new Set([...(seed[brand]||[]),...(homeDirectory()[brand]||[]),...homeExamples().filter(x=>x.brand===brand).map(x=>x.name),...(remote.get(brand)||[])])].sort((a,b)=>a.localeCompare(b,"de",{numeric:true}));
 async function get(url){
  const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),7000);
  try{const r=await fetch(url,{signal:ctrl.signal,mode:"cors"});if(!r.ok)throw Error("vPIC");const v=await r.json();return Array.isArray(v.Results)?v.Results:[];}
@@ -92,7 +94,7 @@ function loadModels(brand){
 }
 function match(input){
  const q=" "+norm(input)+" ";
- const candidates=[...Object.entries(alias),...[...makes].map(x=>[x,x])].sort((a,b)=>b[0].length-a[0].length);
+ const candidates=[...Object.entries(alias),...brands().map(x=>[x,x])].sort((a,b)=>norm(b[0]).length-norm(a[0]).length);
  const found=candidates.find(x=>norm(x[0]).length>=2&&q.includes(" "+norm(x[0])+" "));
  if(!found)return null;
  const brand=found[1], model=models(brand).filter(m=>norm(m).length>=2&&q.includes(" "+norm(m)+" ")).sort((a,b)=>norm(b).length-norm(a).length)[0]||"";
