@@ -17,6 +17,22 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
+// VIN-assisted motor selector regression checks
+const vinJs=path.join(ROOT,'assets/6006-vin-stage1.js');
+const vinCss=path.join(ROOT,'assets/6006-vin-stage1.css');
+assert(fs.existsSync(vinJs)&&fs.existsSync(vinCss),'Missing VIN engine finder assets');
+execFileSync(process.execPath,['--check',vinJs],{stdio:'pipe'});
+const vinScript=fs.readFileSync(vinJs,'utf8');
+assert(vinScript.includes('WVW')&&vinScript.includes('wmi[full.slice(0,3)]'),'VIN WMI maker lookup missing');
+assert(vinScript.includes('option(year,"",t("choose"))'),'Year should start unselected');
+assert(vinScript.includes('finder.engineVariants'),'Engine list does not use actual vehicle variants');
+assert(vinScript.includes('relatedCodes()')&&vinScript.includes('showRange('),'DTC and Stage-1 sections missing');
+assert(!vinScript.includes('sessionStorage.setItem("vin"') && !vinScript.includes('localStorage.setItem("vin"'),'Do not store full VIN');
+const vehicleHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
+assert(vehicleHtml.includes('6006-vin-stage1.js')&&vehicleHtml.includes('6006-vin-stage1.css'),'VIN finder is not mounted on vehicle page');
+const dtcVehicleJs=fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8');
+assert(dtcVehicleJs.includes('dtc-car-advanced'),'DTC-to-VIN navigation missing');
+console.log('PASS: VIN WMI, dependent vehicle selector, Stage-1 and DTC page linkage');
 const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
