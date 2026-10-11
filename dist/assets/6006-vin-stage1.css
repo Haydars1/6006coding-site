@@ -1,0 +1,48 @@
+
+/* 6006 Performance vehicle finder – restrained gold/graphite visual language */
+.vin6006-wrap{padding:30px max(16px,calc((100vw - 1180px)/2)) 76px;scroll-margin-top:28px}
+.vin6006-frame{background:linear-gradient(145deg,#221c17,#151310);border:1px solid rgba(198,154,99,.42);border-radius:18px;padding:clamp(18px,3.4vw,36px);box-shadow:0 22px 50px #0004}
+.vin6006-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:22px;flex-wrap:wrap}
+.vin6006-kicker{font:700 .71rem ui-monospace,monospace;letter-spacing:.13em;color:#d7a96c;text-transform:uppercase;margin:0 0 10px}
+.vin6006-head h2{font:500 clamp(1.8rem,4vw,2.7rem)/1.08 Georgia,serif;letter-spacing:-.03em;margin:0 0 9px;color:#fff2df}
+.vin6006-head p{color:#cdbeb0;line-height:1.6;font-size:.86rem;margin:0;max-width:620px}
+.vin6006-head>a{border:1px solid #ab8053;padding:10px 16px;border-radius:8px;color:#edc99b;font-weight:700;font-size:.78rem}
+.vin6006-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.vin6006-field{min-width:0;display:grid;gap:6px}
+.vin6006-field label{font-size:.73rem;letter-spacing:.02em;color:#e2c5a2;font-weight:750}
+.vin6006-field select,.vin6006-field input{min-width:0;width:100%;height:48px;border:1px solid #6e5841;border-radius:7px;padding:10px 12px;background:#0f100f;color:#f8eddf;font:600 .83rem system-ui,sans-serif}
+.vin6006-field :is(select,input):focus{border-color:#e4bb80;outline:2px solid #b9925b55;outline-offset:1px}
+.vin6006-field select:disabled{opacity:.55}
+.vin6006-vin{grid-column:1/-1;margin-bottom:10px;padding:15px;background:#171511;border:1px solid #4e4033;border-radius:9px}
+.vin6006-vin-row{display:flex;gap:10px}
+.vin6006-vin-row button,.vin6006-action{white-space:nowrap;border:1px solid #d4aa75;background:#cba06b;color:#16120f;padding:9px 18px;border-radius:7px;cursor:pointer;font-weight:800;font-size:.82rem}
+.vin6006-vin-row button:hover,.vin6006-action:hover{background:#f1c992}
+.vin6006-vin-help{font-size:.7rem;color:#bbad9d;line-height:1.5;margin:6px 0 0}
+.vin6006-vin-feedback{margin:7px 0 0;color:#f1c78e;font-size:.8rem;min-height:1.1rem}
+.vin6006-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.vin6006-result{margin-top:20px;border-top:1px solid #5c4833;padding-top:22px}
+.vin6006-result[hidden]{display:none}
+.vin6006-result h3{margin:0 0 6px;color:#f5e7d7;font:500 clamp(1.4rem,3vw,1.8rem) Georgia,serif}
+.vin6006-identity{color:#d7b68c;font-size:.83rem;margin:0 0 17px;overflow-wrap:anywhere}
+.vin6006-result-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vin6006-panel{border:1px solid #64503a;border-radius:10px;background:#191612;padding:17px;min-width:0}
+.vin6006-panel h4{margin:0 0 14px;color:#ebc998;font-size:.93rem}
+.vin6006-table{width:100%;border-collapse:collapse;text-align:left;font-size:.83rem}
+.vin6006-table th,.vin6006-table td{padding:11px 7px;border-bottom:1px solid #44372d}
+.vin6006-table th{color:#f0d2ae;font-size:.72rem}
+.vin6006-table td{color:#f1e8dc}
+.vin6006-table td:last-child{color:#c4dba8;font-weight:750}
+.vin6006-note{color:#bfb0a0;font-size:.74rem;line-height:1.65;margin:13px 0 0}
+.vin6006-codes{display:grid;gap:7px}
+.vin6006-codes a{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border:1px solid #554432;border-radius:7px;padding:10px;color:#eee5d7;text-decoration:none;font-size:.77rem}
+.vin6006-codes a:hover{border-color:#d3a876;background:#302318}
+.vin6006-codes strong{font:800 .87rem ui-monospace,monospace;color:#f5c487}
+.vin6006-codes span{overflow-wrap:anywhere}.vin6006-codes b{color:#e9c294;font-size:1rem}
+.vin6006-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.vin6006-links a{font-size:.79rem;color:#ecd0a7;text-decoration:none;border:1px solid #8d6946;padding:10px 13px;border-radius:7px}
+.vin6006-links a:hover{background:#3e2c1d}
+.vin6006-loading{padding:12px;color:#d4bb99;font-size:.8rem}
+.vin6006-empty{padding:16px;background:#171410;border:1px dashed #6b543b;border-radius:9px;color:#bdada0;font-size:.8rem}
+@media(max-width:1000px){.vin6006-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vin6006-result-layout{grid-template-columns:1fr}}
+@media(max-width:600px){.vin6006-wrap{padding:22px 13px 62px}.vin6006-grid,.vin6006-details{grid-template-columns:1fr}.vin6006-vin-row{flex-direction:column}.vin6006-vin{grid-column:auto}.vin6006-vin-row button{min-height:44px}.vin6006-frame{border-radius:11px}.vin6006-codes a{grid-template-columns:56px 1fr auto}.vin6006-head>a{width:100%;text-align:center}}
+@media(prefers-reduced-motion:reduce){.vin6006-wrap{scroll-behavior:auto}}

@@ -25,6 +25,30 @@ assert(stageFinderJS.includes('quick.blur()'),'Find button does not dismiss keyb
 assert(stageFinderJS.includes('yearSelect')&&stageFinderJS.includes('engineVariantSelect'),'Missing engine navigation');
 assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('20261011-searchaction'),'Homepage missing asset version');
 console.log('PASS: Mobile Find Vehicle visibly confirms choice and navigates to engine');
+
+const vinJs=path.join(ROOT,'assets/6006-vin-stage1.js');
+const videoJs=path.join(ROOT,'assets/6006-video-search.js');
+for(const file of [vinJs,videoJs]){
+ assert(fs.existsSync(file),'Missing advanced vehicle/diagnostic search JavaScript: '+file);
+ execFileSync(process.execPath,['--check',file],{stdio:'pipe'});
+}
+for(const file of ['assets/6006-vin-stage1.css','assets/6006-video-search.css']){
+ assert(fs.existsSync(path.join(ROOT,file)),'Missing advanced finder CSS: '+file);
+}
+const carPage=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
+const dtcPage=fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8');
+assert(carPage.includes('6006-vin-stage1.js')&&carPage.includes('6006-vin-stage1.css'),'VIN interface not mounted');
+assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-search.css'),'Instant DTC search not mounted');
+assert(fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8').includes('dtc-car-advanced'),'Vehicle catalog cross-link missing');
+const vinCode=fs.readFileSync(vinJs,'utf8');
+assert(vinCode.includes('WVW')&&vinCode.includes('vin6-vin')&&vinCode.includes('stockPower(v)'),'VIN manufacturer resolver or horsepower validation missing');
+assert(vinCode.includes('finder.engineVariants')&&vinCode.includes('relatedCodes()'),'Motor and DTC lookup missing');
+const videoCode=fs.readFileSync(videoJs,'utf8');
+assert(videoCode.includes('dtc-video-suggest')&&videoCode.includes('P0335'),'Instant fault-code suggestions missing');
+assert(fs.existsSync(path.join(ROOT,'fehlercodes/p0335/index.html')),'Curated P0335 guide not published');
+const ads=fs.readFileSync(path.join(ROOT,'ads.txt'),'utf8').trim();
+assert(ads==='google.com, pub-7331900145381998, DIRECT, f08c47fec0942fa0','AdSense ads.txt publisher configuration invalid');
+console.log('PASS: Advanced VIN finder, instant DTC search, curated P0335 and publisher ads.txt');
 const javascript=['assets/6006-dtc-intelligence.js','assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
