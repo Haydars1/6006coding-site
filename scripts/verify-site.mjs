@@ -17,6 +17,14 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
+const videoSearch='assets/6006-video-search.js';
+assert(fs.existsSync(path.join(ROOT,videoSearch)),'Video-style instant search script missing');
+execFileSync(process.execPath,['--check',path.join(ROOT,videoSearch)],{stdio:'pipe'});
+const videoStyles='assets/6006-video-search.css';
+assert(fs.existsSync(path.join(ROOT,videoStyles)),'Video-style search styles missing');
+const dtcHTML=fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8');
+assert(dtcHTML.includes('/assets/6006-video-search.js') && dtcHTML.includes('/assets/6006-video-search.css'),'Video-style search not loaded');
+assert(fs.readFileSync(path.join(ROOT,videoSearch),'utf8').includes('dtc-video-suggest'),'Instant suggestion feature missing');
 const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
@@ -48,7 +56,7 @@ const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
 assert(urls.length>=30,'SEO sitemap should contain at least 30 accessible pages');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
-for(const code of ['p0299','p0401','p2002','p20ee','u0100']){
+for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0335']){
   const pathname=path.join(ROOT,'fehlercodes',code,'index.html');
   assert(fs.existsSync(pathname),'Missing curated troubleshooting article: '+code);
   const html=fs.readFileSync(pathname,'utf8');
