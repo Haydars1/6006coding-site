@@ -286,7 +286,10 @@ for(const e of [manual,ps,nm]){e.addEventListener("change",renderReport);e.addEv
 window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMakes();if(current&&!make.value){option(make,current,current);make.value=current;}});
 window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value){const current=model.value;populateModels(current);}});
 new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
-const initial={make:preferred.get("brand")||memory.brand||"",model:preferred.get("model")||memory.model||"",year:preferred.get("year")||memory.year||"",fuel:preferred.get("powertrain")||memory.powertrain||"",engine:preferred.get("engine")||memory.engine||"",ps:preferred.get("ps")||memory.ps||""};
+const externalMake=preferred.get("brand"),externalModel=preferred.get("model");
+const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model));
+const stored=sameSavedVehicle?memory:{};
+const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||""};
 async function restore(){
 if(initial.make){if(![...make.options].some(o=>o.value===initial.make))option(make,initial.make,initial.make);make.value=initial.make;populateModels(initial.model);
 if(initial.model)model.value=initial.model;}
