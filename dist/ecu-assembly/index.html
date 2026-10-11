@@ -11,7 +11,7 @@ header{position:absolute;top:max(23px,env(safe-area-inset-top));left:clamp(17px,
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
 </head>
-<body><header><small>6006 PERFORMANCE · 3B / MEKANİK PROTOTİP</small><h1>ECU'nun içine bak.</h1><p>Orijinal fotoğraftan modellenen üç ayrı hareketli parça. Kaydırarak döndür, aşama seç.</p></header>
+<body><header><small>6006 PERFORMANCE · 3B / MEKANİK PROTOTİP</small><h1>ECU'nun içine bak.</h1><p>ECU fotoğrafından üç ayrı 3D parça: metal kapak, devre kartı ve sabit gövde.</p></header>
 <main><canvas id="canvas" aria-label="Üç soketli ECU fiziksel katmanlı üç boyutlu önizlemesi"></canvas>
 <div id="loading">Metal kasa ve kapak yükleniyor…</div>
 <div id="caption" aria-live="polite"><small id="step">01 / 03</small><div><strong id="heading">ECU kapalı</strong><p id="explain">Üç bağlantı soketi ve döküm alüminyum gövde.</p></div></div>
@@ -37,7 +37,7 @@ function shapeFrom(coords){const v=coords.map(p2w);const shape=new THREE.Shape()
 function textureFromCanvas(canvas){const t=new THREE.CanvasTexture(canvas);t.colorSpace=THREE.SRGBColorSpace;t.flipY=true;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
 function makeSurface(coords,tex,sideColor,depth=.07){const geo=new THREE.ExtrudeGeometry(shapeFrom(coords),{depth,steps:1,bevelEnabled:true,bevelThickness:.007,bevelSize:.006,bevelSegments:2,curveSegments:1});
  const position=geo.getAttribute('position'),uv=geo.getAttribute('uv');for(let i=0;i<position.count;i++){const x=position.getX(i),y=position.getY(i);uv.setXY(i,(x*290+560)/1120,(y*290+420)/840)}uv.needsUpdate=true;
- const cap=new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,transparent:true,alphaTest:.025,depthWrite:true});const side=new THREE.MeshStandardMaterial({color:sideColor,metalness:.67,roughness:.42});
+ const cap=new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,transparent:true,alphaTest:.025,depthWrite:true});const side=new THREE.MeshStandardMaterial({color:sideColor,metalness:.55,roughness:.50,transparent:true,opacity:.32,depthWrite:false});
  return new THREE.Mesh(geo,[cap,side]);}
 function maskedCanvas(src,polygon,{hole=false}={}){const cv=document.createElement('canvas');cv.width=1120;cv.height=840;const c=cv.getContext('2d',{willReadFrequently:false});c.drawImage(src,0,0,1120,840);if(hole){ // Only replace the removed PCB region; retain real aluminium rim, screw sockets and printed connector photography.
  const points=polys.well; c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.save();c.clip();
@@ -68,8 +68,8 @@ function update(initial=false){if(!lid)return; if(initial)phase=goal;
  const lidOpen=Math.max(0,Math.min(1,phase)),pcbRise=Math.max(0,Math.min(1,phase-1));
  // Align the lid with actual photographed three-connector body at rest;
  // raise the photographic lid along a true rigid 3D axis during disassembly.
- lid.position.y=-.80+lidOpen*.80;lid.position.z=.50+lidOpen*.13;
- board.position.y=-.02+pcbRise*.13;board.position.z=.19+pcbRise*.22;
+ lid.position.y=-.84+lidOpen*.84+pcbRise*.24;lid.position.z=.50+lidOpen*.13+pcbRise*.08;
+ board.position.y=-.02+pcbRise*.19;board.position.z=.19+pcbRise*.30;
  // Prevent a duplicate board image under the lifted board: the base uses a recessed alloy well.
  assembly.rotation.x=rotationX;assembly.rotation.y=rotationY;
  assembly.scale.setScalar(scale);
