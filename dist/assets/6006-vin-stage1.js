@@ -24,6 +24,69 @@ const $=id=>document.getElementById("vin6-"+id);
 const make=$("make"),model=$("model"),year=$("year"),fuel=$("fuel"),engine=$("engine"),manual=$("manual"),ps=$("ps"),nm=$("nm"),report=$("result"),feedback=$("feedback");
 // Quick links show that the finder is not limited to Volkswagen.
 // The native make dropdown remains the complete catalogue, not the buttons below.
+
+// Quotation handoff stays entirely browser-side until the visitor opens a contact link.
+// The VIN input is intentionally NEVER part of the outgoing message.
+const quoteCopy={
+tr:{head:"Stage 1 / ECU için kişisel teklif iste",intro:"Motoru seçtikten sonra araç bilgilerini WhatsApp veya e-postayla 6006 Performance'a gönderebilirsin. Güç artışı ancak motor, ECU, şanzıman ve araç durumu kontrol edilince değerlendirilir.",mileage:"Kilometre (isteğe bağlı)",ecu:"ECU / yazılım versiyonu (biliniyorsa)",note:"Talep / belirti (isteğe bağlı)",wa:"WhatsApp ile teklif iste →",email:"E-posta ile teklif iste →",choose:"Teklif bağlantısını açmak için motor seç veya motor kodunu elle gir.",ready:"Motor seçimi hazır. Gönderilecek bilgiler aşağıda özetlendi.",preview:"Gönderilecek araç özeti",privacy:"Şasi numarası (VIN) gönderilmez. Bağlantıya dokunduğunda WhatsApp veya e-posta uygulamasına geçilir; mesajı göndermek senin kontrolündedir.",subject:"6006 Performance | Stage 1 ve ECU değerlendirme talebi",salutation:"Merhaba 6006 Performance, aracıma özel Stage 1 / ECU değerlendirmesi ve fiyat bilgisi rica ediyorum.",stock:"Referans stok değer",unverified:"Referans veri doğrulanmamış / OEM onayı yok",family:"Model ailesi eşleşmesi; tam jenerasyon doğrulanmadı",verification:"Motor kodu, ECU yazılımı, şanzıman, kondisyon ve yasal uygunluk kontrol edilmelidir.",mileageUnit:"km",vehicle:"Araç",year:"Yıl",fuel:"Yakıt",engine:"Motor",generation:"Nesil",gearbox:"Şanzıman",ecuVersion:"ECU",extra:"Açıklama",unavailable:"Bilinmiyor"},
+de:{head:"Individuelles Angebot für Stage 1 / ECU",intro:"Motor auswählen und Fahrzeugdaten per WhatsApp oder E-Mail an 6006 Performance übermitteln. Leistungswerte erfordern eine Prüfung von Motor, ECU, Getriebe und Zustand.",mileage:"Kilometerstand (optional)",ecu:"ECU / Softwarestand (falls bekannt)",note:"Wunsch / Symptome (optional)",wa:"Angebot per WhatsApp anfragen →",email:"Angebot per E-Mail anfragen →",choose:"Bitte zuerst eine Motorvariante wählen oder die Motorkennung eingeben.",ready:"Motor gewählt. Die folgenden Angaben werden vorbereitet.",preview:"Zusammenfassung der Anfrage",privacy:"Die Fahrgestellnummer (VIN) wird nicht übertragen. WhatsApp bzw. E-Mail öffnet sich erst beim Klick; das Absenden bleibt Ihre Entscheidung.",subject:"6006 Performance | Stage 1 / ECU Anfrage",salutation:"Hallo 6006 Performance, bitte prüfen Sie Stage 1 / ECU Möglichkeiten und ein individuelles Angebot für mein Fahrzeug.",stock:"Serien-Referenzwerte",unverified:"Referenzdaten nicht OEM-verifiziert",family:"Modellfamilie statt exakter Baureihe; bitte prüfen",verification:"Motorkennung, ECU-Software, Getriebe, Zustand und Zulässigkeit bitte prüfen.",mileageUnit:"km",vehicle:"Fahrzeug",year:"Baujahr",fuel:"Kraftstoff",engine:"Motor",generation:"Generation",gearbox:"Getriebe",ecuVersion:"ECU",extra:"Hinweise",unavailable:"Unbekannt"},
+en:{head:"Request an individual Stage 1 / ECU quote",intro:"Select an engine, then share the vehicle details with 6006 Performance by WhatsApp or email. Any power upgrade requires engine, ECU, gearbox and condition checks.",mileage:"Mileage (optional)",ecu:"ECU / software version (if known)",note:"Request / symptoms (optional)",wa:"Ask via WhatsApp →",email:"Ask via email →",choose:"Select an engine variant or enter the engine code before requesting a quote.",ready:"Engine selection ready. The summary below will be shared.",preview:"Vehicle request summary",privacy:"Your VIN is not included. WhatsApp or your email app opens only after you click; sending the message is your choice.",subject:"6006 Performance | Stage 1 / ECU inquiry",salutation:"Hello 6006 Performance, please check Stage 1 / ECU suitability and quote for my vehicle.",stock:"Reference stock figures",unverified:"Reference data not OEM verified",family:"Model-family match, exact generation not verified",verification:"Please verify engine code, ECU software, gearbox, condition and local regulations.",mileageUnit:"km",vehicle:"Vehicle",year:"Year",fuel:"Fuel",engine:"Engine",generation:"Generation",gearbox:"Gearbox",ecuVersion:"ECU",extra:"Notes",unavailable:"Unknown"}
+};
+const contactWaNumber="491788354756",contactEmail="6006performance@gmail.com";
+const quoteBox=document.createElement("section");
+quoteBox.className="vin6006-quote";quoteBox.id="vin6-quote";
+quoteBox.innerHTML='<div class="vin6006-quote-top"><div class="vin6006-quote-eyebrow">6006 PERFORMANCE · ECU / STAGE 1</div><h4 id="vin6-quote-title"></h4><p id="vin6-quote-intro"></p></div>'
++'<div class="vin6006-quote-grid"><div class="vin6006-field"><label for="vin6-mileage" id="vin6-mileage-label"></label><input type="number" id="vin6-mileage" inputmode="numeric" min="0" max="2000000" placeholder="120000"></div>'
++'<div class="vin6006-field"><label for="vin6-ecu" id="vin6-ecu-label"></label><input type="text" id="vin6-ecu" maxlength="90" placeholder="EDC17 / Bosch / SW ..."></div>'
++'<div class="vin6006-field vin6006-quote-note"><label for="vin6-inquiry-note" id="vin6-inquiry-label"></label><textarea id="vin6-inquiry-note" maxlength="400" rows="2"></textarea></div></div>'
++'<p class="vin6006-quote-state" role="status" aria-live="polite" id="vin6-quote-state"></p><p class="vin6006-quote-preview" id="vin6-quote-preview"></p>'
++'<div class="vin6006-quote-actions"><a id="vin6-quote-whatsapp" target="_blank" rel="noopener noreferrer"></a><a id="vin6-quote-email"></a></div>'
++'<p id="vin6-quote-privacy" class="vin6006-quote-privacy"></p>';
+report.append(quoteBox);
+const quoteControls={mileage:document.getElementById("vin6-mileage"),ecu:document.getElementById("vin6-ecu"),note:document.getElementById("vin6-inquiry-note"),wa:document.getElementById("vin6-quote-whatsapp"),email:document.getElementById("vin6-quote-email")};
+function renderQuote(){
+ const copy=quoteCopy[lang()];
+ for(const [id,value] of Object.entries({"quote-title":copy.head,"quote-intro":copy.intro,"mileage-label":copy.mileage,"ecu-label":copy.ecu,"inquiry-label":copy.note,"quote-privacy":copy.privacy}))$(id).textContent=value;
+ quoteControls.wa.textContent=copy.wa;quoteControls.email.textContent=copy.email;
+ const selected=engine.value!==""?variants[Number(engine.value)]:null;
+ const engineCode=manual.value.trim()||selected?.engine||"";
+ const valid=Boolean(make.value&&model.value&&engineCode);
+ const details=[];
+ const put=(label,value)=>{if(value)details.push(label+": "+String(value).replace(/[\r\n]+/g," ").trim());};
+ put(copy.vehicle,make.value+" "+model.value);
+ put(copy.year,year.value);
+ put(copy.fuel,selected?.fuel||(fuel.value?(w[lang()].fuels[fuel.value]||fuel.value):""));
+ put(copy.engine,engineCode);
+ if(selected){
+  put(copy.generation,selected.generation||"");
+  put(copy.gearbox,selected.transmission||"");
+  if(stockNeedsReview(selected))details.push(copy.unverified);
+  if(clean(selected.model)!==clean(model.value))details.push(copy.family);
+ }
+ const stockPS=numeric(ps.value)||(!selected?null:stockPower(selected));
+ const stockNM=numeric(nm.value)||(!selected?null:stockTorque(selected));
+ if(stockPS||stockNM)put(copy.stock,[stockPS?stockPS+" PS":"",stockNM?stockNM+" Nm":""].filter(Boolean).join(" / "));
+ if(quoteControls.mileage.value&&numeric(quoteControls.mileage.value))put(copy.mileage,+quoteControls.mileage.value+" "+copy.mileageUnit);
+ put(copy.ecuVersion,quoteControls.ecu.value.trim().slice(0,90));
+ put(copy.extra,quoteControls.note.value.trim().slice(0,400));
+ const message=[copy.salutation,"",...details,"",copy.verification].join("\n");
+ $("quote-state").textContent=valid?copy.ready:copy.choose;
+ $("quote-preview").textContent=copy.preview+": "+[make.value,model.value,year.value,engineCode].filter(Boolean).join(" · ");
+ for(const a of [quoteControls.wa,quoteControls.email]){
+  a.setAttribute("aria-disabled",String(!valid));
+  a.tabIndex=valid?0:-1;
+ }
+ if(valid){
+  quoteControls.wa.href="https://wa.me/"+contactWaNumber+"?text="+encodeURIComponent(message);
+  quoteControls.email.href="mailto:"+contactEmail+"?subject="+encodeURIComponent(copy.subject)+"&body="+encodeURIComponent(message);
+ }else{
+  quoteControls.wa.removeAttribute("href");quoteControls.email.removeAttribute("href");
+ }
+}
+for(const control of [quoteControls.mileage,quoteControls.ecu,quoteControls.note]){
+ control.addEventListener("input",renderQuote);
+ control.addEventListener("change",renderQuote);
+}
 const popularMakes=["Volkswagen","BMW","Mercedes-Benz","Audi","Ford","Toyota","Renault","Peugeot","Hyundai","Kia","Opel","Škoda","Porsche","Fiat","Honda","Tesla","Volvo","Nissan"];
 const brandBar=document.createElement("div");brandBar.className="vin6006-brands";
 const brandCaption=document.createElement("p");brandCaption.className="vin6006-brand-caption";
@@ -92,6 +155,7 @@ if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
 engineSearchLabel.textContent=w[lang()].searchLabel;
 engineSearch.placeholder=w[lang()].searchLabel;
+renderQuote();
 if(year.options.length)year.options[0].textContent=t("choose");
 if(report&&!report.hidden)renderReport();
 }
@@ -197,6 +261,7 @@ relatedCodes().forEach(([code,description])=>{const a=document.createElement("a"
 $("stage-link").href="/?"+vehicleParams().toString()+"#aracin";
 $("dtc-link").href="/fehlercodes/?"+vehicleParams().toString();
 $("provenance").textContent=t("variant")+(v&&stockNeedsReview(v)?" · "+w[lang()].reviewWarning:"")+(v&&clean(v.model)!==clean(model.value)?" · "+w[lang()].familyWarning:"")+(manuallyEditedStock?" · "+t("manual"):"");
+renderQuote();
 saveChoice();
 }
 const wmi={
