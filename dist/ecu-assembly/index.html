@@ -34,7 +34,7 @@ const polys={
  well:[[174,353],[245,305],[306,304],[383,328],[494,358],[582,380],[691,408],[792,437],[902,463],[992,491],[1023,544],[1004,614],[944,671],[899,686],[783,655],[677,629],[541,588],[442,560],[322,529],[201,500],[166,467]]
 };
 function shapeFrom(coords){const v=coords.map(p2w);const shape=new THREE.Shape();shape.moveTo(v[0].x,v[0].y);for(let i=1;i<v.length;i++)shape.lineTo(v[i].x,v[i].y);shape.closePath();return shape;}
-function textureFromCanvas(canvas){const t=new THREE.CanvasTexture(canvas);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
+function textureFromCanvas(canvas){const t=new THREE.CanvasTexture(canvas);t.colorSpace=THREE.SRGBColorSpace;t.flipY=true;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
 function makeSurface(coords,tex,sideColor,depth=.07){const geo=new THREE.ExtrudeGeometry(shapeFrom(coords),{depth,steps:1,bevelEnabled:true,bevelThickness:.007,bevelSize:.006,bevelSegments:2,curveSegments:1});
  const position=geo.getAttribute('position'),uv=geo.getAttribute('uv');for(let i=0;i<position.count;i++){const x=position.getX(i),y=position.getY(i);uv.setXY(i,(x*290+560)/1120,(y*290+420)/840)}uv.needsUpdate=true;
  const cap=new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,transparent:true,alphaTest:.025,depthWrite:true});const side=new THREE.MeshStandardMaterial({color:sideColor,metalness:.67,roughness:.42});
@@ -59,7 +59,7 @@ async function setup(){const [opened,closed]=await Promise.all([loadImg('/assets
 }
 scene.add(new THREE.HemisphereLight(0xffffff,0x262016,2));const k=new THREE.DirectionalLight(0xffffff,1.2);k.position.set(-2,4,7);scene.add(k);
 const buttons=[...document.querySelectorAll('button[data-step]')];let goal=0,phase=0,rotationX=0,rotationY=0,targetRotX=0,targetRotY=0,scale=1,targetScale=1;
-function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);const aspect=w/Math.max(h,1);const base=aspect<.75?2.65:2.2;camera.left=-base*aspect;camera.right=base*aspect;camera.top=base;camera.bottom=-base;camera.updateProjectionMatrix();}addEventListener('resize',resize,{passive:true});resize();
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);const aspect=w/Math.max(h,1);const base=Math.max(2.35,2.12/aspect);camera.left=-base*aspect;camera.right=base*aspect;camera.top=base;camera.bottom=-base;camera.updateProjectionMatrix();}addEventListener('resize',resize,{passive:true});resize();
 const phaseStep=()=>Math.max(0,Math.min(2,Math.round(phase)));
 function updateLabels(i){document.getElementById('step').textContent=String(i+1).padStart(2,'0')+' / 03';document.getElementById('heading').textContent=steps[i][0];document.getElementById('explain').textContent=steps[i][1];buttons.forEach((b,n)=>b.setAttribute('aria-pressed',String(i===n)));}
 buttons.forEach((b,i)=>b.addEventListener('click',()=>{goal=i;updateLabels(i)}));
