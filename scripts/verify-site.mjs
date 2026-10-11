@@ -126,6 +126,13 @@ assert(homepage.includes('VehicleCatalog6006?.brands()'),'Extended make options 
 assert(homepage.includes('VehicleCatalog6006?.models(brandSelect.value)'),'Extended model options missing');
 assert(homepage.includes('VehicleCatalog6006?.match(raw)'),'Assistant make/model matching missing');
 assert(homepage.includes('class="real-home-feature"'),'Existing home systems list removed unexpectedly');
+assert(homepage.includes('id="hero-title">ECU Yazılımı,'),'Commercial homepage must lead with ECU software');
+assert(homepage.includes('id="repairGuideTitle">Araç Kodlama'),'Quick services must include vehicle coding');
+assert(homepage.includes('href="#hizmetler">Hizmetlerimizi gör'),'Homepage needs a direct services CTA');
+for(const name of ['Araç Kodlama &amp; Adaptasyon','ECU Okuma, Yazma &amp; Yedekleme','Arıza Kodu &amp; Canlı Veri Teşhisi'])assert(homepage.includes(name),'Missing advertised service: '+name);
+assert(homepage.includes('"Wie können wir Ihrem Fahrzeug helfen?"'),'Missing German service finder copy');
+assert(homepage.includes('ECU-Softwareoptimierung, Fahrzeugcodierung'),'Missing German SEO focus');
+console.log('PASS: commercial ECU, vehicle coding and OBD diagnostics homepage with TR/DE/EN copy');
 console.log('PASS: ECU scene, photo controls, 3D links and animation assets are absent from homepage');
 for(const folder of ['ecu-final','ecu3d','ecu3d-real']){
  assert(!fs.existsSync(path.join(ROOT,folder)),'Retired ECU preview still publicly published: '+folder);
