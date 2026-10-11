@@ -55,6 +55,30 @@ for(const code of ['p0299','p0401','p2002','p20ee','u0100']){
   assert(html.includes('<h1>')&&html.includes('rel="canonical"')&&!html.includes('noindex'),'Fault article not indexable: '+code);
   assert(urls.includes('https://6006coding.de/fehlercodes/'+code+'/'),'Missing sitemap entry: '+code);
 }
+
+// Every licensed fault-code definition must be discoverable in server-rendered HTML.
+const directoryRoot=path.join(ROOT,'fehlercodes','verzeichnis');
+assert(fs.existsSync(path.join(directoryRoot,'index.html')),'Full code directory missing');
+const groups=fs.readdirSync(directoryRoot,{withFileTypes:true}).filter(x=>x.isDirectory());
+let entries=0, directoryPages=0;
+for(const group of groups) {
+ const groupDir=path.join(directoryRoot,group.name);
+ const pages=[path.join(groupDir,'index.html'),...fs.readdirSync(groupDir,{withFileTypes:true}).filter(x=>x.isDirectory()).map(x=>path.join(groupDir,x.name,'index.html'))];
+ for(const file of pages){
+   assert(fs.existsSync(file),'Broken directory page: '+file);
+   const html=fs.readFileSync(file,'utf8');
+   entries += [...html.matchAll(/data-dtc-row="1"/g)].length;
+   assert(html.includes('name="robots" content="index,follow')&&html.includes('rel="canonical"'),'Unindexable directory page: '+file);
+   const url='https://6006coding.de/'+path.relative(ROOT,path.dirname(file)).replace(/\\/g,'/')+'/';
+   assert(urls.includes(url),'Missing sitemap link for '+url);
+   directoryPages++;
+ }
+}
+assert.equal(entries,db.defs.filter(r=>Array.isArray(r)&&r.length===3&&r.every(v=>typeof v==='string'&&v.trim())).length,'Not all DTC definitions are in static HTML');
+assert(urls.includes('https://6006coding.de/fehlercodes/verzeichnis/'),'Directory hub missing from sitemap');
+assert(fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8').includes('/fehlercodes/verzeichnis/'),'Directory unlinked from diagnosis page');
+console.log('PASS: '+entries+' DTC definitions discoverable in '+directoryPages+' static pages');
+
 const vehicleIndexPath=path.join(ROOT,'assets/vehicle-data/index.json');
 assert(fs.existsSync(vehicleIndexPath),'Missing broad model/engine database');
 const vehicleIndex=JSON.parse(fs.readFileSync(vehicleIndexPath,'utf8'));
