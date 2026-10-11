@@ -367,7 +367,7 @@ function install(){
   });
   menu.hidden=false;quick.setAttribute("aria-expanded","true");
  }
- quick.addEventListener("input",updateSuggestions);
+ quick.addEventListener("input",()=>{confirmation.hidden=true;updateSuggestions();});
  quick.addEventListener("focus",()=>{if(quick.value.trim().length>=2)updateSuggestions();});
  quick.addEventListener("keydown",event=>{
   if(event.key==="Escape"){hideSuggestions();return;}
