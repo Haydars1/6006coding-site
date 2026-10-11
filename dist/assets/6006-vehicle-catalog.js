@@ -59,6 +59,8 @@ const extras={
 };
 const seed={};Object.keys(extras).forEach(k=>seed[k]=extras[k].split(","));
 const makes=new Set(Object.keys(seed)), remote=new Map(), pending=new Map();
+const openSlugs=new Map(),openModels=new Map(),openPending=new Map();
+let openIndexPromise;
 const alias={"vw":"Volkswagen","mercedes":"Mercedes-Benz","benz":"Mercedes-Benz","skoda":"Škoda","citroen":"Citroën","range rover":"Land Rover","landrover":"Land Rover","chevy":"Chevrolet","vauxhall":"Opel","ds":"DS Automobiles","seat":"SEAT"};
 const norm=s=>String(s||"").toLowerCase().replace(/ı/g,"i").replace(/ß/g,"ss").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
 const homeDirectory=()=>typeof vehicleDirectory==="undefined"?{}:vehicleDirectory;
@@ -82,13 +84,62 @@ function loadMakes(){
  })().catch(()=>{});
  return makesPromise;
 }
+function loadOpenIndex(){
+ if(openIndexPromise)return openIndexPromise;
+ openIndexPromise=(async()=>{
+   const response=await fetch("/assets/vehicle-data/index.json",{cache:"force-cache"});
+   if(!response.ok)throw Error("No on-site ODbL catalogue");
+   const data=await response.json();
+   for(const group of data.makes||[])for(const name of group.makes||[]){
+     const brand=canonical(name);makes.add(brand);openSlugs.set(norm(brand),group.slug);
+   }
+   dispatchEvent(new Event("6006-makes-ready"));
+   return data;
+ })().catch(()=>null);
+ return openIndexPromise;
+}
+function loadOpenBrand(brand){
+ if(!brand)return Promise.resolve();
+ const k=norm(brand);
+ if(openModels.has(k))return Promise.resolve(openModels.get(k));
+ if(openPending.has(k))return openPending.get(k);
+ const task=(async()=>{
+   await loadOpenIndex();
+   const slug=openSlugs.get(k);
+   if(!slug)return null;
+   const response=await fetch("/assets/vehicle-data/"+encodeURIComponent(slug)+".json",{cache:"force-cache"});
+   if(!response.ok)throw Error("Reference data not found");
+   const data=await response.json();
+   const found=(data.models||[]).filter(x=>norm(x.make)===k);
+   openModels.set(k,found);
+   remote.set(brand,[...new Set([...(remote.get(brand)||[]),...found.map(x=>x.name)])]);
+   dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
+   dispatchEvent(new CustomEvent("6006-engines-ready",{detail:{brand}}));
+   return found;
+ })().catch(()=>null);
+ openPending.set(k,task);return task;
+}
+function engineVariants(brand,model,year){
+ const entries=openModels.get(norm(brand))||[];
+ const q=norm(model);
+ if(!q)return [];
+ const matched=entries.filter(x=>norm(x.name)===q||(q.length>=3&&norm(x.name).includes(q)));
+ const y=Number(year)||0,result=[];
+ for(const item of matched)for(const engine of item.engines||[]){
+   const first=Number(engine.from)||Number(item.from)||0,last=Number(engine.to)||Number(item.to)||9999;
+   if(y&&(y<first||y>last))continue;
+   result.push({...engine,model:item.name});
+ }
+ return result.slice(0,500);
+}
 function loadModels(brand){
  if(!brand)return Promise.resolve();
+ loadOpenBrand(brand);
  if(pending.has(brand))return pending.get(brand);
  const task=(async()=>{
   let names=fromCache("model:"+brand);
   if(!names){names=(await get("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"+encodeURIComponent(brand)+"?format=json")).map(x=>x.Model_Name).filter(Boolean);cache("model:"+brand,names);}
-  remote.set(brand,[...new Set(names.filter(x=>typeof x==="string"&&x.length<=70))]);dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
+  remote.set(brand,[...new Set([...(remote.get(brand)||[]),...names.filter(x=>typeof x==="string"&&x.length<=70)])]);dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
  })().catch(()=>{});
  pending.set(brand,task);return task;
 }
@@ -143,6 +194,39 @@ function install(){
  const engines=document.createElement("datalist");engines.id="vehicle-engine-examples";document.body.append(engines);
  document.getElementById("engineInput").setAttribute("list",engines.id);
  function engineSuggestions(){engines.replaceChildren();(motorSamples[brand.value]||[]).forEach(value=>engines.append(new Option(value,value)));}
+ const variantField=document.createElement("div");variantField.className="field";variantField.innerHTML='<label for="engineVariantSelect" id="engineVariantLabel">Motorvariante · Open Data</label><select id="engineVariantSelect"><option value="">—</option></select>';
+ const yearField=document.getElementById("yearSelect").closest(".field");yearField?.insertAdjacentElement("afterend",variantField);
+ const variantSelect=document.getElementById("engineVariantSelect");
+ let selectedVariants=[];
+ function variantOptions(){
+   selectedVariants=engineVariants(brand.value,model.value,field("yearSelect"));
+   variantSelect.replaceChildren(new Option("—",""));
+   selectedVariants.forEach((v,index)=>{
+     const label=(v.generation?v.generation+" · ":"")+v.engine+(v.hp?" · "+v.hp+" HP":"")+(v.nm?" · "+v.nm+" Nm":"");
+     variantSelect.add(new Option(label.slice(0,155),String(index)));
+   });
+   variantField.hidden=selectedVariants.length===0;
+ }
+ function updateVariants(){
+   engineSuggestions();loadOpenBrand(brand.value).then(variantOptions);variantOptions();
+ }
+ variantSelect.addEventListener("change",()=>{
+   const variant=selectedVariants[Number(variantSelect.value)];if(!variant)return;
+   document.getElementById("engineInput").value=variant.engine;
+   if(variant.hp)document.getElementById("powerInput").value=String(Math.round(variant.hp*1.01387));
+   if(variant.fuel){
+     const str=variant.fuel.toLowerCase();const fuel=str.includes("diesel")?"Diesel":str.includes("electric")?"Electric":str.includes("hybrid")?"Hybrid":"Benzin";
+     document.getElementById("fuelSelect").value=fuel;
+   }
+   if(variant.transmission){
+     const k=variant.transmission.toLowerCase();
+     document.getElementById("gearboxSelect").value=/dct|dsg|dual/.test(k)?"DSG/DCT":/manual|mt/.test(k)?"Manuel":/cvt/.test(k)?"CVT":"Otomatik";
+   }
+   model.dispatchEvent(new Event("change",{bubbles:true}));
+ });
+ [brand,model,document.getElementById("yearSelect")].forEach(el=>el.addEventListener("change",updateVariants));
+ addEventListener("6006-engines-ready",event=>{if(event.detail?.brand===brand.value)variantOptions();});
+ updateVariants();
  brand.addEventListener("change",engineSuggestions);
  const tech=document.createElement("section");tech.id="vehicle-stage-verification";tech.style.cssText="margin:1rem 0;padding:1rem;border:1px solid rgba(198,154,99,.43);background:#1b1a18;font-size:.76rem;line-height:1.68;color:#f0e9df";
  tech.setAttribute("aria-live","polite");
@@ -216,7 +300,7 @@ function install(){
    model.dispatchEvent(new Event("change",{bubbles:true}));
  }
 }
-window.VehicleCatalog6006={brands,models,loadModels,loadMakes,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
+window.VehicleCatalog6006={brands,models,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loadMakes,{once:true});else loadMakes();
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{loadOpenIndex();loadMakes();},{once:true});else {loadOpenIndex();loadMakes();}
 })();
