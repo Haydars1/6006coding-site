@@ -101,7 +101,7 @@ function findVariants(){
  if(!make.value||!model.value)return[];
  // The open reference catalogue includes all makes and exact year-bound variants.
  const y=year.value;
- const attempts=[model.value,model.value.replace(/\\b(B[0-9]|W[0-9]{3}|F[0-9]{2})\\b/gi,"").trim(),model.value.split("(")[0].trim()];
+ const attempts=[model.value,model.value.replace(/\b(B[0-9]|W[0-9]{3}|F[0-9]{2})\b/gi,"").trim(),model.value.split("(")[0].trim()];
  let list=[];
  for(const q of [...new Set(attempts.filter(Boolean))]){
    list=finder.engineVariants(make.value,q,y);
