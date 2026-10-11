@@ -207,7 +207,43 @@ function install(){
  const extraBox=document.createElement("div");extraBox.className="vehicle-discovery";
  [".vehicle-extra",".vehicle-manual",".vehicle-note"].forEach(selector=>{while(box.querySelector(selector))extraBox.appendChild(box.querySelector(selector));});
  grid.insertAdjacentElement("afterend",extraBox);
- const styles=document.createElement("style");styles.id="vehicle-discovery-css";styles.textContent=".vehicle-discovery{padding:.5rem 0 0}.vehicle-find{margin:0 0 1rem}.vehicle-find-row{display:flex;gap:.5rem}.vehicle-discovery input{width:100%;min-width:0;min-height:3.05rem;padding:.6rem .7rem;border:1px solid rgba(242,238,229,.3);border-radius:3px;background:#171816;color:#f3eee4;font-size:.8rem}.vehicle-discovery label{display:block;margin:0 0 .42rem;color:#dfbd8a;font-size:.68rem}.vehicle-discovery button{flex-shrink:0;min-height:3rem;padding:0 .85rem;background:#c69a63;color:#161310;border:0;border-radius:3px;font-size:.7rem;font-weight:700;cursor:pointer}.vehicle-discovery button:hover{background:#e0bd89}.vehicle-extra{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:.25rem 0 1rem}.vehicle-extra .field{min-width:0}.vehicle-manual{margin:.35rem 0}.vehicle-note,.vehicle-find small{display:block;min-height:1.2rem;margin:.4rem 0;color:#c6bbab;font-size:.68rem;line-height:1.55}.vehicle-note{margin:.55rem 0 1rem}.vehicle-find-row input{flex:1}@media(max-width:600px){.vehicle-extra{grid-template-columns:1fr}.vehicle-find-row button{padding:0 .55rem;font-size:.64rem}}";document.head.append(styles);
+ const styles=document.createElement("style");styles.id="vehicle-discovery-css";styles.textContent=".vehicle-discovery{padding:.5rem 0 0}.vehicle-find{margin:0 0 1rem}.vehicle-find-row{display:flex;gap:.5rem}.vehicle-discovery input{width:100%;min-width:0;min-height:3.05rem;padding:.6rem .7rem;border:1px solid rgba(242,238,229,.3);border-radius:3px;background:#171816;color:#f3eee4;font-size:.8rem}.vehicle-discovery label{display:block;margin:0 0 .42rem;color:#dfbd8a;font-size:.68rem}.vehicle-discovery button{flex-shrink:0;min-height:3rem;padding:0 .85rem;background:#c69a63;color:#161310;border:0;border-radius:3px;font-size:.7rem;font-weight:700;cursor:pointer}.vehicle-discovery button:hover{background:#e0bd89}.vehicle-extra{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:.25rem 0 1rem}.vehicle-extra .field{min-width:0}.vehicle-manual{margin:.35rem 0}.vehicle-note,.vehicle-find small{display:block;min-height:1.2rem;margin:.4rem 0;color:#c6bbab;font-size:.68rem;line-height:1.55}.vehicle-note{margin:.55rem 0 1rem}.vehicle-find-row input{flex:1}@media(max-width:600px){.vehicle-extra{grid-template-columns:1fr}.vehicle-find-row button{padding:0 .75rem;font-size:.76rem}.vehicle-discovery input,.vehicle-discovery select{font-size:16px!important}.vehicle-discovery .vehicle-find-row{display:grid;grid-template-columns:minmax(0,1fr) auto}.vehicle-discovery .vehicle-find-row input{min-width:0}}#vehicleQuickConfirmation[hidden]{display:none!important}";document.head.append(styles);
+
+ // A visible, actionable step immediately after model search.
+ const confirmation=document.createElement("div");confirmation.id="vehicleQuickConfirmation";
+ confirmation.hidden=true;confirmation.setAttribute("role","status");confirmation.setAttribute("aria-live","polite");
+ confirmation.style.cssText="margin:.7rem 0 .95rem;padding:13px 14px;border:1px solid #d2a76f;border-radius:7px;background:#35291b;color:#f9e8d2;display:grid;gap:8px";
+ const confirmedTitle=document.createElement("strong");confirmedTitle.id="vehicleQuickConfirmationTitle";
+ confirmedTitle.style.cssText="color:#ffd9a2;font-size:.88rem;line-height:1.5";
+ const confirmedDescription=document.createElement("p");confirmedDescription.id="vehicleQuickConfirmationHelp";
+ confirmedDescription.style.cssText="margin:0;font-size:.79rem;line-height:1.5;color:#e0d2c2";
+ const confirmedButton=document.createElement("button");confirmedButton.id="vehicleQuickNext";confirmedButton.type="button";
+ confirmedButton.style.cssText="min-height:46px;width:100%;padding:9px 12px;font-weight:800;font-size:.85rem";
+ confirmation.append(confirmedTitle,confirmedDescription,confirmedButton);box.append(confirmation);
+ function showQuickResult(){
+  if(confirmation.hidden)return;
+  if(!brand.value||!model.value){confirmation.hidden=true;return;}
+  const pickedYear=field("yearSelect"),variant=document.getElementById("engineVariantSelect");
+  const hasEngines=variant&&!variant.hidden&&variant.options.length>1;
+  const l=lang();
+  confirmedTitle.textContent=(l==="tr"?"✓ Araç bulundu: ":l==="de"?"✓ Fahrzeug gefunden: ":"✓ Vehicle found: ")+brand.value+" "+model.value;
+  let next,description,label;
+  if(!pickedYear){
+   next=document.getElementById("yearSelect");
+   description=l==="tr"?"Şimdi model yılını seçin. Sonrasında uygun motor varyantlarını göstereceğiz.":l==="de"?"Jetzt das Baujahr auswählen. Danach werden passende Motoren angezeigt.":"Choose model year to see available engine variants.";
+   label=l==="tr"?"1. Model yılını seç →":l==="de"?"1. Baujahr auswählen →":"1. Select year →";
+  } else if(hasEngines){
+   next=variant;
+   description=l==="tr"?"Motor varyantları listelendi. Motorunu seç; stok PS bilgisi varsa otomatik doldurulacak.":l==="de"?"Motorvarianten geladen. Den passenden Motor wählen.":"Engine variants loaded; choose your matching engine.";
+   label=l==="tr"?"2. Motorunu seç →":l==="de"?"2. Motor auswählen →":"2. Select engine →";
+  } else {
+   next=document.getElementById("engineInput");
+   description=l==="tr"?"Bu yıl/model için motor listede yok. Motor kodunu elle girerek devam et.":l==="de"?"Motorvariante nicht gelistet. Motorkennbuchstabe eingeben.":"Engine not listed; enter the code manually.";
+   label=l==="tr"?"Motor kodunu gir →":l==="de"?"Motorkennbuchstabe eingeben →":"Enter engine code →";
+  }
+  confirmedDescription.textContent=description;confirmedButton.textContent=label;
+  confirmedButton.onclick=()=>{document.getElementById("vehicleQuickSearch")?.blur();next.scrollIntoView({behavior:"smooth",block:"center"});try{next.focus({preventScroll:true})}catch(e){next.focus()}};
+ }
  const year=document.getElementById("yearSelect");for(let y=new Date().getFullYear()+1;y>=1950;y--){const option=new Option(String(y),String(y));year.add(option);}
  const motorSamples={
    "Volkswagen":["1.0 TSI","1.2 TSI","1.4 TSI","1.5 TSI","1.6 TDI","2.0 TDI","2.0 TSI","3.0 TDI"],
@@ -234,6 +270,7 @@ function install(){
      variantSelect.add(new Option(label.slice(0,155),String(index)));
    });
    variantField.hidden=selectedVariants.length===0;
+   showQuickResult();
  }
  function updateVariants(){
    engineSuggestions();loadOpenBrand(brand.value).then(variantOptions);variantOptions();
@@ -253,7 +290,7 @@ function install(){
    }
    model.dispatchEvent(new Event("change",{bubbles:true}));
  });
- [brand,model,document.getElementById("yearSelect")].forEach(el=>el.addEventListener("change",updateVariants));
+ [brand,model,document.getElementById("yearSelect")].forEach(el=>el.addEventListener("change",()=>{updateVariants();showQuickResult();}));
  addEventListener("6006-engines-ready",event=>{if(event.detail?.brand===brand.value)variantOptions();});
  updateVariants();
  brand.addEventListener("change",engineSuggestions);
@@ -286,11 +323,14 @@ function install(){
  applyWords();new MutationObserver(applyWords).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  const feedback=document.getElementById("vehicleFindMessage");
  function selectCar(result){
-   if(!result||!result.brand){feedback.textContent=tr("error");return;}
+   if(!result||!result.brand){feedback.textContent=tr("error");confirmation.hidden=true;return;}
+   if(brand.value!==result.brand||model.value!==(result.model||"")){
+     for(const id of ["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"]){const e=document.getElementById(id);if(e)e.value="";}
+   }
    if(![...brand.options].some(x=>x.value===result.brand))brand.add(new Option(result.brand,result.brand));
    brand.value=result.brand;brand.dispatchEvent(new Event("change",{bubbles:true}));
    if(result.model){if(![...model.options].some(x=>x.value===result.model))model.add(new Option(result.model,result.model));model.value=result.model;model.dispatchEvent(new Event("change",{bubbles:true}));}
-   feedback.textContent=tr("result")+": "+result.brand+" "+(result.model||"");loadModels(result.brand);
+   feedback.textContent=tr("result")+": "+result.brand+" "+(result.model||"");confirmation.hidden=!result.model;if(result.model)showQuickResult();loadModels(result.brand);
  }
  const quick=document.getElementById("vehicleQuickSearch");
  // Search suggestions are on-site; selecting one updates both existing selectors.
@@ -308,7 +348,7 @@ function install(){
  function chooseSuggestion(item){
   if(!item)return;
   hideSuggestions();quick.value=item.brand+(item.model?" "+item.model:"");
-  selectCar(item);parseHints(quick.value);
+  selectCar(item);parseHints(quick.value);quick.blur();if(item.model)confirmation.scrollIntoView({behavior:"smooth",block:"center"});
  }
  function updateSuggestions(){
   const q=quick.value.trim();menu.replaceChildren();
@@ -327,7 +367,7 @@ function install(){
   });
   menu.hidden=false;quick.setAttribute("aria-expanded","true");
  }
- quick.addEventListener("input",updateSuggestions);
+ quick.addEventListener("input",()=>{confirmation.hidden=true;updateSuggestions();});
  quick.addEventListener("focus",()=>{if(quick.value.trim().length>=2)updateSuggestions();});
  quick.addEventListener("keydown",event=>{
   if(event.key==="Escape"){hideSuggestions();return;}
@@ -353,7 +393,12 @@ function install(){
    if(/\b(TDI|CDI|dCi|BlueHDi|HDi|EcoBlue|CRDi|D-4D|JTD|Multijet)\b/i.test(query))set("fuelSelect","Diesel");
    else if(/\b(TSI|TFSI|FSI|EcoBoost|PureTech|Benzin|petrol|gasoline)\b/i.test(query))set("fuelSelect","Benzin");
  }
- function search(){const selected=activeSuggestion>=0?quickMatches[activeSuggestion]:match(quick.value);hideSuggestions();selectCar(selected);parseHints(quick.value);model.dispatchEvent(new Event("change",{bubbles:true}));}
+ function search(){
+   const selected=activeSuggestion>=0?quickMatches[activeSuggestion]:match(quick.value);
+   hideSuggestions();quick.blur();selectCar(selected);parseHints(quick.value);
+   model.dispatchEvent(new Event("change",{bubbles:true}));
+   if(selected?.model){confirmation.hidden=false;showQuickResult();confirmation.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});}
+ }
  document.getElementById("vehicleFindButton").addEventListener("click",search);
  quick.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search();}});
  function manual(){
