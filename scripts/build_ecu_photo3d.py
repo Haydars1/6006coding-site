@@ -28,12 +28,12 @@ def rectify(src,corner_points,size):
 # These coordinates are calibrated against the existing genuine three-socket photographs.
 # Crop INSIDE the lid's machined metal upper face; nothing behind the lid is cut away.
 lid_photo=rectify(src_closed,[
-    (260,132),(178,356),(912,546),(958,258)
-],(1024,592))
+    (314,57),(55,356),(877,602),(1065,284)
+],(1024,600))
 # The PCB surface of the separated ECU includes actual integrated circuits, copper
 # traces and ceramic components, not artificial green cubes.
 board_photo=rectify(src_exploded,[
-    (290,322),(200,472),(848,634),(926,454)
+    (276,309),(174,481),(864,681),(967,431)
 ],(1024,548))
 lid_photo.save(OUT/'ecu-lid-texture.webp','WEBP',quality=91,method=6)
 board_photo.save(OUT/'ecu-pcb-texture.webp','WEBP',quality=91,method=6)
@@ -65,6 +65,37 @@ def add(part,style,mesh):parts[(part,style)].append(mesh)
 def box(part,style,x,y,z,w,h,d):
     m=trimesh.creation.box(extents=(w,h,d));m.apply_translation((x,y,z))
     add(part,style,m)
+def rounded_box(part,style,x,y,z,w,h,d,r=.15,segments=7,bevel=.035):
+    """Watertight rounded aluminum prism with bevelled edges, not a sharp cube."""
+    radius=min(r,w*.25,d*.25)
+    def ring_vertices(width,depth,height,radius):
+        corners=[(width/2-radius,depth/2-radius,0,math.pi/2),
+                 (-width/2+radius,depth/2-radius,math.pi/2,math.pi),
+                 (-width/2+radius,-depth/2+radius,math.pi,math.pi*1.5),
+                 (width/2-radius,-depth/2+radius,math.pi*1.5,math.pi*2)]
+        outline=[]
+        for cx,cz,a,b in corners:
+            for theta in np.linspace(a,b,segments+1,endpoint=True)[:-1]:
+                outline.append([x+cx+radius*math.cos(theta),y+height,z+cz+radius*math.sin(theta)])
+        return outline
+    # Top and bottom bevel rings provide authentic highlight roll-off.
+    outer_top=ring_vertices(w,d,h/2-bevel,radius)
+    inset_top=ring_vertices(w-2*bevel,d-2*bevel,h/2,radius-bevel)
+    outer_bottom=ring_vertices(w,d,-h/2+bevel,radius)
+    inset_bottom=ring_vertices(w-2*bevel,d-2*bevel,-h/2,radius-bevel)
+    n=len(outer_top)
+    vertices=np.array(outer_bottom+inset_bottom+outer_top+inset_top,dtype=float)
+    faces=[]
+    for layer_a,layer_b in [(0,1),(0,2),(2,3)]:
+        for i in range(n):
+            j=(i+1)%n
+            a,b,c,d=layer_a*n+i,layer_a*n+j,layer_b*n+i,layer_b*n+j
+            faces.extend([[a,b,c],[c,b,d]])
+    for i in range(1,n-1):
+        faces.append([n,n+i,n+i+1])
+        faces.append([3*n,3*n+i+1,3*n+i])
+    mesh=trimesh.Trimesh(vertices=vertices,faces=faces,process=False)
+    add(part,style,mesh)
 def cyl(part,style,x,y,z,r,h,sections=16):
     m=trimesh.creation.cylinder(radius=r,height=h,sections=sections)
     m.apply_transform(trimesh.transformations.rotation_matrix(math.pi/2,[1,0,0]))
@@ -73,9 +104,9 @@ def ring(part,style,x,y,z,w,d,t,h):
     for sx in (-1,1):box(part,style,x+sx*(w-t)/2,y,z,t,h,d)
     for sz in (-1,1):box(part,style,x,y,z+sz*(d-t)/2,w-2*t,h,t)
 # Core magnesium/aluminum housing: solid true 3D geometry remains when lid/PCB rise.
-box('BASE','cast',0,-.48,0,6.45,.40,4.14)
-box('BASE','edge',0,-.26,0,6.13,.04,3.82)
-box('BASE','well',0,-.22,0,5.89,.04,3.62)
+rounded_box('BASE','cast',0,-.48,0,6.45,.40,4.14,.38)
+rounded_box('BASE','edge',0,-.26,0,6.13,.065,3.82,.29,bevel=.008)
+rounded_box('BASE','well',0,-.22,0,5.89,.05,3.62,.26,bevel=.009)
 ring('BASE','cast_high',0,-.16,0,6.44,4.12,.19,.32)
 ring('BASE','gasket',0,.016,0,6.15,3.83,.065,.055)
 for x in [-3.27,3.27]:
@@ -91,8 +122,8 @@ for x in np.linspace(-2.6,2.6,9):
     box('BASE','edge',float(x),-.17,-.65,.055,.025,2.5)
 
 # The PCB is a separate true 3D board with photo-projected real electronics.
-box('PCB','green',0,.03,-.15,5.73,.095,3.47)
-box('PCB','pin',0,.078,-.15,5.70,.006,3.44)
+rounded_box('PCB','green',0,.03,-.15,5.73,.095,3.47,.10,bevel=.008)
+rounded_box('PCB','pin',0,.078,-.15,5.70,.006,3.44,.10,bevel=.001)
 board_y=.089
 for x in [-2.48,2.48]:
     for z in [-1.40,1.09]:
@@ -100,9 +131,9 @@ for x in [-2.48,2.48]:
         cyl('PCB','well',x,.097,z,.036,.008,14)
 
 # Physically removable lid with genuine photographic top surface.
-box('LID','cast',0,.34,-.12,6.41,.28,4.06)
+rounded_box('LID','cast',0,.34,-.12,6.41,.28,4.06,.36)
 ring('LID','edge',0,.174,-.12,6.39,4.02,.10,.085)
-box('LID','cast_high',0,.496,-.15,5.86,.055,3.72)
+rounded_box('LID','cast_high',0,.496,-.15,5.86,.055,3.72,.21,bevel=.01)
 # Subtle true-depth ribs. Photo texture supplies the fine real-machined detail.
 for x in [-2.65,-2.36,-2.07,-1.78,1.75,2.04,2.33,2.62]:
     box('LID','cast',x,.54,-.34,.065,.072,2.48)
@@ -115,9 +146,9 @@ for x in [-2.97,2.97]:
 
 # Three robust FRONT CONNECTOR SOCKETS with contacts and molded retainer.
 for idx,x in enumerate([-2.04,0,2.04]):
-    box('CONNECTORS','plastic',x,-.39,2.32,1.83,.81,1.06)
-    box('CONNECTORS','bezel',x,-.38,2.87,1.78,.75,.14)
-    box('CONNECTORS','well',x,-.40,2.959,1.54,.51,.016)
+    rounded_box('CONNECTORS','plastic',x,-.39,2.32,1.83,.81,1.06,.14,bevel=.016)
+    rounded_box('CONNECTORS','bezel',x,-.38,2.87,1.78,.75,.14,.10,bevel=.015)
+    rounded_box('CONNECTORS','well',x,-.40,2.959,1.54,.51,.016,.065,bevel=.003)
     for sx in [-1,1]:
         box('CONNECTORS','bezel',x+sx*.837,-.38,3.00,.10,.74,.14)
     for sy in [-1,1]:
@@ -142,7 +173,7 @@ def textured_top(part,name,picture,w,d,y,cx=0,cz=0):
     ],dtype=float)
     faces=np.array([[0,1,2],[0,2,3]])
     uv=np.array([[0,1],[0,0],[1,0],[1,1]],dtype=float)
-    mat=PBRMaterial(name=name,baseColorTexture=picture,metallicFactor=.12,roughnessFactor=.64,doubleSided=True)
+    mat=PBRMaterial(name=name,baseColorTexture=picture,metallicFactor=0,roughnessFactor=1,doubleSided=True)
     geom=trimesh.Trimesh(vertices=vertices,faces=faces,process=False)
     geom.visual=TextureVisuals(uv=uv,material=mat)
     scene.add_geometry(geom,geom_name=f'{part}_{name}',node_name=f'{part}_{name}')
