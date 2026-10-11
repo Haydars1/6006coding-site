@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
+import vm from 'node:vm';
 const ROOT='dist';
 const pages=['index.html','fahrzeug/index.html','reparatur-wartung/index.html','fehlercodes/index.html','technik/index.html'];
 for(const f of pages){
@@ -17,6 +18,32 @@ for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.ha
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
 const javascript=['assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js'];
+
+// Exercise the actual catalogue script without requiring a network or browser.
+const fakeWindow={};
+const sandbox={
+  window:fakeWindow,
+  document:{readyState:'loading',addEventListener(){}},
+  addEventListener(){},
+  vehicleDirectory:{Volkswagen:['Golf','Passat'],BMW:['X5'], 'Mercedes-Benz':['E-Klasse'],Tesla:['Model Y']},
+  vehicles:[{brand:'Volkswagen',name:'Passat B8 2.0 TDI'}]
+};
+vm.runInNewContext(fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8'),sandbox,{timeout:2000});
+const finder=fakeWindow.VehicleCatalog6006;
+assert(finder && typeof finder.match==='function','Vehicle catalogue was not initialized');
+for(const [input,brand,model] of [
+  ['vw golf','Volkswagen','Golf'],
+  ['BMW X5','BMW','X5'],
+  ['mercedes E-Klasse','Mercedes-Benz','E-Klasse'],
+  ['Tesla Model Y','Tesla','Model Y']
+]){
+  const found=finder.match(input);
+  assert(found && found.brand===brand && found.model===model,'Vehicle matching failed: '+input);
+}
+assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
+assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
+console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
+
 for(const f of javascript){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing JS ${f}`);
  execFileSync(process.execPath,['--check',path.join(ROOT,f)],{stdio:'pipe'});
