@@ -60,7 +60,7 @@ assert(vinCode.includes('stockNeedsReview(v)')&&vinCode.includes('referencePower
 assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified universal Stage 1 estimates must not be shown as calibration targets');
 assert(vinCode.includes('sameSavedVehicle'),'Vehicle memory must not leak specifications across different models');
 assert(vinCode.includes('familyWarning'),'Model-family matches must carry explicit uncertainty');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-stage1-request'),'VIN and quote module version must bust caches');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-reference'),'Stage 1 reference asset version must bust caches');
 const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
 assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
 console.log('PASS: Full engine matching, fuel categorization, data provenance and Stage 1 safety');
@@ -75,6 +75,36 @@ assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(ma
 assert(quoteSection.includes('stockNeedsReview(selected)'),'Unverified engine values must be marked in quote');
 assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Stage 1 quote form CSS not found');
 console.log('PASS: Multi-language Stage 1 inquiry, correct business contacts, user-initiated handoff and VIN privacy');
+const stageRefFile=path.join(ROOT,'assets/6006-stage1-references.json');
+assert(fs.existsSync(stageRefFile),'Stage 1 published references missing');
+const stageRefDb=JSON.parse(fs.readFileSync(stageRefFile,'utf8'));
+assert(stageRefDb.schemaVersion===1&&Array.isArray(stageRefDb.examples),'Stage 1 reference schema invalid');
+assert(stageRefDb.examples.length>=2,'Expected two externally sourced published examples');
+const seenStageRef=new Set();
+for(const ref of stageRefDb.examples){
+ assert(typeof ref.id==='string'&&ref.id.length>7&&!seenStageRef.has(ref.id),'Stage 1 reference id duplicated or missing');
+ seenStageRef.add(ref.id);
+ assert(ref.classification==='third-party-advertised','Unqualified Stage 1 claims are forbidden');
+ assert(typeof ref.make==='string'&&ref.make.length>=2&&typeof ref.model==='string'&&ref.model.length>=2,'Stage 1 source must identify make and model');
+ assert(Number.isInteger(ref.yearFrom)&&Number.isInteger(ref.yearTo)&&ref.yearFrom>=1980&&ref.yearTo>=ref.yearFrom,'Stage 1 year window invalid');
+ assert(typeof ref.publisher==='string'&&ref.publisher.length>=4,'Stage 1 publisher attribution missing');
+ assert(/^https:\/\/[^\s]+$/.test(ref.sourceUrl),'Third-party Stage 1 needs a direct HTTPS source');
+ assert(typeof ref.fuel==='string'&&ref.fuel.length>2,'Stage 1 fuel type missing');
+ assert(Number.isInteger(ref.sourceStockHp)&&ref.sourceStockHp>30&&ref.sourceStockHp<=1200,'Stock engine HP invalid');
+ assert(Number.isInteger(ref.sourceStockNm)&&ref.sourceStockNm>30&&ref.sourceStockNm<=1600,'Stock engine Nm invalid');
+ for(const k of ['publishedStockPs','publishedStockNm','publishedStage1Ps','publishedStage1Nm'])assert(Number.isInteger(ref[k])&&ref[k]>30&&ref[k]<=1600,'Stage 1 reference number invalid: '+k);
+ assert(ref.publishedStage1Ps>ref.publishedStockPs&&ref.publishedStage1Ps<=ref.publishedStockPs*1.6,'Implausible Stage 1 PS claim');
+ assert(ref.publishedStage1Nm>ref.publishedStockNm&&ref.publishedStage1Nm<=ref.publishedStockNm*1.7,'Implausible Stage 1 Nm claim');
+ assert(ref.manualOnly?(typeof ref.manualEngineContains==='string'&&ref.manualEngineContains.length>=7):(typeof ref.enginePrefix==='string'&&ref.enginePrefix.length>=4&&typeof ref.generationContains==='string'),'Stage 1 matching conditions missing');
+}
+assert(vinCode.includes('function matchPublishedStage()')&&vinCode.includes('function renderStageReference()'),'Source-linked reference UI not connected');
+assert(vinCode.includes('manualOnly')&&vinCode.includes('sourceStockNm')&&vinCode.includes('manuallyEditedStock'),'Strict reference matching missing');
+assert(vinCode.includes('third-party-advertised')&&vinCode.includes('vin6-ref-source'),'Third-party attribution missing');
+assert(!vinCode.includes('canEstimate=Boolean('),'Unverified tuning values must not be invented');
+assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-stage-reference'),'Stage 1 source card styles missing');
+assert(fs.existsSync('docs/stage1-reference-policy.md'),'Source vetting policy missing');
+console.log('PASS: Strictly sourced tuning references, motor/year/stocks matching and calibrated disclaimers');
+
 
 
 console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback, iPhone controls');

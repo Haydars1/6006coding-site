@@ -88,3 +88,16 @@
 .vin6006-quote-actions a:focus-visible{outline:2px solid #f5e0b5;outline-offset:2px}
 .vin6006-quote-privacy{margin:12px 0 0;color:#baa992;font-size:.73rem;line-height:1.6}
 @media(max-width:600px){.vin6006-quote-grid{grid-template-columns:1fr}.vin6006-quote-note{grid-column:auto}.vin6006-quote-actions{flex-direction:column}.vin6006-quote-actions a{width:100%;min-width:0;flex:none}.vin6006-quote-grid .vin6006-field input{font-size:16px!important}}
+
+/* Third-party examples are separate from Stage 1 targets and 6006 service offers. */
+.vin6006-stage-reference{margin-top:16px;padding:15px 16px;border:1px solid rgba(200,161,109,.47);border-radius:9px;background:#242018}
+.vin6006-stage-reference h5{font-size:.94rem;line-height:1.4;color:#f4d7ae;margin:0 0 8px;font-weight:750}
+.vin6006-stage-reference p{color:#dbccb8;font-size:.79rem;line-height:1.55;margin:5px 0 10px}
+#vin6-ref-values:not([hidden]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+#vin6-ref-values[hidden],#vin6-ref-warning[hidden],#vin6-ref-source[hidden]{display:none!important}
+.vin6006-ref-value{padding:10px;background:#151513;border:1px solid #645038;border-radius:6px;display:flex;flex-direction:column;gap:5px}
+.vin6006-ref-value span{color:#c8b8a4;font-size:.71rem}
+.vin6006-ref-value strong{font-size:1.01rem;color:#f4e5d3;letter-spacing:.005em}
+.vin6006-stage-reference #vin6-ref-warning{font-size:.72rem;color:#d8b58e}
+.vin6006-stage-reference #vin6-ref-source{color:#f6d29c;text-decoration:underline;text-underline-offset:3px;display:inline-flex;padding:5px 0;font-size:.76rem;font-weight:750}
+@media(max-width:440px){#vin6-ref-values:not([hidden]){grid-template-columns:1fr}.vin6006-stage-reference{padding:13px}}
