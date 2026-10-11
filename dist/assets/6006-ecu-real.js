@@ -48,8 +48,8 @@
   toCss('split',reveal);
   toCss('lid-lift',-Math.min(vh*.12,105)*lidTravel,'px');
   // The board lifts gently OUT of its original metal bed; connector sockets and housing remain fixed.
-  toCss('board-rise',-Math.min(vh*.054,44)*boardTravel,'px');
-  toCss('board-depth',1+.035*boardTravel);
+  toCss('board-rise',-Math.min(vh*.025,21)*boardTravel,'px');
+  toCss('board-depth',1+.06*boardTravel);
   toCss('caption-alpha',1-smooth(.73,.83,p));
   toCss('unit-alpha',1-fade);
   toCss('graph-alpha',graphIn);
