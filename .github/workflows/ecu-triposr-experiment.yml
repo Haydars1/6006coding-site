@@ -42,6 +42,7 @@ jobs:
           CUDA_VISIBLE_DEVICES: ''
           OMP_NUM_THREADS: '4'
         run: |
+          mkdir -p "${GITHUB_WORKSPACE}/output/ecu-triposr/meshes"/{0,1,2}
           cd /tmp/TripoSR
           python run.py \
             "${GITHUB_WORKSPACE}/output/ecu-triposr/lid.png" \
