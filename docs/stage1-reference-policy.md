@@ -30,3 +30,11 @@ Canlı veri: `dist/assets/6006-stage1-references.json`. Her satır kaynak adresi
 Katalog kaynağı bir otomobil markasının bütün motorlarını temsil etmez. Doğrudan eşleştirme yalnızca jenerasyon, stok motor HP/Nm, yakıt türü, üretim yılı ve motor etiketinin tümü uyuşursa açılır. Referans motor modeli katalogda bulunamıyorsa `manualOnly` girilerek motor adı + stok PS/Nm + yıl + yakıt ayrı doğrulanmalıdır. Üçüncü taraf ilanları bağımsız olarak güncellenebilir ve bu değerler 6006 Performance'ın ölçümü değildir.
 
 Manuel örneklerin bir kısmında kaynakta motor/ECU yazılım numarası olmadığından doğrudan ECU/harita uyumluluğu çıkarılamaz. Araç sağlığı, emisyon ve yol uygunluğu ayrı kontrol edilmeden kullanıcıya kesin sonuç veya Almanya'da izin garantisi verilmez.
+
+## 12 Ekim 2026 — Kaynak denetimi ve 21 örnek
+
+Artık kaynaklar **21 ilandan / 12 markadan** oluşmaktadır. Yeni doğrudan kaynaklar Audi A3 8V/8Y, Nissan Qashqai J11, Hyundai i30 1.0/1.4 T-GDI, Ford Focus Mk3/Mk4 1.0 EcoBoost, Peugeot 208 II 1.2 PureTech ve BMW 3 Serisi Gran Turismo F34 320d motorlarını kapsar. Bunlar gerçek ECU haritası değil, üçüncü tarafın ilan ettiği değerlerdir. Kaynak URL'leri doğrudan ilgili motor ilanlarını açmalıdır.
+
+**BMW kontrolü:** Genel 3 Serisi (F3x) ile 3 Serisi Gran Turismo (F34) ayrı model kabul edilir. Gran Turismo (F34) kaynağını genel 3 Serisi arama sonucuna sessizce uygulamayın. Katalogda nesil ve gövde tipi başka model olarak sınıflanıyorsa eşleşme reddedilir. Motor gücü katalog etiketine uymuyorsa referans gösterilmez.
+
+**Yeni markalarda:** Ford Focus motor verisinde açık katalog ile ilan arasında 1 Nm fark bulunduğundan yalnızca model yılı, motor adı ve kullanıcı tarafından doğrulanan 125 PS / 170 Nm bilgileriyle örnek açılır. Audi A3 8Y için de katalogdaki 360 Nm ile ilan edilen 340 Nm karıştırılmaz; manuel doğrulama gereklidir.

@@ -60,7 +60,7 @@ assert(vinCode.includes('stockNeedsReview(v)')&&vinCode.includes('referencePower
 assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified universal Stage 1 estimates must not be shown as calibration targets');
 assert(vinCode.includes('sameSavedVehicle'),'Vehicle memory must not leak specifications across different models');
 assert(vinCode.includes('familyWarning'),'Model-family matches must carry explicit uncertainty');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-multibrand'),'Stage 1 reference asset version must bust caches');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-21refs'),'Stage 1 reference asset version must bust caches');
 const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
 assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
 console.log('PASS: Full engine matching, fuel categorization, data provenance and Stage 1 safety');
@@ -79,7 +79,7 @@ const stageRefFile=path.join(ROOT,'assets/6006-stage1-references.json');
 assert(fs.existsSync(stageRefFile),'Stage 1 published references missing');
 const stageRefDb=JSON.parse(fs.readFileSync(stageRefFile,'utf8'));
 assert(stageRefDb.schemaVersion===1&&Array.isArray(stageRefDb.examples),'Stage 1 reference schema invalid');
-assert(stageRefDb.examples.length>=12,'Expected twelve externally sourced Stage 1 advertisements');
+assert(stageRefDb.examples.length>=21,'Expected twenty-one externally sourced Stage 1 advertisements');
 const seenStageRef=new Set();
 for(const ref of stageRefDb.examples){
  assert(typeof ref.id==='string'&&ref.id.length>7&&!seenStageRef.has(ref.id),'Stage 1 reference id duplicated or missing');
@@ -100,12 +100,20 @@ for(const ref of stageRefDb.examples){
 assert(vinCode.includes('function matchPublishedStage()')&&vinCode.includes('function renderStageReference()'),'Source-linked reference UI not connected');
 assert(vinCode.includes('manualOnly')&&vinCode.includes('sourceStockNm')&&vinCode.includes('manuallyEditedStock'),'Strict reference matching missing');
 assert(vinCode.includes('third-party-advertised')&&vinCode.includes('vin6-ref-source'),'Third-party attribution missing');
-const requiredReferenceMakes=['BMW','Volkswagen','Audi','Renault','Opel','SEAT','Škoda','Peugeot','Mercedes-Benz'];
+const requiredReferenceMakes=['BMW','Volkswagen','Audi','Renault','Opel','SEAT','Škoda','Peugeot','Mercedes-Benz','Nissan','Hyundai','Ford'];
 for(const make of requiredReferenceMakes)assert(stageRefDb.examples.some(r=>r.make===make),'Missing reviewed Stage 1 reference make: '+make);
 const knownStageRefIds=['audi-a4-b9-2tdi-150-brp','audi-a4-b8-2tdi-150-brp','renault-clio-iv-ph2-dci90-brp','opel-astra-k-cdti136-brp','volkswagen-golf8-2tdi150-brp','seat-leon-5f-act150-brp','skoda-octavia4-2tdievo150-brp','peugeot-308iii-bluehdi130-brp','mercedes-aclass-w177-220d194-brp','audi-a4-35tdi-2019-150-brp'];
 for(const id of knownStageRefIds)assert(seenStageRef.has(id),'Missing reviewed Stage 1 advertisement '+id);
+const latestStageRefIds=["audi-a3-8v-fl-2tdi-150-2016-brp","audi-a3-8y-35tdi-2020-brp","nissan-qashqai-j11-fl-15dci110-brp","hyundai-i30-2018-10tgdi120-brp","hyundai-i30-2018-14tgdi140-brp","ford-focus-mk4-10ecoboost125-brp","ford-focus-mk3-10ecoboost125-brp","peugeot-208-ii-puretech75-brp","bmw-3series-gt-f34-320d190-brp"];
+for(const id of latestStageRefIds)assert(seenStageRef.has(id),'Missing newly reviewed Stage 1 advertisement '+id);
+assert(stageRefDb.examples.some(r=>r.id==='bmw-3series-gt-f34-320d190-brp'&&r.model==='3 Series Gran Turismo'&&r.sourceUrl.includes('/5685-serie-3-gt/')),'BMW Gran Turismo reference must be model-specific');
+assert(vinCode.includes('clean(selected.model)!==clean(model.value)'),'Cross-model stock engines cannot trigger a Stage 1 advertisement');
+assert(vinCode.includes('stockNeedsReview(selected)'),'Disputed source power must never trigger Stage 1 estimates');
+assert(stageRefDb.examples.filter(x=>x.manualOnly).every(x=>x.manualEngineContains.length>=6),'Manual-only source must require explicit engine text');
+console.log('PASS: 21 source-linked Stage 1 examples across 12 makes; exact model and reference-power safeguards');
+
 assert(vinCode.includes('if(fuel.value!==item.fuel)continue;'),'Published Stage 1 results must not appear without matching fuel');
-assert(vinCode.includes('20261012-multibrand'),'Multi-brand Stage 1 data version not updated');
+assert(vinCode.includes('20261012-21refs'),'21-reference Stage 1 data version not updated');
 const sources=new Set();
 for(const x of stageRefDb.examples){assert(!sources.has(x.sourceUrl),'Duplicate third-party source URL');sources.add(x.sourceUrl);}
 assert(!vinCode.includes('canEstimate=Boolean('),'Unverified tuning values must not be invented');

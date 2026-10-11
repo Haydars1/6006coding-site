@@ -112,7 +112,7 @@ function matchPublishedStage(){
    if(selected||!clean(manual.value).includes(clean(item.manualEngineContains)))continue;
    if(Number(ps.value)!==item.sourceStockHp||Number(nm.value)!==item.sourceStockNm)continue;
   }else{
-   if(!selected||manuallyEditedStock||!String(selected.engine||"").toLowerCase().startsWith(String(item.enginePrefix||"").toLowerCase()))continue;
+   if(!selected||manuallyEditedStock||stockNeedsReview(selected)||clean(selected.model)!==clean(model.value)||!String(selected.engine||"").toLowerCase().startsWith(String(item.enginePrefix||"").toLowerCase()))continue;
    if(item.generationContains&&!String(selected.generation||"").includes(item.generationContains))continue;
    if(Number(selected.hp)!==item.sourceStockHp||Number(selected.nm)!==item.sourceStockNm)continue;
    if(readFuel(selected.fuel||selected.engine)!==item.fuel)continue;
@@ -141,7 +141,7 @@ function renderStageReference(){
 }
 async function loadPublishedStageReferences(){
  try{
-  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-multibrand",{cache:"force-cache"});
+  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-21refs",{cache:"force-cache"});
   if(!response.ok)return;
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.examples))return;
