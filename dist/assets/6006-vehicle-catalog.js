@@ -101,9 +101,9 @@ function match(input){
  return {brand,model};
 }
 const word={
- tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Kesin motor varyantını doğrulamak için yıl, yakıt, motor kodu, stok güç ve şanzıman girin. Stage 1 rakamları otomatik uydurulmaz."},
- de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Für den genauen Motor Baujahr, Kraftstoff, Motorcode, Serienleistung und Getriebe ergänzen. Keine erfundenen Stage-1-Werte."},
- en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Enter year, fuel, engine code, stock power and gearbox to identify the variant. No invented Stage 1 figures."}
+ tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",missingBrand:"Marka listede yoksa buraya yazın",addBrand:"Markayı ekle",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Kesin motor varyantını doğrulamak için yıl, yakıt, motor kodu, stok güç ve şanzıman girin. Stage 1 rakamları otomatik uydurulmaz."},
+ de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",missingBrand:"Marke fehlt? Hier eingeben",addBrand:"Marke hinzufügen",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Für den genauen Motor Baujahr, Kraftstoff, Motorcode, Serienleistung und Getriebe ergänzen. Keine erfundenen Stage-1-Werte."},
+ en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",missingBrand:"Make missing? Enter it here",addBrand:"Add make",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Enter year, fuel, engine code, stock power and gearbox to identify the variant. No invented Stage 1 figures."}
 };
 function lang(){let v;try{v=localStorage.getItem("6006-language");}catch(_){}return word[v]?v:word[document.documentElement.lang]?document.documentElement.lang:"de";}
 const tr=k=>word[lang()][k];
@@ -121,14 +121,18 @@ function install(){
  +'<div class="field"><label for="engineInput"></label><input id="engineInput" type="text" maxlength="90" placeholder="2.0 TDI CRLB"></div>'
  +'<div class="field"><label for="powerInput"></label><input id="powerInput" type="number" min="1" max="3000" inputmode="numeric" placeholder="150"></div>'
  +'<div class="field"><label for="gearboxSelect"></label><select id="gearboxSelect"><option value=""></option><option value="Manuel">Manuel / Schaltgetriebe</option><option value="Otomatik">Otomatik / Automatik</option><option value="DSG/DCT">DSG / DCT</option><option value="CVT">CVT</option></select></div></div>'
+ +'<div class="vehicle-manual"><label for="customBrandInput"></label><div class="vehicle-find-row"><input id="customBrandInput" type="text" maxlength="80"><button id="customBrandButton" type="button"></button></div></div>'
  +'<div class="vehicle-manual"><label for="customModelInput"></label><div class="vehicle-find-row"><input id="customModelInput" type="text" maxlength="90"><button id="customModelButton" type="button"></button></div></div>'
  +'<p class="vehicle-note" id="vehicleDiscoveryNote"></p>';
  grid.parentNode.insertBefore(box,grid);
+ const extraBox=document.createElement("div");extraBox.className="vehicle-discovery";
+ [".vehicle-extra",".vehicle-manual",".vehicle-note"].forEach(selector=>{while(box.querySelector(selector))extraBox.appendChild(box.querySelector(selector));});
+ grid.insertAdjacentElement("afterend",extraBox);
  const styles=document.createElement("style");styles.id="vehicle-discovery-css";styles.textContent=".vehicle-discovery{padding:.5rem 0 0}.vehicle-find{margin:0 0 1rem}.vehicle-find-row{display:flex;gap:.5rem}.vehicle-discovery input{width:100%;min-width:0;min-height:3.05rem;padding:.6rem .7rem;border:1px solid rgba(242,238,229,.3);border-radius:3px;background:#171816;color:#f3eee4;font-size:.8rem}.vehicle-discovery label{display:block;margin:0 0 .42rem;color:#dfbd8a;font-size:.68rem}.vehicle-discovery button{flex-shrink:0;min-height:3rem;padding:0 .85rem;background:#c69a63;color:#161310;border:0;border-radius:3px;font-size:.7rem;font-weight:700;cursor:pointer}.vehicle-discovery button:hover{background:#e0bd89}.vehicle-extra{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:.25rem 0 1rem}.vehicle-extra .field{min-width:0}.vehicle-manual{margin:.35rem 0}.vehicle-note,.vehicle-find small{display:block;min-height:1.2rem;margin:.4rem 0;color:#c6bbab;font-size:.68rem;line-height:1.55}.vehicle-note{margin:.55rem 0 1rem}.vehicle-find-row input{flex:1}@media(max-width:600px){.vehicle-extra{grid-template-columns:1fr}.vehicle-find-row button{padding:0 .55rem;font-size:.64rem}}";document.head.append(styles);
  const year=document.getElementById("yearSelect");for(let y=new Date().getFullYear()+1;y>=1950;y--){const option=new Option(String(y),String(y));year.add(option);}
  function applyWords(){
-   [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"],["customModelInput","missing"],["vehicleQuickSearch","find"]].forEach(x=>box.querySelector('label[for="'+x[0]+'"]').textContent=tr(x[1]));
-   document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");
+   [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"],["customModelInput","missing"],["customBrandInput","missingBrand"],["vehicleQuickSearch","find"]].forEach(x=>document.querySelector('label[for="'+x[0]+'"]').textContent=tr(x[1]));
+   document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");document.getElementById("customBrandButton").textContent=tr("addBrand");
    document.getElementById("vehicleQuickSearch").placeholder=tr("hint");document.getElementById("vehicleDiscoveryNote").textContent=tr("notice");
    ["yearSelect","fuelSelect","gearboxSelect"].forEach(id=>document.getElementById(id).options[0].textContent=tr("choose"));
  }
@@ -150,6 +154,9 @@ function install(){
    const matched=[...model.options].find(x=>norm(x.value)===norm(value));const chosen=matched?matched.value:value;
    if(!matched)model.add(new Option(value,value));model.value=chosen;model.dispatchEvent(new Event("change",{bubbles:true}));feedback.textContent=tr("result")+": "+brand.value+" "+chosen;
  }
+ function addBrand(){const name=field("customBrandInput");if(!name){feedback.textContent=tr("error");return;}const existing=[...brand.options].find(x=>norm(x.value)===norm(name));const chosen=existing?existing.value:name;if(!existing)brand.add(new Option(chosen,chosen));makes.add(chosen);brand.value=chosen;brand.dispatchEvent(new Event("change",{bubbles:true}));feedback.textContent=tr("result")+": "+chosen;}
+ document.getElementById("customBrandButton").addEventListener("click",addBrand);
+ document.getElementById("customBrandInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();addBrand();}});
  document.getElementById("customModelButton").addEventListener("click",manual);
  document.getElementById("customModelInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();manual();}});
  const ids=["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"];
