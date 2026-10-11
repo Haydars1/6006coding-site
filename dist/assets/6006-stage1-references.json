@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "methodology": "Third-party public advertised Stage 1 examples. Not 6006 Performance results, fitment certification, legal approval, guarantee, dyno proof, or safety limits. Never extrapolate to other engines.",
+  "reviewedAt": "2026-10-12",
+  "examples": [
+    {
+      "id": "bmw-f3x-320d-190-brp",
+      "classification": "third-party-advertised",
+      "make": "BMW",
+      "model": "3 Series",
+      "yearFrom": 2016,
+      "yearTo": 2019,
+      "fuel": "Diesel",
+      "enginePrefix": "320d ",
+      "generationContains": "(2016)",
+      "sourceStockHp": 190,
+      "sourceStockNm": 400,
+      "publishedStockPs": 190,
+      "publishedStockNm": 400,
+      "publishedStage1Ps": 220,
+      "publishedStage1Nm": 440,
+      "publisher": "BR-Performance",
+      "sourceUrl": "https://www.br-performance.com/brp-paris/reprogrammation/1-voitures/5-bmw/525-serie-3/7522-f3x-lci-06-2015-2019/7531-320d/",
+      "note": "Publicly advertised F3x LCI 320d reference, not a 6006 tuning map or guaranteed result."
+    },
+    {
+      "id": "vw-passat-b8-crl-150-ecuperformance",
+      "classification": "third-party-advertised",
+      "make": "Volkswagen",
+      "model": "Passat B8",
+      "yearFrom": 2014,
+      "yearTo": 2019,
+      "fuel": "Diesel",
+      "manualEngineContains": "2.0 TDI CRL",
+      "manualOnly": true,
+      "sourceStockHp": 150,
+      "sourceStockNm": 340,
+      "publishedStockPs": 150,
+      "publishedStockNm": 340,
+      "publishedStage1Ps": 190,
+      "publishedStage1Nm": 420,
+      "publisher": "ECU Performance",
+      "sourceUrl": "https://www.ecuperformance.net/2207/volkswagen-passat-magotan-2-0-tdi-cr-150hp-stage-1-modification-details.html",
+      "note": "CRL-family published illustration. Only shown when the visitor manually states this engine family and 150 PS / 340 Nm. No exact ECU fitment or result verified."
+    }
+  ]
+}
