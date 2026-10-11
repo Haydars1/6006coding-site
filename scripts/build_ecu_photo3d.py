@@ -7,7 +7,7 @@ from pathlib import Path
 from collections import defaultdict
 import math, random
 import numpy as np
-from PIL import Image, ImageEnhance
+from PIL import Image, ImageEnhance, ImageOps, ImageDraw
 import trimesh
 from trimesh.visual.material import PBRMaterial
 from trimesh.visual.texture import TextureVisuals
@@ -35,12 +35,28 @@ lid_photo=rectify(src_closed,[
 board_photo=rectify(src_exploded,[
     (276,309),(174,481),(864,681),(967,431)
 ],(1024,548))
-lid_photo.save(OUT/'ecu-lid-texture.webp','WEBP',quality=91,method=6)
+lid_photo=ImageEnhance.Brightness(lid_photo).enhance(.91)
+lid_photo.save(OUT/'ecu-lid-texture.webp','WEBP',quality=90,method=6)
+board_photo=ImageEnhance.Brightness(board_photo).enhance(.96)
 board_photo.save(OUT/'ecu-pcb-texture.webp','WEBP',quality=91,method=6)
+# Native textured aluminum from the actual ECU lid
+metal_src=src_closed.crop((390,220,738,385)).convert('RGB')
+metal_src=ImageOps.fit(metal_src,(600,330),method=Image.Resampling.LANCZOS)
+metal_src=ImageEnhance.Contrast(metal_src).enhance(.83)
+metal_src=ImageEnhance.Brightness(metal_src).enhance(.78)
+metal_src.save(OUT/'ecu-cast-alloy.webp','WEBP',quality=89,method=6)
+cavity=metal_src.resize((1024,600),Image.Resampling.LANCZOS).convert('RGB')
+cavity=ImageEnhance.Brightness(cavity).enhance(.46)
+cd=ImageDraw.Draw(cavity,'RGBA')
+for yy in range(52,590,28):
+    cd.line((30,yy,990,yy+17),fill=(185,190,183,36),width=2)
+cavity.save(OUT/'ecu-bay-metal.webp','WEBP',quality=88,method=6)
 
 def socket_texture(points,name):
-    pic=rectify(src_closed,points,(360,220))
-    pic.save(OUT/name,'WEBP',quality=88,method=6)
+    pic=rectify(src_closed,points,(440,260))
+    pic=ImageEnhance.Brightness(pic).enhance(1.22)
+    pic=ImageEnhance.Contrast(pic).enhance(1.15)
+    pic.save(OUT/name,'WEBP',quality=92,method=6)
     return pic
 socket_textures=[
     socket_texture([(110,444),(83,573),(250,625),(248,485)],'ecu-socket-left.webp'),
@@ -49,9 +65,9 @@ socket_textures=[
 ]
 parts=defaultdict(list)
 PBR={
- 'cast':((155,165,172,255),.83,.31),
- 'cast_high':((194,202,207,255),.76,.22),
- 'edge':((100,112,120,255),.73,.38),
+ 'cast':((122,131,140,255),.64,.41),
+ 'cast_high':((165,173,179,255),.65,.34),
+ 'edge':((93,104,110,255),.58,.50),
  'well':((43,48,53,255),.43,.56),
  'gasket':((22,25,30,255),.02,.91),
  'plastic':((22,25,29,255),.04,.59),
@@ -118,8 +134,16 @@ for x in [-3.27,3.27]:
 for x in [-2.65,2.65]:
     for z in [-1.44,1.44]:
         cyl('BASE','cast',x,-.10,z,.14,.18)
-for x in np.linspace(-2.6,2.6,9):
-    box('BASE','edge',float(x),-.17,-.65,.055,.025,2.5)
+# Shallow machined cast ribs under the lifted PCB.
+for x in np.linspace(-2.6,2.6,7):
+    rounded_box('BASE','edge',float(x),-.159,-.65,.03,.018,2.20,.012,bevel=.004)
+for x in (-3.32,3.32):
+    for z in (-1.75,1.75):
+        cyl('BASE','cast_high',x,-.310,z,.20,.040,20)
+        cyl('BASE','well',x,-.284,z,.099,.014,20)
+        cyl('SCREWS','cast',x,-.268,z,.042,.011,14)
+for x in (-3.03,3.03):
+    rounded_box('BASE','cast_high',x,-.36,0,.094,.17,3.24,.037,bevel=.018)
 
 # The PCB is a separate true 3D board with photo-projected real electronics.
 rounded_box('PCB','green',0,.03,-.15,5.73,.095,3.47,.10,bevel=.008)
@@ -153,7 +177,11 @@ for idx,x in enumerate([-2.04,0,2.04]):
         box('CONNECTORS','bezel',x+sx*.837,-.38,3.00,.10,.74,.14)
     for sy in [-1,1]:
         box('CONNECTORS','bezel',x,-.38+sy*.34,3.00,1.70,.085,.14)
-    box('CONNECTORS','bezel',x,.070,2.55,.56,.10,.23)
+    rounded_box('CONNECTORS','bezel',x,.070,2.55,.56,.105,.23,.045,bevel=.012)
+    for xx in (x-.63,x+.63):
+        rounded_box('CONNECTORS','plastic',xx,-.06,2.53,.14,.23,.27,.03,bevel=.008)
+    for xx in (x-.84,x+.84):
+        rounded_box('CONNECTORS','bezel',xx,-.36,2.88,.07,.62,.09,.022,bevel=.008)
     for row in [-.49,-.29]:
         for col in range(12):
             box('CONNECTORS','pin',x-.64+col*1.28/11,row,3.005,.023,.035,.052)
@@ -180,13 +208,31 @@ def textured_top(part,name,picture,w,d,y,cx=0,cz=0):
 
 def textured_front(idx,x,picture):
     # A real photographic connector-face decal placed onto physical socket mesh.
-    w,h,z=1.52,.48,3.035
+    w,h,z=1.49,.47,3.096
     cy=-.39
     vertices=np.array([[x-w/2,cy-h/2,z],[x+w/2,cy-h/2,z],[x+w/2,cy+h/2,z],[x-w/2,cy+h/2,z]])
     uv=np.array([[0,0],[1,0],[1,1],[0,1]])
     geom=trimesh.Trimesh(vertices=vertices,faces=[[0,1,2],[0,2,3]],process=False)
-    geom.visual=TextureVisuals(uv=uv,material=PBRMaterial(name=f'real-socket-{idx}',baseColorTexture=picture,metallicFactor=0,roughnessFactor=.9,doubleSided=True))
+    geom.visual=TextureVisuals(uv=uv,material=PBRMaterial(name=f'real-socket-{idx}',baseColorTexture=picture,metallicFactor=0,roughnessFactor=1,doubleSided=True))
     scene.add_geometry(geom,geom_name=f'CONNECTORS_photo_{idx}',node_name=f'CONNECTORS_photo_{idx}')
+
+# Real aluminum material on recessed floor and cast lips. All sit below the PCB.
+textured_top('BASE','photo-machined-floor',cavity,5.68,3.40,-.185,0,0)
+def lip_photo(name,cx,cz,w,d,y):
+    textured_top('BASE',name,metal_src,w,d,y,cx,cz)
+lip_photo('real-lip-front',0,1.975,6.18,.16,.058)
+lip_photo('real-lip-rear',0,-1.975,6.18,.16,.058)
+lip_photo('real-lip-left',-3.12,0,.135,3.78,.058)
+lip_photo('real-lip-right',3.12,0,.135,3.78,.058)
+def photographed_front_wall(image,w,h,cy,z):
+    vertices=np.array([[-w/2,cy-h/2,z],[w/2,cy-h/2,z],[w/2,cy+h/2,z],[-w/2,cy+h/2,z]],dtype=float)
+    uv=np.array([[0,0],[1,0],[1,1],[0,1]],dtype=float)
+    geom=trimesh.Trimesh(vertices=vertices,faces=[[0,1,2],[0,2,3]],process=False)
+    geom.visual=TextureVisuals(uv=uv,material=PBRMaterial(
+        name='real-aluminum-front-rail',baseColorTexture=image,
+        metallicFactor=.08,roughnessFactor=.95,doubleSided=True))
+    scene.add_geometry(geom,geom_name='BASE_photo-front-rail',node_name='BASE_photo-front-rail')
+photographed_front_wall(metal_src,6.22,.24,-.065,2.074)
 
 textured_top('LID','photo-lid',lid_photo,5.78,3.60,.534,0,-.13)
 textured_top('PCB','photo-board',board_photo,5.51,3.30,.094,0,-.15)
@@ -199,5 +245,6 @@ model=trimesh.load(output,force='scene')
 groups={name.split('_')[0] for name in model.geometry}
 assert {'BASE','CONNECTORS','LID','PCB','SCREWS'} <= groups
 assert any('photo' in name for name in model.geometry)
+assert len([n for n in model.geometry if n.startswith('BASE_photo')])>=5
 assert output.stat().st_size < 6_000_000
 print('PHOTO ECU 3D:',output.stat().st_size,'bytes',len(model.geometry),'geometry groups',sorted(groups))
