@@ -143,13 +143,41 @@ function loadModels(brand){
  })().catch(()=>{});
  pending.set(brand,task);return task;
 }
+// Search all makes by model, so 'Golf', 'Passat', 'X5', etc. work without a make.
+function searchModels(input,limit=12){
+ const q=norm(input);if(q.length<2)return [];
+ const makeNames=[...Object.entries(alias),...brands().map(b=>[b,b])].sort((a,b)=>norm(b[0]).length-norm(a[0]).length);
+ const named=makeNames.find(([name])=>q===norm(name)||q.startsWith(norm(name)+" "));
+ const selectedBrand=named?.[1]||"",term=named?q.slice(norm(named[0]).length).trim():q;
+ if(!term)return selectedBrand?[{brand:selectedBrand,model:"",score:125}]:[];
+ const found=[];
+ for(const brand of selectedBrand?[selectedBrand]:brands()){
+  for(const model of models(brand)){
+   const n=norm(model);if(!n)continue;
+   let score=0;
+   if(n===term)score=120;
+   else if(n.startsWith(term+" "))score=110;
+   else if(n.startsWith(term))score=90;
+   else if(term.startsWith(n+" "))score=75;
+   else if(n.includes(" "+term))score=60;
+   else if(term.length>=3&&term.split(" ").every(t=>t.length>=2&&n.includes(t)))score=42;
+   if(score)found.push({brand,model,score});
+  }
+ }
+ found.sort((a,b)=>b.score-a.score||a.model.length-b.model.length||a.brand.localeCompare(b.brand,"de")||a.model.localeCompare(b.model,"de",{numeric:true}));
+ const items=[],seen=new Set();
+ for(const item of found){
+  const key=norm(item.brand)+"|"+norm(item.model);
+  if(seen.has(key))continue;seen.add(key);items.push(item);
+  if(items.length>=limit)break;
+ }
+ return items;
+}
 function match(input){
- const q=" "+norm(input)+" ";
- const candidates=[...Object.entries(alias),...brands().map(x=>[x,x])].sort((a,b)=>norm(b[0]).length-norm(a[0]).length);
- const found=candidates.find(x=>norm(x[0]).length>=2&&q.includes(" "+norm(x[0])+" "));
- if(!found)return null;
- const brand=found[1], model=models(brand).filter(m=>norm(m).length>=2&&q.includes(" "+norm(m)+" ")).sort((a,b)=>norm(b).length-norm(a).length)[0]||"";
- return {brand,model};
+ const list=searchModels(input,1);
+ if(list.length)return {brand:list[0].brand,model:list[0].model};
+ const q=norm(input),m=[...Object.entries(alias),...brands().map(x=>[x,x])].find(([s])=>norm(s)===q);
+ return m?{brand:m[1],model:""}:null;
 }
 const word={
  tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",missingBrand:"Marka listede yoksa buraya yazın",addBrand:"Markayı ekle",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Kesin motor varyantını doğrulamak için yıl, yakıt, motor kodu, stok güç ve şanzıman girin. Stage 1 rakamları otomatik uydurulmaz."},
@@ -265,6 +293,54 @@ function install(){
    feedback.textContent=tr("result")+": "+result.brand+" "+(result.model||"");loadModels(result.brand);
  }
  const quick=document.getElementById("vehicleQuickSearch");
+ // Search suggestions are on-site; selecting one updates both existing selectors.
+ const quickRow=quick.closest(".vehicle-find-row"),menu=document.createElement("div");
+ menu.id="vehicleQuickResults";menu.className="vehicle-quick-results";
+ menu.setAttribute("role","listbox");menu.setAttribute("aria-label","Vehicle suggestions");
+ menu.hidden=true;quickRow.append(menu);
+ quick.setAttribute("aria-controls",menu.id);quick.setAttribute("aria-autocomplete","list");
+ quick.setAttribute("aria-expanded","false");box.style.position="relative";box.style.zIndex="45";
+ const suggestionStyle=document.createElement("style");suggestionStyle.id="vehicle-quick-results-css";
+ suggestionStyle.textContent=".vehicle-find-row:has(.vehicle-quick-results){position:relative}.vehicle-quick-results{position:absolute;z-index:110;top:calc(100% + 5px);left:0;right:0;display:grid;max-height:235px;overflow-y:auto;overscroll-behavior:contain;padding:5px;border:1px solid #cda675;border-radius:8px;background:#171511;box-shadow:0 16px 34px #0009}.vehicle-quick-results[hidden]{display:none!important}.vehicle-quick-choice{display:flex!important;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;width:100%;min-height:44px!important;padding:8px 11px!important;border:0!important;border-radius:5px!important;background:transparent!important;text-align:left;white-space:normal!important;color:#f4eee4!important;font-size:.83rem!important}.vehicle-quick-choice:hover,.vehicle-quick-choice[aria-selected=true]{background:#493421!important}.vehicle-quick-choice span{font-weight:800}.vehicle-quick-choice small{font-size:.68rem;opacity:.8}.vehicle-quick-results .no-match{color:#e3caa5;padding:14px;font-size:.78rem}@media(max-width:600px){.vehicle-quick-results{max-height:200px}.vehicle-quick-choice{min-height:46px!important}}";
+ document.head.append(suggestionStyle);
+ let quickMatches=[],activeSuggestion=-1;
+ function hideSuggestions(){menu.hidden=true;quick.setAttribute("aria-expanded","false");quick.removeAttribute("aria-activedescendant");activeSuggestion=-1;}
+ function chooseSuggestion(item){
+  if(!item)return;
+  hideSuggestions();quick.value=item.brand+(item.model?" "+item.model:"");
+  selectCar(item);parseHints(quick.value);
+ }
+ function updateSuggestions(){
+  const q=quick.value.trim();menu.replaceChildren();
+  quickMatches=q.length>=2?searchModels(q,12):[];activeSuggestion=-1;
+  if(q.length<2){hideSuggestions();return;}
+  if(!quickMatches.length){
+   const msg=document.createElement("div");msg.className="no-match";
+   msg.textContent=lang()==="tr"?"Model bulunamadı. Önce marka seçin veya modeli elle ekleyin.":lang()==="de"?"Kein Modell gefunden. Marke wählen oder Modell manuell eingeben.":"No model found. Choose a make or add manually.";
+   menu.append(msg);
+  }else quickMatches.forEach((item,i)=>{
+   const button=document.createElement("button");button.type="button";button.className="vehicle-quick-choice";
+   button.id="vehicle-quick-option-"+i;button.setAttribute("role","option");button.setAttribute("aria-selected","false");
+   const name=document.createElement("span");name.textContent=item.brand+" "+item.model;
+   const hint=document.createElement("small");hint.textContent=item.brand;
+   button.append(name,hint);button.addEventListener("click",()=>chooseSuggestion(item));menu.append(button);
+  });
+  menu.hidden=false;quick.setAttribute("aria-expanded","true");
+ }
+ quick.addEventListener("input",updateSuggestions);
+ quick.addEventListener("focus",()=>{if(quick.value.trim().length>=2)updateSuggestions();});
+ quick.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){hideSuggestions();return;}
+  if(event.key!=="ArrowDown"&&event.key!=="ArrowUp")return;
+  if(menu.hidden||!quickMatches.length)return;
+  event.preventDefault();
+  activeSuggestion=(activeSuggestion+(event.key==="ArrowDown"?1:-1)+quickMatches.length)%quickMatches.length;
+  [...menu.querySelectorAll(".vehicle-quick-choice")].forEach((button,index)=>{
+   const selected=index===activeSuggestion;button.setAttribute("aria-selected",String(selected));
+   if(selected){quick.setAttribute("aria-activedescendant",button.id);button.scrollIntoView({block:"nearest"});}
+  });
+ });
+ document.addEventListener("pointerdown",event=>{if(!quickRow.contains(event.target))hideSuggestions();});
  function parseHints(query) {
    const year=String(query).match(/\b(19\d{2}|20\d{2})\b/);
    const ps=String(query).match(/\b(\d{2,4})\s*(?:PS|HP|BG|bhp)\b/i);
@@ -277,7 +353,7 @@ function install(){
    if(/\b(TDI|CDI|dCi|BlueHDi|HDi|EcoBlue|CRDi|D-4D|JTD|Multijet)\b/i.test(query))set("fuelSelect","Diesel");
    else if(/\b(TSI|TFSI|FSI|EcoBoost|PureTech|Benzin|petrol|gasoline)\b/i.test(query))set("fuelSelect","Benzin");
  }
- function search(){selectCar(match(quick.value));parseHints(quick.value);model.dispatchEvent(new Event("change",{bubbles:true}));}
+ function search(){const selected=activeSuggestion>=0?quickMatches[activeSuggestion]:match(quick.value);hideSuggestions();selectCar(selected);parseHints(quick.value);model.dispatchEvent(new Event("change",{bubbles:true}));}
  document.getElementById("vehicleFindButton").addEventListener("click",search);
  quick.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search();}});
  function manual(){
@@ -302,7 +378,7 @@ function install(){
    model.dispatchEvent(new Event("change",{bubbles:true}));
  }
 }
-window.VehicleCatalog6006={brands,models,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
+window.VehicleCatalog6006={brands,models,searchModels,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{loadOpenIndex();loadMakes();},{once:true});else {loadOpenIndex();loadMakes();}
 })();
