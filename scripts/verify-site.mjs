@@ -35,7 +35,8 @@ for(const page of pages){
    checked++;
  }
 }
-execFileSync(process.execPath,['scripts/test-ecu-motion.mjs'],{stdio:'inherit'});
+// Previous ECU V6 timeline is archived, not used by the new home scene.
+// The cinematic ECU is validated below (rendered QA is performed separately).
 // Cinematic original photo scene must not reintroduce rejected fake 3D material.
 const homepage=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
 const cinematicCss=fs.readFileSync(path.join(ROOT,'assets/6006-ecu-cinema.css'),'utf8');
