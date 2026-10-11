@@ -53,5 +53,13 @@ assert(viewer.includes('lid.position.y')&&viewer.includes('pcb.position.y'),'Mis
 assert(viewer.includes('pointermove'),'Missing touch-based model inspection');
 execFileSync(process.execPath,['--check',path.join(photo3dRoot,'viewer.js')],{stdio:'pipe'});
 const previewHtml=fs.readFileSync(path.join(photo3dRoot,'index.html'),'utf8');
-assert(previewHtml.includes('ecu-3d-story')&&previewHtml.includes('ecu-3d-canvas'),'Missing standalone preview scene');
+// If the model is under visual review, the public preview must show the
+// original three-connector photographs, not an inaccurately branded 3D model.
+assert(previewHtml.includes('ecu-photo-story')&&previewHtml.includes('ecu-photo-stage'),'Missing genuine ECU reference preview');
+for(const f of ['ecu-closed.webp','ecu-open.webp','ecu-exploded.webp']){
+ assert(previewHtml.includes(f),'Missing genuine ECU photographic state '+f);
+ assert(fs.existsSync(path.join(ROOT,'assets/ecu',f)),'Missing original ECU image '+f);
+}
+assert(!previewHtml.includes('viewer.js'),'Rejected 3D mockup must not render in the public preview');
+
 console.log(`PASS: ${pages.length} pages, ${db.defs.length} DTC definitions, ${categories.length} part visuals, ${checked} local links, ${javascript.length} JS files`);

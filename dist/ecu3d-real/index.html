@@ -1,67 +1,87 @@
 <!doctype html>
-<html lang="tr"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>6006 Performance · Gerçek Fotoğraf Dokulu 3D ECU</title>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6006 Performance · Orijinal Üç Soketli ECU</title>
+<meta name="description" content="6006 Performance üç soketli gerçek ECU fotoğrafı; kapalı, kapağı açılmış ve iç yapısı gösterilen aşamalar.">
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:#11100f;color:#f3e9dd;font:15px/1.55 -apple-system,BlinkMacSystemFont,system-ui,sans-serif}
-header{padding:35px clamp(20px,6vw,85px) 55px;min-height:38svh;display:grid;align-content:center;gap:14px}
-.tag{font:700 11px/1.5 ui-monospace,SFMono-Regular,monospace;letter-spacing:.19em;color:#d6aa7a}
-h1{font-size:clamp(2.25rem,6vw,5rem);letter-spacing:-.035em;line-height:1.07;margin:0;max-width:900px}
-header p{font-size:clamp(14px,1.65vw,18px);max-width:680px;color:#bfb4a8;margin:0}
-a{color:#edc496}button{font:inherit;cursor:pointer}
-.story{position:relative;min-height:1800px;height:245svh;isolation:isolate;background:radial-gradient(ellipse at 50% 37%,#322b27,#181514 53%,#100f0f 88%)}
-.sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.sticky:before{content:"";position:absolute;top:43%;left:50%;height:78svh;width:min(115vw,980px);transform:translate(-50%,-50%);
-background:radial-gradient(ellipse,rgba(164,105,62,.14),rgba(26,22,21,.13) 48%,transparent 72%);pointer-events:none}
-.label{position:absolute;z-index:3;top:5svh;left:clamp(16px,6vw,80px)}
-.hint{position:absolute;z-index:3;top:5svh;right:clamp(16px,6vw,80px);font:500 10px/1.5 ui-monospace,monospace;color:#ae9b8a;text-align:right}
-.stage{position:relative;z-index:2;width:min(100%,1080px);height:min(77svh,790px)}
-canvas{width:100%;height:100%;display:block;touch-action:pan-y}
-.fallback{position:absolute;left:50%;top:50%;max-width:95%;width:700px;transform:translate(-50%,-50%);filter:drop-shadow(0 18px 24px rgba(0,0,0,.65))}
-.status{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);color:#cfb99f;white-space:nowrap}
-.caption{position:absolute;z-index:3;bottom:12svh;left:clamp(20px,6vw,85px);font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.11em;color:#efd0a4}
-.controls{position:absolute;z-index:4;bottom:4svh;left:50%;transform:translateX(-50%);display:flex;gap:7px;max-width:calc(100vw - 20px)}
-.controls button{border:1px solid rgba(237,194,145,.4);background:rgba(25,22,20,.9);padding:10px 12px;color:#e7cab0;border-radius:20px;font-size:12px;white-space:nowrap}
-.controls button[aria-pressed=true]{background:#c19b6c;color:#211912}
-.note{padding:38px clamp(20px,6vw,85px) 90px;max-width:1020px;margin:auto;color:#c8bbac}
-.note h2{font-size:clamp(22px,3vw,32px);color:#f4eadf}
-.graph{position:absolute;z-index:3;bottom:20svh;right:5vw;opacity:0;pointer-events:none;color:#d7b185;text-align:right}
-.graph b{display:block;font-size:clamp(22px,4vw,42px)}
+:root{color-scheme:dark}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#141210;color:#f4e8d7;font:16px/1.48 -apple-system,BlinkMacSystemFont,system-ui,Arial,sans-serif}
+.hero{padding:36px clamp(18px,5vw,78px) 45px;min-height:34svh;display:flex;flex-direction:column;justify-content:center;gap:10px;background:radial-gradient(ellipse at 55% 0%,#302622,#141210 65%)}
+.eyebrow{font:700 11px/1.5 ui-monospace,SFMono-Regular,monospace;letter-spacing:.17em;color:#d6ab80}
+h1{margin:0;font-size:clamp(29px,6.7vw,58px);line-height:1.05;letter-spacing:-.035em;max-width:920px}
+.hero p{margin:0;max-width:750px;color:#cbbeb1;font-size:clamp(14px,2vw,18px)}
+.story{position:relative;height:265svh;min-height:1700px;background:radial-gradient(ellipse at center 30%,#292320,#141211 60%,#11100f)}
+.sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.kicker{position:absolute;top:5.5svh;left:clamp(18px,5vw,78px);font:700 11px/1.6 ui-monospace,SFMono-Regular,monospace;letter-spacing:.15em;color:#d8b088}
+.stage{height:min(68svh,780px);width:min(100%,1040px);position:relative;display:flex;align-items:center;justify-content:center;margin-top:-3svh}
+.stage img{position:absolute;display:block;width:100%;height:100%;object-fit:contain;opacity:0;visibility:hidden;pointer-events:none;filter:drop-shadow(0 18px 22px rgba(0,0,0,.60))}
+.stage img.active{opacity:1;visibility:visible}
+.caption{position:absolute;bottom:15svh;left:clamp(18px,5vw,78px);font:700 13px/1.4 ui-monospace,SFMono-Regular,monospace;letter-spacing:.085em;color:#efd0a7}
+.controls{position:absolute;bottom:5svh;left:50%;transform:translateX(-50%);display:flex;gap:8px;max-width:calc(100vw - 18px)}
+.controls button{font:600 12px/1.2 -apple-system,system-ui,sans-serif;border:1px solid #886c50;color:#e9d6c2;background:#1f1a17;padding:12px 14px;white-space:nowrap;border-radius:22px;cursor:pointer}
+.controls button[aria-pressed="true"]{color:#21170f;background:#cfab79;border-color:#cfab79}
+.note{max-width:1050px;padding:54px clamp(18px,5vw,78px) 90px;margin:auto;color:#c6b9aa}
+.note h2{color:#f4e8d7;font-size:clamp(24px,4vw,38px);margin:0 0 8px}
+.note a{color:#e3b88d}.small{font-size:12px;color:#a99a89}
 [hidden]{display:none!important}
-@media(max-width:650px){
-header{min-height:30svh;padding-bottom:28px}.story{height:230svh;min-height:1400px}
-.stage{height:75svh;width:110vw;flex-shrink:0}
-.label{top:4svh;font-size:9px}.hint{top:9svh;right:5vw;font-size:9px}
-.caption{bottom:16svh;font-size:11px}
-.controls{bottom:7svh}.controls button{font-size:11px;padding:9px}
-.graph{bottom:23svh}
-}
+@media(max-width:600px){.hero{min-height:27svh;padding-bottom:22px}.story{height:235svh;min-height:1300px}.kicker{top:5svh;font-size:10px}.stage{height:62svh;width:110vw;max-width:none;flex-shrink:0;margin-top:-1svh}.caption{bottom:17svh;font-size:11px}.controls{bottom:7svh}.controls button{font-size:11px;padding:11px 13px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body.qa header,body.qa .note{display:none!important}
-body.qa .story{height:100svh!important;min-height:100svh!important}
-body.qa .stage{height:82svh}
-body.qa .graph{display:none!important}
-</style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
-</head><body>
-<header><div class="tag">6006 PERFORMANCE · STAGE 1</div><h1>Gerçek ECU fotoğrafından üç boyutlu model.</h1>
-<p>Gerçek üç soketli ECU fotoğrafından oluşturulan metal yüzey ve elektronik kart dokuları, ayrı hareket eden 3D parçalara uygulandı. Aşağı kaydır veya aşama düğmelerini kullan.</p></header>
-<section id="ecu-3d-story" class="story"><div class="sticky">
- <div class="label tag">6006 · FOTOĞRAF DOKULU ECU / 3D</div>
- <div class="hint">Dikey kaydır · yana sürükleyerek döndür</div>
- <div class="stage"><canvas id="ecu-3d-canvas" aria-label="Üç soketli ECU'nun kapağı ve elektronik kartı bağımsız hareket eden 3D modeli"></canvas>
- <img class="fallback" id="ecu-3d-fallback" alt="Üç soketli orijinal ECU fotoğrafı" src="/assets/ecu/ecu-closed.webp" hidden>
- <div class="status" id="ecu-3d-status">Gerçek ECU dokuları yükleniyor…</div></div>
- <div class="caption" id="ecu-3d-phase">KAPALI ECU</div>
- <div class="graph" id="ecu-3d-graph">SONRAKİ AŞAMA<b>STAGE 1 ANALİZ</b></div>
- <div class="controls" role="group" aria-label="ECU 3D modelini kontrol et">
- <button data-progress="0" aria-pressed="true">Kapalı ECU</button><button data-progress="0.45" aria-pressed="false">Kapağı aç</button><button data-progress="0.78" aria-pressed="false">Kartı çıkar</button>
- </div>
- </div></section>
-<section class="note"><div class="tag">6006 PERFORMANCE · AYRI GÖRSEL KONTROL</div>
-<h2>Plastik görünümlü eski modelin yerine gerçek fotoğraf yüzeyli 3D parçalar.</h2>
-<p>PCB ve metal kapak yüzey dokuları orijinal üç soketli ECU fotoğraflarından oluşturulmuştur. Alt kasa ve soketler katı 3D geometridir, kapak ile devre kartı bağımsız hareket eder. Teknik görselleştirmedir; belirli bir üreticinin birebir CAD dosyası değildir.</p>
-<p><a href="/">6006 Performance ana sayfası</a></p>
-</section><script type="module" src="./viewer.js?v=photo3d1"></script>
-</body></html>
+body.inspection .hero,body.inspection .note{display:none}
+body.inspection .story{height:100svh!important;min-height:100svh!important}
+</style></head><body>
+<header class="hero"><div class="eyebrow">6006 PERFORMANCE · ECU GÖRSEL İNCELEME</div>
+<h1>Gerçek üç soketli ECU.</h1>
+<p>Orijinal ECU fotoğrafları. Kapalı, kapağı açılmış ve iç devre kartı görünen aşamalar. Bu, henüz tamamlanmamış 3D modelin yerine kullanılan fotoğraf önizlemesidir.</p></header>
+<main>
+<section class="story" id="ecu-photo-story"><div class="sticky">
+<div class="kicker">GERÇEK ECU FOTOĞRAFLARI · 3 AŞAMA</div>
+<div class="stage" id="ecu-photo-stage">
+<img class="active" src="/assets/ecu/ecu-closed.webp" width="1120" height="840" alt="Üç siyah soketli ECU'nun kapalı metal kapağı" decoding="async" fetchpriority="high" data-photo="0">
+<img src="/assets/ecu/ecu-open.webp" width="1120" height="840" alt="Üç siyah soketli ECU'nun açık kapağı, devre kartı görünüyor" decoding="async" data-photo="1">
+<img src="/assets/ecu/ecu-exploded.webp" width="1120" height="840" alt="Üç siyah soketli ECU'nun kapağı ayrılmış, elektronik devre kartı görünüyor" decoding="async" data-photo="2">
+</div>
+<div class="caption" id="ecu-photo-title" aria-live="polite">KAPALI ECU</div>
+<div class="controls" role="group" aria-label="ECU fotoğrafı aşamaları">
+<button type="button" data-step="0" aria-pressed="true">Kapalı ECU</button>
+<button type="button" data-step="1" aria-pressed="false">Kapağı aç</button>
+<button type="button" data-step="2" aria-pressed="false">İç yapıyı gör</button>
+</div>
+</div></section>
+<section class="note">
+<h2>Gerçek fotoğraf, yapay kasa yok.</h2>
+<p>Önceki gri kutu gibi görünen 3D önizleme burada gösterilmiyor. Bunun yerine beğendiğin üç soketli gerçek ECU'nun orijinal fotoğrafları kullanılıyor. Parçaların hareket ettiği fotogerçekçi 3D model henüz hazır olmadığı için bu görseller 3D olarak tanıtılmıyor.</p>
+<p class="small">6006 Performance · Ayrı görsel önizleme · Ana sayfa değiştirilmedi</p>
+<p><a href="/">6006 Performance ana sayfaya dön</a></p>
+</section>
+</main>
+<script>
+(()=>{'use strict';
+const story=document.getElementById('ecu-photo-story');
+const slides=[...document.querySelectorAll('[data-photo]')];
+const btns=[...document.querySelectorAll('[data-step]')];
+const title=document.getElementById('ecu-photo-title');
+const captions=['KAPALI ECU','METAL KAPAK AÇILMIŞ','KAPAK AYRI · DEVRE KARTI GÖRÜNÜR'];
+const q=new URLSearchParams(location.search);
+const inspect=q.has('inspect')?Number(q.get('inspect')):null;
+if(inspect!==null)document.body.classList.add('inspection');
+let selected=0;
+function show(i){
+ i=Math.max(0,Math.min(2,i|0));
+ if(i===selected && slides[i].classList.contains('active'))return;
+ selected=i;
+ slides.forEach((el,n)=>el.classList.toggle('active',n===i));
+ btns.forEach((el,n)=>el.setAttribute('aria-pressed',String(n===i)));
+ title.textContent=captions[i];
+}
+function scroll(){
+ if(inspect!==null&&Number.isFinite(inspect)){show(inspect>=0&&inspect<=1?Math.min(2,Math.floor(inspect*3)):Math.round(inspect));return}
+ const rect=story.getBoundingClientRect();
+ const range=Math.max(1,rect.height-innerHeight);
+ const p=Math.max(0,Math.min(1,-rect.top/range));
+ show(p<.30?0:p<.66?1:2);
+}
+btns.forEach((b,i)=>b.addEventListener('click',()=>{show(i);}));
+window.addEventListener('scroll',scroll,{passive:true});
+window.addEventListener('resize',scroll,{passive:true});
+window.addEventListener('pageshow',scroll);
+scroll();
+})();
+</script></body></html>
