@@ -42,7 +42,7 @@ let ready=false,onscreen=true,dirty=false,scrollProgress=0,forced=null;
 function resize(){
  const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);
  renderer.setSize(w,h,false);
- const halfWidth=w<700?3.93:4.85;
+ const halfWidth=w<700?4.48:4.95;
  camera.left=-halfWidth;camera.right=halfWidth;
  const halfHeight=halfWidth*h/w;
  camera.top=halfHeight;camera.bottom=-halfHeight;
