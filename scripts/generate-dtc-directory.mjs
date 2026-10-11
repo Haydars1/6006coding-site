@@ -22,7 +22,7 @@ for (const row of all) {
 }
 for (const rows of groups.values()) rows.sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
 const groupNames = [...groups.keys()].sort((a,b)=>a.localeCompare(b,'de'));
-const curated = new Set(['P0299','P0234','P2563','P0401','P0402','P0403','P2002','P2452','P2463','P20EE','P204F','P2201','P0101','P0087','P0191','P0171','P0300','P0420','P0016','P0340','P0700','U0100','U0121','C0035']);
+const hasGuide = code => fs.existsSync(path.join(root,'fehlercodes',code.toLowerCase(),'index.html'));
 const save = (relative,html) => {const filename = path.join(root,relative);fs.mkdirSync(path.dirname(filename),{recursive:true});fs.writeFileSync(filename,html,'utf8');};
 const rootDir = '/fehlercodes/verzeichnis/';
 const folder = (g,page) => rootDir+g+'/'+(page===1?'':page+'/');
@@ -49,7 +49,7 @@ for (const prefix of groupNames) {
     const links=slice.map(r=>{
       const [code,make,definition]=r;
       const deep='/fehlercodes/?code='+encodeURIComponent(code)+(make==='GENERIC'?'':'&brand='+encodeURIComponent(make));
-      const editorial=curated.has(code)?' <a class="dtc-guide" href="/fehlercodes/'+code.toLowerCase()+'/">Ausführliche Diagnose →</a>':'';
+      const editorial=hasGuide(code)?' <a class="dtc-guide" href="/fehlercodes/'+code.toLowerCase()+'/">Ausführliche Diagnose →</a>':'';
       return '<li class="dtc-entry" data-dtc-row="1"><strong><a href="'+deep+'">'+safe(code)+'</a></strong>'
         +'<span class="dtc-make">'+safe(make==='GENERIC'?'OBD allgemein':make)+'</span>'
         +'<span class="dtc-def">'+safe(definition)+'</span>'+editorial+'</li>';
