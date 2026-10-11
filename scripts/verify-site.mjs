@@ -74,7 +74,7 @@ assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
 console.log('PASS: vehicle finder recognizes VW Golf, BMW X5, Mercedes E-Klasse, Tesla Model Y and engine-specific profiles');
 const sitemap=fs.readFileSync(path.join(ROOT,'sitemap.xml'),'utf8');
 const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
-assert(urls.length>=80,'SEO sitemap should contain at least 80 accessible pages');
+assert(urls.length>=12000,'SEO sitemap must cover all individual DTC reference pages');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
 for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p2015','p0562','p0741','u0415']){
@@ -84,6 +84,32 @@ for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p201
   assert(html.includes('<h1>')&&html.includes('rel="canonical"')&&!html.includes('noindex'),'Fault article not indexable: '+code);
   assert(urls.includes('https://6006coding.de/fehlercodes/'+code+'/'),'Missing sitemap entry: '+code);
 }
+
+const allPages=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/6006-all-dtc-pages.json'),'utf8'));
+assert(allPages.uniqueCodes===codes.size,'Unique DTC coverage changed unexpectedly');
+assert(allPages.manufacturerDefinitions===db.defs.length,'Manufacturer definition count mismatch');
+assert(allPages.generatedCodePages>=11000,'Missing individual DTC pages');
+assert(allPages.generatedCodePages+allPages.curated===allPages.uniqueCodes,'Code page/curated coverage mismatch');
+const codePages=path.join(ROOT,'fehlercodes','code');
+const dirs=fs.readdirSync(codePages,{withFileTypes:true}).filter(item=>item.isDirectory()&&/^[pbcu][0-9a-f]{4}$/i.test(item.name));
+assert(dirs.length===allPages.generatedCodePages,'Some code paths were not written');
+const allCodes=new Set(db.defs.map(row=>row[0]));
+for(const code of allCodes){
+ const url='/fehlercodes/code/'+code.toLowerCase()+'/';
+ if(fs.existsSync(path.join(ROOT,'fehlercodes',code.toLowerCase(),'index.html'))) continue; 
+ const file=path.join(codePages,code.toLowerCase(),'index.html');
+ assert(fs.existsSync(file),'No dedicated page for '+code);
+ assert(urls.includes('https://6006coding.de'+url),'Missing indexable DTC sitemap entry '+code);
+}
+for(const code of ['P0102','P0113','P0670','B0001','C0035','U0073']){
+ const direct=path.join(ROOT,'fehlercodes','code',code.toLowerCase(),'index.html');
+ if(!fs.existsSync(direct))continue;
+ const page=fs.readFileSync(direct,'utf8');
+ assert(page.includes('<h1>'+code+' Fehlercode')&&page.includes('name="description"')&&page.includes('rel="canonical"')&&page.includes('Mögliche Ursache')&&page.includes('Diagnose und Prüfablauf'),'Incomplete code detail '+code);
+ assert(!page.includes('noindex'),'Unexpected noindex for '+code);
+}
+assert(fs.readFileSync(path.join(ROOT,'fehlercodes','verzeichnis','index.html'),'utf8').includes('Jeder Code hat eine eigene Informationsseite'),'Code directory not describing its detailed links');
+console.log('PASS: '+allPages.uniqueCodes+' distinct DTCs have their own accessible indexed HTML article or curated guide');
 
 // Every licensed fault-code definition must be discoverable in server-rendered HTML.
 const directoryRoot=path.join(ROOT,'fehlercodes','verzeichnis');

@@ -22,7 +22,9 @@ for (const row of all) {
 }
 for (const rows of groups.values()) rows.sort((a,b)=>a[0].localeCompare(b[0])||a[1].localeCompare(b[1]));
 const groupNames = [...groups.keys()].sort((a,b)=>a.localeCompare(b,'de'));
-const hasGuide = code => fs.existsSync(path.join(root,'fehlercodes',code.toLowerCase(),'index.html'));
+const editorial=new Set(JSON.parse(fs.readFileSync(path.join(root,'assets/6006-curated-guides.json'),'utf8')).codes);
+const hasGuide = code => editorial.has(code) && fs.existsSync(path.join(root,'fehlercodes',code.toLowerCase(),'index.html'));
+const codeHref = code => hasGuide(code)?'/fehlercodes/'+code.toLowerCase()+'/':'/fehlercodes/code/'+code.toLowerCase()+'/';
 const save = (relative,html) => {const filename = path.join(root,relative);fs.mkdirSync(path.dirname(filename),{recursive:true});fs.writeFileSync(filename,html,'utf8');};
 const rootDir = '/fehlercodes/verzeichnis/';
 const folder = (g,page) => rootDir+g+'/'+(page===1?'':page+'/');
@@ -49,10 +51,10 @@ for (const prefix of groupNames) {
     const links=slice.map(r=>{
       const [code,make,definition]=r;
       const deep='/fehlercodes/?code='+encodeURIComponent(code)+(make==='GENERIC'?'':'&brand='+encodeURIComponent(make));
-      const editorial=hasGuide(code)?' <a class="dtc-guide" href="/fehlercodes/'+code.toLowerCase()+'/">Ausführliche Diagnose →</a>':'';
-      return '<li class="dtc-entry" data-dtc-row="1"><strong><a href="'+deep+'">'+safe(code)+'</a></strong>'
+      const expanded=hasGuide(code)?' <a class="dtc-guide" href="/fehlercodes/'+code.toLowerCase()+'/">Ausführlicher Fachartikel →</a>':'';
+      return '<li class="dtc-entry" data-dtc-row="1"><strong><a href="'+codeHref(code)+'">'+safe(code)+'</a></strong>'
         +'<span class="dtc-make">'+safe(make==='GENERIC'?'OBD allgemein':make)+'</span>'
-        +'<span class="dtc-def">'+safe(definition)+'</span>'+editorial+'</li>';
+        +'<span class="dtc-def">'+safe(definition)+'</span> <a class="dtc-guide" href="'+deep+'">Herstellereintrag →</a>'+expanded+'</li>';
     }).join('');
     const previous=page>1?'<a href="'+folder(prefix,page-1)+'">← Zurück</a>':'';
     const next=page<totalPages?'<a href="'+folder(prefix,page+1)+'">Weiter →</a>':'';
@@ -72,7 +74,7 @@ const cards=groupNames.map(g=>{
   return '<a href="'+url+'"><strong>'+safe(name)+'-Codes</strong><span>'+safe(category(rows[0][0]))+'</span><small>'+rows.length+' Referenzdefinitionen</small></a>';
 }).join('');
 const hubTitle='OBD Fehlercode-Verzeichnis P, B, C und U – alle Definitionen';
-const hubDesc='Vollständiges Verzeichnis von '+total+' OBD-Fehlercode- und Herstellerdefinitionen. P-, B-, C- und U-Codes nach Nummer finden, genaue Bedeutung lesen und die Diagnose beginnen.';
+const hubDesc='Vollständiges Verzeichnis von '+total+' OBD-Fehlercode- und Herstellerdefinitionen. Jeder Code hat eine eigene Informationsseite mit Herstellerangaben und passenden ersten Diagnoseschritten.';
 const intro='<span class="kicker">OBD-II · ALLE FEHLERCODES</span><h1>Alle '+total+' Fehlercode-Definitionen finden</h1>'
  +'<p class="lead">'+safe(hubDesc)+'</p><p>Hier sind alle Einträge aus unserem DTC-Datensatz als echte HTML-Texte aufrufbar, auch ohne JavaScript. Wählen Sie eine Nummerngruppe oder nutzen Sie die direkte Suche.</p>'
  +'<p><a class="btn" href="/fehlercodes/">Fehlercode direkt suchen →</a> <a class="btn outline" href="/fehlercodes/loesungen/">Ausführliche Fehlerlösungen →</a></p>'
