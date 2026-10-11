@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6006 ECU • 3D Geometri Kontrolü (Yayın Değil)</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100e0c;color:#f3e9dc;font:14px/1.5 -apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+header{padding:17px 18px 10px;border-bottom:1px solid #4b3520}
+h1{font-size:19px;line-height:1.2;margin:5px 0}p{margin:4px 0;color:#cdbb9f}
+.kicker{font:700 10px/1.5 ui-monospace,monospace;letter-spacing:.18em;color:#e8b573}
+canvas{height:52svh;width:100%;display:block;touch-action:none;background:radial-gradient(ellipse,#392e23 0%,#171310 65%,#100e0c)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 18px}
+.compare img{width:100%;height:23svh;object-fit:contain;display:block}
+.compare figure{margin:0;border:1px solid #58402e;background:#16120f;border-radius:8px;padding:4px}
+figcaption{font-size:10px;text-align:center;color:#ccb79b}
+.controls{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:11px 15px}
+button{border-radius:22px;border:1px solid #94724d;background:#231c16;color:#efddc8;padding:9px 14px;font-size:12px;cursor:pointer}
+button[aria-pressed=true]{background:#caa472;color:#21170e}
+.status{margin:0 18px 12px;min-height:23px;color:#bba98b;font-size:11px}
+footer{padding:9px 20px 30px;color:#b9a594;font-size:11px}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
+</head><body>
+<header><span class="kicker">6006 PERFORMANCE • İÇ KALİTE KONTROLÜ</span>
+<h1>3D model / gerçek ECU karşılaştırması</h1>
+<p>Bu sayfa yayındaki site değil. Geometri kalitesi onaylanmadan ana sayfaya geçmeyecek.</p></header>
+<div class="controls" role="group" aria-label="Modeller">
+<button type="button" data-model="closed" aria-pressed="true">Kapalı ECU</button>
+<button type="button" data-model="lid" aria-pressed="false">Kapak</button>
+<button type="button" data-model="pcb" aria-pressed="false">Devre kartı</button>
+</div>
+<canvas id="canvas" aria-label="Döndürülebilen üç boyutlu ECU geometri adayı"></canvas>
+<div class="status" id="status">Üç boyutlu model yükleniyor...</div>
+<section class="compare">
+<figure><img id="source" src="/assets/ecu/ecu-closed.webp" alt="Kaynak ECU fotoğrafı"><figcaption>Referans fotoğraf</figcaption></figure>
+<figure><img id="inference" src="./closed-input.png" alt="Yapay zekâya verilen kırpılmış kaynak"><figcaption>3D modelin girdisi</figcaption></figure>
+</section>
+<footer>MIT lisanslı TripoSR araştırma denemesi. Görsel QA tamamlanmadı. Bu, müşteri tanıtım sayfası değildir.</footer>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const c=document.querySelector('#canvas'),status=document.querySelector('#status'),source=document.querySelector('#source'),inp=document.querySelector('#inference');
+const buttons=[...document.querySelectorAll('[data-model]')];
+const renderer=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true,powerPreference:'low-power'});
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(30,1,.01,100);
+camera.position.set(2,1.6,3.8);
+const controls=new OrbitControls(camera,c);controls.enablePan=false;controls.enableDamping=true;controls.dampingFactor=.12;
+scene.add(new THREE.HemisphereLight(0xffffff,0x47403a,2.8));
+const light=new THREE.DirectionalLight(0xffffff,2.5);light.position.set(2,5,4);scene.add(light);
+const models={},loader=new GLTFLoader();
+let selected=null,loaded=false;
+const files={closed:'./closed.glb',lid:'./lid.glb',pcb:'./pcb.glb'};
+function size(){const w=Math.max(1,c.clientWidth),h=Math.max(1,c.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+window.addEventListener('resize',size,{passive:true});size();
+function frame(obj){
+ const bb=new THREE.Box3().setFromObject(obj),center=bb.getCenter(new THREE.Vector3()),span=bb.getSize(new THREE.Vector3()).length();
+ controls.target.copy(center);
+ camera.position.set(center.x+span*.72,center.y+span*.45,center.z+span*.92);
+ controls.minDistance=span*.55;controls.maxDistance=span*3;
+ camera.near=Math.max(.001,span/400);camera.far=span*20;camera.updateProjectionMatrix();
+ controls.update();
+}
+function show(name){
+ selected=name;
+ for(const [key,model] of Object.entries(models))model.visible=key===name;
+ buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.model===name)));
+ inp.src='./'+name+'-input.png';
+ if(source)source.src=name==='closed'?'/assets/ecu/ecu-closed.webp':'/assets/ecu/ecu-exploded.webp';
+ if(models[name]){frame(models[name]);status.textContent=name+' · Mesh üretildi; kalite onayı bekleniyor.'}
+ else status.textContent=name+' yükleniyor...';
+}
+buttons.forEach(b=>b.addEventListener('click',()=>show(b.dataset.model)));
+const param=new URLSearchParams(location.search).get('model');
+selected=files[param]?param:'closed';
+for(const [name,url] of Object.entries(files)){
+ loader.load(url,gltf=>{
+  models[name]=gltf.scene;
+  models[name].traverse(o=>{if(o.isMesh&&o.material){o.material.side=THREE.DoubleSide;if(o.material.map)o.material.map.colorSpace=THREE.SRGBColorSpace;}});
+  scene.add(models[name]);models[name].visible=name===selected;
+  if(name===selected)show(name);
+ },undefined,e=>{status.textContent=name+' GLB açılmadı: '+e.message;});
+}
+function tick(){requestAnimationFrame(tick);controls.update();renderer.render(scene,camera)}tick();
+</script>
+</body></html>
