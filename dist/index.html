@@ -1429,6 +1429,7 @@ html{scroll-padding-top:1.25rem}
     </footer>
 
     <script defer src="/assets/6006-language-bridge.js"></script>
+    <script src="/assets/6006-vehicle-catalog.js?v=20261011"></script>
     <script>
       const vehicles = [
         { brand: "BMW", name: "320i G20", years: "2019–2024", engine: "2.0T B48 · Benzin · Otomatik", stock: { ps: 184, nm: 300 }, stage: { ps: [240, 250], nm: [380, 400] } },
@@ -1927,7 +1928,7 @@ html{scroll-padding-top:1.25rem}
       }
 
       function populateBrands() {
-        const brands = [...new Set([...Object.keys(vehicleDirectory), ...vehicles.map((vehicle) => vehicle.brand)])].sort((a, b) => a.localeCompare(b, "de"));
+        const brands = [...new Set([...Object.keys(vehicleDirectory), ...vehicles.map((vehicle) => vehicle.brand), ...(window.VehicleCatalog6006?.brands() || [])])].sort((a, b) => a.localeCompare(b, "de"));
         const currentBrand = brands.includes(brandSelect.value) ? brandSelect.value : "";
         const copy = stageLabels();
         brandSelect.innerHTML = `<option value="">${copy.brandPlaceholder}</option>${brands.map((brand) => `<option value="${brand}">${brand}</option>`).join("")}`;
@@ -1940,8 +1941,10 @@ html{scroll-padding-top:1.25rem}
         const currentModel = modelSelect.value;
         const models = [...new Set([
           ...vehicles.filter((vehicle) => vehicle.brand === brandSelect.value).map((vehicle) => vehicle.name),
-          ...(vehicleDirectory[brandSelect.value] || [])
+          ...(vehicleDirectory[brandSelect.value] || []),
+          ...(window.VehicleCatalog6006?.models(brandSelect.value) || [])
         ])];
+        if (currentModel && !models.includes(currentModel)) models.push(currentModel);
         if (!brandSelect.value) {
           modelSelect.innerHTML = `<option value="">${copy.modelFirst}</option>`;
           modelSelect.value = "";
@@ -1955,6 +1958,14 @@ html{scroll-padding-top:1.25rem}
         renderVehicle();
       }
 
+      function selectedVehicleParams(brand, model) {
+        const query = new URLSearchParams({ brand, model });
+        if (window.VehicleCatalog6006) {
+          for (const [key,value] of window.VehicleCatalog6006.params()) query.set(key,value);
+        }
+        return query;
+      }
+
       function renderVehicle() {
         const vehicle = currentVehicle();
         const copy = stageLabels();
@@ -1963,7 +1974,8 @@ html{scroll-padding-top:1.25rem}
           const hasDirectorySelection = Boolean(brandSelect.value && modelSelect.value);
           card.classList.add("is-empty");
           byId("stageStatus").innerHTML = `<i class="status-signal" aria-hidden="true"></i>${hasDirectorySelection ? copy.statusReview : copy.statusEmpty}`;
-          byId("vehicleYears").textContent = hasDirectorySelection ? copy.reviewYears : copy.emptyYears;
+          const details = window.VehicleCatalog6006?.details() || "";
+          byId("vehicleYears").textContent = hasDirectorySelection ? (details || copy.reviewYears) : copy.emptyYears;
           byId("vehicleName").textContent = hasDirectorySelection ? `${brandSelect.value} ${modelSelect.value}` : copy.emptyName;
           byId("vehicleEngine").textContent = hasDirectorySelection ? copy.reviewEngine : copy.emptyEngine;
           document.querySelector(".vehicle-badge").textContent = hasDirectorySelection ? copy.reviewBadge : copy.emptyBadge;
@@ -1973,7 +1985,7 @@ html{scroll-padding-top:1.25rem}
           byId("nmGain").textContent = "—";
           const catalogLink = byId("stageCatalogLink");
           if (catalogLink) {
-            const query = new URLSearchParams({ brand: brandSelect.value, model: modelSelect.value });
+            const query = selectedVehicleParams(brandSelect.value, modelSelect.value);
             catalogLink.href = hasDirectorySelection ? `reparatur-wartung/?${query.toString()}` : "reparatur-wartung/";
           }
           return;
@@ -1982,14 +1994,14 @@ html{scroll-padding-top:1.25rem}
         byId("stageStatus").innerHTML = `<i class="status-signal" aria-hidden="true"></i>${copy.statusReady}`;
         byId("vehicleYears").textContent = `${vehicle.years} · ${t("catalog")}`;
         byId("vehicleName").textContent = vehicle.brand + " " + vehicle.name;
-        byId("vehicleEngine").textContent = localizeEngine(vehicle.engine);
+        byId("vehicleEngine").textContent = localizeEngine(vehicle.engine) + (window.VehicleCatalog6006?.details() ? " · " + window.VehicleCatalog6006.details() : "");
         document.querySelector(".vehicle-badge").textContent = copy.sample;
         byId("psValue").textContent = fmtRange(vehicle.stage.ps, "PS");
         byId("psGain").textContent = fmtGain(vehicle.stage.ps, vehicle.stock.ps, "PS");
         byId("nmValue").textContent = fmtRange(vehicle.stage.nm, "Nm");
         byId("nmGain").textContent = fmtGain(vehicle.stage.nm, vehicle.stock.nm, "Nm");
         const catalogLink = byId("stageCatalogLink");
-        if (catalogLink) catalogLink.href = `reparatur-wartung/?${new URLSearchParams({ brand: vehicle.brand, model: vehicle.name }).toString()}`;
+        if (catalogLink) catalogLink.href = `reparatur-wartung/?${selectedVehicleParams(vehicle.brand, vehicle.name).toString()}`;
         if (vehicleHasRendered) replayMotion(byId("estimateCard"), "data-refresh");
         vehicleHasRendered = true;
       }
@@ -2029,8 +2041,15 @@ html{scroll-padding-top:1.25rem}
       }
 
       brandSelect.addEventListener("change", () => {
+        modelSelect.value = "";
         populateModels();
         assistantState.selectedVehicle = null;
+        const brand = brandSelect.value;
+        if (brand && window.VehicleCatalog6006) window.VehicleCatalog6006.loadModels(brand);
+      });
+      window.addEventListener("6006-makes-ready", populateBrands);
+      window.addEventListener("6006-models-ready", event => {
+        if (event.detail?.brand === brandSelect.value) populateModels();
       });
       modelSelect.addEventListener("change", () => {
         renderVehicle();
@@ -2172,6 +2191,11 @@ html{scroll-padding-top:1.25rem}
           lines.push(`${copy.engine}: ${localizeEngine(vehicle.engine)}`);
           lines.push(`${copy.years}: ${vehicle.years}`);
           lines.push(`${copy.catalogue}: ${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`);
+        } else if (brandSelect.value && modelSelect.value) {
+          lines.push(`${copy.vehicle}: ${brandSelect.value} ${modelSelect.value}`);
+          const specs = window.VehicleCatalog6006?.details();
+          if (specs) lines.push(specs);
+          lines.push("Stage 1: motor kodu doğrulanmadan rakam verilemez.");
         } else {
           lines.push(copy.vehicleMissing);
         }
@@ -2185,6 +2209,7 @@ html{scroll-padding-top:1.25rem}
         const vehicle = currentVehicle() || assistantState.selectedVehicle;
         const lines = [copy.faultIntro, "", `${copy.faultCode}: ${displayFault.code} — ${displayFault.title}`];
         if (vehicle) lines.push(`${copy.vehicle}: ${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}`);
+        else if (brandSelect.value && modelSelect.value) lines.push(`${copy.vehicle}: ${brandSelect.value} ${modelSelect.value} · ${window.VehicleCatalog6006?.details() || ""}`);
         else lines.push(copy.vehicleMissing);
         lines.push("", copy.faultPrompt);
         return lines.join("\n");
@@ -2273,8 +2298,18 @@ html{scroll-padding-top:1.25rem}
           selectCatalogVehicle(vehicleMatch.vehicle);
           return catalogVehicleResponse(vehicleMatch.vehicle);
         }
+        const general = window.VehicleCatalog6006?.match(raw);
+        if (general?.brand) {
+          window.VehicleCatalog6006.select(general);
+          const prompt = currentLanguage === "tr" ? "Yıl, motor/yakıt, stok güç (PS) ve şanzımanı seçiciden doldurun. Motor kodu doğrulanmadan kesin Stage 1 değeri gösterilmez." : currentLanguage === "de" ? "Bitte Baujahr, Motor/Kraftstoff, Serienleistung (PS) und Getriebe im Fahrzeugfinder ergänzen. Ohne Motorcode keine verbindliche Stage-1-Angabe." : "Please add year, engine/fuel, stock power (PS) and gearbox in the vehicle finder; exact Stage 1 figures require a verified engine code.";
+          return `${general.brand}${general.model ? " " + general.model : ""} — ${prompt}`;
+        }
         if (vehicleMatch.conflict || isVehicleLikeQuery(vehicleMatch.query)) return assistantVehicleLabels().clarify;
-        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) return assistantState.selectedVehicle ? `${copy.stage}\n${stageSummary()}` : copy.stageNeedVehicle;
+        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) {
+          if (assistantState.selectedVehicle) return `${copy.stage}\n${stageSummary()}`;
+          if (brandSelect.value && modelSelect.value) return `${brandSelect.value} ${modelSelect.value}\n${window.VehicleCatalog6006?.details() || ""}\n${assistantVehicleLabels().clarify}`;
+          return copy.stageNeedVehicle;
+        }
         if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return copy.consult;
         return copy.generic;
       }
