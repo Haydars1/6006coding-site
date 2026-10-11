@@ -36,6 +36,7 @@ const labels={kicker:"kicker",heading:"head",intro:"intro",all:"all", "vin-label
 for(const [id,key]of Object.entries(labels)){$(id).textContent=t(key);}
 if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));fuel.value=value;}
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
+if(year.options.length)year.options[0].textContent=t("choose");
 if(report&&!report.hidden)renderReport();
 }
 function fillMakes(){const current=make.value;const list=finder.brands().filter(Boolean).sort((a,b)=>a.localeCompare(b,"de"));fill(make,list.map(b=>[b,b]));if(current&&list.includes(current))make.value=current;}
@@ -146,6 +147,7 @@ populateModels(keep||model.value);renderEngines("");if(model.value)renderReport(
 async function modelChanged(){
 const token=++busy;renderEngines("");if(make.value)await finder.loadOpenBrand(make.value);if(token!==busy)return;renderEngines("");renderReport();
 }
+option(year,"",t("choose"));
 for(let y=new Date().getFullYear()+1;y>=1950;y--)option(year,String(y),String(y));
 fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));
 fillMakes();populateModels("");renderEngines("");
