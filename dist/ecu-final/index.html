@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#14110f">
+<title>6006 Performance · Gerçek ECU Açılış Sahnesi</title>
+<meta name="description" content="Üç soketli gerçek ECU'nun kapalı, kapağı kaldırılmış ve devresi ortaya çıkmış fotoğraf aşamaları.">
+<style>
+:root{color-scheme:dark;--gold:#c9a77d;--off:#f6ede4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#11100f;color:var(--off);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+header{min-height:30svh;display:grid;align-content:center;gap:10px;padding:32px clamp(20px,6vw,82px) 38px;background:linear-gradient(180deg,#201a16,#11100f)}
+.eyebrow{font:700 11px/1.5 ui-monospace,monospace;letter-spacing:.17em;color:var(--gold)}
+h1{margin:0;font-size:clamp(2.2rem,7vw,4.5rem);line-height:1.08;letter-spacing:-.045em;max-width:880px}
+header p{color:#c4b7a8;max-width:720px;margin:0;font-size:clamp(14px,2.1vw,18px)}
+.story{height:310svh;min-height:1900px;position:relative;isolation:isolate;background:linear-gradient(180deg,#11100f 0%,#171310 30%,#16120f 64%,#11100f)}
+.scene{height:100svh;width:100%;position:sticky;top:0;display:grid;place-items:center;overflow:hidden}
+.scene:before{content:"";position:absolute;z-index:0;left:50%;top:48%;width:min(118vw,1000px);height:72svh;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(104,67,44,.24) 0%,rgba(39,30,23,.16) 51%,transparent 77%);pointer-events:none}
+.scene:after{content:"";position:absolute;z-index:0;left:50%;bottom:9svh;transform:translateX(-50%);width:min(88vw,790px);height:7svh;background:radial-gradient(ellipse,rgba(0,0,0,.45),transparent 70%);pointer-events:none}
+.scene-top{position:absolute;z-index:5;top:clamp(24px,5svh,55px);left:clamp(19px,5vw,80px);right:clamp(19px,5vw,80px);display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.scene-top .mono{color:#d6ae7d;font:700 10px/1.5 ui-monospace,monospace;letter-spacing:.15em}
+.scene-top a{text-decoration:none;border-bottom:1px solid rgba(220,179,131,.50);font:500 11px/1.5 system-ui;color:#ead3b8}
+.scene-top a:hover{color:white}
+.stage{position:relative;z-index:2;width:min(96vw,890px);height:min(74svh,750px);transform:translate3d(0,var(--photo-y,0px),0) scale(var(--photo-scale,1));will-change:transform;pointer-events:none}
+.stage img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;visibility:hidden;opacity:0;filter:drop-shadow(0 19px 18px rgba(0,0,0,.50));transform:none;pointer-events:none}
+.stage img.active{visibility:visible;opacity:1}
+.info{position:absolute;z-index:6;bottom:clamp(117px,17svh,195px);left:clamp(20px,6vw,85px);right:clamp(20px,6vw,85px);display:flex;justify-content:space-between;align-items:flex-end;gap:10px;pointer-events:none}
+.info-label{max-width:88%}
+.info .counter{color:#b59570;font:500 12px/1.6 ui-monospace,monospace}
+.info h2{margin:5px 0 0;color:#f2e5d7;letter-spacing:-.02em;font-size:clamp(19px,3.9vw,37px);line-height:1.15}
+.info p{margin:7px 0 0;color:#c6b3a1;font-size:clamp(11px,1.7vw,14px);max-width:500px}
+.hairline{position:relative;min-width:44px;max-width:125px;width:12vw;height:1px;background:rgba(230,188,128,.4);margin-bottom:8px}
+.hairline::before{content:"";position:absolute;inset:0 0 0 auto;width:45%;background:#d6aa74;box-shadow:0 0 10px rgba(212,167,110,.18)}
+.controls{position:absolute;z-index:8;bottom:clamp(30px,7.5svh,73px);left:50%;transform:translateX(-50%);display:flex;gap:9px;width:max-content;max-width:calc(100vw - 26px)}
+.controls button{background:#201a16;border:1px solid rgba(191,149,105,.43);border-radius:100px;padding:11px 17px;color:#e7d6c1;font:600 12px system-ui;cursor:pointer;white-space:nowrap}
+.controls button[aria-pressed="true"]{background:var(--gold);color:#1e1711;border-color:var(--gold)}
+.controls button:focus-visible{outline:2px solid white;outline-offset:3px}
+.progress{position:absolute;z-index:8;bottom:0;left:0;height:2px;width:100%;background:rgba(154,116,76,.12)}
+.progress span{display:block;height:100%;width:var(--scroll-percent,0%);background:#d6ab78;box-shadow:0 0 9px rgba(220,174,113,.33)}
+.graph{position:absolute;z-index:3;inset:0;padding:clamp(70px,14svh,140px) clamp(23px,9vw,135px) 150px;display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:var(--graph-alpha,0);visibility:hidden;pointer-events:none;transform:translateY(var(--graph-y,35px))}
+.graph.visible{visibility:visible}
+.graph .inner{width:min(100%,760px)}
+.graph h2{font-size:clamp(23px,4.5vw,44px);margin:5px 0 23px;line-height:1.1}
+.graph svg{width:100%;height:auto;overflow:visible}
+.graph .grid{fill:none;stroke:rgba(218,190,160,.18);stroke-width:1}
+.graph .curve{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:800;stroke-dashoffset:var(--curve-offset,800)}
+.graph .stock{stroke:#c3ae96}.graph .tuned{stroke:#dea56c}
+.graph .note{color:#bfae9a;font-size:12px;margin-top:16px}
+footer{padding:55px clamp(20px,6vw,82px) 90px;max-width:970px;margin:auto;color:#c3b3a2}
+footer h2{color:#f3e6d6;font-size:27px;margin:0 0 12px}
+footer p{max-width:750px;margin:0 0 16px}
+footer a{color:#e2b788}
+[hidden]{display:none!important}
+body.qa header,body.qa footer{display:none!important}
+body.qa .story{height:100svh!important;min-height:100svh!important}
+@media(max-width:700px){
+ header{min-height:24svh}
+ .story{height:240svh;min-height:1420px}
+ .scene:before{height:64svh}
+ .stage{width:112vw;height:70svh;max-width:none}
+ .scene-top{left:18px;right:18px;top:5svh}
+ .scene-top .mono{font-size:9px}
+ .info{bottom:20svh;left:18px;right:18px}
+ .info h2{font-size:21px}
+ .info p{font-size:11px}
+ .hairline{display:none}
+ .controls{bottom:8svh;gap:6px}
+ .controls button{font-size:11px;padding:11px 12px}
+ .graph{padding:100px 25px 155px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stage{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">6006 PERFORMANCE · ECU DETAY</div><h1>Gerçek bir ECU'nun içine bak.</h1>
+<p>Üç soketli ECU'nun gerçek fotoğraflarından oluşan, scroll ile yönetilen teknik açılış sahnesi. Kapağı gör, devre kartını incele, Stage 1'e geç.</p></header>
+<section class="story" id="ecu-story"><div class="scene">
+ <div class="scene-top"><span class="mono">6006 PERFORMANCE / STAGE 1</span><a href="/">Aracını seç →</a></div>
+ <div class="stage" id="ecu-stage" aria-label="Gerçek üç soketli ECU fotoğraf sahnesi">
+  <img data-frame="0" class="active" src="/assets/ecu/ecu-closed.webp" width="1120" height="840" fetchpriority="high" decoding="async" alt="Gerçek metal üç soketli ECU kapalı">
+  <img data-frame="1" src="/assets/ecu/ecu-open.webp" width="1120" height="840" decoding="async" alt="ECU kapağı açılıyor ve devre kartı ortaya çıkıyor">
+  <img data-frame="2" src="/assets/ecu/ecu-exploded.webp" width="1120" height="840" decoding="async" alt="ECU kapağı ayrılmış ve üç soketli gövdenin içindeki devre kartı görülüyor">
+ </div>
+ <div class="info" id="ecu-info" aria-live="polite"><div class="info-label">
+  <span class="counter" id="ecu-counter">01 / 03</span>
+  <h2 id="ecu-title">Metal ECU gövdesi</h2><p id="ecu-desc">Üç soketli orijinal motor kontrol ünitesi.</p>
+ </div><div class="hairline" aria-hidden="true"></div></div>
+ <div class="graph" id="ecu-graph" aria-hidden="true"><div class="inner">
+  <div class="eyebrow">6006 PERFORMANCE · STAGE 1</div><h2>Gücün kontrollü analizi.</h2>
+  <svg viewBox="0 0 760 285" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Örnek orijinal ve Stage 1 performans eğrisi">
+   <g class="grid"><path d="M12 18H747M12 68H747M12 118H747M12 168H747M12 218H747M12 268H747"/><path d="M125 13V270M248 13V270M371 13V270M494 13V270M617 13V270"/></g>
+   <path class="curve stock" d="M18 260C95 255 143 247 211 214S316 166 392 146S512 101 591 117S706 138 744 147"/>
+   <path class="curve tuned" d="M18 259C96 254 143 232 210 189S320 116 389 95S500 43 591 57S708 81 744 94"/>
+  </svg>
+  <p class="note">Örnek performans eğrileridir. Gerçek sonuçlar motor, yazılım ve araç durumuna göre değişir.</p>
+ </div></div>
+ <div class="controls" role="group" aria-label="ECU sahneleri"><button type="button" data-set="0" aria-pressed="true">Kapalı</button><button type="button" data-set="1" aria-pressed="false">Kapak açık</button><button type="button" data-set="2" aria-pressed="false">İç yapı</button></div>
+ <div class="progress" aria-hidden="true"><span></span></div>
+</div></section>
+<footer><div class="eyebrow">TEKNİK GÖRSEL SUNUM</div><h2>Fotoğraf gerçekçiliğinden vazgeçmedik.</h2>
+<p>Bu sahnede kullanılan üç ECU görüntüsü, farklı açılardaki kaynak fotoğraflardır. Tam 3D CAD modeli değildir; görünmeyen yüzleri uydurmak yerine gerçek ECU görsellerini korur.</p>
+<a href="/">6006 Performance ana sayfasına dön</a></footer>
+<script>
+(()=>{
+'use strict';
+const story=document.getElementById('ecu-story'),root=document.documentElement,scene=story.querySelector('.scene');
+const photos=[...document.querySelectorAll('[data-frame]')],buttons=[...document.querySelectorAll('[data-set]')];
+const title=document.getElementById('ecu-title'),desc=document.getElementById('ecu-desc'),counter=document.getElementById('ecu-counter'),graph=document.getElementById('ecu-graph'),info=document.getElementById('ecu-info'),stage=document.getElementById('ecu-stage');
+const frames=[
+ ['Metal ECU gövdesi','Üç soketli orijinal motor kontrol ünitesi.'],
+ ['Kapak açılıyor','Devre kartı, metal gövdenin içinde ortaya çıkıyor.'],
+ ['Elektronik kart ve bağlantılar','Gerçek PCB, işlemciler ve üç soketli kasa.']
+];
+const params=new URLSearchParams(location.search),check=params.has('inspect')?Number(params.get('inspect')):null;
+if(check!==null)document.body.classList.add('qa');
+const clamp=x=>Math.min(1,Math.max(0,x)),mix=(a,b,t)=>a+(b-a)*t;
+const smooth=(a,b,x)=>{const t=clamp((x-a)/(b-a));return t*t*(3-2*t)};
+let forced=null,active=-1,raf=0,lastP=-1;
+const locale=()=>document.documentElement.lang?.slice(0,2)==='de'?'de':document.documentElement.lang?.slice(0,2)==='en'?'en':'tr';
+const translations={
+ tr:frames,
+ de:[['Geschlossenes Steuergerät','Originales Steuergerät mit drei Steckanschlüssen.'],['Deckel geöffnet','Die Leiterplatte im Aluminiumgehäuse wird sichtbar.'],['Elektronik und Anschlüsse','Originale Platine, Bauteile und drei Anschlüsse.']],
+ en:[['Closed ECU housing','Original engine control unit with three connectors.'],['Cover opened','Circuit board visible within the aluminum housing.'],['Circuit board and connectors','Original PCB, components and three connectors.']]
+};
+function paint(frame,p){
+ if(frame!==active){
+  active=frame;
+  photos.forEach((el,i)=>{el.classList.toggle('active',i===frame);el.setAttribute('aria-hidden',String(i!==frame));});
+  buttons.forEach((el,i)=>el.setAttribute('aria-pressed',String(i===frame)));
+  counter.textContent=String(frame+1).padStart(2,'0')+' / 03';
+  const words=translations[locale()][frame];title.textContent=words[0];desc.textContent=words[1];
+ }
+ const open=smooth(.0,.82,p);
+ const y=mix(16,-13,open);
+ const scale=1.015+0.045*Math.sin(Math.PI*clamp(p/.80));
+ stage.style.setProperty('--photo-y',y.toFixed(1)+'px');
+ stage.style.setProperty('--photo-scale',scale.toFixed(3));
+ scene.style.setProperty('--scroll-percent',(100*p).toFixed(1)+'%');
+ // Graph appears only after the photographic ECU has completely left the scene.
+ const fade=smooth(.82,.91,p),shown=smooth(.915,.985,p);
+ stage.style.opacity=String(1-fade);
+ info.style.opacity=String(1-fade);
+ graph.style.setProperty('--graph-alpha',shown.toFixed(3));
+ graph.style.setProperty('--graph-y',(35*(1-shown)).toFixed(1)+'px');
+ graph.style.setProperty('--curve-offset',String(Math.round(800*(1-smooth(.93,.999,p)))));
+ graph.classList.toggle('visible',shown>0);
+ graph.setAttribute('aria-hidden',String(shown===0));
+ }
+function update(){
+ raf=0;
+ const box=story.getBoundingClientRect(),range=Math.max(1,box.height-innerHeight);
+ const p=check!==null&&Number.isFinite(check)?clamp(check):forced!==null?forced:clamp(-box.top/range);
+ if(p===lastP)return;
+ lastP=p;
+ const frame=p<.29?0:p<.62?1:2;
+ paint(frame,p);
+}
+function queue(){if(!raf)raf=requestAnimationFrame(update)}
+buttons.forEach((b,i)=>b.addEventListener('click',()=>{
+ forced=[.08,.43,.72][i];lastP=-1;queue();
+ story.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+window.addEventListener('scroll',()=>{if(check===null){forced=null;lastP=-1;}queue()},{passive:true});
+window.addEventListener('resize',()=>{lastP=-1;queue()},{passive:true});
+window.addEventListener('pageshow',()=>{lastP=-1;queue()});
+new MutationObserver(()=>{active=-1;lastP=-1;queue()}).observe(root,{attributes:true,attributeFilter:['lang']});
+queue();
+})();
+</script>
+</body></html>
