@@ -7,7 +7,7 @@ on:
       - '.github/workflows/ecu-triposr-experiment.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   trial:
     runs-on: ubuntu-latest
@@ -43,6 +43,8 @@ jobs:
           OMP_NUM_THREADS: '4'
         run: |
           mkdir -p "${GITHUB_WORKSPACE}/output/ecu-triposr/meshes"/{0,1,2}
+          # TripoSR creates per-image subdirs only when background-removal is enabled.
+          mkdir -p "${GITHUB_WORKSPACE}/output/ecu-triposr/meshes/"{0,1,2}
           cd /tmp/TripoSR
           python run.py \
             "${GITHUB_WORKSPACE}/output/ecu-triposr/lid.png" \
@@ -65,6 +67,21 @@ jobs:
             print(part, f.stat().st_size, 'bytes', sum(len(g.faces) for g in mesh.geometry.values()),'triangles')
           print('Provisional GLB meshes generated; not visually approved for production.')
           PY
+      - name: Save tested experimental GLBs to review branch (never main)
+        if: success()
+        run: |
+          set -euo pipefail
+          mkdir -p dist/ecu-triposr-trial
+          cp output/ecu-triposr/meshes/0/mesh.glb dist/ecu-triposr-trial/lid.glb
+          cp output/ecu-triposr/meshes/1/mesh.glb dist/ecu-triposr-trial/pcb.glb
+          cp output/ecu-triposr/meshes/2/mesh.glb dist/ecu-triposr-trial/closed.glb
+          git config user.name "6006 3D Research Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/ecu-triposr-trial/*.glb
+          if ! git diff --cached --quiet; then
+            git commit -m "research(ecu): store unapproved TripoSR generated GLBs for visual inspection"
+            git push origin HEAD:experiment/ecu-triposr-separated-parts
+          fi
       - name: Store research input and mesh files for visual QA
         if: always()
         uses: actions/upload-artifact@v4
