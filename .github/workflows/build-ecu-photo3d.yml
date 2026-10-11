@@ -1,0 +1,55 @@
+name: Build photo-textured ECU 3D review model
+on:
+  push:
+    branches: [fix/ecu-phototextured-mesh-v1]
+    paths:
+      - scripts/build_ecu_photo3d.py
+      - dist/ecu3d-real/viewer.js
+      - dist/ecu3d-real/index.html
+      - .github/workflows/build-ecu-photo3d.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install open-source 3D/image processing libraries
+        run: python -m pip install --quiet trimesh==4.11.1 pillow==11.3.0 numpy==2.3.3
+      - name: Generate real-photo textured 3D ECU
+        run: python scripts/build_ecu_photo3d.py
+      - name: Verify model, source photos, and viewer JS
+        run: |
+          node --check dist/ecu3d-real/viewer.js
+          python - <<'PY'
+          from pathlib import Path
+          import trimesh
+          root=Path('dist/ecu3d-real')
+          model=trimesh.load(root/'ecu-photo-3d.glb',force='scene')
+          names=list(model.geometry)
+          for part in ('BASE','CONNECTORS','SCREWS','LID','PCB'):
+              assert any(n.startswith(part+'_') for n in names),part
+          assert any('photo' in n for n in names)
+          for name in ('ecu-lid-texture.webp','ecu-pcb-texture.webp','ecu-socket-left.webp','ecu-socket-middle.webp','ecu-socket-right.webp'):
+              assert (root/name).stat().st_size>5000,name
+          assert (root/'ecu-photo-3d.glb').stat().st_size<6_000_000
+          print('PASS: true phototextured 3D hardware, all mobile assets')
+          PY
+      - name: Commit tested phototextured model to review branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name '6006 ECU 3D Builder'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dist/ecu3d-real/ecu-photo-3d.glb dist/ecu3d-real/ecu-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'assets(ecu3d): photo mapped solid three-connector ECU'
+            git pull --rebase origin fix/ecu-phototextured-mesh-v1
+            git push origin HEAD:fix/ecu-phototextured-mesh-v1
+          fi
