@@ -1,0 +1,168 @@
+/* 6006 Performance: broad vehicle finder. NHTSA provides make/model names only,
+   never engine codes, European trim verification or Stage-1 performance figures. */
+(function(){
+"use strict";
+const extras={
+"Acura":"Integra,ILX,TLX,RDX,MDX","Aixam":"City,Coupé,Crossline","Alpine":"A110,A290",
+"Aston Martin":"DB9,DB11,DB12,Vantage,DBX","Bentley":"Continental GT,Flying Spur,Bentayga,Mulsanne",
+"Buick":"Encore,Enclave,Regal","BYD":"Atto 3,Dolphin,Seal,Seal U,Tang",
+"Cadillac":"Escalade,CT4,CT5,XT4,XT5,Lyriq","Chery":"Tiggo 4,Tiggo 7,Tiggo 8,Omoda 5",
+"Chrysler":"300,Pacifica,Voyager","DAF":"LF,CF,XF,XG","Daewoo":"Matiz,Lanos,Nubira,Lacetti",
+"Daihatsu":"Cuore,Sirion,Terios,Copen","Ferrari":"Roma,296,488,F8,SF90,Purosangue",
+"Genesis":"G70,G80,G90,GV60,GV70,GV80","GMC":"Sierra,Yukon,Canyon,Terrain,Acadia",
+"Great Wall":"Poer,Steed,Wingle","Haval":"H2,H6,Jolion,Dargo","Holden":"Commodore,Astra,Colorado",
+"Hongqi":"E-HS9,H5,H9","Hummer":"H2,H3,EV",
+"Infiniti":"Q30,Q50,Q60,QX30,QX50,QX70,QX80","Isuzu":"D-Max,MU-X,N-Series,F-Series",
+"JAC":"T8,JS4,JS6","Lada":"Niva,Granta,Vesta,Largus",
+"Lamborghini":"Huracán,Aventador,Urus,Revuelto,Temerario","Lancia":"Ypsilon,Delta,Thema",
+"Leapmotor":"T03,C10","Lincoln":"Navigator,Corsair,Aviator,Nautilus",
+"Lotus":"Elise,Evora,Emira,Eletre,Emeya","Lucid":"Air,Gravity",
+"Mahindra":"Scorpio,XUV700,Thar","Maserati":"Ghibli,Quattroporte,Levante,Grecale,MC20",
+"Maxus":"Deliver 9,eDeliver 3,T90","McLaren":"570S,720S,750S,Artura,GT",
+"MG":"MG3,MG4,MG5,ZS,HS,Marvel R,Cyberster","NIO":"ET5,ET7,EL6,EL7,EL8",
+"Omoda":"5,E5,7,9","Ora":"03,Funky Cat,Lightning Cat",
+"Polestar":"1,2,3,4,5","Pontiac":"G6,G8,Firebird,Solstice",
+"RAM":"1500,2500,3500,ProMaster","Rivian":"R1T,R1S,R2",
+"Rolls-Royce":"Ghost,Phantom,Cullinan,Spectre","Rover":"25,45,75",
+"Saab":"9-3,9-5,900,9000","Scania":"P-Series,G-Series,R-Series,S-Series",
+"SsangYong":"Korando,Rexton,Tivoli,Musso,Torres","Tata":"Nexon,Harrier,Safari",
+"TOGG":"T10X,T10F","UAZ":"Patriot,Hunter,Pickup","VinFast":"VF 6,VF 7,VF 8,VF 9",
+"Voyah":"Free,Dream,Courage","Wuling":"Air EV,Bingo","XPeng":"P7,G6,G9",
+"Zeekr":"001,X,7X,009",
+"Abarth":"124 Spider","Alfa Romeo":"147,156,159,166,4C,Brera,Junior",
+"Audi":"80,100,A2,A7,A8,Q4 e-tron,Q6 e-tron,Q8,e-tron,RS3,RS4,RS5,RS6,S3,S4,R8",
+"BMW":"1 Series,2 Series,3 Series,4 Series,5 Series,6 Series,7 Series,8 Series,i3,i4,i5,i7,iX,iX1,X2,X4,X7,XM,Z4,M2,M3,M4,M5,320i,320d,330d,530d",
+"Citroën":"C2,C3 Aircross,C4 Picasso,C5,C6,DS3,DS4,DS5,SpaceTourer",
+"Dacia":"Spring,Bigster,Lodgy","Fiat":"500X,500L,600,Grande Punto,Punto,Bravo,Stilo,Scudo",
+"Ford":"Ka,Fusion,EcoSport,S-MAX,Galaxy,Edge,Explorer,Bronco,F-150,Tourneo,Transit Custom",
+"Honda":"Accord,City,Prelude,FR-V,Insight,HR-V,ZR-V,Pilot",
+"Hyundai":"i40,ix20,ix35,Bayon,IONIQ,IONIQ 5,IONIQ 6,Nexo,Staria,Veloster",
+"Jeep":"Avenger,Cherokee,Gladiator,Patriot","Kia":"Rio,Stonic,Venga,Optima,Stinger,Soul,EV3,EV9",
+"Land Rover":"Freelander,Discovery Sport,Range Rover,Range Rover Velar",
+"Lexus":"IS,GS,LS,RC,LC,CT,LBX,GX,LX,RZ",
+"Mazda":"MX-5,CX-3,CX-50,CX-80,RX-7,RX-8,BT-50",
+"Mercedes-Benz":"190,C-Class,E-Class,S-Class,CLA,CLS,CLE,GLB,GLK,GLS,G-Class,SL,AMG GT,EQA,EQB,EQC,EQE,EQS,EQV,Citan,V-Class,Actros,Atego,E 200,E 220 d,E 300 de,E 53 AMG,C 220 d,W204,W205,W206,W212,W213,W214",
+"MINI":"Cooper,Cooper S,John Cooper Works,Cabrio,Paceman",
+"Mitsubishi":"Colt,Lancer,Eclipse Cross,Pajero,Grandis",
+"Nissan":"Almera,Note,Pulsar,Primera,Altima,Patrol,Ariya,350Z,370Z,GT-R",
+"Opel":"Adam,Karl,Meriva,Vectra,Omega,Crossland,Combo,Ampera,Antara,Frontera",
+"Peugeot":"106,206,207,2008,301,306,307,407,408,508,807,Partner,Traveller",
+"Porsche":"718 Boxster,718 Cayman,Boxster,Cayman",
+"Renault":"Twingo,Laguna,Talisman,Kadjar,Koleos,Zoe,Espace,Kangoo,Symbioz,Rafale",
+"Škoda":"Citigo,Rapid,Roomster,Yeti,Enyaq,Elroq",
+"Subaru":"BRZ,Legacy,XV,Levorg,WRX,Solterra",
+"Suzuki":"Alto,Ignis,Baleno,Splash,SX4,Across,Swace",
+"Tesla":"Cybertruck,Roadster",
+"Toyota":"Aygo,Aygo X,Auris,Avensis,Camry,Prius,Verso,Hilux,Supra,GR86,bZ4X,Highlander",
+"Volkswagen":"Up!,Lupo,Fox,Bora,Jetta,Beetle,Scirocco,Sharan,ID.3,ID.4,ID.5,ID.7,ID.Buzz,Amarok,Crafter,T4,T5,T6,Multivan,California,Golf IV,Golf V,Golf VI,Golf VII,Golf VIII,Golf 7,Golf 8,Passat B5,Passat B6,Passat B7,Passat B8,Passat B9",
+"Volvo":"S40,S60,S80,S90,V50,V70,XC70,C30,EX30,EX40,EX90,FH,FM"
+};
+const seed={};Object.keys(extras).forEach(k=>seed[k]=extras[k].split(","));
+const makes=new Set(Object.keys(seed)), remote=new Map(), pending=new Map();
+const alias={"vw":"Volkswagen","mercedes":"Mercedes-Benz","benz":"Mercedes-Benz","skoda":"Škoda","citroen":"Citroën","range rover":"Land Rover","landrover":"Land Rover","chevy":"Chevrolet","vauxhall":"Opel","ds":"DS Automobiles","seat":"SEAT"};
+const norm=s=>String(s||"").toLowerCase().replace(/ı/g,"i").replace(/ß/g,"ss").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim().replace(/\s+/g," ");
+const brands=()=>[...makes];
+const models=brand=>[...new Set([...(seed[brand]||[]),...(remote.get(brand)||[])])].sort((a,b)=>a.localeCompare(b,"de",{numeric:true}));
+async function get(url){
+ const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),7000);
+ try{const r=await fetch(url,{signal:ctrl.signal,mode:"cors"});if(!r.ok)throw Error("vPIC");const v=await r.json();return Array.isArray(v.Results)?v.Results:[];}
+ finally{clearTimeout(timer);}
+}
+function fromCache(k){try{let v=JSON.parse(sessionStorage.getItem("6006-vpic:"+k)||"null");return v&&Date.now()-v.at<604800000?v.data:null;}catch(_){return null;}}
+function cache(k,data){try{sessionStorage.setItem("6006-vpic:"+k,JSON.stringify({at:Date.now(),data}));}catch(_){}}
+const canonical=name=>[...makes].find(m=>norm(m)===norm(name))||name.toLowerCase().replace(/(^|\s|-)\S/g,s=>s.toUpperCase());
+let makesPromise;
+function loadMakes(){
+ if(makesPromise)return makesPromise;
+ makesPromise=(async()=>{
+  let names=fromCache("makes");if(!names){names=(await get("https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json")).map(x=>x.MakeName).filter(Boolean);cache("makes",names);}
+  names.forEach(n=>makes.add(canonical(n)));dispatchEvent(new Event("6006-makes-ready"));
+ })().catch(()=>{});
+ return makesPromise;
+}
+function loadModels(brand){
+ if(!brand)return Promise.resolve();
+ if(pending.has(brand))return pending.get(brand);
+ const task=(async()=>{
+  let names=fromCache("model:"+brand);
+  if(!names){names=(await get("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"+encodeURIComponent(brand)+"?format=json")).map(x=>x.Model_Name).filter(Boolean);cache("model:"+brand,names);}
+  remote.set(brand,[...new Set(names.filter(x=>typeof x==="string"&&x.length<=70))]);dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
+ })().catch(()=>{});
+ pending.set(brand,task);return task;
+}
+function match(input){
+ const q=" "+norm(input)+" ";
+ const candidates=[...Object.entries(alias),...[...makes].map(x=>[x,x])].sort((a,b)=>b[0].length-a[0].length);
+ const found=candidates.find(x=>norm(x[0]).length>=2&&q.includes(" "+norm(x[0])+" "));
+ if(!found)return null;
+ const brand=found[1], model=models(brand).filter(m=>norm(m).length>=2&&q.includes(" "+norm(m)+" ")).sort((a,b)=>norm(b).length-norm(a).length)[0]||"";
+ return {brand,model};
+}
+const word={
+ tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Kesin motor varyantını doğrulamak için yıl, yakıt, motor kodu, stok güç ve şanzıman girin. Stage 1 rakamları otomatik uydurulmaz."},
+ de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Für den genauen Motor Baujahr, Kraftstoff, Motorcode, Serienleistung und Getriebe ergänzen. Keine erfundenen Stage-1-Werte."},
+ en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Enter year, fuel, engine code, stock power and gearbox to identify the variant. No invented Stage 1 figures."}
+};
+function lang(){let v;try{v=localStorage.getItem("6006-language");}catch(_){}return word[v]?v:word[document.documentElement.lang]?document.documentElement.lang:"de";}
+const tr=k=>word[lang()][k];
+const field=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+function details(){return [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"]].map(x=>field(x[0])?tr(x[1])+": "+field(x[0]):"").filter(Boolean).join(" · ");}
+function params(){const q=new URLSearchParams();[["yearSelect","year"],["fuelSelect","powertrain"],["engineInput","engine"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{if(field(x[0]))q.set(x[1],field(x[0]));});return q;}
+function install(){
+ const brand=document.getElementById("brandSelect"), model=document.getElementById("modelSelect"), grid=document.querySelector(".estimate-card .select-grid");
+ if(!brand||!model||!grid||document.getElementById("yearSelect"))return;
+ const box=document.createElement("div");box.className="vehicle-discovery";
+ box.innerHTML='<div class="vehicle-find"><label for="vehicleQuickSearch"></label><div class="vehicle-find-row"><input id="vehicleQuickSearch" type="search" autocomplete="off" spellcheck="false"><button type="button" id="vehicleFindButton"></button></div><small role="status" id="vehicleFindMessage" aria-live="polite"></small></div>'
+ +'<div class="vehicle-extra">'
+ +'<div class="field"><label for="yearSelect"></label><select id="yearSelect"><option value=""></option></select></div>'
+ +'<div class="field"><label for="fuelSelect"></label><select id="fuelSelect"><option value=""></option><option value="Benzin">Benzin / Petrol</option><option value="Diesel">Diesel / Dizel</option><option value="Hybrid">Hybrid / Hibrit</option><option value="Plug-in-Hybrid">Plug-in-Hybrid</option><option value="Electric">Elektro / Elektrik</option><option value="LPG">LPG</option><option value="CNG">CNG</option></select></div>'
+ +'<div class="field"><label for="engineInput"></label><input id="engineInput" type="text" maxlength="90" placeholder="2.0 TDI CRLB"></div>'
+ +'<div class="field"><label for="powerInput"></label><input id="powerInput" type="number" min="1" max="3000" inputmode="numeric" placeholder="150"></div>'
+ +'<div class="field"><label for="gearboxSelect"></label><select id="gearboxSelect"><option value=""></option><option value="Manuel">Manuel / Schaltgetriebe</option><option value="Otomatik">Otomatik / Automatik</option><option value="DSG/DCT">DSG / DCT</option><option value="CVT">CVT</option></select></div></div>'
+ +'<div class="vehicle-manual"><label for="customModelInput"></label><div class="vehicle-find-row"><input id="customModelInput" type="text" maxlength="90"><button id="customModelButton" type="button"></button></div></div>'
+ +'<p class="vehicle-note" id="vehicleDiscoveryNote"></p>';
+ grid.parentNode.insertBefore(box,grid);
+ const styles=document.createElement("style");styles.id="vehicle-discovery-css";styles.textContent=".vehicle-discovery{padding:.5rem 0 0}.vehicle-find{margin:0 0 1rem}.vehicle-find-row{display:flex;gap:.5rem}.vehicle-discovery input{width:100%;min-width:0;min-height:3.05rem;padding:.6rem .7rem;border:1px solid rgba(242,238,229,.3);border-radius:3px;background:#171816;color:#f3eee4;font-size:.8rem}.vehicle-discovery label{display:block;margin:0 0 .42rem;color:#dfbd8a;font-size:.68rem}.vehicle-discovery button{flex-shrink:0;min-height:3rem;padding:0 .85rem;background:#c69a63;color:#161310;border:0;border-radius:3px;font-size:.7rem;font-weight:700;cursor:pointer}.vehicle-discovery button:hover{background:#e0bd89}.vehicle-extra{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:.25rem 0 1rem}.vehicle-extra .field{min-width:0}.vehicle-manual{margin:.35rem 0}.vehicle-note,.vehicle-find small{display:block;min-height:1.2rem;margin:.4rem 0;color:#c6bbab;font-size:.68rem;line-height:1.55}.vehicle-note{margin:.55rem 0 1rem}.vehicle-find-row input{flex:1}@media(max-width:600px){.vehicle-extra{grid-template-columns:1fr}.vehicle-find-row button{padding:0 .55rem;font-size:.64rem}}";document.head.append(styles);
+ const year=document.getElementById("yearSelect");for(let y=new Date().getFullYear()+1;y>=1950;y--){const option=new Option(String(y),String(y));year.add(option);}
+ function applyWords(){
+   [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"],["customModelInput","missing"],["vehicleQuickSearch","find"]].forEach(x=>box.querySelector('label[for="'+x[0]+'"]').textContent=tr(x[1]));
+   document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");
+   document.getElementById("vehicleQuickSearch").placeholder=tr("hint");document.getElementById("vehicleDiscoveryNote").textContent=tr("notice");
+   ["yearSelect","fuelSelect","gearboxSelect"].forEach(id=>document.getElementById(id).options[0].textContent=tr("choose"));
+ }
+ applyWords();new MutationObserver(applyWords).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+ const feedback=document.getElementById("vehicleFindMessage");
+ function selectCar(result){
+   if(!result||!result.brand){feedback.textContent=tr("error");return;}
+   if(![...brand.options].some(x=>x.value===result.brand))brand.add(new Option(result.brand,result.brand));
+   brand.value=result.brand;brand.dispatchEvent(new Event("change",{bubbles:true}));
+   if(result.model){if(![...model.options].some(x=>x.value===result.model))model.add(new Option(result.model,result.model));model.value=result.model;model.dispatchEvent(new Event("change",{bubbles:true}));}
+   feedback.textContent=tr("result")+": "+result.brand+" "+(result.model||"");loadModels(result.brand);
+ }
+ const quick=document.getElementById("vehicleQuickSearch");
+ function search(){selectCar(match(quick.value));}
+ document.getElementById("vehicleFindButton").addEventListener("click",search);
+ quick.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search();}});
+ function manual(){
+   const value=field("customModelInput");if(!brand.value||!value){feedback.textContent=tr("error");return;}
+   const matched=[...model.options].find(x=>norm(x.value)===norm(value));const chosen=matched?matched.value:value;
+   if(!matched)model.add(new Option(value,value));model.value=chosen;model.dispatchEvent(new Event("change",{bubbles:true}));feedback.textContent=tr("result")+": "+brand.value+" "+chosen;
+ }
+ document.getElementById("customModelButton").addEventListener("click",manual);
+ document.getElementById("customModelInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();manual();}});
+ const ids=["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"];
+ ids.forEach(id=>{const e=document.getElementById(id);e.addEventListener("change",()=>model.dispatchEvent(new Event("change",{bubbles:true})));if(e.tagName==="INPUT")e.addEventListener("blur",()=>model.dispatchEvent(new Event("change",{bubbles:true})));});
+ function save(){try{sessionStorage.setItem("6006-vehicle-choice",JSON.stringify({brand:brand.value,model:model.value,...Object.fromEntries(params())}));}catch(_){}}
+ [brand,model,...ids.map(x=>document.getElementById(x))].forEach(e=>e.addEventListener("change",save));
+ const q=new URLSearchParams(location.search);
+ let stored={};try{stored=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"{}");}catch(_){}
+ if(q.has("brand")||stored.brand){
+   selectCar({brand:q.get("brand")||stored.brand,model:q.get("model")||stored.model||""});
+   [["yearSelect","year"],["engineInput","engine"],["fuelSelect","powertrain"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{const value=q.get(x[1])||stored[x[1]]||"";if(value)document.getElementById(x[0]).value=value;});
+   model.dispatchEvent(new Event("change",{bubbles:true}));
+ }
+}
+window.VehicleCatalog6006={brands,models,loadModels,loadMakes,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",loadMakes,{once:true});else loadMakes();
+})();
