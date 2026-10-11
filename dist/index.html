@@ -1140,7 +1140,7 @@ html{scroll-padding-top:1.25rem}
 .ecub__world::before{content:none!important}
 .ecub__light{display:none!important}
 </style>
-  <link rel="stylesheet" href="/assets/6006-ecu-real.css?v=20261011motion7"/>
+  <link rel="stylesheet" href="/assets/6006-ecu-real.css?v=20261011realphoto8"/>
 </head>
   <body>
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
@@ -1228,12 +1228,10 @@ html{scroll-padding-top:1.25rem}
           <p class="ecu-real__heading" data-ecu-real-i18n="brand">6006 · STAGE 1 / ECU</p>
           <a class="ecu-real__skip" href="#aracin" data-ecu-real-i18n="skip">Doğrudan araç seç ↓</a>
           <div class="ecu-real__unit" aria-hidden="true">
-            <img class="ecu-real__photo ecu-real__photo--closed" src="/assets/ecu/ecu-v6-closed.webp" alt="" width="1120" height="840" decoding="async" loading="lazy" />
-            <div class="ecu-real__split">
-              <img class="ecu-real__photo ecu-real__photo--base" src="/assets/ecu/ecu-v6-housing.webp" alt="" width="1120" height="840" decoding="async" loading="lazy" />
-              <img class="ecu-real__photo ecu-real__photo--board" src="/assets/ecu/ecu-v6-board.webp" alt="" width="1120" height="840" decoding="async" loading="lazy" />
-              <img class="ecu-real__photo ecu-real__photo--lid" src="/assets/ecu/ecu-v6-lid.webp" alt="" width="1120" height="840" decoding="async" loading="lazy" />
-            </div>
+            <!-- Photo-real ECU states from one matched hardware family; NEVER recombine the fake metal filler -->
+            <img class="ecu-real__photo ecu-real__photo--closed" src="/assets/ecu/ecu2026-closed.webp" alt="" width="1120" height="840" decoding="async" loading="eager" fetchpriority="high" />
+            <img class="ecu-real__photo ecu-real__photo--open" src="/assets/ecu/ecu2026-open.webp" alt="" width="1120" height="840" decoding="async" loading="eager" />
+            <img class="ecu-real__photo ecu-real__photo--exploded" src="/assets/ecu/ecu2026-exploded.webp" alt="" width="1120" height="840" decoding="async" loading="eager" />
           </div>
           <div class="ecu-real__caption"><span data-ecu-real-phase>ECU KAPAĞI AÇILIYOR</span></div>
           <div class="ecu-real__conduit" aria-hidden="true"></div>
@@ -2466,6 +2464,6 @@ html{scroll-padding-top:1.25rem}
   enhance("topic-search",".topic");
   enhance("work-search",".work");
 })();</script><script defer src="/assets/6006-ui.js?v=20261008"></script>
-  <script defer src="/assets/6006-ecu-real.js?v=20261011motion7"></script>
+  <script defer src="/assets/6006-ecu-real.js?v=20261011realphoto8"></script>
 </body>
 </html>
