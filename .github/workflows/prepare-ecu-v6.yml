@@ -1,0 +1,33 @@
+name: Preview ECU assembly V6
+on:
+  push:
+    branches:
+      - fix/ecu-assembly-visual-v6
+    paths:
+      - .github/workflows/prepare-ecu-v6.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Generate real ECU photo components
+        run: |
+          python -m pip install --quiet Pillow==11.3.0 numpy==2.3.3
+          python scripts/build-ecu-v6.py
+      - name: Commit extracted layers to preview branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "6006 Visual QA"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/assets/ecu/ecu-v6-closed.webp dist/assets/ecu/ecu-v6-lid.webp dist/assets/ecu/ecu-v6-board.webp dist/assets/ecu/ecu-v6-housing.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(stage1): generate realistic independently moving ECU layers"
+            git pull --rebase origin fix/ecu-assembly-visual-v6
+            git push origin HEAD:fix/ecu-assembly-visual-v6
+          fi
