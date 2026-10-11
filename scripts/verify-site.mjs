@@ -79,21 +79,11 @@ for(const f of ['ecu-closed.webp','ecu-open.webp','ecu-exploded.webp']){
 assert(!previewHtml.includes('viewer.js'),'Rejected 3D mockup must not render in the public preview');
 
 
-/* Modern WebGL assembly is the preferred view; original three-stage photographs
- * remain the fallback when module/CDN/WebGL initialization fails. */
-const premium3d=fs.readFileSync(path.join(ROOT,'assets/6006-ecu-premium3d.js'),'utf8');
-const premiumCss=fs.readFileSync(path.join(ROOT,'assets/6006-ecu-premium3d.css'),'utf8');
-execFileSync(process.execPath,['--check',path.join(ROOT,'assets/6006-ecu-premium3d.js')],{stdio:'pipe'});
-assert(homepage.includes('6006-ecu-premium3d.js')&&homepage.includes('6006-ecu-premium3d.css'),'WebGL home scene not linked');
-for(const part of ['const base=new THREE.Group()','const pcb=new THREE.Group()','const lid=new THREE.Group()']){
- // All primary assemblies are grouped; the scene moves lid and PCB separately.
- assert(premium3d.includes(part.slice(0,11))||premium3d.includes('new THREE.Group()'),'Missing physical assembly');
-}
-assert(premium3d.includes('for(const [x,w,pins] of [['),'3 individually modeled multi-pin connectors missing');
-assert(premium3d.includes('lid.position.y=')&&premium3d.includes('pcb.position.y='),'3D lid / board motions missing');
-assert(premium3d.includes("canvas.addEventListener('pointermove'"),'Interactive model rotation missing');
-assert(premiumCss.includes('ecx--3d-ready')&&premiumCss.includes('img{display:none!important}'),'Safe real-photo fallback missing');
-assert(homepage.includes('/assets/ecu/ecu-closed.webp'),'Real-ECU fallback disappeared');
-console.log('PASS: modelled 3D ECU casing, lid, PCB and three separate sockets; interactive with photo fallback');
+// Experimental ECU WebGL was removed on request; photographic stages remain.
+assert(!homepage.includes('6006-ecu-premium3d.js'),'Rejected ECU WebGL renderer must not be on homepage');
+assert(!homepage.includes('6006-ecu-premium3d.css'),'Rejected ECU WebGL styles must not be on homepage');
+assert(!homepage.includes('/ecu-atelier/'),'Rejected separate 3D ECU route must not be linked');
+console.log('PASS: rejected ECU 3D removed, original photo stages remain');
+
 
 console.log(`PASS: ${pages.length} pages, ${db.defs.length} DTC definitions, ${categories.length} part visuals, ${checked} local links, ${javascript.length} JS files`);
