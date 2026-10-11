@@ -245,6 +245,6 @@ model=trimesh.load(output,force='scene')
 groups={name.split('_')[0] for name in model.geometry}
 assert {'BASE','CONNECTORS','LID','PCB','SCREWS'} <= groups
 assert any('photo' in name for name in model.geometry)
-assert len([n for n in model.geometry if n.startswith('BASE_photo')])>=5
+assert len([n for n in model.geometry if n.startswith('BASE_') and ('photo' in n or 'real-lip' in n)])>=6
 assert output.stat().st_size < 6_000_000
 print('PHOTO ECU 3D:',output.stat().st_size,'bytes',len(model.geometry),'geometry groups',sorted(groups))
