@@ -152,6 +152,8 @@ for(const row of db.defs.filter(r=>r.length===3)){
  assert(result&&result.classification&&result.causes.length>=1&&result.checks.length>=2&&result.note,'Missing preliminary guidance for '+row[0]);
 }
 for(const language of ['tr','de','en']){
+ const unknown=detailEngine.explain('B2000','Manufacturer Controlled DTC','GENERIC',language);
+ assert(unknown.mode==='undefined'&&unknown.limited,'Placeholder mistaken for component diagnosis in '+language);
  const pending=detailEngine.explain('P1000','OBD System Readiness Test Not Complete','FORD',language);
  assert(pending.mode==='readiness'&&pending.limited,'Readiness misclassified in '+language);
  const safety=detailEngine.explain('B0020','Airbag squib circuit open','GENERIC',language);
