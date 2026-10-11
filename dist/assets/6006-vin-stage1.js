@@ -105,7 +105,8 @@ function matchPublishedStage(){
  for(const item of stage1Published){
   if(clean(make.value)!==clean(item.make)||clean(model.value)!==clean(item.model))continue;
   if(selectedYear<item.yearFrom||selectedYear>item.yearTo)continue;
-  if(fuel.value&&fuel.value!==item.fuel)continue;
+  // A known fuel type is required for any published tuning example.
+  if(fuel.value!==item.fuel)continue;
   if(item.manualOnly){
    // A Passat B8 example must NOT be shown for loose generic Passat model-family matches.
    if(selected||!clean(manual.value).includes(clean(item.manualEngineContains)))continue;
@@ -140,7 +141,7 @@ function renderStageReference(){
 }
 async function loadPublishedStageReferences(){
  try{
-  const response=await fetch("/assets/6006-stage1-references.json?v=20261012",{cache:"force-cache"});
+  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-multibrand",{cache:"force-cache"});
   if(!response.ok)return;
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.examples))return;
