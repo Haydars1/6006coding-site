@@ -79,7 +79,7 @@ function faultType(code,description){
  if(/invalid data received|invalid data|implausible data/i.test(d))return "invalid";
  if(/open circuit|circuit open|circuit\/open|electrical open|open or short/i.test(d))return "open";
  if(/circuit low|input low|signal low|low voltage|voltage below|short to ground/i.test(d))return "low";
- if(/circuit high|input high|signal high|high voltage|voltage above|short to battery/i.test(d))return "high";
+ if(/circuit high|input high|high input|signal high|high signal|high voltage|voltage above|short to battery/i.test(d))return "high";
  if(/misfire|combustion fault|ignition miss/i.test(d))return "misfire";
  if(/system too lean|mixture too lean|lean bank/i.test(d))return "lean";
  if(/system too rich|mixture too rich|rich bank/i.test(d))return "rich";
