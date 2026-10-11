@@ -27,7 +27,12 @@ jobs:
           python -m pip install --quiet 'torch==2.3.1' 'torchvision==0.18.1' --index-url https://download.pytorch.org/whl/cpu
           git clone --depth 1 https://github.com/VAST-AI-Research/TripoSR.git /tmp/TripoSR
           cd /tmp/TripoSR
-          python -m pip install --quiet -r requirements.txt
+          # torchmcubes must compile against the already installed CPU torch;
+          # building in isolated pip metadata environment fails to see PyTorch.
+          grep -v 'torchmcubes' requirements.txt > /tmp/ecu-triposr-reqs.txt
+          python -m pip install --quiet -r /tmp/ecu-triposr-reqs.txt
+          python -m pip install --quiet scikit-build-core ninja pybind11 cmake
+          python -m pip install --quiet --no-build-isolation 'git+https://github.com/tatsy/torchmcubes.git'
       - name: Build source-grounded photographic ECU 3D candidates
         env:
           HF_HUB_DISABLE_TELEMETRY: '1'
