@@ -119,6 +119,12 @@ function loadOpenBrand(brand){
  })().catch(()=>null);
  openPending.set(k,task);return task;
 }
+function referencePowerNeedsReview(variant){
+ const hp=Number(variant.hp),label=String(variant.engine||'');
+ if(/hybrid|phev|mhev|e-tsi|etsi/i.test(label+' '+(variant.fuel||'')))return true;
+ const named=label.match(/\b(\d{2,4})\s*(?:hp|bhp|ps)\b/i);
+ return !!(named&&hp>0&&Math.abs(Number(named[1])-hp)>Math.max(3,Number(named[1])*.03));
+}
 function engineVariants(brand,model,year){
  const entries=openModels.get(norm(brand))||[];
  const q=norm(model);
@@ -261,12 +267,15 @@ function install(){
  const variantField=document.createElement("div");variantField.className="field";variantField.innerHTML='<label for="engineVariantSelect" id="engineVariantLabel">Motorvariante · Open Data</label><select id="engineVariantSelect"><option value="">—</option></select>';
  const yearField=document.getElementById("yearSelect").closest(".field");yearField?.insertAdjacentElement("afterend",variantField);
  const variantSelect=document.getElementById("engineVariantSelect");
+ const powerNote=document.createElement('p');powerNote.id='enginePowerNote';powerNote.setAttribute('role','status');powerNote.hidden=true;variantField.append(powerNote);
+ let powerReview=false;
+ function updatePowerNote(){powerNote.hidden=!powerReview;powerNote.textContent=lang()==='tr'?'Güç verisi belirsiz: kaynak alanları uyuşmuyor veya hibrit motor/toplam sistem gücü ayrımı gerekli. Ruhsattaki doğrulanmış stok PS değerini elle girin.':lang()==='de'?'Leistungsangabe unklar: Quellfelder weichen ab oder Hybrid-Motor- und Systemleistung müssen unterschieden werden. Bestätigte Serienleistung in PS anhand der Fahrzeugunterlagen selbst eintragen.':'Power reference needs review: source fields differ or hybrid engine and total system power need distinction. Enter confirmed stock PS from the vehicle documents.';}
  let selectedVariants=[];
  function variantOptions(){
    selectedVariants=engineVariants(brand.value,model.value,field("yearSelect"));
    variantSelect.replaceChildren(new Option("—",""));
    selectedVariants.forEach((v,index)=>{
-     const label=(v.generation?v.generation+" · ":"")+v.engine+(v.hp?" · "+v.hp+" HP":"")+(v.nm?" · "+v.nm+" Nm":"");
+     const label=(v.generation?v.generation+" · ":"")+v.engine+(v.hp&&!referencePowerNeedsReview(v)?" · "+v.hp+" HP":"")+(v.nm?" · "+v.nm+" Nm":"");
      variantSelect.add(new Option(label.slice(0,155),String(index)));
    });
    variantField.hidden=selectedVariants.length===0;
@@ -279,7 +288,8 @@ function install(){
    if(!variantSelect.value)return;
    const variant=selectedVariants[Number(variantSelect.value)];if(!variant)return;
    document.getElementById("engineInput").value=variant.engine;
-   if(variant.hp)document.getElementById("powerInput").value=String(Math.round(variant.hp*1.01387));
+   powerReview=referencePowerNeedsReview(variant);updatePowerNote();
+   document.getElementById("powerInput").value=variant.hp&&!powerReview?String(Math.round(variant.hp*1.01387)):'';
    if(variant.fuel){
      const str=variant.fuel.toLowerCase();const fuel=str.includes("diesel")?"Diesel":str.includes("electric")?"Electric":str.includes("hybrid")?"Hybrid":"Benzin";
      document.getElementById("fuelSelect").value=fuel;
@@ -319,6 +329,7 @@ function install(){
    document.getElementById("vehicleQuickSearch").placeholder=tr("hint");document.getElementById("vehicleDiscoveryNote").textContent=tr("notice");
    ["yearSelect","fuelSelect","gearboxSelect"].forEach(id=>document.getElementById(id).options[0].textContent=tr("choose"));
    const variantLabel=document.getElementById("engineVariantLabel");if(variantLabel)variantLabel.textContent=lang()==="tr"?"Motor varyantı · açık veri":lang()==="de"?"Motorvariante · offene Fahrzeugdaten":"Engine variant · open reference data";
+   updatePowerNote();
  }
  applyWords();new MutationObserver(applyWords).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  const feedback=document.getElementById("vehicleFindMessage");
@@ -423,7 +434,7 @@ function install(){
    model.dispatchEvent(new Event("change",{bubbles:true}));
  }
 }
-window.VehicleCatalog6006={brands,models,searchModels,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
+window.VehicleCatalog6006={brands,models,searchModels,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,referencePowerNeedsReview,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{loadOpenIndex();loadMakes();},{once:true});else {loadOpenIndex();loadMakes();}
 })();

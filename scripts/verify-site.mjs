@@ -39,6 +39,10 @@ const sandbox={
 vm.runInNewContext(fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8'),sandbox,{timeout:2000});
 const finder=fakeWindow.VehicleCatalog6006;
 assert(finder && typeof finder.match==='function','Vehicle catalogue was not initialized');
+assert(finder.referencePowerNeedsReview({engine:'2.0L (300 HP)',hp:200}), 'Conflicting reference power must require review');
+assert(finder.referencePowerNeedsReview({engine:'1.4L (204 HP)',hp:150,fuel:'Hybrid'}), 'Hybrid system power must not auto-fill stock PS');
+assert(!finder.referencePowerNeedsReview({engine:'1.4L (150 HP)',hp:150,fuel:'Petrol'}), 'Consistent reference power rejected');
+assert(!finder.referencePowerNeedsReview({engine:'1.2L (85 HP)',hp:86}), 'Small unit/rounding differences rejected');
 for(const [input,brand,model] of [
   ['vw golf','Volkswagen','Golf'],
   ['BMW X5','BMW','X5'],
