@@ -54,11 +54,11 @@ jobs:
           if(removed<100000)throw Error("Photo mask did not remove the filler");
           // A narrow, recessed aluminium lip occupies only the case edge,
           // instead of the former upright black rectangular plate.
-          const floor='<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="840"><defs><linearGradient id="m" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#353b3b"/><stop offset="0.45" stop-color="#898f8c"/><stop offset="1" stop-color="#41484b"/></linearGradient></defs><path d="M183 412 L280 369 719 453 880 499 877 523 813 555 289 480 183 446Z" fill="#66706f" stroke="#adb4b0" stroke-width="5"/><path d="M192 417 L285 383 711 463 865 507 807 542 296 470 199 440Z" fill="url(#m)" stroke="#343a3c" stroke-width="4"/><path d="M197 414L285 381 710 462 859 504" stroke="#d9dfd9" stroke-opacity=".4" stroke-width="2" fill="none"/></svg>';
+          const floor='<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="840"><defs><linearGradient id="m" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#353b3b"/><stop offset="0.45" stop-color="#898f8c"/><stop offset="1" stop-color="#41484b"/></linearGradient></defs><g transform="translate(0,50)"><path d="M183 412 L280 369 719 453 880 499 877 523 813 555 289 480 183 446Z" fill="#66706f" stroke="#adb4b0" stroke-width="5"/><path d="M192 417 L285 383 711 463 865 507 807 542 296 470 199 440Z" fill="url(#m)" stroke="#343a3c" stroke-width="4"/><path d="M197 414L285 381 710 462 859 504" stroke="#d9dfd9" stroke-opacity=".4" stroke-width="2" fill="none"/></g></svg>';
           const keep=await sharp(data,{raw:info}).png().toBuffer();
           const output=await sharp(Buffer.from(floor)).composite([{input:keep}])
             .webp({quality:86,effort:4}).toBuffer();
-          fs.writeFileSync(path+"ecu-split-base-v4.webp",output);
+          fs.writeFileSync(path+"ecu-split-base-v5.webp",output);
           console.log("Removed filler pixels:",removed,"new bytes:",output.length);
           JS
       - name: Commit corrected only ECU image
@@ -66,7 +66,7 @@ jobs:
         run: |
           git config user.name "6006 Performance Assets"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/assets/ecu/ecu-split-base-v4.webp
+          git add dist/assets/ecu/ecu-split-base-v5.webp
           if ! git diff --cached --quiet; then
             git commit -m "assets(stage1): replace fake vertical filler with realistic recessed ECU tray"
             git pull --rebase origin main
