@@ -31,6 +31,584 @@ const rows=[
 ['U0121','Kommunikation mit ABS-Steuergerät verloren','CAN / ABS','Das Fahrzeugnetzwerk erhält vom ABS-/ESP-Steuergerät keine erwarteten Nachrichten.','ABS- und ESP-Leuchte, Assistenzsystem-Ausfall, mehrere Fehler zugleich','Unterspannung und Sicherungen; Versorgung oder Masse des ABS-Steuergeräts; Netzwerkverkabelung oder Stecker','ABS-Steuergerät direkt ansprechen; Spannungsversorgung unter Last prüfen; CAN-Bus und Begleitcodes kontrollieren','Bei ABS-/ESP-Ausfall längeren Bremsweg und fehlende Stabilisierung berücksichtigen und Fahrzeug überprüfen lassen.','U0100,C0035'],
 ['C0035','Raddrehzahlsensor vorne links: Signalproblem','ABS / Fahrwerk','Der Diagnosecode wird häufig dem vorderen linken Raddrehzahlsensor zugeordnet; markenspezifische Untercodes müssen geprüft werden.','ABS-/ESP-Leuchte, ausgefallene Traktionsregelung, unplausible Geschwindigkeit','Beschädigtes Sensorkabel oder Stecker; Sensorfehler; beschädigter Magnetencoder am Radlager','Live-Raddrehzahlen aller vier Räder vergleichen; Sensorleitung und mechanischen Einbau prüfen; Radlager-Encoder auf Beschädigung kontrollieren','Bremsreparaturen und Arbeiten an ABS-Sensorik erfordern geeignete Sicherung und Fachkenntnis.','U0121,P0700']
 ];
+
+// Additional individually reviewed first-pass troubleshooting profiles.
+// Do not infer exact OEM repair approval, replacement necessity or tuning results from these entries.
+rows.push(...[
+  [
+    "P0100",
+    "Luftmassenmesser: Signal-/Stromkreisfehler",
+    "Ansaugluft / MAF",
+    "Das Luftmassenmessersignal fehlt oder liegt außerhalb des plausiblen elektrischen Bereichs.",
+    "Leistungsverlust, unrunder Leerlauf, Motorkontrollleuchte",
+    "Beschädigter Sensorstecker oder Kabel; Stromversorgung oder Massefehler; defekter MAF-Sensor",
+    "Fehlerspeicher und Freeze-Frame auslesen; Versorgung, Masse und Signalleitung prüfen; Luftmassenwerte im Vergleich zu Last und Drehzahl beurteilen",
+    "Ein elektrischer Fehler verlangt eine andere Prüfung als ein verschmutzter Sensor.",
+    "P0101,P0102"
+  ],
+  [
+    "P0102",
+    "Luftmassenmesser: Signal zu niedrig",
+    "Ansaugluft / MAF",
+    "Das Steuergerät erfasst ein zu kleines Luftmassenmesser-Signal.",
+    "Schlechter Durchzug, rauer Leerlauf, teils erhöhter Verbrauch",
+    "Signalunterbrechung oder Masseproblem; Luftfilter-/Ansaugproblem; Sensorfehler",
+    "Stecker und Kabelstrang auf Scheuerstellen prüfen; Messwert bei Motorlauf und Lastwechsel verfolgen; Ansaugtrakt auf Undichtigkeiten kontrollieren",
+    "Sensorersatz erst nach elektrischer und mechanischer Kontrolle.",
+    "P0100,P0101"
+  ],
+  [
+    "P0103",
+    "Luftmassenmesser: Signal zu hoch",
+    "Ansaugluft / MAF",
+    "Das Eingangssignal des MAF liegt oberhalb des erwarteten elektrischen Bereichs.",
+    "Motorkontrollleuchte, schlechter Motorlauf, Notlauf",
+    "Kurzschluss gegen Versorgung; fehlerhafte Sensorversorgung; defekter MAF",
+    "MAF-Signal und Referenzspannung prüfen; Steckerkorrosion suchen; Signal während Kabelbewegung beobachten",
+    "Stecker nie mit ungeeigneter Prüfspannung beaufschlagen.",
+    "P0100,P0101"
+  ],
+  [
+    "P0113",
+    "Ansauglufttemperatursensor: Signal hoch",
+    "Ansaugluft / Temperatur",
+    "Ein hohes Eingangssignal weist bei vielen NTC-Sensoren auf eine Unterbrechung oder extrem niedrige gemeldete Temperatur hin.",
+    "Kaltstartabweichungen, Motorkontrollleuchte, unplausible Temperatur",
+    "Leitungsunterbrechung; loser Stecker; Defekt im kombinierten MAF-/Temperatursensor",
+    "Ansauglufttemperatur bei kaltem Motor mit Umgebung vergleichen; Versorgung und Sensorkreis prüfen; Steckerbelegung nach Motorcode abgleichen",
+    "Ein hoher Spannungswert bedeutet nicht automatisch eine tatsächlich heiße Ansaugluft.",
+    "P0100,P0118"
+  ],
+  [
+    "P0118",
+    "Kühlmitteltemperaturgeber: Signal hoch",
+    "Motorkühlung / Sensor",
+    "Der Kühlmitteltemperatur-Signalkreis meldet einen unzulässig hohen elektrischen Wert.",
+    "Schwieriger Start, auffälliger Lüfterlauf, Motorkontrollleuchte",
+    "Offener Sensorkreis; Kontaktproblem; defekter Kühlmitteltemperaturgeber",
+    "Kühlmitteltemperatur nach Standzeit mit Umgebung vergleichen; Leitung und Stecker prüfen; Temperaturverlauf beim Warmlauf prüfen",
+    "Bei Überhitzungsanzeige nicht nur auf den Fehlerspeicher vertrauen; Kühlmittelstand und reale Temperatur sicher prüfen.",
+    "P0128,P0113"
+  ],
+  [
+    "P0128",
+    "Kühlmittelthermostat: Temperatur zu niedrig",
+    "Motorkühlung / Thermostat",
+    "Der Motor erreicht innerhalb der erwarteten Zeit nicht die vorgesehene Kühlmitteltemperatur.",
+    "Heizung bleibt schwach, langsamer Warmlauf, erhöhter Verbrauch",
+    "Thermostat hängt offen; Kühlmitteltemperaturgeber misst falsch; Kühlkreislaufregelung gestört",
+    "Warmlaufkurve bei Außentemperatur protokollieren; Kühlerschläuche und Thermostatregelung beurteilen; Solltemperatur motorabhängig abgleichen",
+    "Kühlkreislauf nur am abgekühlten Motor öffnen.",
+    "P0118,P0597"
+  ],
+  [
+    "P0121",
+    "Drosselklappen-Stellung: Bereich/Leistung",
+    "Drosselklappe / Elektronik",
+    "Die Rückmeldung der Drosselklappenstellung passt nicht zu den erwarteten Signalen.",
+    "Verzögerte Gasannahme, Motorlaufprobleme, Notlauf",
+    "Drosselklappengehäuse verschmutzt; Positionsgeber-/Antriebsschaden; Steck- oder Kabelproblem",
+    "Pedal- und Drosselklappen-Soll/Istwerte vergleichen; Stecker und Spannungsversorgung prüfen; Anlernung nur nach Herstellervorgabe durchführen",
+    "Bei unkontrollierbarer Gasannahme Fahrzeug sicher abstellen.",
+    "P0221,P0507"
+  ],
+  [
+    "P0130",
+    "Lambdasonde Bank 1 Sensor 1: Stromkreis",
+    "Abgas / Lambdaregelung",
+    "Die elektrische Überwachung der vorderen Lambdasonde meldet einen Stromkreisfehler.",
+    "Motorkontrollleuchte, Mehrverbrauch, unruhiger Motorlauf",
+    "Sondenkabel thermisch beschädigt; Steck- oder Massefehler; Sensordefekt",
+    "Heizung und Signalkreis getrennt prüfen; Leitung im Abgasbereich kontrollieren; Gemischfehler als Folgecodes bewerten",
+    "Ein Lambdasondenfehler kann die Folge von Gemischproblemen sein.",
+    "P0133,P0171"
+  ],
+  [
+    "P0133",
+    "Vordere Lambdasonde: langsame Reaktion",
+    "Abgas / Lambdaregelung",
+    "Das Lambda-Regelsignal reagiert langsamer als im Diagnosefenster erwartet.",
+    "Motorkontrollleuchte, gelegentlich Mehrverbrauch, kaum Fahrsymptome",
+    "Gealterte Lambdasonde; Abgasleck; Gemisch- und Kraftstoffdruckabweichung",
+    "Lambdaregelung bei betriebswarmem Motor prüfen; Abgasdichtheit vor Sonde beurteilen; Kraftstoffkorrekturwerte mitlesen",
+    "Sonden nicht ohne vorgelagerte Abgas- und Gemischkontrolle wechseln.",
+    "P0130,P0171"
+  ],
+  [
+    "P0135",
+    "Lambdasondenheizung Bank 1 Sensor 1",
+    "Abgas / Sondenheizung",
+    "Der Heizkreis der vorderen Lambdasonde arbeitet nicht innerhalb der erwarteten elektrischen Grenzen.",
+    "Motorkontrollleuchte, verzögerte Regelbereitschaft nach Kaltstart",
+    "Heizung der Sonde defekt; Sicherung oder Spannungsversorgung; beschädigter Stecker",
+    "Heizungsversorgung und elektrische Leitung prüfen; Freigabebedingungen für Sondenheizung auslesen; Heizkreis nach Schaltplan testen",
+    "Messungen am heißen Abgasstrang nur mit geeigneter Ausrüstung.",
+    "P0130,P0141"
+  ],
+  [
+    "P0141",
+    "Lambdasondenheizung Bank 1 Sensor 2",
+    "Abgas / Sondenheizung",
+    "Die Heizung der nachgeschalteten Lambdasonde zeigt einen elektrischen Fehler.",
+    "Motorkontrollleuchte, meist kein deutlicher Leistungsverlust",
+    "Leitung im Abgasbereich beschädigt; Heizungsversorgung fehlerhaft; defekte Nachkatsonde",
+    "Vor- und Nachkatsonde eindeutig identifizieren; Sicherung und Steckverbindung kontrollieren; Heizkreis gemäß Schaltplan messen",
+    "Vordere und hintere Sonde nicht verwechseln.",
+    "P0135,P0420"
+  ],
+  [
+    "P0174",
+    "Gemisch zu mager (Bank 2)",
+    "Benzin / Gemischbildung",
+    "Die Kraftstoffanpassung der zweiten Zylinderbank deutet auf ein dauerhaft zu mageres Gemisch hin.",
+    "Unruhiger Leerlauf, schwache Gasannahme, Motorkontrollleuchte",
+    "Falschluft an Bank 2; Kraftstoffdruck- oder MAF-Abweichung; undichter Ansaugkrümmer",
+    "Kurz- und Langzeittrims beider Bänke gegenüberstellen; Rauchtest des Ansaugsystems; Kraftstoffdruck und Lambdaregelung prüfen",
+    "Bei starkem Ruckeln hohe Motorlast vermeiden.",
+    "P0171,P0300"
+  ],
+  [
+    "P0201",
+    "Einspritzventil Zylinder 1: Stromkreis",
+    "Einspritzung / Elektrik",
+    "Das Motorsteuergerät erkennt eine Auffälligkeit bei der elektrischen Ansteuerung des Injektors von Zylinder 1.",
+    "Ruckeln, fehlende Leistung, Aussetzer unter Last",
+    "Unterbrechung oder Kurzschluss im Injektorkreis; Steckkontakt; defekter Injektor",
+    "Zylinderzuordnung anhand Motorplan bestätigen; Leitung und Stecker prüfen; elektrischen Injektortest nach Herstellervorgabe durchführen",
+    "Hochdruck-Kraftstoffleitungen nicht bei laufendem Motor lösen.",
+    "P0301,P0087"
+  ],
+  [
+    "P0301",
+    "Verbrennungsaussetzer Zylinder 1",
+    "Motor / Verbrennung",
+    "Das Steuergerät erkennt Verbrennungsaussetzer am ersten Zylinder.",
+    "Starkes Ruckeln, Motorkontrollleuchte, schlechter Leerlauf",
+    "Zündkerze oder Zündspule bei Ottomotoren; Einspritzung; Kompression oder Ventilproblem",
+    "Aussetzerzähler und Zylinderzuordnung prüfen; Zünd-/Einspritzkomponenten systematisch testen; bei Bedarf Kompression prüfen",
+    "Bei blinkender Motorkontrollleuchte Motorlast reduzieren und sicher anhalten.",
+    "P0300,P0201"
+  ],
+  [
+    "P0302",
+    "Verbrennungsaussetzer Zylinder 2",
+    "Motor / Verbrennung",
+    "Das Steuergerät erkennt wiederholte Aussetzer an Zylinder 2.",
+    "Ruckeln, Startprobleme, teils blinkende Motorleuchte",
+    "Zündung bei Ottomotor; Einspritzfehler; mechanische Zylinderabweichung",
+    "Freeze-Frame sichern; zylinderbezogene Zünd- und Einspritzwerte kontrollieren; Kompression bei anhaltendem Aussetzer testen",
+    "Anhaltende Aussetzer können den Katalysator beschädigen.",
+    "P0300,P0301"
+  ],
+  [
+    "P0303",
+    "Verbrennungsaussetzer Zylinder 3",
+    "Motor / Verbrennung",
+    "Die Verbrennungsüberwachung erkennt Aussetzer am dritten Zylinder.",
+    "Unrunder Lauf, Leistungseinbruch, erhöhter Kraftstoffverbrauch",
+    "Zünd- oder Einspritzproblem; Falschluft am betreffenden Ansaugkanal; Kompressionsverlust",
+    "Zylinderzuordnung verifizieren; Aussetzerwerte nach Lastzustand vergleichen; Einspritzung, Zündung und Mechanik getrennt testen",
+    "Bei starken Zündaussetzern nicht weiter stark beschleunigen.",
+    "P0300,P0302"
+  ],
+  [
+    "P0325",
+    "Klopfsensor 1: Stromkreisfehler",
+    "Motor / Klopfregelung",
+    "Die elektrische Überwachung des Klopfsensors oder seines Signalwegs meldet einen Fehler.",
+    "Verringerte Leistung, Zündwinkelrücknahme, Motorkontrollleuchte",
+    "Sensorkabel abgeschirmt beschädigt; Befestigungsmoment falsch; Sensor defekt",
+    "Sensorkreis und Steckverbindung prüfen; korrekte Befestigung nach Motorvorgabe kontrollieren; Klopfregelwerte und Begleitcodes auswerten",
+    "Sensorbefestigung nicht ohne vorgegebenes Drehmoment verändern.",
+    "P0300,P0335"
+  ],
+  [
+    "P0335",
+    "Kurbelwellenpositionssensor: Stromkreis",
+    "Motordrehzahl / Sensor",
+    "Das Kurbelwellensignal fehlt oder wird elektrisch unplausibel erkannt.",
+    "Motor startet nicht, stirbt warm ab, Drehzahlanzeige fällt aus",
+    "Wärmeabhängiger Sensorsignalfehler; Kabel oder Stecker; beschädigter Geberkranz",
+    "Beim Starten Drehzahlsignal beobachten; Sensorversorgung und Signalform prüfen; Leitung und Geberrad kontrollieren",
+    "Bei spontanem Motorstillstand während der Fahrt sicher anhalten.",
+    "P0340,P0016"
+  ],
+  [
+    "P0351",
+    "Zündspule A: Primär-/Sekundärkreis",
+    "Zündung / Elektrik",
+    "Das Steuergerät meldet eine elektrische Störung im zugeordneten Zündspulenkreis.",
+    "Deutliches Ruckeln, Aussetzer, Motorwarnleuchte",
+    "Spule oder integrierter Treiber; Anschluss oder Leitung; fehlerhafte Versorgung",
+    "Spulenbezeichnung A mit Motorplan abgleichen; Steueransteuerung und Spannungsversorgung kontrollieren; Fehlzündungszähler prüfen",
+    "Hochspannungsteile nicht bei laufendem Motor berühren.",
+    "P0301,P0300"
+  ],
+  [
+    "P0440",
+    "Tankentlüftungssystem: allgemeine Störung",
+    "Kraftstoffdämpfe / EVAP",
+    "Die Dichtheits- oder Funktionsüberwachung des Tankentlüftungssystems ist fehlgeschlagen.",
+    "Motorkontrollleuchte, gelegentlich Kraftstoffgeruch",
+    "Tankdeckeldichtung; poröse Tankentlüftungsleitung; Ventil- oder Aktivkohlefilterproblem",
+    "Tankverschluss und Leitungen prüfen; EVAP-Stellglied- und Dichtheitstests gemäß Fahrzeugtyp ausführen; Begleitcodes auswerten",
+    "Bei starkem Kraftstoffgeruch Zündquellen vermeiden und Leck fachlich klären.",
+    "P0442,P0455"
+  ],
+  [
+    "P0441",
+    "Tankentlüftung: Durchfluss unplausibel",
+    "Kraftstoffdämpfe / EVAP",
+    "Der gemessene beziehungsweise abgeleitete Gasdurchfluss bei der Tankentlüftung passt nicht zum Soll.",
+    "Unruhiger Leerlauf nach Tanken, Motorwarnleuchte",
+    "Tankentlüftungsventil klemmt; Schläuche falsch verlegt; Druck-/Purge-Steuerung gestört",
+    "Tankentlüftungsventil gezielt ansteuern; Schlauchführung kontrollieren; Kraftstofftrims unter Ventilbetätigung beobachten",
+    "Nicht von EVAP-Fehler auf einen defekten Tank schließen.",
+    "P0440,P0442"
+  ],
+  [
+    "P0442",
+    "Kleines Leck im Tankentlüftungssystem",
+    "Kraftstoffdämpfe / EVAP",
+    "Das Diagnosesystem meldet eine kleine Undichtigkeit im Verdunstungsemissionssystem.",
+    "Häufig nur Motorkontrollleuchte, gelegentlich Kraftstoffgeruch",
+    "Tankdeckel oder Dichtung; Haarriss im Entlüftungsschlauch; Tankventil schließt nicht",
+    "Tankverschluss und Dichtungen prüfen; EVAP-Dichtheit mit geeigneter Prüftechnik kontrollieren; Ventile auf korrekte Funktion prüfen",
+    "Keine unzulässige Druckluft oder brennbare Prüfmittel in das EVAP-System geben.",
+    "P0440,P0456"
+  ],
+  [
+    "P0455",
+    "Großes Leck im Tankentlüftungssystem",
+    "Kraftstoffdämpfe / EVAP",
+    "Das Steuergerät erkennt eine erhebliche Undichtigkeit im EVAP-System.",
+    "Motorkontrollleuchte, möglicherweise Kraftstoffgeruch",
+    "Lockerer Tankdeckel; abgerissener Schlauch; offenes Tankentlüftungsventil",
+    "Tankdeckel und sichtbare Leitungen zuerst prüfen; Dichtheitstest mit geeigneter Anlage durchführen; Aktivkohlefiltergehäuse begutachten",
+    "Bei Kraftstoffgeruch oder sichtbarem Leck Fahrzeug sicher abstellen.",
+    "P0440,P0442"
+  ],
+  [
+    "P0456",
+    "Sehr kleines EVAP-Leck",
+    "Kraftstoffdämpfe / EVAP",
+    "Ein besonders kleines Leck wurde bei der Selbstprüfung erkannt; die Grenzwerte sind herstellerabhängig.",
+    "Oft keine Fahrsymptome außer Warnleuchte",
+    "Tankverschlussdichtung; mikroskopischer Leitungsriss; Prüfventil undicht",
+    "Tankverschlussoberfläche reinigen und prüfen; Leitungsverbinder inspizieren; empfindlichen Dichtheitstest gemäß Herstellervorgabe durchführen",
+    "Fehlerspeicher löschen ohne Lecksuche behebt die Ursache nicht.",
+    "P0442,P0455"
+  ],
+  [
+    "P0500",
+    "Fahrgeschwindigkeitssensor: Stromkreis",
+    "Geschwindigkeit / Getriebe",
+    "Ein erwartetes Fahrzeuggeschwindigkeitssignal fehlt oder ist fehlerhaft.",
+    "Geschwindigkeitsanzeige unzuverlässig, Automatik schaltet auffällig, ABS-Meldung",
+    "Raddrehzahlsensor- oder Getriebesignal; Kabelbaum; Kommunikationsproblem",
+    "Geschwindigkeitssignale im Motor-, ABS- und Getriebesteuergerät vergleichen; Sensorquelle fahrzeugabhängig ermitteln; Sicherungen und Leitungen prüfen",
+    "Defekte Geschwindigkeitsanzeige und Assistenzsysteme können sicherheitsrelevant sein.",
+    "U0121,C0035"
+  ],
+  [
+    "P0507",
+    "Leerlaufregelung: Drehzahl höher als erwartet",
+    "Leerlauf / Drosselklappe",
+    "Die Motordrehzahl im Leerlauf liegt über der vom Steuergerät vorgesehenen Sollvorgabe.",
+    "Zu hoher Leerlauf, unruhige Drehzahl, teils erhöhte Kriechneigung",
+    "Falschluft; Drosselklappenverschmutzung und Adaptionsabweichung; Kurbelgehäuseentlüftung undicht",
+    "Leerlauf Soll/Ist prüfen; Ansaugtrakt auf Lecks testen; Drosselklappenadaption nur bei geeignetem Modell vornehmen",
+    "Bei erhöhter Kriechneigung Fahrzeug sicher abstellen.",
+    "P0121,P0171"
+  ],
+  [
+    "P0562",
+    "Bordnetzspannung zu niedrig",
+    "Elektrische Versorgung",
+    "Die überwachte Bordnetzspannung fällt unter den zulässigen Bereich.",
+    "Mehrere Warnlampen, Startprobleme, zeitweilige Steuergeräteausfälle",
+    "Schwache Batterie; Lichtmaschine oder Regler; Übergangswiderstand an Masse",
+    "Batterieruhespannung und Spannung unter Startlast messen; Ladespannung prüfen; Masse- und Plusverbindungen unter Last prüfen",
+    "Unterspannung kann zahlreiche Folgefehler in anderen Steuergeräten auslösen.",
+    "U0100,U0121"
+  ],
+  [
+    "P0606",
+    "Motorsteuergerät: Prozessorüberwachung",
+    "ECU / Elektronik",
+    "Die interne Selbstüberwachung des Motorsteuergeräts meldet eine Prozessor- oder Steuergerätefunktionsabweichung.",
+    "Startprobleme, sporadischer Notlauf, Motorwarnleuchte",
+    "Spannungs- und Masseversorgung unzureichend; Software-/Kommunikationsstörung; interner ECU-Defekt",
+    "Batterie- und ECU-Versorgung unter Last prüfen; relevante Softwareversion und bekannte Servicehinweise prüfen; Fehler nach stabiler Versorgung erneut bewerten",
+    "Steuergerätetausch nicht ohne Versorgungstest und Herstellervorgaben beginnen.",
+    "P0562,U0100"
+  ],
+  [
+    "P0627",
+    "Kraftstoffpumpe A: Steuerkreis unterbrochen",
+    "Kraftstoff / Pumpensteuerung",
+    "Die elektrische Ansteuerung des Kraftstoffpumpenkreises weist eine Unterbrechung oder Funktionsabweichung auf.",
+    "Motor startet schlecht oder gar nicht, Leistungsausfall",
+    "Relais oder Sicherung; Pumpensteuergerät; Leitungsunterbrechung oder Pumpendefekt",
+    "Beim Start Pumpenansteuerung und Versorgung prüfen; Sicherungen und Relais kontrollieren; Pumpenstrom nur mit geeigneter Messtechnik prüfen",
+    "Arbeiten an Kraftstoffleitungen erfordern Brandschutz und geeignete Ausrüstung.",
+    "P0087,P0191"
+  ],
+  [
+    "P0670",
+    "Vorglüh-Steuergerät: Stromkreisfehler",
+    "Diesel / Vorglühen",
+    "Das Steuergerät erkennt eine Störung im zentralen Stromkreis des Vorglühsystems.",
+    "Schlechtes Kaltstartverhalten, Vorglühlampe, Motorwarnleuchte",
+    "Vorglühmodul; Sicherung oder Masse; Leitungskontakt",
+    "Vorglühsteuergerät und einzelne Glühkerzencodes getrennt auslesen; Versorgung prüfen; Ansteuerung nach Temperaturbedingungen testen",
+    "Glühkerzen können fest sitzen; Ausbau nur mit angemessener Fachkenntnis.",
+    "P0671,P0118"
+  ],
+  [
+    "P0671",
+    "Glühkerze Zylinder 1: Stromkreisfehler",
+    "Diesel / Vorglühen",
+    "Der elektrische Glühkreis für den ersten Zylinder hat einen Fehler.",
+    "Schlechter Kaltstart, rauer Lauf unmittelbar nach Start",
+    "Glühkerze elektrisch defekt; Steck- oder Kabelproblem; Vorglühsteuergerät",
+    "Zylinderreihenfolge motorabhängig bestätigen; Glühkreis elektrisch mit geeigneter Prüfmethode messen; Steuergerätansteuerung kontrollieren",
+    "Festgefressene Glühkerzen nicht mit Gewalt lösen.",
+    "P0670,P0118"
+  ],
+  [
+    "P0715",
+    "Getriebeeingangsdrehzahlsensor: Stromkreis",
+    "Automatikgetriebe / Drehzahlsensor",
+    "Das Getriebesteuergerät erhält ein unzulässiges Eingangsdrehzahlsignal.",
+    "Ruckende Schaltvorgänge, Notlauf, Gangwahlprobleme",
+    "Drehzahlsensor oder interne Leitung; Stecker / Getriebeöl im Stecker; Versorgung",
+    "TCM mitlesen; Eingangsdrehzahl mit Motordrehzahl und Ausgangsdrehzahl vergleichen; elektrische Stecker kontrollieren",
+    "Bei rutschender Kupplung oder starken Getriebeschlägen Belastung reduzieren.",
+    "P0700,P0720"
+  ],
+  [
+    "P0720",
+    "Getriebeausgangsdrehzahlsensor: Stromkreis",
+    "Automatikgetriebe / Drehzahlsensor",
+    "Das Ausgangsdrehzahlsignal des Getriebes wird nicht korrekt erkannt.",
+    "Schaltfehler, Notlauf, fehlerhafte Geschwindigkeitsanzeige",
+    "Sensor oder interner Kabelbaum; Steckproblem; beschädigter Signalgeber",
+    "Drehzahlen beim langsamen Rollen vergleichen; TCM-Zusatzcodes auslesen; Sensorkreis nach Getriebetyp prüfen",
+    "Keine Probefahrt mit unsicherer Schaltfunktion durchführen.",
+    "P0715,P0700"
+  ],
+  [
+    "P0730",
+    "Falsches Übersetzungsverhältnis im Getriebe",
+    "Automatikgetriebe / Übersetzung",
+    "Das Verhältnis zwischen Eingangs- und Ausgangsdrehzahl entspricht keinem erwarteten Gang.",
+    "Schlupf, harte Schaltvorgänge, Getriebe-Notlauf",
+    "Kupplungsrutschen; Hydraulik- oder Öldruckproblem; Drehzahlsensorabweichung",
+    "Getriebeölstand und -spezifikation fachgerecht prüfen; Sollgang und Drehzahldifferenzen loggen; weitere TCM-Codes auswerten",
+    "Bei massivem Schlupf droht Getriebeschaden; Fahrzeug nicht belasten.",
+    "P0715,P0720"
+  ],
+  [
+    "P0741",
+    "Wandlerüberbrückungskupplung: Leistung / klemmt offen",
+    "Automatikgetriebe / Wandler",
+    "Die Überbrückungskupplung des Drehmomentwandlers erreicht den erwarteten Schlupfbereich nicht.",
+    "Erhöhte Drehzahl bei Fahrt, schlechter Wirkungsgrad, Getriebewarnung",
+    "Kupplungsverschleiß; Hydrauliksteuerung und Magnetventil; unpassende Getriebeölbedingungen",
+    "TCM-Wandlerschlupf während zulässiger Fahrbedingungen protokollieren; Getriebetemperatur und Ölzustand prüfen; Magnetventilsteuerung bewerten",
+    "Kupplungs- und Hydraulikfehler nur getriebetypbezogen reparieren.",
+    "P0700,P0730"
+  ],
+  [
+    "P0750",
+    "Schaltmagnetventil A: Fehler",
+    "Automatikgetriebe / Magnetventil",
+    "Die Steuerung eines als A bezeichneten Schaltmagnetventils ist elektrisch oder funktional auffällig.",
+    "Harte Schaltungen, Gang wird nicht eingelegt, Notlauf",
+    "Magnetventil defekt; interne Leitungsplatte; Druck-/Hydraulikproblem",
+    "Ventilzuordnung per Getriebecode prüfen; TCM-Stellglied- und Leitungsprüfung durchführen; Ölstand und Druckbedingungen bewerten",
+    "Magnetventile nicht allein anhand der Buchstabenkennung lokalisieren.",
+    "P0700,P0730"
+  ],
+  [
+    "P0841",
+    "Getriebeöldrucksensor A: Bereich/Leistung",
+    "Automatikgetriebe / Öldruck",
+    "Das Öl-/Hydraulikdrucksignal im Getriebe liegt außerhalb des plausiblen Bereichs.",
+    "Schaltverzögerung, Ruckeln, Getriebewarnung",
+    "Hydraulikdruck tatsächlich falsch; Sensor-/Leitungsproblem; Ölstand oder Ölzustand ungeeignet",
+    "Getriebedruck Soll/Ist in relevanten Schaltphasen prüfen; Getriebeölstand nach Temperaturroutine kontrollieren; elektrische Signale testen",
+    "Falsche Ölfüllung kann weitere Schäden verursachen.",
+    "P0700,P0730"
+  ],
+  [
+    "P2004",
+    "Saugrohrklappe Bank 1: klemmt offen",
+    "Ansaugkrümmer / Saugrohrklappen",
+    "Die Stellklappe des Ansaugkrümmers erreicht ihre Sollposition nicht und wird als offen erkannt.",
+    "Schwache Gasannahme, Ruckeln bei niedriger Last, Motorwarnleuchte",
+    "Klemmende Saugrohrklappe; Stellmotor oder Unterdruckbetätigung; ausgeschlagene Gestänge",
+    "Saugrohrklappen-Soll/Istwert prüfen; Gestänge mechanisch begutachten; Stellgliedtest und Unterdruckleitungen kontrollieren",
+    "Lose Bauteile im Ansaugtrakt können Folgeschäden verursachen.",
+    "P2015,P0101"
+  ],
+  [
+    "P2015",
+    "Saugrohrklappen-Positionsgeber: Bereich/Leistung",
+    "Ansaugkrümmer / Stellungsgeber",
+    "Das Positionssignal der Saugrohrklappenregelung liegt außerhalb des erwarteten Bereichs.",
+    "Motorwarnleuchte, Leistungsverlust, sporadischer Notlauf",
+    "Ausgeschlagenes Gestänge oder Endanschlag; Sensor/Antriebseinheit; Steckkontakt",
+    "Saugrohrklappen-Soll/Istwerte und Stellwege vergleichen; Unterdruck und Gestänge motorabhängig prüfen; Fehlerhistorie beachten",
+    "Reparatur muss zum jeweiligen Ansaugkrümmer und Stellmotor passen.",
+    "P2004,P0101"
+  ],
+  [
+    "P2279",
+    "Undichtigkeit im Ansaugluftsystem",
+    "Ansaugluft / Falschluft",
+    "Das Steuergerät erkennt eine nicht plausible zusätzliche Luftmenge im Ansaugsystem.",
+    "Unruhiger Leerlauf, Leistungsmangel, Fehler in Gemischregelung",
+    "Defekter Ansaugschlauch; Kurbelgehäuseentlüftung undicht; Drosselklappendichtung",
+    "Rauchtest des Ansaugsystems fachgerecht durchführen; Luftmassen- und Druckwerte vergleichen; Dichtungen und Unterdruckanschlüsse prüfen",
+    "Bei großen Lecks kann der Motorlauf instabil werden.",
+    "P0171,P0101"
+  ],
+  [
+    "P0010",
+    "Nockenwellensteller A Bank 1: Steuerkreis",
+    "Ventilsteuerung / Elektrik",
+    "Der Stromkreis der Einlassnockenwellenverstellung ist gestört.",
+    "Unruhiger Motorlauf, Leistungsverlust, Motorwarnleuchte",
+    "Stellmagnet elektrisch gestört; Kabel oder Sicherung; Steuergerät-Ausgang",
+    "Ölstand und Qualität prüfen; Stecker, Versorgung und Magnetkreis messen; Stellgliedtest nach Motorvorgabe durchführen",
+    "Elektrischer Stellkreis ist nicht gleichbedeutend mit gedehnter Steuerkette.",
+    "P0011,P0016"
+  ],
+  [
+    "P0011",
+    "Nockenwellenverstellung A Bank 1: zu weit vor",
+    "Ventilsteuerung / Steuerzeiten",
+    "Die tatsächliche Einlassnockenwellenposition ist stärker vorgestellt als angefordert.",
+    "Unrunder Leerlauf, Leistungseinbruch, Startprobleme",
+    "Ölqualität oder Öldruck mangelhaft; Magnetventil klemmt; mechanische Steuerzeiten fehlerhaft",
+    "Ölstand und Herstellerölspezifikation kontrollieren; Soll/Ist-Nockenwellenwinkel auswerten; Magnetventil und mechanische Steuerzeiten prüfen",
+    "Bei auffälligem Kettenrasseln Motor nicht weiter belasten.",
+    "P0010,P0016"
+  ],
+  [
+    "P0014",
+    "Nockenwellenverstellung B Bank 1: zu weit vor",
+    "Ventilsteuerung / Steuerzeiten",
+    "Die Auslassnockenwelle weicht in Richtung Frühstellung von der Sollposition ab.",
+    "Unruhiger Motor, Aussetzer, Motorwarnleuchte",
+    "Öldruck oder Verschmutzung im Versteller; Magnetventil; falsche Steuerzeiten",
+    "Ölversorgung prüfen; Auslassnockenwellen-Soll/Istwerte vergleichen; Stellglied und mechanische Synchronisation prüfen",
+    "Bei mechanischen Steuerzeitenfehlern können Motorschäden entstehen.",
+    "P0016,P0011"
+  ],
+  [
+    "P0017",
+    "Kurbel-/Nockenwellen-Korrelation Bank 1 Sensor B",
+    "Motorsteuerung / Synchronisation",
+    "Die Synchronisation zwischen Kurbelwelle und Auslassnockenwelle weicht zu stark ab.",
+    "Schlechter Start, unruhiger Motorlauf, mögliche Geräusche",
+    "Steuerkette/Riemen versetzt; Verstellerproblem; Signalgeber- oder Geberradabweichung",
+    "Synchronisationsdaten auslesen; Öldruck und Stellerwerte prüfen; Steuerzeiten nach Herstellervorgaben kontrollieren",
+    "Bei metallischen Motorgeräuschen und Steuerzeitenverdacht Motor abstellen.",
+    "P0016,P0340"
+  ],
+  [
+    "P0520",
+    "Motoröldrucksensor: Stromkreis",
+    "Schmierung / Sensor",
+    "Der elektrische Kreis des Öldrucksensors oder Schalters meldet eine Störung.",
+    "Öldruckwarnung, Motorwarnleuchte, möglicherweise keine weiteren Symptome",
+    "Sensor-/Schalterfehler; Kabelunterbrechung; tatsächlicher niedriger Öldruck",
+    "Bei Öldruckwarnung Motor stoppen; Ölstand sicher prüfen; mechanischen Öldruck mit geeignetem Messgerät nach Herstellervorgabe verifizieren",
+    "Motor bei anhaltender Öldruckwarnung nicht weiterlaufen lassen.",
+    "P0521,P0011"
+  ],
+  [
+    "P0521",
+    "Öldrucksensor: Bereich/Leistung",
+    "Schmierung / Öldruck",
+    "Der gemeldete Öldruckverlauf liegt außerhalb der erwarteten Plausibilität.",
+    "Öldruckwarnung, Motorgeräusch, Motorwarnleuchte",
+    "Zu wenig Öl oder falsche Viskosität; Sensorabweichung; reales Öldruckproblem",
+    "Motor sicher abstellen und Ölstand prüfen; mechanische Druckmessung durchführen; Ölfilter- und Pumpenfunktion fachgerecht prüfen",
+    "Fehlender Öldruck kann binnen kurzer Zeit schwere Motorschäden verursachen.",
+    "P0520,P0011"
+  ],
+  [
+    "P0597",
+    "Kühlmittelthermostat-Heizung: Steuerkreis offen",
+    "Motorkühlung / Elektrik",
+    "Die Ansteuerung eines elektrisch beheizten Kennfeldthermostats meldet einen offenen Stromkreis.",
+    "Temperaturmanagement unplausibel, Kühlmittelwarnleuchte, Motorwarnleuchte",
+    "Stecker- oder Leitungsunterbrechung; Thermostat-Heizung defekt; Sicherungsproblem",
+    "Fahrzeugausführung mit Kennfeldthermostat bestätigen; Versorgung und Heizungswiderstand kontrollieren; Temperaturwerte vergleichen",
+    "Bei Überhitzung anhalten und Kühlmittelkreislauf abkühlen lassen.",
+    "P0128,P0118"
+  ],
+  [
+    "U0101",
+    "Kommunikation mit Getriebesteuergerät unterbrochen",
+    "CAN / Getriebe",
+    "Andere Steuergeräte melden fehlende Kommunikation mit der Getriebesteuerung.",
+    "Getriebewarnung, Notlauf, keine Gangwahl",
+    "TCM-Versorgung oder Masse ausgefallen; Netzwerkleitung; Unterspannung",
+    "Alle Steuergeräte zeitgleich auslesen; Getriebesteuergerät direkt prüfen; Versorgung und CAN-Leitungen anhand Schaltplan messen",
+    "Bei unsicherer Gangwahl Fahrzeug nicht weiterfahren.",
+    "P0700,U0100"
+  ],
+  [
+    "U0140",
+    "Kommunikation mit Karosseriesteuergerät verloren",
+    "CAN / Karosserie",
+    "Die Netzwerkkommunikation zum Body Control Module ist ausgefallen oder unterbrochen.",
+    "Ausfall von Licht, Zentralverriegelung oder Komfortfunktionen; mehrere Warnleuchten",
+    "Bordnetzunterspannung; BCM-Sicherung oder Masse; CAN-/LIN-Verbindungsfehler",
+    "Bordnetz unter Last prüfen; Erreichbarkeit BCM und weitere Netzwerkknoten prüfen; Stecker und Sicherungen beurteilen",
+    "Licht- oder Verriegelungsausfall kann sicherheitsrelevant sein.",
+    "U0100,P0562"
+  ],
+  [
+    "U0155",
+    "Kommunikation mit Kombiinstrument verloren",
+    "CAN / Cockpit",
+    "Ein Steuergerät empfängt erwartete Nachrichten vom Instrumentencluster nicht.",
+    "Ausfall einzelner Anzeigen, Warnlampen, Startfreigabeproblem",
+    "Unterspannung; Kombiinstrumentversorgung; CAN-Kontaktstörung",
+    "Instrumentencluster separat ansprechen; Spannung und Masse prüfen; Netzwerk-Topologie und weitere U-Codes vergleichen",
+    "Fehlende Geschwindigkeits- oder Warnanzeigen erfordern zeitnahe Reparatur.",
+    "U0100,U0140"
+  ],
+  [
+    "U0073",
+    "Steuergeräte-Kommunikationsbus A ausgefallen",
+    "CAN / Datenbus",
+    "Eine überwachte Datenbusverbindung kann nicht ordnungsgemäß kommunizieren.",
+    "Mehrere gleichzeitige Warnmeldungen, Ausfall von Assistenzsystemen, Startprobleme",
+    "Kurzschluss oder offene Busleitung; Steuergerät zieht Bus herunter; schlechte Spannungsversorgung",
+    "Zeitpunkt aller U-Codes vergleichen; Stromversorgung und Masse prüfen; Netzwerk messen und Knoten einzeln nach Herstellerverfahren eingrenzen",
+    "Netzwerkeingriffe ohne Schaltplan können zusätzliche Steuergeräteprobleme auslösen.",
+    "U0100,U0121"
+  ],
+  [
+    "U0415",
+    "Ungültige Daten vom ABS-Steuergerät",
+    "CAN / ABS-ESP",
+    "Die empfangenen Daten des ABS-/ESP-Steuergeräts werden von anderen Modulen als ungültig bewertet.",
+    "ABS/ESP-Warnung, Assistenzsysteme zeitweise nicht verfügbar",
+    "Raddrehzahlsignal fehlerhaft; ABS-interner Fehler; Spannungs- oder Kommunikationsstörung",
+    "ABS-spezifische Fehlercodes auslesen; Raddrehzahlen vergleichen; Netzwerksignal und Versorgung kontrollieren",
+    "Defekte Brems- und Stabilitätssysteme müssen vor normalem Straßenbetrieb bewertet werden.",
+    "U0121,C0035"
+  ]
+]);
+
 const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const split=s=>s.split(';').map(x=>x.trim()).filter(Boolean);
 function article(r){
