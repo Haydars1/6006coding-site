@@ -149,7 +149,10 @@ assert(stageRefDb.examples.find(x=>x.id==='mitsubishi-asx-2016-did114-brp')?.man
 assert(stageRefDb.examples.find(x=>x.id==='subaru-forester-2008-boxerd150-brp')?.publishedStage1Ps===180,'Subaru stage 1 must not inherit stage 2 200 PS');
 console.log('PASS: Six additional motor advertisements, three newly covered makes, strict model/torque validation');
 const stage1CarHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
-assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261012-deeplink62'),'Stage 1 source transfer must use fresh script version');
+assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261012-fullengines'),'Stage 1 source transfer must use fresh script version');
+assert(vinCode.includes('preferred.has("engineSearch")'),'Open community motor search hint must ignore stale saved vehicle');
+assert(vinCode.includes('engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)'),'Community engine links must not preload stock or tuning information');
+assert(vinCode.includes('if(initial.engineSearch)engineSearch.value=initial.engineSearch'),'Open motor link must narrow search without auto-certifying engine/gearbox');
 assert(vinCode.includes('transferredReferenceId')&&vinCode.includes('applyTransferredStageReference'),'Source-specific deep linking not enabled');
 assert(vinCode.includes('stage1Published.find(r=>r.id===transferredReferenceId)'),'Transferred source must be checked against the published data');
 assert(vinCode.includes('Number(year.value)<item.yearFrom')&&vinCode.includes('fuel.value!==item.fuel'),'Transferred data must verify model year and fuel');
