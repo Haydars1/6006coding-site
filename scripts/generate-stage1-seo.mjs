@@ -10,6 +10,9 @@ const URL_PATH="/stage1-referenzen/";
 const DATA=JSON.parse(fs.readFileSync(path.join(ROOT,"assets/6006-stage1-references.json"),"utf8"));
 const safe=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const rows=DATA.examples;
+const OPEN_INDEX=JSON.parse(fs.readFileSync(path.join(ROOT,"assets/vehicle-data/index.json"),"utf8"));
+assert(Number.isInteger(OPEN_INDEX.totalEngines)&&OPEN_INDEX.totalEngines>0,"Open motor index missing");
+assert(Array.isArray(OPEN_INDEX.makes)&&OPEN_INDEX.makes.length>0,"Open makes index missing");
 assert.equal(DATA.schemaVersion,1);
 assert(rows.length>=38,"Stage-1 hub must be generated from current source catalogue");
 const uniqueIds=new Set(),urlSet=new Set();
@@ -94,6 +97,7 @@ const html='<!doctype html><html lang="de"><head><meta charset="utf-8">'
  +'<link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml">'
  +'<link rel="stylesheet" href="/assets/6006-seo.css">'
  +'<link rel="stylesheet" href="/assets/6006-stage1-seo.css">'
+ +'<script defer src="/assets/6006-stage1-open-engine-finder.js?v=20261012-full-engines"></script>'
  +'<script defer src="/assets/6006-stage1-seo-filter.js?v=20261012-62refs"></script>'
  +'<script type="application/ld+json">'+JSON.stringify(breadcrumbs)+'</script>'
  +'<script type="application/ld+json">'+JSON.stringify(pageSchema)+'</script></head>'
@@ -105,6 +109,25 @@ const html='<!doctype html><html lang="de"><head><meta charset="utf-8">'
  +'<p class="lead">'+rows.length+' veröffentlichte Beispiele aus '+makeNames.length+' Marken, mit Serienleistung, Anbieterangaben und direkten Quellen. Finden Sie Ihr Modell und lassen Sie die tatsächliche Eignung Ihres Fahrzeugs prüfen.</p>'
  +'<p class="stage-lead">Diese Übersicht dient dem technischen Vergleich. Sie ist weder eine Liste verfügbarer 6006-Performance-Kennfelder noch eine Leistungs- oder Zulassungsgarantie. Es handelt sich um öffentlich beworbene Ergebnisse Dritter.</p>'
  +'<div class="stage-cta"><a class="btn" href="/fahrzeug/">Mein Fahrzeug auswählen →</a><a class="btn outline" href="/fahrzeug/">Motor nicht gelistet? Melden →</a></div>'
+ +'<section id="stage1-open-engine-finder" class="stage-open-finder" aria-label="Alle Motoren im offenen Katalog">'
+ +'<h2>Offener Motorfinder: '+OPEN_INDEX.totalEngines.toLocaleString("de-DE")+' Motorvarianten für '+OPEN_INDEX.makes.length+' Automarken</h2>'
+ +'<p>Im offenen Referenzbestand stehen '+OPEN_INDEX.totalModels.toLocaleString("de-DE")+' Modelle und '+OPEN_INDEX.totalEngines.toLocaleString("de-DE")+' Motorvarianten. <strong>Das sind keine '+rows.length+' geprüften Tuning-Kennfelder:</strong> Für die meisten Modelle gibt es hier bewusst keine Leistungssteigerung. Sie können trotzdem Ihre Motorvariante finden und die ECU-Prüfung anfragen.</p>'
+ +'<p class="stage-open-note">Die Daten stammen aus einem offenen Community-Fahrzeugbestand (ODbL-1.0; Quelle: <a href="https://github.com/gor3a/vehicle-makes-models" rel="noopener noreferrer" target="_blank">Fahrzeugdatensatz</a>). Sie sind nicht durch den Fahrzeughersteller bestätigt; Baujahr, Motorcode, Getriebe, ECU und Leistung müssen am Fahrzeug geprüft werden.</p>'
+ +'<div class="stage-open-controls" role="search">'
+ +'<div><label for="stage1-open-brand">Automarke</label><select id="stage1-open-brand" aria-label="Automarke im offenen Motorbestand"><option value="">Motorbestand wird geladen …</option></select></div>'
+ +'<div><label for="stage1-open-model-filter">Modellname eingrenzen</label><input id="stage1-open-model-filter" type="search" placeholder="Golf, E-Klasse, 320d …" maxlength="80"></div>'
+ +'<div><label for="stage1-open-model">Modell</label><select id="stage1-open-model"><option value="">Alle Modelle</option></select></div>'
+ +'<div><label for="stage1-open-year">Baujahr (optional)</label><input type="number" id="stage1-open-year" min="1950" max="2035" inputmode="numeric" placeholder="z. B. 2019"></div>'
+ +'<div><label for="stage1-open-fuel">Kraftstoff</label><select id="stage1-open-fuel"><option value="">Alle Kraftstoffarten</option><option value="Diesel">Diesel</option><option value="Benzin">Benzin</option><option value="Hybrid">Hybrid</option><option value="PHEV">Plug-in-Hybrid</option><option value="Electric">Elektro</option></select></div>'
+ +'<div><label for="stage1-open-term">Motor, Leistung oder Getriebe suchen</label><input id="stage1-open-term" type="search" placeholder="TDI, 150 HP, 6MT, N47 …" maxlength="100"></div>'
+ +'</div>'
+ +'<p id="stage1-open-meta" class="stage-open-count">'+OPEN_INDEX.makes.length+' Marken · '+OPEN_INDEX.totalModels.toLocaleString("de-DE")+' Modelle · '+OPEN_INDEX.totalEngines.toLocaleString("de-DE")+' Motorreferenzen</p>'
+ +'<p id="stage1-open-count" class="stage-open-count" role="status" aria-live="polite">Bitte eine Marke wählen, um Motorvarianten zu suchen.</p>'
+ +'<div id="stage1-open-results" class="stage-open-results"></div>'
+ +'<button id="stage1-open-more" type="button" hidden>Weitere Motoren anzeigen</button>'
+ +'<p id="stage1-open-hint" class="stage-open-footer">Alle Angaben sind offene Referenzdaten, keine OEM-Bestätigung, kein Stage-1-Versprechen und keine Prüfung des konkreten Steuergeräts. <a href="/fahrzeug/">Zur individuellen Fahrzeugauswahl →</a></p>'
+ +'</section>'
+ +'<section class="stage-explainer"><h2>'+rows.length+' direkt verlinkte Drittanbieterbeispiele – nicht der vollständige Motorbestand</h2><p>Die folgenden veröffentlichten Chiptuning-Beispiele sind eine gesonderte, quellengebundene Auswahl. Motorvarianten ohne solche Quellen bleiben dennoch über den offenen Motorfinder auswählbar.</p></section>'
  +'<section class="stage-explainer"><h2>So prüfen Sie eine Stage-1-Angabe richtig</h2>'
  +'<p>Ein gleicher Modellname genügt nicht. Entscheidend sind <strong>Baujahr, Baureihe, Motorkennung, Getriebe, ECU-Hardware und Softwarestand</strong>. Aus einem öffentlichen Leistungsdiagramm oder einer Tuninganzeige lässt sich die tatsächliche Eignung Ihres Fahrzeugs nicht sicher ableiten. Deshalb sind die folgenden Zahlen ausschließlich als veröffentlichte Vergleichswerte gekennzeichnet.</p>'
  +'<ol><li><strong>Motorvariante bestimmen:</strong> Modellgeneration und Motorcode aus den Fahrzeugunterlagen bzw. aus einer sicheren ECU-Auslesung abgleichen.</li>'
@@ -126,7 +149,8 @@ const dest=path.join(ROOT,"stage1-referenzen","index.html");
 fs.mkdirSync(path.dirname(dest),{recursive:true});
 fs.writeFileSync(dest,html,"utf8");
 const filterCss='.stage-filter{margin:16px 0 24px;padding:18px;border:1px solid #806041;border-radius:9px;background:#262018}.stage-filter h2{font-size:1.16rem;margin:0 0 9px;color:#f6d5ab}.stage-filter label{display:block;font-size:.82rem;font-weight:700;color:#dcc6aa;margin-bottom:7px}.stage-filter-controls{display:flex;gap:9px}.stage-filter input{box-sizing:border-box;min-height:46px;min-width:0;flex:1;border:1px solid #886646;border-radius:6px;background:#15130f;color:#fff1db;font:500 16px/1.4 system-ui,sans-serif;padding:9px 12px}.stage-filter button{padding:8px 14px;min-height:44px;background:#d2a46e;color:#17130e;border:0;border-radius:6px;font-weight:750;cursor:pointer}.stage-filter button:disabled{opacity:.45;cursor:not-allowed}.stage-filter input:focus-visible,.stage-filter button:focus-visible{outline:2px solid #f0c591;outline-offset:2px}#stage-seo-count{font-size:.79rem;margin:12px 0 0;color:#e8c697}.stage-brand[hidden],.stage-item[hidden]{display:none!important}@media(max-width:650px){.stage-filter{padding:12px}.stage-filter-controls{flex-direction:column}.stage-filter button{width:100%}}';
-fs.writeFileSync(path.join(ROOT,"assets","6006-stage1-seo.css"),css+filterCss,"utf8");
+const fullEngineCss='.stage-open-finder{margin:25px 0;border:1px solid #8d6b45;border-radius:12px;background:#211b16;padding:20px;color:#eddbc2}.stage-open-finder h2{font-size:1.45rem;line-height:1.35;margin:0 0 12px;color:#f6dbb9}.stage-open-finder p{font-size:.85rem;line-height:1.62;color:#d9c9b4}.stage-open-finder a{color:#f5c88c}.stage-open-note{border-left:3px solid #bb945c;padding-left:12px}.stage-open-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0 12px}.stage-open-controls>div{display:flex;flex-direction:column;gap:5px;min-width:0}.stage-open-controls label{font-size:.77rem;font-weight:730;color:#edcc9c}.stage-open-controls input,.stage-open-controls select{box-sizing:border-box;min-width:0;width:100%;height:44px;padding:9px 10px;border-radius:6px;border:1px solid #7c6244;background:#12110f;color:#fff0dd;font-size:16px}.stage-open-controls input:focus-visible,.stage-open-controls select:focus-visible,#stage1-open-more:focus-visible{outline:2px solid #f3bd7e;outline-offset:2px}.stage-open-count{font-size:.79rem;color:#efc68c;margin:10px 0}.stage-open-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stage-open-engine{display:flex;flex-direction:column;min-width:0;padding:14px;border:1px solid #5f4c37;border-radius:9px;background:#161614}.stage-open-engine h3{font-size:.96rem;color:#f9ddbb;line-height:1.4;overflow-wrap:anywhere;margin:0 0 8px}.stage-open-engine p{margin:0 0 10px;font-size:.76rem}.stage-open-spec{font-weight:760;color:#f4dfc2!important}.stage-open-caution{color:#beab97!important}.stage-open-link{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:44px;padding:10px 12px;border-radius:6px;background:#d6ab72;color:#17120e!important;text-decoration:none;font-size:.8rem;font-weight:800;margin-top:auto}.stage-open-link:hover{filter:brightness(1.09)}#stage1-open-more{display:block;margin:15px auto;min-height:44px;border-radius:6px;background:#d0a06b;color:#1a130c;border:0;padding:9px 19px;font-size:.85rem;font-weight:750;cursor:pointer}#stage1-open-more[hidden]{display:none!important}.stage-open-footer{border-top:1px solid #60503a;margin:16px 0 0;padding-top:12px}@media(max-width:780px){.stage-open-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.stage-open-finder{padding:13px}.stage-open-controls,.stage-open-results{grid-template-columns:1fr}.stage-open-finder h2{font-size:1.22rem}}';
+fs.writeFileSync(path.join(ROOT,"assets","6006-stage1-seo.css"),css+filterCss+fullEngineCss,"utf8");
 const sitemap=path.join(ROOT,"sitemap.xml"),xml=fs.readFileSync(sitemap,"utf8");
 const tag="<loc>"+canonical+"</loc>";
 assert(xml.includes("</urlset>"),"Missing DTC sitemap base");

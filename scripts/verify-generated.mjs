@@ -68,6 +68,21 @@ for(const file of files){
 const stage1HubPath=path.join(root,'stage1-referenzen','index.html');
 const stage1Html=read(stage1HubPath);
 const stage1Db=JSON.parse(read(path.join(root,'assets','6006-stage1-references.json')));
+const openDataIndex=JSON.parse(read(path.join(root,'assets','vehicle-data','index.json')));
+assert(openDataIndex.totalEngines>=30000,'Open motor data should contain over 30k source engine entries');
+assert(openDataIndex.makes.length>=160,'Open motor data should cover over 160 reference makes');
+assert(stage1Html.includes('id="stage1-open-engine-finder"'),'Stage 1 page missing broad source motor search section');
+assert(stage1Html.includes(openDataIndex.totalEngines.toLocaleString('de-DE')+' Motorvarianten'),'Stage 1 open-motor count should come from source index');
+assert(stage1Html.includes(openDataIndex.totalModels.toLocaleString('de-DE')+' Modelle'),'Stage 1 open-model count missing');
+assert(stage1Html.includes('https://github.com/gor3a/vehicle-makes-models'),'Open data catalogue attribution missing');
+assert(stage1Html.includes('/assets/6006-stage1-open-engine-finder.js?v=20261012-full-engines'),'Open motor browser asset script missing');
+assert(stage1Html.includes('id="stage1-open-brand"')&&stage1Html.includes('id="stage1-open-model"')&&stage1Html.includes('id="stage1-open-results"'),'Open motor finder fields not mounted');
+const openEngineJs=read(path.join(root,'assets','6006-stage1-open-engine-finder.js'));
+assert(openEngineJs.includes('/assets/vehicle-data/index.json')&&openEngineJs.includes('encodeURIComponent(bucket.slug)'),'Open motor finder must lazy load per-brand ODbL data');
+assert(openEngineJs.includes('engineSearch:String(v.engine||"").slice(0,90)'),'Open motor selection must be a search hint, not a confirmed ECU variant');
+assert(!openEngineJs.includes('publishedStage1Ps')&&!openEngineJs.includes('publishedStage1Nm'),'Generic community engine data must never invent Stage 1 figures');
+assert(read(path.join(root,'assets','6006-stage1-seo.css')).includes('.stage-open-engine'),'Open motor browser must have a responsive card style');
+
 const stage1Summary=JSON.parse(read(path.join(root,'assets','6006-stage1-seo-summary.json')));
 assert(urlSet.has(base+'/stage1-referenzen/'),'Missing crawlable Stage 1 catalogue URL from sitemap');
 assert.equal((urls.filter(u=>u.includes('/stage1-referenzen/'))).length,1,'One canonical Stage 1 hub, not many thin SEO pages');

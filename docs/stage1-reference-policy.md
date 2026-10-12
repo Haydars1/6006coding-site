@@ -82,3 +82,14 @@ Yeni Alman SEO sayfası motor adı, marka veya nesle göre **erişilebilir canl�
 Yeni doğrudan üçüncü taraf yayıncı kaynakları: Jaguar XE X760 2015–17 2.0T 200 PS / 320 Nm → 230 PS / 400 Nm; Jaguar XE X760 facelift2 2020–24 P250 250 PS / 365 Nm → 270 PS / 440 Nm; Land Rover Range Rover Evoque L538 facelift 2015–18 2.0 TD4 150 PS / 380 Nm → 180 PS / 440 Nm; DS7 Crossback 2017–20 2.0 BlueHDi 180 PS / 400 Nm → 205 PS / 460 Nm. DS veritabanında üretici `DS` ve model `AUTOMOBILES DS 7` şeklinde listelendiğinden **Crossback teknik doğrulaması manuel** yapılmalıdır. Evoque aynı model adıyla birden fazla nesil/TD4/tork varyantını barındırdığından **manuel** motor kodu ve stok güç/tork onayı zorunludur. Jaguar XE 2020+ P250 hem RWD hem AWD varyantlıdır: derin bağlantı tek varyant seçimi yapmamalıdır.
 
 Almanya TÜV/tescil/onay garantisi veya 6006 Performance güç ölçümü değildir. Kaynak ilanlarına doğrudan bağlantı verilmiştir; araç ECU yazılımı ve şanzıman doğrulanmadan performans sözü verilmez.
+
+## 12.10.2026 — Vollständiger offener Motorkatalog separat von Stage-1-Quellen
+
+Die Stage-1-Seite `/stage1-referenzen/` zeigt künftig **zwei verschiedene, ausdrücklich getrennte Datenbestände**:
+
+1. **Offener Motorkatalog:** Aktuell 164 Community-Marken, 2.649 Modelle, 30.535 Motorvarianten aus `dist/assets/vehicle-data/index.json` (ODbL 1.0; quelle: `gor3a/vehicle-makes-models`, upstream `autoevolution.com`). Angaben zum Motor sind offene Referenzdaten, nicht von OEM freigegebene Motordaten, nicht Stage 1, nicht verfügbare Tuningdateien. Die Benutzeroberfläche lädt pro ausgewählter Marke die passende `vehicle-data/<slug>.json` Datei, statt 30.535 Einträge ungefiltert zu übertragen.
+2. **Drittanbieter-Chiptuninganzeigen:** 62 individuell verlinkte, modellbezogene Angaben mit Stock/Stage1 PS/Nm, Quelladresse und engen Modell- und Motorkriterien. Nur hier gibt es überhaupt veröffentlichte Leistungssteigerungszahlen.
+
+**Anfragen aus dem offenen Motorkatalog** verlinken lediglich auf die Marke, das Modell, das ausgewählte Baujahr, den Kraftstoff und einen **Motor-Suchhinweis** (`engineSearch`). Der Besucher muss Getriebe, Motorkennung und reale Serienleistung am Fahrzeug bestätigen. Insbesondere werden keine `ps`-/`nm`-Parameter automatisch aus den Community-Daten als Herstellerwerte oder garantierte Stage-1-Leistung gesetzt.
+
+**Nicht verändern:** Weder den gesamten Community-Katalog als 30.535 Stage-1-Kennfelder bezeichnen, noch für Motoren ohne verifizierte Drittanbieter-Quelle Prozentsteigerungen interpolieren oder TÜV/ECU-Kompatibilität automatisch behaupten. Weitere Quellen nur nach Prüfung der Originalpublikation hinzufügen.
