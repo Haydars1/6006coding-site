@@ -76,3 +76,9 @@ Katalog 52 kayıttan **58 doğrudan üçüncü taraf ilanına ve 29 markaya** ge
 **ASX önemli:** Açık motor kataloğu `ASX / RVR / Outlander Sport` model ailesi şeklinde birleştirdiği için yeni kayıt bir ASX motor örneğidir ve `ASX 1.6 DID` adlı manuel motor kodu gerektirir. RVR veya Outlander Sport için genelleme yapılmaz. Subaru için yalnızca kaynakta açık Stage 1 değeri 150/350 → 180/400 alınmıştır; ayrı Stage 2 sonuçları eklenmemiştir.
 
 Yeni Alman SEO sayfası motor adı, marka veya nesle göre **erişilebilir canlı arama** sağlar. Bu istemci filtreleyicisidir: `/stage1-referenzen/` üzerindeki 58 HTML kaydı JavaScript kapalıyken de okunabilir ve indekslenebilir kalır. Sıralama garantisi yoktur; 6006 Performance sonuç/izin garantisi vermez.
+
+## 12.10.2026 — 62 Motorbeispiele / 32 Automarken
+
+Yeni doğrudan üçüncü taraf yayıncı kaynakları: Jaguar XE X760 2015–17 2.0T 200 PS / 320 Nm → 230 PS / 400 Nm; Jaguar XE X760 facelift2 2020–24 P250 250 PS / 365 Nm → 270 PS / 440 Nm; Land Rover Range Rover Evoque L538 facelift 2015–18 2.0 TD4 150 PS / 380 Nm → 180 PS / 440 Nm; DS7 Crossback 2017–20 2.0 BlueHDi 180 PS / 400 Nm → 205 PS / 460 Nm. DS veritabanında üretici `DS` ve model `AUTOMOBILES DS 7` şeklinde listelendiğinden **Crossback teknik doğrulaması manuel** yapılmalıdır. Evoque aynı model adıyla birden fazla nesil/TD4/tork varyantını barındırdığından **manuel** motor kodu ve stok güç/tork onayı zorunludur. Jaguar XE 2020+ P250 hem RWD hem AWD varyantlıdır: derin bağlantı tek varyant seçimi yapmamalıdır.
+
+Almanya TÜV/tescil/onay garantisi veya 6006 Performance güç ölçümü değildir. Kaynak ilanlarına doğrudan bağlantı verilmiştir; araç ECU yazılımı ve şanzıman doğrulanmadan performans sözü verilmez.
