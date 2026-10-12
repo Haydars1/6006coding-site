@@ -52,3 +52,19 @@ Artık kaynaklar **21 ilandan / 12 markadan** oluşmaktadır. Yeni doğrudan kay
 Yeterince temiz katalog motor kaydında yalnızca **marka + tam model + model yılı + yakıt + nesil + motor etiketi + stok HP + stok Nm** eşleşirse üçüncü taraf ilanı görüntülenir. Katalog farkı, motor jenerasyonu belirsizliği veya hibrid sistem gücü varsa `manualOnly` kullanılır: ziyaretçi motor tanımı ve kaynağın ilan ettiği orijinal PS/Nm değerlerini açıkça girer; hiçbir algoritma bu sayıları tahmin etmez.
 
 Özellikle Mazda 2.2 Skyactiv-D örneğinin yüksek üretici-iddialı artışı, 6006 Performance için garanti veya güvenlik sınırı olarak sunulmaz. Bir üçüncü tarafın "ITV/TÜV" beyanı Almanya için yasal onay oluşturmaz. Ayrı ECU/TCU kontrolleri ve gerekli belgeler gerekir.
+
+## 12.10.2026 — 52 externe Quellenbeispiele / 26 Automarken
+
+14 kaynaklı ilave örnekle üçüncü taraf ilan kataloğu **52 kayıt / 26 marka** olarak genişletildi. Yeni markalar: Volvo, Alfa Romeo, Citroën, Suzuki, MINI, Cupra, Smart ve Porsche. Örnekler `dist/assets/6006-stage1-references.json` dosyasında kaynak yayıncı bağlantısı, model yılı, motor tipi, stok/ilan PS ve Nm ve manuel doğrulama koşullarıyla tutulur.
+
+**Özellikle veri kalitesi ve güvenlik:**
+- MINI F56 Cooper S 192PS/280Nm için 260PS/400Nm ilanı yalnızca 6MT manuel şanzımanlı referansla eşleşir; kaynağın DKG7 otomatik şanzıman için sınırlı yaklaşık 240PS/360Nm beyanı tüm otomatik viteslere genel olarak uygulanmaz.
+- Smart fortwo 453 için yayımlanan 135Nm, açık motor kataloğundaki 136Nm'den farklıdır; yalnızca kullanıcı stok değerlerini ayrıca doğrularsa görünür.
+- Citroën C3 1.2T PureTech stok torku açık katalogla uyuşmadığı için otomatik gösterilmez. C3 Aircross'un GPF donanımı kullanıcıca ayrıca belirtilmelidir.
+- Suzuki Vitara 129PS 1.4 Boosterjet, motor referansında **Hybrid** sınıfındadır; farklı 140PS düz benzinli varyant ile karıştırılmaz.
+- Alfa Romeo Giulia 150/180/210PS motorları ve Stelvio ayrı kaynak/manuel koşul kayıtları olarak kalır.
+- Porsche Macan 245PS ve 252PS varyantları birbirine karıştırılmaz; Cayenne 262PS motoru kullanıcı doğrulaması ister.
+- İspanyol kaynaklarda yayımlanan *cv* ilanları yerel kaynakta PS sınıfı olarak aktarılır; kullanıcı sözleşmesinde üretici ölçüm teyidi olmadan garanti verilmez.
+- İlanlardaki performans rakamları araca uygulanabilir ECU haritası, motor dayanıklılığı, garanti veya Almanya'da TÜV/tescil onayı değildir.
+
+Güncel URL: `https://6006coding.de/stage1-referenzen/`. Sayfa build esnasında veritabanındaki kayıt sayısına göre sunucu tarafında oluşturulur; kaynak ve model bilgileri arama motoruna HTML olarak verilir. Google sıralaması/indeksleme garantisi yoktur.
