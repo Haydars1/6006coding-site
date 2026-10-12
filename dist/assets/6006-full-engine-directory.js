@@ -113,7 +113,7 @@ function render(){
   const params=new URLSearchParams({brand,model:model[1]});
   if(requestedYear)params.set("year",requestedYear);
   const fuel=fuelValue(row[7]);if(fuel)params.set("powertrain",fuel);
-  params.set("catalogEngineSearch",row[2]);
+  params.set("engineSearch",String(row[2]||"").slice(0,90));
   ask.href="/fahrzeug/?"+params.toString()+"#vehicle-selector-6006";
   item.append(head,engine,meta,stock,ask);fragment.append(item);
  }
