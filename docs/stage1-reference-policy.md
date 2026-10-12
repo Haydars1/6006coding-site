@@ -38,3 +38,17 @@ Artık kaynaklar **21 ilandan / 12 markadan** oluşmaktadır. Yeni doğrudan kay
 **BMW kontrolü:** Genel 3 Serisi (F3x) ile 3 Serisi Gran Turismo (F34) ayrı model kabul edilir. Gran Turismo (F34) kaynağını genel 3 Serisi arama sonucuna sessizce uygulamayın. Katalogda nesil ve gövde tipi başka model olarak sınıflanıyorsa eşleşme reddedilir. Motor gücü katalog etiketine uymuyorsa referans gösterilmez.
 
 **Yeni markalarda:** Ford Focus motor verisinde açık katalog ile ilan arasında 1 Nm fark bulunduğundan yalnızca model yılı, motor adı ve kullanıcı tarafından doğrulanan 125 PS / 170 Nm bilgileriyle örnek açılır. Audi A3 8Y için de katalogdaki 360 Nm ile ilan edilen 340 Nm karıştırılmaz; manuel doğrulama gereklidir.
+
+## 12 Ekim 2026 — 38 kayıt, 18 marka ve arama kataloğu
+
+Üçüncü taraf kaynaklı Stage 1 gösterimleri **38 doğrulanmış ilan satırına / 18 markaya** genişletildi. Yeni kaynak bağlantıları Kia Sportage, BMW 5 Series (G30 / LCI), Dacia Duster, Mazda CX-5, SEAT Ateca, Renault Megane III/IV, Honda Civic, Toyota Avensis, Fiat Tipo, Škoda Kodiaq, VW Polo ve Opel Corsa motorlarını kapsar.
+
+### Kullanıcıya görünür katalog
+
+`/fahrzeug/` üzerindeki **Stage 1 kaynak kataloğu** tüm 38 yayımlanmış üçüncü taraf örneğini marka ve serbest metin filtresiyle gösterebilir. Kayıtlar kaynak bağlantısını ve ilgili marka/model araç seçim bağlantısını verir. Bir kayıt **asla araç seçildiğinde otomatik garanti edilmiş güç artışı olarak gösterilmez**; kesin motor/yıl/nesil, fabrika güç ve tork koşulları ayrı matcher tarafından kontrol edilir. Kullanıcı motoru bulamazsa ayrıca “Modelim veya motorum listede yok” bildirimi mevcuttur.
+
+### Otomatik eşleşme / manuel eşleşme ayrımı
+
+Yeterince temiz katalog motor kaydında yalnızca **marka + tam model + model yılı + yakıt + nesil + motor etiketi + stok HP + stok Nm** eşleşirse üçüncü taraf ilanı görüntülenir. Katalog farkı, motor jenerasyonu belirsizliği veya hibrid sistem gücü varsa `manualOnly` kullanılır: ziyaretçi motor tanımı ve kaynağın ilan ettiği orijinal PS/Nm değerlerini açıkça girer; hiçbir algoritma bu sayıları tahmin etmez.
+
+Özellikle Mazda 2.2 Skyactiv-D örneğinin yüksek üretici-iddialı artışı, 6006 Performance için garanti veya güvenlik sınırı olarak sunulmaz. Bir üçüncü tarafın "ITV/TÜV" beyanı Almanya için yasal onay oluşturmaz. Ayrı ECU/TCU kontrolleri ve gerekli belgeler gerekir.
