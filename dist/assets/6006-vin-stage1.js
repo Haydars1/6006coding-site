@@ -141,7 +141,7 @@ function renderStageReference(){
 }
 async function loadPublishedStageReferences(){
  try{
-  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-38refs",{cache:"force-cache"});
+  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-52refs",{cache:"force-cache"});
   if(!response.ok)return;
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.examples))return;
