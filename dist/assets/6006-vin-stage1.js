@@ -521,6 +521,19 @@ if(initial.engineSearch)engineSearch.value=initial.engineSearch;
 if(initial.engine)manual.value=initial.engine;
 translate();
 if(make.value){await makeChanged(initial.model);if(model.value){renderEngines("");const found=variants.findIndex(v=>clean(v.engine)===clean(initial.engine));if(found>=0){engine.value=String(found);manual.value="";syncVariant();}else renderReport();}}
+// Search links from the OPEN motor directory only supply a search hint.
+// Apply it after all async brand/model work so it cannot be overwritten.
+// Never treat community HP/Nm as verified stock values or select ECU automatically.
+if(initial.engineSearch&&!transferredReferenceId){
+ engineSearch.value=initial.engineSearch;
+ renderEngines("");
+ engine.value="";
+ manual.value="";
+ ps.value="";
+ nm.value="";
+ manuallyEditedStock=false;
+ renderReport();
+}
 }
 const restoreTask=restore();
 loadPublishedStageReferences().then(()=>restoreTask.then(applyTransferredStageReference));
