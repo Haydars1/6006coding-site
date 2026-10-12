@@ -65,5 +65,5 @@ for(const file of files){
  }
  for(const json of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g))JSON.parse(json[1]);
 }
-assert.equal(urls.length,grouped.size-noindex+170,'Unexpected sitemap coverage');
+assert.equal(urls.length,grouped.size-noindex+171,'Unexpected sitemap coverage');
 console.log(`PASS: ${files.size} HTML pages, ${links} internal links/assets/fragments, canonical URLs and JSON-LD; ${noindex} placeholder-only pages excluded from sitemap`);
