@@ -36,6 +36,14 @@ for(const file of ['assets/6006-vin-stage1.css','assets/6006-video-search.css'])
  assert(fs.existsSync(path.join(ROOT,file)),'Missing advanced finder CSS: '+file);
 }
 const carPage=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
+const vehicleMeta=carPage.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i);
+assert(vehicleMeta&&vehicleMeta[1].length>=90&&vehicleMeta[1].length<=180,
+ 'Vehicle finder needs a concise German SEO meta description');
+assert(vehicleMeta[1].includes('30.535')&&vehicleMeta[1].includes('Stage-1-Werte'),
+ 'Vehicle meta description must distinguish open motor references from sourced Stage 1 offers');
+assert(carPage.includes('<link rel="canonical" href="https://6006coding.de/fahrzeug/"'),
+ 'Vehicle finder canonical must point to the public German landing page');
+
 const dtcPage=fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8');
 assert(carPage.includes('6006-vin-stage1.js')&&carPage.includes('6006-vin-stage1.css'),'VIN interface not mounted');
 assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-search.css'),'Instant DTC search not mounted');
