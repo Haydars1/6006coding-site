@@ -26,3 +26,8 @@
 .vin6006-full-warning{margin:17px 0 8px;border-top:1px solid #604b35;padding-top:13px;color:#d5b898;font-size:.76rem;line-height:1.6}
 .vin6006-full-license{color:#e8c08d;text-decoration:underline;text-underline-offset:3px;font-size:.76rem}
 @media(max-width:700px){.vin6006-full-controls{grid-template-columns:1fr}.vin6006-full-body{padding:12px}.vin6006-full-engine>summary{padding:14px;font-size:.88rem}.vin6006-full-card{padding:12px}#vin6-global-results{grid-template-columns:1fr}}
+
+.vin6006-full-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.vin6006-full-actions a{flex:1;min-width:145px;margin-top:0}
+.vin6006-full-actions a:nth-child(2){background:#30251b;border:1px solid #b1895b;color:#f2d1a8}
+@media(max-width:700px){.vin6006-full-actions{flex-direction:column}.vin6006-full-actions a{width:100%;min-width:0;box-sizing:border-box}}
