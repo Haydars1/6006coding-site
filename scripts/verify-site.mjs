@@ -392,6 +392,15 @@ assert(vinCode.includes('engineSearch.value=initial.engineSearch;\n renderEngine
 assert(vinCode.includes('ps.value=\"\";\n nm.value=\"\";\n manuallyEditedStock=false;'),'Community reference must not silently populate verified stock power');
 assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v=20261012-fullengines-handoff'),'Corrected motor search hint cache version not published');
 
+assert(allEngineCode.includes('inquiryDraft('),'Search result must prepare a specific engine inquiry message');
+assert(allEngineCode.includes('https://wa.me/491788354756?text=')&&allEngineCode.includes('encodeURIComponent(draft)'),'Customer-initiated WhatsApp inquiry must use business contact and URL encoding');
+assert(allEngineCode.includes('Keine bestätigte Stage-1-Leistung oder Garantie'),'German customer message must disclose unverified motor references');
+assert(allEngineCode.includes('Stage 1 sonucu/garantisi değildir'),'Turkish customer message must disclose no Stage 1 guarantee');
+assert(allEngineCode.includes('Not a confirmed Stage 1 result or guarantee'),'English customer message must disclose no Stage 1 guarantee');
+assert(allEngineCode.includes('vin6006-full-actions')&&allEngineCode.includes('actions.append(ask,contact)'),'Both inspect-vehicle and ask-by-WhatsApp CTAs must be shown');
+assert(!allEngineCode.includes('vin6-vin')&&!allEngineCode.includes('sendBeacon('),'Do not automatically send or collect full VIN and visitor data');
+assert(finderHtml.includes('6006-full-engine-directory.js?v=20261012-direct-inquiry')&&finderHtml.includes('6006-full-engine-directory.css?v=20261012-direct-inquiry'),'New direct-contact assets must have cache-busted URLs');
+assert(fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.css'),'utf8').includes('.vin6006-full-actions'),'Responsive dual CTAs missing stylesheet');
 assert(!allEngineCode.includes('publishedStage1Ps')&&!allEngineCode.includes('publishedStage1Nm'),'Open engine data must not claim third-party tuning gains');
 assert(allEngineCode.includes('databaseLicense')||fs.readFileSync(globalSearchFile,'utf8').includes('databaseLicense'),'ODbL source attribution missing');
 console.log('PASS: '+globalEngineIndex.count+' globally searchable open reference engines, 164+ makes, paginated safe quote handoff');
