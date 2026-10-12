@@ -141,7 +141,7 @@ function renderStageReference(){
 }
 async function loadPublishedStageReferences(){
  try{
-  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-21refs",{cache:"force-cache"});
+  const response=await fetch("/assets/6006-stage1-references.json?v=20261012-38refs",{cache:"force-cache"});
   if(!response.ok)return;
   const data=await response.json();
   if(data.schemaVersion!==1||!Array.isArray(data.examples))return;
@@ -417,7 +417,14 @@ fuel.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";rend
 engine.addEventListener("change",syncVariant);
 engineSearch.addEventListener("input",()=>{const old=engine.value;renderEngines(old);if(engine.value!==old){manuallyEditedStock=false;ps.value="";nm.value="";renderReport();}});
 
-for(const e of [manual,ps,nm]){e.addEventListener("change",renderReport);e.addEventListener("input",()=>{manuallyEditedStock=true;renderReport();});}
+manual.addEventListener("change",renderReport);
+manual.addEventListener("input",()=>{
+ if(manual.value.trim()&&engine.value!==""){
+  engine.value="";ps.value="";nm.value="";
+ }
+ manuallyEditedStock=true;renderReport();
+});
+for(const e of [ps,nm]){e.addEventListener("change",renderReport);e.addEventListener("input",()=>{manuallyEditedStock=true;renderReport();});}
 window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMakes();if(current&&!make.value){option(make,current,current);make.value=current;}});
 window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value){const current=model.value;populateModels(current);}});
 new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
