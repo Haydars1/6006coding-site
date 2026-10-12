@@ -52,11 +52,27 @@ async function main(){
     entity.engines.push(e);
   }
   fs.mkdirSync(out,{recursive:true});
+  // Build one compact, globally searchable index without duplicating detailed per-make files.
+  // A model dictionary avoids repeating model and brand strings in every motor row.
+  const engineSearchModels=[],engineSearchEntries=[],engineSearchMakes=[],makeIds=new Map();
+  const makeIndex=make=>{
+    if(!makeIds.has(make)){makeIds.set(make,engineSearchMakes.length);engineSearchMakes.push(make);}
+    return makeIds.get(make);
+  };
   const list=[];
   for(const group of groups.values()){
     const payload={license:'ODbL-1.0',source:'https://github.com/gor3a/vehicle-makes-models',upstream:'autoevolution.com',referenceOnly:true,
       makes:[...group.makes],models:[...group.models.values()]};
     fs.writeFileSync(path.join(out,group.slug+'.json'),JSON.stringify(payload));
+    for(const model of payload.models){
+      const modelId=engineSearchModels.length;
+      engineSearchModels.push([makeIndex(model.make),model.name]);
+      for(const e of model.engines){
+        // [modelId,generation,label,firstYear,lastYear,HP,Nm,fuel,gearbox,drive].
+        // These are third-party OPEN reference specs, never tuning targets.
+        engineSearchEntries.push([modelId,e.generation,e.engine,e.from||model.from||"",e.to||model.to||"",e.hp,e.nm,e.fuel,e.transmission,e.drive]);
+      }
+    }
     list.push({slug:group.slug,makes:[...group.makes],models:payload.models.length,engines:payload.models.reduce((n,m)=>n+m.engines.length,0)});
   }
   const metadata={license:'ODbL-1.0',source:'https://github.com/gor3a/vehicle-makes-models',upstream:'autoevolution.com',
@@ -65,6 +81,20 @@ async function main(){
     makes:list.sort((a,b)=>a.makes[0].localeCompare(b.makes[0],'de')),
     totalModels:list.reduce((n,r)=>n+r.models,0),totalEngines:list.reduce((n,r)=>n+r.engines,0)};
   fs.writeFileSync(path.join(out,'index.json'),JSON.stringify(metadata));
+  const engineSearch={
+    schemaVersion:1,
+    license:'ODbL-1.0',
+    source:metadata.source,
+    databaseLicense:metadata.databaseLicense,
+    referenceOnly:true,
+    note:'Open public reference data, NOT manufacturer verified and NOT Stage 1 tuning output.',
+    count:engineSearchEntries.length,
+    makes:engineSearchMakes,
+    models:engineSearchModels,
+    entries:engineSearchEntries
+  };
+  if(engineSearch.count!==metadata.totalEngines)throw Error('Engine index counts do not match the per-make catalogue');
+  fs.writeFileSync(path.join(out,'engine-search.json'),JSON.stringify(engineSearch));
   console.log('OPEN VEHICLES: '+list.length+' make groups, '+metadata.totalModels+' models, '+metadata.totalEngines+' engine rows');
 }
 main().catch(error=>{
