@@ -148,6 +148,18 @@ for(const id of latestSourceIds)assert(stageRefDb.examples.find(x=>x.id===id)?.m
 assert(stageRefDb.examples.find(x=>x.id==='mitsubishi-asx-2016-did114-brp')?.manualEngineContains==='ASX 1.6 DID','ASX shared model category requires ASX-specific manual identification');
 assert(stageRefDb.examples.find(x=>x.id==='subaru-forester-2008-boxerd150-brp')?.publishedStage1Ps===180,'Subaru stage 1 must not inherit stage 2 200 PS');
 console.log('PASS: Six additional motor advertisements, three newly covered makes, strict model/torque validation');
+const stage1CarHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
+assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261012-deeplink'),'Stage 1 source transfer must use fresh script version');
+assert(vinCode.includes('transferredReferenceId')&&vinCode.includes('applyTransferredStageReference'),'Source-specific deep linking not enabled');
+assert(vinCode.includes('stage1Published.find(r=>r.id===transferredReferenceId)'),'Transferred source must be checked against the published data');
+assert(vinCode.includes('Number(year.value)<item.yearFrom')&&vinCode.includes('fuel.value!==item.fuel'),'Transferred data must verify model year and fuel');
+assert(vinCode.includes('const matches=variants.map')&&vinCode.includes('if(unique.length===1)'),'Only unique verified motor variants may be automatically selected');
+assert(vinCode.includes('transferredButton.addEventListener("click"')&&vinCode.includes('item.manualOnly'),'Manual-only sources must require customer confirmation');
+assert(vinCode.includes('publishedMatch.publisher+" · "+publishedMatch.id'),'Quote draft must keep publisher and source identification');
+const stage1DirectoryJs=fs.readFileSync(path.join(ROOT,'assets','6006-stage1-directory.js'),'utf8');
+assert(stage1DirectoryJs.includes('stageRef:r.id'),'Stage 1 directory must transfer selected engine source ID');
+assert(fs.readFileSync(path.join(ROOT,'assets','6006-vin-stage1.css'),'utf8').includes('.vin6006-transfer'),'Transferred-source note lacks mobile styling');
+console.log('PASS: Source-specific Stage 1 deep-links, explicit confirmation, safe preselection and quote provenance');
 const directoryJS=path.join(ROOT,'assets/6006-stage1-directory.js'),directoryCSS=path.join(ROOT,'assets/6006-stage1-directory.css');
 assert(fs.existsSync(directoryJS)&&fs.existsSync(directoryCSS),'Searchable public Stage 1 browser assets missing');
 execFileSync(process.execPath,['--check',directoryJS],{stdio:'pipe'});
