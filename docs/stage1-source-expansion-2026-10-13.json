@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-13",
-  "status": "2 publisher advertisements verified against directly readable source pages; remaining 7 unverified; NOT imported into live catalog",
+  "status": "9/12 original publisher advertisement values checked, 3 remain unverified; research only, NOT live catalog",
   "records": [
     {
       "id": "vw-golf7-gti-220",
@@ -33,13 +33,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "publisher's advertised Stage 1 figures checked against indexed original page 2026-10-13; not independently tested",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "vw-golf7-gti-performance-gpf-245",
@@ -52,13 +52,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "publisher's advertised Stage 1 figures checked against indexed original page 2026-10-13; not independently tested",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "vw-golf5-gti-edition30-230",
@@ -109,13 +109,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "publisher's advertised Stage 1 figures checked against indexed original page 2026-10-13; not independently tested",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "audi-s3-8v-gpf-300",
@@ -128,13 +128,13 @@
       "stage1Torque": 460,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "publisher's advertised Stage 1 figures checked against indexed original page 2026-10-13; not independently tested",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "mercedes-c220d-w205-194",
@@ -173,6 +173,63 @@
       "legalApprovalVerified": false,
       "sourcePageChecked": false,
       "advertisedClaimMatched": false
+    },
+    {
+      "id": "vw-golf7-gti-facelift-230",
+      "vehicle": "Volkswagen Golf VII Facelift GTI 2.0 TSI 2017–2018",
+      "publisher": "BR-Performance Barcelona",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/54-volkswagen/2968-golf/9023-vii-facelift-02-2017-2020/9027-gti-2-0-tsi/",
+      "stockPower": 230,
+      "stockTorque": 350,
+      "stage1Power": 300,
+      "stage1Torque": 440,
+      "powerUnit": "cv",
+      "torqueUnit": "Nm",
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true,
+      "verificationScope": "publisher advertised Stage 1 values checked against original indexed page",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false
+    },
+    {
+      "id": "audi-a4-b9-20tfsi-190",
+      "vehicle": "Audi A4 B9 2.0 TFSI",
+      "publisher": "BR-Performance Barcelona",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/11-audi/256-a4/7018-b9-07-2015-2018/11457-2-0-tfsi/",
+      "stockPower": 190,
+      "stockTorque": 320,
+      "stage1Power": 235,
+      "stage1Torque": 400,
+      "powerUnit": "cv",
+      "torqueUnit": "Nm",
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true,
+      "verificationScope": "publisher advertised Stage 1 values checked against original indexed page",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false
+    },
+    {
+      "id": "vw-golf7-gti-us-210",
+      "vehicle": "Volkswagen Golf VII GTI US 2.0 TSI",
+      "publisher": "BR-Performance Barcelona",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/54-volkswagen/2968-golf/5104-vii-2012-2017/9578-2-0-tsi-gti-us/",
+      "stockPower": 210,
+      "stockTorque": 350,
+      "stage1Power": 300,
+      "stage1Torque": 440,
+      "powerUnit": "cv",
+      "torqueUnit": "Nm",
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true,
+      "verificationScope": "publisher advertised Stage 1 values checked against original indexed page",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false
     }
   ]
 }
