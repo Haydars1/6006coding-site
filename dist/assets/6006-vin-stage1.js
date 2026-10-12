@@ -509,14 +509,15 @@ window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value)
 new MutationObserver(()=>{translate();if(activeTransferredReference){transferLabels(transferMessageKind);}}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 const externalMake=preferred.get("brand"),externalModel=preferred.get("model");
 const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model));
-const stored=sameSavedVehicle&&!transferredReferenceId?memory:{};
-const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||""};
+const stored=sameSavedVehicle&&!transferredReferenceId&&!preferred.has("engineSearch")?memory:{};
+const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||"",engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)};
 async function restore(){
 if(initial.make){if(![...make.options].some(o=>o.value===initial.make))option(make,initial.make,initial.make);make.value=initial.make;populateModels(initial.model);
 if(initial.model)model.value=initial.model;}
 if(initial.year&&[...year.options].some(o=>o.value===initial.year))year.value=initial.year;
 if(initial.fuel&&fuelKeys.includes(initial.fuel))fuel.value=initial.fuel;
 if(initial.ps)ps.value=initial.ps;
+if(initial.engineSearch)engineSearch.value=initial.engineSearch;
 if(initial.engine)manual.value=initial.engine;
 translate();
 if(make.value){await makeChanged(initial.model);if(model.value){renderEngines("");const found=variants.findIndex(v=>clean(v.engine)===clean(initial.engine));if(found>=0){engine.value=String(found);manual.value="";syncVariant();}else renderReport();}}
