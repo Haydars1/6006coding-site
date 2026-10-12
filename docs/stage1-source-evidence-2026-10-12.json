@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-12",
+  "purpose": "Manual checks of third-party published advertisements only. This is NOT a 6006 calibration, dyno test, OEM validation, ECU or gearbox fitment approval, legal/TUV approval or a guarantee.",
+  "records": [
+    {
+      "id": "bmw-f3x-320d-190-brp",
+      "sourceUrl": "https://www.br-performance.com/brp-paris/reprogrammation/1-voitures/5-bmw/525-serie-3/7522-f3x-lci-06-2015-2019/7531-320d/",
+      "publisher": "BR-Performance",
+      "advertisedClaimMatched": true,
+      "sourceStockPowerText": "190 ch",
+      "sourceStockTorqueText": "400 Nm",
+      "sourceStage1PowerText": "220 ch",
+      "sourceStage1TorqueText": "440 Nm",
+      "sourceVehicleText": "BMW Série 3 F3x LCI 06/2015–2019 320d",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false,
+      "notes": "Original publisher page displayed the vehicle and advertised figures on 2026-10-12. 'ch' is the source unit; do not imply a 6006 dyno result."
+    },
+    {
+      "id": "vw-passat-b8-crl-150-ecuperformance",
+      "sourceUrl": "https://www.ecuperformance.net/2207/volkswagen-passat-magotan-2-0-tdi-cr-150hp-stage-1-modification-details.html",
+      "publisher": "ECU Performance",
+      "advertisedClaimMatched": true,
+      "sourceStockPowerText": "150 hp",
+      "sourceStockTorqueText": "340 Nm",
+      "sourceStage1PowerText": "190 hp",
+      "sourceStage1TorqueText": "420 Nm",
+      "sourceVehicleText": "Volkswagen Passat / Magotan B8 2014–2019 2.0 TDI CR 150hp",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false,
+      "notes": "Publisher page mentions CRL and Bosch EDC17C64/EDC17C74, but this does NOT verify the exact ECU fitted to a customer's vehicle. The publisher's emissions claim is unverified and not adopted."
+    }
+  ]
+}
