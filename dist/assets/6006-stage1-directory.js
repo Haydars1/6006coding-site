@@ -75,7 +75,7 @@ search.addEventListener("input",()=>{shown=12;render();});
 more.addEventListener("click",()=>{shown+=12;render();});
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 render();
-fetch("/assets/6006-stage1-references.json?v=20261012-38refs",{cache:"force-cache"}).then(async response=>{
+fetch("/assets/6006-stage1-references.json?v=20261012-52refs",{cache:"force-cache"}).then(async response=>{
  if(!response.ok)throw Error("reference list unavailable");
  const db=await response.json();
  if(db.schemaVersion!==1||!Array.isArray(db.examples))throw Error("schema mismatch");
