@@ -382,7 +382,7 @@ for(const [make,model] of [['Volkswagen','Passat'],['BMW','3 Series'],['Mercedes
  assert(globalEngineIndex.models.some(m=>globalEngineIndex.makes[m[0]]===make&&m[1].includes(model)),'Major make/model missing from global search: '+make+' '+model);
 const finderHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
 for(const file of ['6006-full-engine-directory.js','6006-full-engine-directory.css'])
- assert(finderHtml.includes('/assets/'+file+'?v=20261012-all-engines'),'Live vehicle finder must load '+file);
+ assert(finderHtml.includes('/assets/'+file+'?v=20261012-direct-inquiry'),'Live vehicle finder must load current '+file);
 execFileSync(process.execPath,['--check',path.join(ROOT,'assets','6006-full-engine-directory.js')],{stdio:'pipe'});
 const allEngineCode=fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.js'),'utf8');
 assert(allEngineCode.includes('engine-search.json?v=20261012-all-engines'),'Search UI must load generated global engine data on demand');
