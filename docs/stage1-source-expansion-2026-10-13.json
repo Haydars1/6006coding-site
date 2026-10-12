@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-13",
-  "status": "Research evidence only; publisher advertised values checked where sourcePageChecked true; NOT imported into live catalog",
+  "status": "22/22 publisher advertisement entries marked checked; RESEARCH ONLY, not published to live catalog; individual source freshness and vehicle compatibility must be reviewed before publication",
   "records": [
     {
       "id": "vw-golf7-gti-220",
@@ -71,13 +71,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "Direct original BR-Performance page confirms 230 cv / 300 Nm original and 290 cv / 400 Nm advertised Stage 1; not vehicle ECU gearbox or legal approval",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "audi-a3-8v-20tfsi-190",
