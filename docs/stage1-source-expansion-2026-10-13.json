@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-13",
-  "status": "research evidence only, NOT imported into live Stage 1 catalog",
+  "status": "UNVERIFIED RESEARCH CANDIDATES ONLY: links and numeric values require direct publisher-page verification before any public import",
   "records": [
     {
       "id": "vw-golf7-gti-220",
@@ -14,11 +14,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "vw-golf7-gti-performance-230",
@@ -31,11 +33,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "vw-golf7-gti-performance-gpf-245",
@@ -48,11 +52,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "vw-golf5-gti-edition30-230",
@@ -65,11 +71,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "audi-a3-8v-20tfsi-190",
@@ -82,11 +90,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "audi-a3-8y-40tfsi-190",
@@ -99,11 +109,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "audi-s3-8v-gpf-300",
@@ -116,11 +128,13 @@
       "stage1Torque": 460,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "mercedes-c220d-w205-194",
@@ -133,11 +147,13 @@
       "stage1Torque": 480,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     },
     {
       "id": "mercedes-glc220d-194",
@@ -150,11 +166,13 @@
       "stage1Torque": 480,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "publisher advertised figures only",
+      "verificationScope": "unverified candidate; do not publish numeric claims",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "sourcePageChecked": false,
+      "advertisedClaimMatched": false
     }
   ]
 }
