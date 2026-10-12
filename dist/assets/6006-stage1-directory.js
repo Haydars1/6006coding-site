@@ -62,7 +62,7 @@ function render(){
   const links=document.createElement("div");links.className="vin6006-directory-links";
   const source=document.createElement("a");source.textContent=t.source;source.href=r.sourceUrl;source.rel="noopener noreferrer";source.target="_blank";
   const vehicleLink=document.createElement("a");vehicleLink.textContent=t.vehicle;
-  const params=new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel});
+  const params=new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel,stageRef:r.id});
   vehicleLink.href="/fahrzeug/?"+params.toString()+"#vehicle-selector-6006";
   links.append(vehicleLink,source);
   card.append(title,subtitle,data,third,links);
