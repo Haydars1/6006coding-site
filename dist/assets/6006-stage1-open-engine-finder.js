@@ -39,11 +39,12 @@ function renderModels(){
  renderResults();
 }
 function filteredEngines(){
- const current=model.value,requestedYear=year.value?Number(year.value):0,q=canon(term.value);
+ const current=model.value,modelQuery=canon(modelFilter.value),requestedYear=year.value?Number(year.value):0,q=canon(term.value);
  const selectedFuel=fuel.value;
  const found=[];
  for(const item of models){
   if(current&&item.name!==current)continue;
+  if(modelQuery&&!canon(item.name).includes(modelQuery))continue;
   for(const v of item.engines||[]){
    const first=Number(v.from)||Number(item.from)||0,last=Number(v.to)||Number(item.to)||9999;
    if(requestedYear&&(requestedYear<first||requestedYear>last))continue;
