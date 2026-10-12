@@ -29,7 +29,7 @@ const makeNames=[...new Set(rows.map(r=>r.make))].sort((a,b)=>a.localeCompare(b,
 const dataByMake=new Map(makeNames.map(make=>[make,rows.filter(r=>r.make===make).sort((a,b)=>a.model.localeCompare(b.model,"de")||a.yearFrom-b.yearFrom)]));
 const engineLabel=r=>(r.manualEngineContains||r.enginePrefix||"Motorvariante");
 const fuelLabel=r=>r.fuel==="Benzin"?"Benzin":r.fuel==="Diesel"?"Diesel":"Hybrid – Antriebsart prüfen";
-const vehicleLink=r=>"/fahrzeug/?"+new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel}).toString()+"#vehicle-selector-6006";
+const vehicleLink=r=>"/fahrzeug/?"+new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel}).toString();
 const sourceLabel=r=>safe(r.publisher);
 const menu=makeNames.map(make=>'<a href="#marke-'+makeNames.indexOf(make)+'">'+safe(make)+' <span>'+dataByMake.get(make).length+'</span></a>').join("\n");
 const cards=makeNames.map((make,idx)=>{
