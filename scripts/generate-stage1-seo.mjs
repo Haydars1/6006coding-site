@@ -94,6 +94,7 @@ const html='<!doctype html><html lang="de"><head><meta charset="utf-8">'
  +'<link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml">'
  +'<link rel="stylesheet" href="/assets/6006-seo.css">'
  +'<link rel="stylesheet" href="/assets/6006-stage1-seo.css">'
+ +'<script defer src="/assets/6006-stage1-seo-filter.js?v=20261012-58refs"></script>'
  +'<script type="application/ld+json">'+JSON.stringify(breadcrumbs)+'</script>'
  +'<script type="application/ld+json">'+JSON.stringify(pageSchema)+'</script></head>'
  +'<body><header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav>'
@@ -124,7 +125,8 @@ const css='.stage-hub{max-width:1100px}.stage-lead{color:#e8c9a1;max-width:860px
 const dest=path.join(ROOT,"stage1-referenzen","index.html");
 fs.mkdirSync(path.dirname(dest),{recursive:true});
 fs.writeFileSync(dest,html,"utf8");
-fs.writeFileSync(path.join(ROOT,"assets","6006-stage1-seo.css"),css,"utf8");
+const filterCss='.stage-filter{margin:16px 0 24px;padding:18px;border:1px solid #806041;border-radius:9px;background:#262018}.stage-filter h2{font-size:1.16rem;margin:0 0 9px;color:#f6d5ab}.stage-filter label{display:block;font-size:.82rem;font-weight:700;color:#dcc6aa;margin-bottom:7px}.stage-filter-controls{display:flex;gap:9px}.stage-filter input{box-sizing:border-box;min-height:46px;min-width:0;flex:1;border:1px solid #886646;border-radius:6px;background:#15130f;color:#fff1db;font:500 16px/1.4 system-ui,sans-serif;padding:9px 12px}.stage-filter button{padding:8px 14px;min-height:44px;background:#d2a46e;color:#17130e;border:0;border-radius:6px;font-weight:750;cursor:pointer}.stage-filter button:disabled{opacity:.45;cursor:not-allowed}.stage-filter input:focus-visible,.stage-filter button:focus-visible{outline:2px solid #f0c591;outline-offset:2px}#stage-seo-count{font-size:.79rem;margin:12px 0 0;color:#e8c697}.stage-brand[hidden],.stage-item[hidden]{display:none!important}@media(max-width:650px){.stage-filter{padding:12px}.stage-filter-controls{flex-direction:column}.stage-filter button{width:100%}}';
+fs.writeFileSync(path.join(ROOT,"assets","6006-stage1-seo.css"),css+filterCss,"utf8");
 const sitemap=path.join(ROOT,"sitemap.xml"),xml=fs.readFileSync(sitemap,"utf8");
 const tag="<loc>"+canonical+"</loc>";
 assert(xml.includes("</urlset>"),"Missing DTC sitemap base");

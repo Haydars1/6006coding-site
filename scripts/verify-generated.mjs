@@ -74,9 +74,15 @@ assert.equal((urls.filter(u=>u.includes('/stage1-referenzen/'))).length,1,'One c
 assert.equal(stage1Summary.entryCount,stage1Db.examples.length,'Stage 1 SEO data must match vehicle source data');
 assert.equal(stage1Summary.brandCount,new Set(stage1Db.examples.map(x=>x.make)).size,'Wrong Stage 1 SEO make count');
 assert.equal((stage1Html.match(/class="stage-item"/g)||[]).length,stage1Db.examples.length,'All Stage 1 motor rows must render as HTML');
+assert(stage1Html.includes('/assets/6006-stage1-seo-filter.js?v=20261012-58refs'),'Static SEO hub missing progressive search');
+const searchJs=read(path.join(root,'assets','6006-stage1-seo-filter.js'));
+assert(searchJs.includes('stage-seo-search')&&searchJs.includes('stage-item')&&searchJs.includes('stage-brand'),'Client-side search not connected to crawlable source cards');
+assert(searchJs.includes('hidden=!ok')&&searchJs.includes('section.hidden=visible===0'),'Search must filter engine rows and brand groups correctly');
+assert(read(path.join(root,'assets','6006-stage1-seo.css')).includes('.stage-item[hidden]'),'Search must hide nonmatching cards on mobile');
+assert(stage1Db.examples.length>=58&&stage1Summary.brandCount>=29,'Published Stage 1 source expansion missing');
 assert(stage1Html.includes('rel="canonical" href="'+base+'/stage1-referenzen/"'),'Stage 1 SEO canonical wrong');
 assert(stage1Html.includes('name="robots" content="index,follow'),'Stage 1 hub must remain indexable');
-assert(stage1Html.includes('38 veröffentlichte Beispiele')||stage1Html.includes(stage1Db.examples.length+' veröffentlichte Beispiele'),'Stage 1 hub count not readable without JavaScript');
+assert(stage1Html.includes(stage1Db.examples.length+' veröffentlichte Beispiele'),'Stage 1 hub count not readable without JavaScript');
 assert(stage1Html.includes('kein')||stage1Html.includes('keine'),'Source limitations must be explicit');
 for(const entry of stage1Db.examples){
  assert(stage1Html.includes('id="ref-'+entry.id+'"'),'Stage 1 missing crawlable motor id '+entry.id);
