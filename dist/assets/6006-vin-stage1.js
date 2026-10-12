@@ -178,12 +178,15 @@ transferredLink.target="_blank";transferredLink.rel="noopener noreferrer";
 transferredPanel.append(transferredHeading,transferredText,transferredButton,transferredLink);
 referenceBox.insertAdjacentElement("afterend",transferredPanel);
 let activeTransferredReference=null;
+let transferMessageKind="missing";
+let transferButtonUsed=false;
 function transferLabels(messageKind){
+ transferMessageKind=messageKind;
  const copy=sourceTransferWords[lang()];
  transferredHeading.textContent=copy.title;
  transferredText.textContent=copy[messageKind]||copy.missing;
  transferredButton.textContent=copy.apply;
- transferredButton.hidden=messageKind!=="manual";
+ transferredButton.hidden=messageKind!=="manual"||transferButtonUsed;
  transferredLink.textContent=copy.source;
 }
 function applyTransferredStageReference(){
@@ -227,6 +230,7 @@ transferredButton.addEventListener("click",()=>{
  nm.value=String(item.sourceStockNm);
  manuallyEditedStock=true;
  renderReport();
+ transferButtonUsed=true;
  transferredButton.hidden=true;
  manual.focus({preventScroll:true});
 });
@@ -502,7 +506,7 @@ manual.addEventListener("input",()=>{
 for(const e of [ps,nm]){e.addEventListener("change",renderReport);e.addEventListener("input",()=>{manuallyEditedStock=true;renderReport();});}
 window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMakes();if(current&&!make.value){option(make,current,current);make.value=current;}});
 window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value){const current=model.value;populateModels(current);}});
-new MutationObserver(()=>{translate();if(activeTransferredReference){const kind=activeTransferredReference.manualOnly?"manual":transferredButton.hidden?"automatic":"multiple";transferLabels(kind);}}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+new MutationObserver(()=>{translate();if(activeTransferredReference){transferLabels(transferMessageKind);}}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 const externalMake=preferred.get("brand"),externalModel=preferred.get("model");
 const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model));
 const stored=sameSavedVehicle&&!transferredReferenceId?memory:{};
