@@ -65,5 +65,27 @@ for(const file of files){
  }
  for(const json of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g))JSON.parse(json[1]);
 }
-assert.equal(urls.length,grouped.size-noindex+170,'Unexpected sitemap coverage');
+const stage1HubPath=path.join(root,'stage1-referenzen','index.html');
+const stage1Html=read(stage1HubPath);
+const stage1Db=JSON.parse(read(path.join(root,'assets','6006-stage1-references.json')));
+const stage1Summary=JSON.parse(read(path.join(root,'assets','6006-stage1-seo-summary.json')));
+assert(urlSet.has(base+'/stage1-referenzen/'),'Missing crawlable Stage 1 catalogue URL from sitemap');
+assert.equal((urls.filter(u=>u.includes('/stage1-referenzen/'))).length,1,'One canonical Stage 1 hub, not many thin SEO pages');
+assert.equal(stage1Summary.entryCount,stage1Db.examples.length,'Stage 1 SEO data must match vehicle source data');
+assert.equal(stage1Summary.brandCount,new Set(stage1Db.examples.map(x=>x.make)).size,'Wrong Stage 1 SEO make count');
+assert.equal((stage1Html.match(/class="stage-item"/g)||[]).length,stage1Db.examples.length,'All Stage 1 motor rows must render as HTML');
+assert(stage1Html.includes('rel="canonical" href="'+base+'/stage1-referenzen/"'),'Stage 1 SEO canonical wrong');
+assert(stage1Html.includes('name="robots" content="index,follow'),'Stage 1 hub must remain indexable');
+assert(stage1Html.includes('38 veröffentlichte Beispiele')||stage1Html.includes(stage1Db.examples.length+' veröffentlichte Beispiele'),'Stage 1 hub count not readable without JavaScript');
+assert(stage1Html.includes('kein')||stage1Html.includes('keine'),'Source limitations must be explicit');
+for(const entry of stage1Db.examples){
+ assert(stage1Html.includes('id="ref-'+entry.id+'"'),'Stage 1 missing crawlable motor id '+entry.id);
+ assert(stage1Html.includes(entry.sourceUrl.replaceAll('&','&amp;')),'Stage 1 original source URL not linked '+entry.id);
+ assert(stage1Html.includes(entry.publishedStage1Ps+' PS / '+entry.publishedStage1Nm+' Nm'),'Stage 1 display fields incorrect '+entry.id);
+}
+assert(read(path.join(root,'index.html')).includes('href="stage1-referenzen/"'),'Homepage is missing crawlable Stage 1 hub link');
+assert(read(path.join(root,'fahrzeug','index.html')).includes('href="/stage1-referenzen/"'),'Vehicle finder must expose SEO catalogue link');
+console.log('PASS: 1 indexable Stage 1 hub, '+stage1Db.examples.length+' externally sourced HTML engine listings, canonical, schema and sitemap');
+
+assert.equal(urls.length,grouped.size-noindex+171,'Unexpected sitemap coverage');
 console.log(`PASS: ${files.size} HTML pages, ${links} internal links/assets/fragments, canonical URLs and JSON-LD; ${noindex} placeholder-only pages excluded from sitemap`);

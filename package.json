@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "6006 Performance source and deployment configuration",
   "scripts": {
-    "test": "node scripts/generate-seo.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs",
-    "build": "node scripts/generate-seo.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs"
+    "test": "node scripts/generate-seo.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/generate-stage1-seo.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs",
+    "build": "node scripts/generate-seo.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/generate-stage1-seo.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs"
   }
 }
