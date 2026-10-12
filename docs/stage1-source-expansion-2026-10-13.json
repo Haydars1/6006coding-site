@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "reviewedAt": "2026-10-13",
-  "status": "UNVERIFIED RESEARCH CANDIDATES ONLY: links and numeric values require direct publisher-page verification before any public import",
+  "status": "2 publisher advertisements verified against directly readable source pages; remaining 7 unverified; NOT imported into live catalog",
   "records": [
     {
       "id": "vw-golf7-gti-220",
@@ -14,13 +14,13 @@
       "stage1Torque": 440,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "original publisher page vehicle label and Stage 1 advertised numeric values checked 2026-10-13; NOT vehicle/ECU/gearbox/legal validation",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "vw-golf7-gti-performance-230",
@@ -90,13 +90,13 @@
       "stage1Torque": 400,
       "powerUnit": "cv",
       "torqueUnit": "Nm",
-      "verificationScope": "unverified candidate; do not publish numeric claims",
+      "verificationScope": "original publisher page vehicle label and Stage 1 advertised numeric values checked 2026-10-13; NOT vehicle/ECU/gearbox/legal validation",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false,
-      "sourcePageChecked": false,
-      "advertisedClaimMatched": false
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true
     },
     {
       "id": "audi-a3-8y-40tfsi-190",
