@@ -819,6 +819,44 @@
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
       "legalApprovalVerified": false
+    },
+    {
+      "id": "mercedes-gla-h247-200d-full-150",
+      "vehicle": "Mercedes GLA H247 Phase 1 200D Euro 6 D-full 2021+",
+      "publisher": "BR-Performance Barcelona",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/37-mercedes/5654-gla/10879-h247-phase-1-2020-2023/13543-200d-euro-6-d-full-2021/",
+      "stockPower": 150,
+      "stockTorque": 320,
+      "stage1Power": 200,
+      "stage1Torque": 440,
+      "powerUnit": "cv",
+      "torqueUnit": "Nm",
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true,
+      "verificationScope": "Original publisher page inspected 2026-10-13; advertised estimates, not independently tested or legal/ECU/gearbox certified",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false
+    },
+    {
+      "id": "mercedes-cla-c118-200d-temp-150",
+      "vehicle": "Mercedes CLA C118 2019–2023 200D Euro 6 D-temp",
+      "publisher": "BR-Performance Barcelona",
+      "sourceUrl": "https://www.br-performance.com/brp-barcelona/chiptuning/1-vehiculos/37-mercedes/5491-cla/10891-c118-2019-2023/11113-200d-euro-6-d-temp/",
+      "stockPower": 150,
+      "stockTorque": 320,
+      "stage1Power": 200,
+      "stage1Torque": 440,
+      "powerUnit": "cv",
+      "torqueUnit": "Nm",
+      "sourcePageChecked": true,
+      "advertisedClaimMatched": true,
+      "verificationScope": "Original publisher page inspected 2026-10-13; advertised estimates, not independently tested or legal/ECU/gearbox certified",
+      "vehicleFitmentVerified": false,
+      "ecuCompatibilityVerified": false,
+      "gearboxCompatibilityVerified": false,
+      "legalApprovalVerified": false
     }
   ]
 }
