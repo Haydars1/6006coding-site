@@ -387,6 +387,11 @@ execFileSync(process.execPath,['--check',path.join(ROOT,'assets','6006-full-engi
 const allEngineCode=fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.js'),'utf8');
 assert(allEngineCode.includes('engine-search.json?v=20261012-all-engines'),'Search UI must load generated global engine data on demand');
 assert(allEngineCode.includes('engineSearch')&&allEngineCode.includes('limit+=20'),'Search must pass an engine hint and paginate without auto-selecting ECU variants');
+assert(vinCode.includes('if(initial.engineSearch&&!transferredReferenceId)'),'Search hint must be restored AFTER async make/model loading');
+assert(vinCode.includes('engineSearch.value=initial.engineSearch;\n renderEngines(\"\");\n engine.value=\"\";'),'Open motor links must filter engine results without confirming a variant');
+assert(vinCode.includes('ps.value=\"\";\n nm.value=\"\";\n manuallyEditedStock=false;'),'Community reference must not silently populate verified stock power');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v=20261012-fullengines-handoff'),'Corrected motor search hint cache version not published');
+
 assert(!allEngineCode.includes('publishedStage1Ps')&&!allEngineCode.includes('publishedStage1Nm'),'Open engine data must not claim third-party tuning gains');
 assert(allEngineCode.includes('databaseLicense')||fs.readFileSync(globalSearchFile,'utf8').includes('databaseLicense'),'ODbL source attribution missing');
 console.log('PASS: '+globalEngineIndex.count+' globally searchable open reference engines, 164+ makes, paginated safe quote handoff');
