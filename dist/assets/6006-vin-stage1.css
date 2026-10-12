@@ -101,3 +101,14 @@
 .vin6006-stage-reference #vin6-ref-warning{font-size:.72rem;color:#d8b58e}
 .vin6006-stage-reference #vin6-ref-source{color:#f6d29c;text-decoration:underline;text-underline-offset:3px;display:inline-flex;padding:5px 0;font-size:.76rem;font-weight:750}
 @media(max-width:440px){#vin6-ref-values:not([hidden]){grid-template-columns:1fr}.vin6006-stage-reference{padding:13px}}
+
+/* Reference deep-link handoff: provenance first, customer approval for uncertain data. */
+.vin6006-transfer{margin:11px 0 16px;border:1px solid #ae8559;background:#201a15;padding:14px 16px;border-radius:9px;color:#e7d6c3;display:flex;flex-direction:column;gap:8px}
+.vin6006-transfer[hidden]{display:none!important}
+.vin6006-transfer h3{margin:0;color:#f4d7a8;font-size:.93rem;line-height:1.4}
+.vin6006-transfer p{margin:0;color:#e6ccaa;font-size:.8rem;line-height:1.55}
+.vin6006-transfer button{align-self:flex-start;border-radius:6px;border:1px solid #a87d48;background:#dcb27e;color:#181310;cursor:pointer;padding:12px 14px;min-height:44px;font-size:.83rem;font-weight:800}
+.vin6006-transfer button[hidden]{display:none}
+.vin6006-transfer button:focus-visible,.vin6006-transfer a:focus-visible{outline:2px solid #f0cd98;outline-offset:2px}
+.vin6006-transfer a{color:#f4c88e;font-size:.79rem;text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:35px}
+@media(max-width:440px){.vin6006-transfer{padding:12px}.vin6006-transfer button{width:100%;text-align:center}}

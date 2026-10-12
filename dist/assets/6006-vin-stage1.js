@@ -69,6 +69,11 @@ function renderQuote(){
  const mileage=Number(quoteControls.mileage.value);if(quoteControls.mileage.value&&Number.isSafeInteger(mileage)&&mileage>=0&&mileage<=2000000)put(copy.mileage,mileage.toLocaleString(lang()==="de"?"de-DE":lang()==="tr"?"tr-TR":"en-US")+" "+copy.mileageUnit);
  put(copy.ecuVersion,quoteControls.ecu.value.trim().slice(0,90));
  put(copy.extra,quoteControls.note.value.trim().slice(0,400));
+ const publishedMatch=matchPublishedStage();
+ if(publishedMatch){
+  const title=lang()==="tr"?"Üçüncü taraf Stage 1 kaynağı":lang()==="de"?"Externe Stage-1-Referenz":"External Stage 1 reference";
+  put(title,publishedMatch.publisher+" · "+publishedMatch.id+" · "+publishedMatch.sourceUrl);
+ }
  const message=[copy.salutation,"",...details,"",copy.verification].join("\n");
  $("quote-state").textContent=valid?copy.ready:copy.choose;
  $("quote-preview").textContent=copy.preview+": "+[make.value,model.value,year.value,engineCode].filter(Boolean).join(" · ");
@@ -98,6 +103,7 @@ const referenceBox=document.createElement("aside");referenceBox.className="vin60
 referenceBox.innerHTML='<h5 id="vin6-ref-title"></h5><p id="vin6-ref-description"></p><div id="vin6-ref-values" hidden></div><p id="vin6-ref-warning" hidden></p><a id="vin6-ref-source" rel="noopener noreferrer" target="_blank" hidden></a>';
 $("stage-note").insertAdjacentElement("afterend",referenceBox);
 let stage1Published=[];
+const transferredReferenceId=(new URLSearchParams(location.search).get("stageRef")||"").trim();
 function matchPublishedStage(){
  const selected=engine.value!==""?variants[Number(engine.value)]:null;
  const selectedYear=Number(year.value);
@@ -155,6 +161,79 @@ async function loadPublishedStageReferences(){
  }catch(e){/* Missing upstream reference files must not break vehicle or quote search. */}
 }
 
+/* A source ID deep-link is a pointer to published external data, not proof of ECU compatibility. */
+const sourceTransferWords={
+ tr:{title:"Stage 1 kaynak kaydı açıldı",manual:"Bu kaynak açık motor kataloğunda birebir doğrulanmadı. Ruhsattaki motor kodunu ve stok güç/torku kontrol ettikten sonra bilgileri aktarmak için düğmeye bas.",apply:"Kontrol ettim, kaynak bilgilerini forma aktar",automatic:"Motor eşleşmesi ön seçildi. Motor kodu, şanzıman ve ECU sürümünü yine doğrula.",multiple:"Birden fazla motor varyantı uyuyor. Şanzıman ve motor kodunu karşılaştırıp aşağıdaki listeden doğru motoru seç.",missing:"Motorun tam varyantı açık katalogdan doğrulanamadı. Motor kodunu ve stok bilgilerini elle girerek kişisel teklif iste.",source:"Orijinal üçüncü taraf ilanı ↗"},
+ de:{title:"Stage-1-Quellenbeispiel geöffnet",manual:"Diese Motorkennung lässt sich mit dem offenen Fahrzeugkatalog nicht zweifelsfrei verifizieren. Erst nach Prüfung der Motorkennung und Serienleistung in den Fahrzeugpapieren die Quelle in das Formular übernehmen.",apply:"Geprüft: Referenzangaben ins Formular übernehmen",automatic:"Der passende Katalogmotor wurde vorausgewählt. Bitte Motorkennung, Getriebe und ECU-Software trotzdem prüfen.",multiple:"Mehrere Motorvarianten sind möglich. Bitte Motorkennung und Getriebe vergleichen und die richtige Variante unten wählen.",missing:"Keine sichere Zuordnung im offenen Motorverzeichnis. Motorkennung und Serienwerte bitte manuell eingeben und individuell prüfen lassen.",source:"Originalanzeige eines Drittanbieters ↗"},
+ en:{title:"Published Stage 1 reference opened",manual:"This engine cannot be securely matched with the open vehicle catalogue. Check your engine designation and factory power/torque first, then click to copy source figures into the request form.",apply:"I've checked; use reference figures in the form",automatic:"The matching catalogue variant was preselected. Still verify engine code, transmission and ECU firmware.",multiple:"Several engine variants match. Check the gearbox and engine code, then pick the correct variant below.",missing:"No secure engine match in the open catalogue. Enter the real engine code and factory values manually for an individual quote.",source:"Original third-party listing ↗"}
+};
+const transferredPanel=document.createElement("aside");
+transferredPanel.className="vin6006-transfer";
+transferredPanel.id="vin6-source-transfer";
+transferredPanel.hidden=true;
+const transferredHeading=document.createElement("h3"),transferredText=document.createElement("p");
+const transferredButton=document.createElement("button"),transferredLink=document.createElement("a");
+transferredButton.type="button";
+transferredLink.target="_blank";transferredLink.rel="noopener noreferrer";
+transferredPanel.append(transferredHeading,transferredText,transferredButton,transferredLink);
+referenceBox.insertAdjacentElement("afterend",transferredPanel);
+let activeTransferredReference=null;
+let transferMessageKind="missing";
+let transferButtonUsed=false;
+function transferLabels(messageKind){
+ transferMessageKind=messageKind;
+ const copy=sourceTransferWords[lang()];
+ transferredHeading.textContent=copy.title;
+ transferredText.textContent=copy[messageKind]||copy.missing;
+ transferredButton.textContent=copy.apply;
+ transferredButton.hidden=messageKind!=="manual"||transferButtonUsed;
+ transferredLink.textContent=copy.source;
+}
+function applyTransferredStageReference(){
+ if(!/^[a-z0-9-]{8,100}$/.test(transferredReferenceId))return;
+ const item=stage1Published.find(r=>r.id===transferredReferenceId);
+ if(!item||clean(make.value)!==clean(item.make)||clean(model.value)!==clean(item.model)
+ || Number(year.value)<item.yearFrom||Number(year.value)>item.yearTo||fuel.value!==item.fuel)return;
+ activeTransferredReference=item;
+ transferredPanel.hidden=false;
+ transferredLink.href=item.sourceUrl;
+ if(item.manualOnly){transferLabels("manual");return;}
+ const qualifies=v=>v&&!stockNeedsReview(v)&&clean(v.model)===clean(model.value)&&
+ String(v.engine||"").toLowerCase().startsWith(String(item.enginePrefix||"").toLowerCase())&&
+ (!item.generationContains||String(v.generation||"").includes(item.generationContains))&&
+ Number(v.hp)===item.sourceStockHp&&Number(v.nm)===item.sourceStockNm&&readFuel(v.fuel||v.engine)===item.fuel;
+ const matches=variants.map((v,i)=>({v,i})).filter(x=>qualifies(x.v));
+ if(matches.length){
+  engineSearch.value=item.enginePrefix||"";
+  renderEngines("");
+  // Recompute the exact engine selection after filtering. Never assume the first gearbox.
+  const unique=variants.map((v,i)=>({v,i})).filter(x=>qualifies(x.v));
+  if(unique.length===1){
+   engine.value=String(unique[0].i);
+   syncVariant();
+   transferLabels("automatic");
+  }else{
+   transferLabels("multiple");
+   engine.focus({preventScroll:true});
+  }
+ }else transferLabels("missing");
+}
+transferredButton.addEventListener("click",()=>{
+ const item=activeTransferredReference;
+ if(!item||!item.manualOnly)return;
+ if(clean(make.value)!==clean(item.make)||clean(model.value)!==clean(item.model)||
+ Number(year.value)<item.yearFrom||Number(year.value)>item.yearTo||fuel.value!==item.fuel)return;
+ engine.value="";
+ engineSearch.value="";
+ manual.value=item.manualEngineContains||"";
+ ps.value=String(item.sourceStockHp);
+ nm.value=String(item.sourceStockNm);
+ manuallyEditedStock=true;
+ renderReport();
+ transferButtonUsed=true;
+ transferredButton.hidden=true;
+ manual.focus({preventScroll:true});
+});
 const popularMakes=["Volkswagen","BMW","Mercedes-Benz","Audi","Ford","Toyota","Renault","Peugeot","Hyundai","Kia","Opel","Škoda","Porsche","Fiat","Honda","Tesla","Volvo","Nissan"];
 const brandBar=document.createElement("div");brandBar.className="vin6006-brands";
 const brandCaption=document.createElement("p");brandCaption.className="vin6006-brand-caption";
@@ -427,10 +506,10 @@ manual.addEventListener("input",()=>{
 for(const e of [ps,nm]){e.addEventListener("change",renderReport);e.addEventListener("input",()=>{manuallyEditedStock=true;renderReport();});}
 window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMakes();if(current&&!make.value){option(make,current,current);make.value=current;}});
 window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value){const current=model.value;populateModels(current);}});
-new MutationObserver(translate).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+new MutationObserver(()=>{translate();if(activeTransferredReference){transferLabels(transferMessageKind);}}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 const externalMake=preferred.get("brand"),externalModel=preferred.get("model");
 const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model));
-const stored=sameSavedVehicle?memory:{};
+const stored=sameSavedVehicle&&!transferredReferenceId?memory:{};
 const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||""};
 async function restore(){
 if(initial.make){if(![...make.options].some(o=>o.value===initial.make))option(make,initial.make,initial.make);make.value=initial.make;populateModels(initial.model);
@@ -442,6 +521,6 @@ if(initial.engine)manual.value=initial.engine;
 translate();
 if(make.value){await makeChanged(initial.model);if(model.value){renderEngines("");const found=variants.findIndex(v=>clean(v.engine)===clean(initial.engine));if(found>=0){engine.value=String(found);manual.value="";syncVariant();}else renderReport();}}
 }
-restore();
-loadPublishedStageReferences();
+const restoreTask=restore();
+loadPublishedStageReferences().then(()=>restoreTask.then(applyTransferredStageReference));
 })();
