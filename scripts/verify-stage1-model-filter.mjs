@@ -17,7 +17,7 @@ const controls={
  classifyFuel:()=> 'Diesel'
 };
 vm.runInNewContext(source.slice(begin,end)+'\nglobalThis.searchResults=filteredEngines;',controls);
-assert.deepEqual(controls.searchResults().map(x=>x.item.name),['Golf'],
+assert.equal(controls.searchResults().map(x=>x.item.name).join(','),'Golf',
  'Model search must filter the visible engine results, not only the dropdown');
 controls.modelFilter.value='';
 assert.equal(controls.searchResults().length,2,'Clearing model query must restore results');
