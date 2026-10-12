@@ -60,8 +60,11 @@ function render(){
   }
   const third=document.createElement("p");third.className="vin6006-directory-provider";third.textContent=r.publisher+(r.manualOnly?" · "+t.manual:"");
   const links=document.createElement("div");links.className="vin6006-directory-links";
+  const referenceName=[r.make,r.model,r.manualEngineContains||r.enginePrefix||""].filter(Boolean).join(" ");
   const source=document.createElement("a");source.textContent=t.source;source.href=r.sourceUrl;source.rel="noopener noreferrer";source.target="_blank";
+  source.setAttribute("aria-label",t.source+" — "+referenceName);
   const vehicleLink=document.createElement("a");vehicleLink.textContent=t.vehicle;
+  vehicleLink.setAttribute("aria-label",t.vehicle+" — "+referenceName);
   const params=new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel,stageRef:r.id});
   vehicleLink.href="/fahrzeug/?"+params.toString()+"#vehicle-selector-6006";
   links.append(vehicleLink,source);
