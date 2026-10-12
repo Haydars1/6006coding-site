@@ -68,3 +68,11 @@ Yeterince temiz katalog motor kaydında yalnızca **marka + tam model + model y�
 - İlanlardaki performans rakamları araca uygulanabilir ECU haritası, motor dayanıklılığı, garanti veya Almanya'da TÜV/tescil onayı değildir.
 
 Güncel URL: `https://6006coding.de/stage1-referenzen/`. Sayfa build esnasında veritabanındaki kayıt sayısına göre sunucu tarafında oluşturulur; kaynak ve model bilgileri arama motoruna HTML olarak verilir. Google sıralaması/indeksleme garantisi yoktur.
+
+## 12.10.2026 — 58 örnek / 29 marka, kullanıcı araması
+
+Katalog 52 kayıttan **58 doğrudan üçüncü taraf ilanına ve 29 markaya** genişletildi. Yeni yayımlayan ilanları: Jeep Renegade 2014–18 JTDM 2.0 140PS, 2018+ MJT 2.0 140PS, GSE T3 1.0 120PS; Mitsubishi ASX DiD 1.6 114PS; Subaru Forester 2.0 D Boxer 150PS; Peugeot 2008 II BlueHDi 130PS. Her kayıt `manualOnly` işaretlenmiştir: ziyaretçinin gerçek motor adını ve kaynağın stok PS/Nm değerlerini doğrulaması zorunludur.
+
+**ASX önemli:** Açık motor kataloğu `ASX / RVR / Outlander Sport` model ailesi şeklinde birleştirdiği için yeni kayıt bir ASX motor örneğidir ve `ASX 1.6 DID` adlı manuel motor kodu gerektirir. RVR veya Outlander Sport için genelleme yapılmaz. Subaru için yalnızca kaynakta açık Stage 1 değeri 150/350 → 180/400 alınmıştır; ayrı Stage 2 sonuçları eklenmemiştir.
+
+Yeni Alman SEO sayfası motor adı, marka veya nesle göre **erişilebilir canlı arama** sağlar. Bu istemci filtreleyicisidir: `/stage1-referenzen/` üzerindeki 58 HTML kaydı JavaScript kapalıyken de okunabilir ve indekslenebilir kalır. Sıralama garantisi yoktur; 6006 Performance sonuç/izin garantisi vermez.
