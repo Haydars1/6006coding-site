@@ -60,7 +60,7 @@ for (const r of research) {
   // Search snippets and indexed summaries are not direct publisher-page evidence.
   // Even a manually checked checkbox must not override a contradictory scope note.
   const scope = typeof r.verificationScope === 'string' ? r.verificationScope : '';
-  if (/\\b(?:indexed|snippet|search result|403|forbidden)\\b/i.test(scope))
+  if (/\b(?:indexed|snippet|search result|403|forbidden)\b/i.test(scope))
     reasons.push('indexed/search-only or inaccessible source evidence; open publisher page directly');
   // Optional HTTP evidence must not contradict a checked-source flag.
   if (r.sourceHttpStatus !== undefined && r.sourceHttpStatus !== 200)
