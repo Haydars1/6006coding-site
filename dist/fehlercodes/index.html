@@ -147,7 +147,7 @@ main,.wrap{width:100%!important;margin:0!important}
 .real-photo,.diagram-panel{break-inside:avoid}
 }
 </style>
-<link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" />
+<link rel="stylesheet" href="/assets/6006-ui.css?v=20261013-mobile-cleanup" />
 <link rel="stylesheet" href="/assets/6006-video-search.css?v=20261012" /></head>
 <body>
 <header><div class="wrap headrow">
@@ -165,8 +165,10 @@ main,.wrap{width:100%!important;margin:0!important}
 <section class="controls" id="arama">
 <label class="searchlabel" id="search-label" for="q">Arıza kodu veya konu ara</label>
 <div class="searchrow"><input id="q" type="search" enterkeyhint="search" autocomplete="off" placeholder="Örn. P0299, P0104, DPF, turbo, AdBlue, ABS..." /><button type="button" class="notranslate" translate="no" id="submit">Ara</button></div>
+<details class="dtc-advanced-filters"><summary id="advanced-filter-label">Gelişmiş kod filtreleri</summary>
 <div class="filters"><div class="selector"><label for="brand" id="label-brand">DTC üreticisi (kod tanımı)</label><select id="brand"><option value="ALL">Tüm markalar</option></select></div>
 <div class="selector"><label for="group" id="label-family">Kod grubu</label><select id="group"><option value="all">Hepsi</option><option value="P">P · Motor &amp; şanzıman</option><option value="B">B · Gövde / hava yastığı</option><option value="C">C · Şasi / fren / direksiyon</option><option value="U">U · Ağ / CAN iletişimi</option></select></div></div>
+</details>
 <section class="dtc-car-panel" id="vehicle-picker-dtc" aria-label="Fahrzeugauswahl"><h2>Mein Fahrzeug auswählen</h2><p>Wählen Sie Marke, Modell, Baujahr und Motor für den Fehlercode-Kontext.</p></section>
 <div class="filterbuttons" id="topics" aria-label="Konu filtreleri"><button data-tag="all" type="button" aria-pressed="true">Tümü</button><button data-tag="turbo" type="button" aria-pressed="false">Turbo</button><button data-tag="dpf" type="button" aria-pressed="false">DPF</button><button data-tag="adblue" type="button" aria-pressed="false">AdBlue / SCR</button><button data-tag="emissions" type="button" aria-pressed="false">Egzoz / EGR</button><button data-tag="air" type="button" aria-pressed="false">Hava / emiş</button><button data-tag="fuel" type="button" aria-pressed="false">Yakıt</button><button data-tag="brake" type="button" aria-pressed="false">Fren / ABS</button><button data-tag="network" type="button" aria-pressed="false">CAN</button></div>
 <p class="hint" id="search-hint">Kod tanımları bir parçanın kesin bozuk olduğunu göstermez. Sonuçlar araç, motor ve üreticiye göre doğrulanmalıdır.</p>
