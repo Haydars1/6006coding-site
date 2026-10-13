@@ -28,6 +28,11 @@ for (const r of research) {
     if (liveUrls.has(url)) reasons.push('already in live catalogue (source URL)');
   }
   if (r.id && liveIds.has(r.id)) reasons.push('already in live catalogue (record ID)');
+  // Editorial exclusions must remain binding even if numeric thresholds change.
+  if (r.excludedFromPublish === true) reasons.push('explicit editorial exclusion from publication');
+  if (typeof r.reviewHoldReason === 'string' && r.reviewHoldReason.trim()) reasons.push('manual review hold: ' + r.reviewHoldReason.trim());
+  // A numeric value without its original unit cannot be compared or promoted safely.
+  if (!['cv','ch','PS'].includes(r.powerUnit) || r.torqueUnit !== 'Nm') flagError('unsupported or missing advertised units');
   for (const field of ['stockPower','stockTorque','stage1Power','stage1Torque']) {
     if (!Number.isFinite(r[field]) || r[field] <= 0) flagError('invalid ' + field);
   }
