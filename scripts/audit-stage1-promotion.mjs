@@ -23,6 +23,11 @@ for (const r of research) {
   if (!r.id || seenIds.has(r.id)) flagError('duplicate/missing research ID');
   if (r.id) seenIds.add(r.id);
   if (!r.vehicle || typeof r.vehicle !== 'string' || !r.publisher || typeof r.publisher !== 'string') flagError('missing vehicle/publisher evidence');
+  // A checked advertisement without an explicit model year is not enough to
+  // prove that the advertised figures apply to the requested model generation.
+  // This is a manual-review hold, not an assertion that the source lacks a year.
+  if (!/\b(?:19|20)\d{2}\b/.test(r.vehicle || ''))
+    reasons.push('research vehicle label lacks a model year; verify publisher year/variant before publication');
   const url = canonical(r.sourceUrl);
   if (!url) flagError('invalid HTTPS source URL');
   else {
