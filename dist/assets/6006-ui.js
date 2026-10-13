@@ -1,22 +1,21 @@
 
 (()=>{"use strict";
-if(document.getElementById('u6006-nav'))return;
+if(document.getElementById('u6006-search'))return;
 const sections=[['home','/','⌂'],['codes','/fehlercodes/','▣'],['tech','/technik/','⚙'],['repair','/reparatur-wartung/','🔧'],['vehicle','/fahrzeug/','▱']];
 const words={tr:{home:'Ana Sayfa',codes:'Kodlar',tech:'Teknik',repair:'Bakım',vehicle:'Araç',search:'Sitede ara',go:'Ara',all:'Tüm kodları aç',hint:'Kod, sistem veya parça ara: DPF, ABS, P0299…',last:'Son görüntülenenler',busy:'Katalog yükleniyor…',empty:'Sonuç bulunamadı.'},de:{home:'Start',codes:'Codes',tech:'Technik',repair:'Wartung',vehicle:'Fahrzeug',search:'Website durchsuchen',go:'Suchen',all:'Alle Codes',hint:'Code, System oder Teil suchen: DPF, ABS, P0299…',last:'Zuletzt geöffnet',busy:'Katalog wird geladen…',empty:'Keine Treffer.'},en:{home:'Home',codes:'Codes',tech:'Technical',repair:'Service',vehicle:'Vehicle',search:'Search the site',go:'Search',all:'All codes',hint:'Search code, system or part: DPF, ABS, P0299…',last:'Recently viewed',busy:'Loading catalog…',empty:'No matches.'}};
 function language(){let l='';try{l=localStorage.getItem('6006-language')||''}catch(e){}const h=document.documentElement.lang.slice(0,2).toLowerCase();return words[l]?l:words[h]?h:words[(navigator.language||'tr').slice(0,2)]?(navigator.language||'tr').slice(0,2):'tr'}
 const txt=k=>words[language()][k],mk=(tag,cls)=>{const e=document.createElement(tag);if(cls)e.className=cls;return e};
 const active=location.pathname.includes('fehlercodes')?'codes':location.pathname.includes('technik')?'tech':location.pathname.includes('reparatur-wartung')?'repair':location.pathname.includes('fahrzeug')?'vehicle':'home';
-const nav=mk('nav');nav.id='u6006-nav';nav.setAttribute('aria-label','6006 Navigation');
-for(const [key,url,icon]of sections){const a=mk('a');a.href=url;a.dataset.nav=key;a.innerHTML='<span aria-hidden="true">'+icon+'</span><span>'+txt(key)+'</span>';if(key===active){a.classList.add('current');a.setAttribute('aria-current','page')}nav.append(a)}document.body.append(nav);
+// Primary site header is the only navigation; do not inject a duplicate bottom bar.
 const tools=mk('div');tools.id='u6006-tools';
 const openBtn=mk('button','u6006-fab');openBtn.type='button';openBtn.textContent='⌕';openBtn.setAttribute('aria-label',txt('search'));tools.append(openBtn);
 const topBtn=mk('button','u6006-fab');topBtn.type='button';topBtn.textContent='↑';topBtn.setAttribute('aria-label','Scroll to top');topBtn.hidden=true;topBtn.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});tools.append(topBtn);
-document.body.append(tools);addEventListener('scroll',()=>topBtn.hidden=window.scrollY<400,{passive:true});
+if(active!=='codes')document.body.append(tools);addEventListener('scroll',()=>topBtn.hidden=window.scrollY<400,{passive:true});
 const overlay=mk('div');overlay.id='u6006-search';overlay.hidden=true;overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');
 overlay.innerHTML='<div class="u6006-modal"><div class="u6006-modal-head"><strong id="u6006-title"></strong><button class="u6006-close" aria-label="Close" type="button">×</button></div><form class="u6006-query-form"><input type="search" id="u6006-q" enterkeyhint="search" autocomplete="off" aria-label="Search fault code"/><button type="submit" id="u6006-go"></button></form><p class="u6006-help" id="u6006-hint"></p><div id="u6006-results" class="u6006-quick-results" aria-live="polite"></div><div class="u6006-shortcuts"><a href="/fehlercodes/?category=turbo">Turbo</a><a href="/fehlercodes/?category=dpf">DPF</a><a href="/fehlercodes/?category=adblue">AdBlue</a><a href="/fehlercodes/?category=brake">ABS</a><a href="/fehlercodes/?category=network">CAN</a><a href="/fehlercodes/" id="u6006-all"></a></div></div>';
 document.body.append(overlay);
 const get=id=>document.getElementById(id),input=get('u6006-q'),results=get('u6006-results');
-const applyLabels=()=>{nav.querySelectorAll('a').forEach(a=>a.lastElementChild.textContent=txt(a.dataset.nav));get('u6006-title').textContent=txt('search');get('u6006-go').textContent=txt('go');get('u6006-hint').textContent=txt('hint');get('u6006-all').textContent=txt('all');openBtn.setAttribute('aria-label',txt('search'));};
+const applyLabels=()=>{get('u6006-title').textContent=txt('search');get('u6006-go').textContent=txt('go');get('u6006-hint').textContent=txt('hint');get('u6006-all').textContent=txt('all');openBtn.setAttribute('aria-label',txt('search'));};
 let dataset=null,loading=null,sequence=0,oldFocus=null;
 function recent(){try{return JSON.parse(localStorage.getItem('6006-recent-codes')||'[]').slice(0,7)}catch(e){return[]}}
 function renderRecent(){results.replaceChildren();const arr=recent();if(!arr.length){results.textContent=txt('hint');return}const p=mk('p','u6006-help');p.textContent=txt('last');results.append(p);arr.forEach(x=>{if(!/^[PBCU][0-3][0-9A-F]{3}$/.test(x.code||''))return;const a=mk('a','u6006-match');a.href='/fehlercodes/?code='+encodeURIComponent(x.code);const b=mk('b');b.textContent=x.code;const s=mk('small');s.textContent=x.description||'';a.append(b,s);results.append(a)})}
