@@ -1084,7 +1084,9 @@
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
-      "legalApprovalVerified": false
+      "legalApprovalVerified": false,
+      "excludedFromPublish": true,
+      "reviewHoldReason": "Advertised power gain exceeds 1.6x stock and live catalog threshold; manually re-check original stock variant and source before considering import"
     },
     {
       "id": "mercedes-c-w204-250",
@@ -1285,11 +1287,11 @@
       "stockTorque": 360,
       "stage1Power": 195,
       "stage1Torque": 430,
-      "powerUnit": "pk",
+      "powerUnit": "PS",
       "torqueUnit": "Nm",
       "sourcePageChecked": true,
       "advertisedClaimMatched": true,
-      "verificationScope": "Original publisher page opened and vehicle/stock/Stage 1 advertisement values checked 2026-10-13; no independent dyno, fitment, ECU, gearbox or German legal approval",
+      "verificationScope": "Original publisher page opened and vehicle/stock/Stage 1 advertisement values checked 2026-10-13; no independent dyno, fitment, ECU, gearbox or German legal approval; original publisher uses Dutch 'pk' (metric horsepower), normalized as PS",
       "vehicleFitmentVerified": false,
       "ecuCompatibilityVerified": false,
       "gearboxCompatibilityVerified": false,
