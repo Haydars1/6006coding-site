@@ -57,6 +57,14 @@ for (const r of research) {
   if (Number.isFinite(r.stage1Torque) && Number.isFinite(r.stockTorque) && r.stage1Torque <= r.stockTorque) reasons.push('non-positive advertised torque gain requires review');
   if (r.stage1Power / r.stockPower > 1.65) reasons.push('power gain exceeds 65% manual review threshold');
   if (r.stage1Torque / r.stockTorque > 1.8) reasons.push('torque gain exceeds 80% manual review threshold');
+  // Search snippets and indexed summaries are not direct publisher-page evidence.
+  // Even a manually checked checkbox must not override a contradictory scope note.
+  const scope = typeof r.verificationScope === 'string' ? r.verificationScope : '';
+  if (/\\b(?:indexed|snippet|search result|403|forbidden)\\b/i.test(scope))
+    reasons.push('indexed/search-only or inaccessible source evidence; open publisher page directly');
+  // Optional HTTP evidence must not contradict a checked-source flag.
+  if (r.sourceHttpStatus !== undefined && r.sourceHttpStatus !== 200)
+    reasons.push('publisher source HTTP status is not 200');
   if (r.sourcePageChecked !== true || r.advertisedClaimMatched !== true) reasons.push('publisher claim not marked checked');
   if (r.vehicleFitmentVerified !== false || r.ecuCompatibilityVerified !== false ||
       r.gearboxCompatibilityVerified !== false || r.legalApprovalVerified !== false) flagError('unsupported approval claim');
