@@ -48,3 +48,11 @@ body:has(#vehicle-picker-dtc) .hero .stats{display:none!important}
 .dtc-advanced-filters{margin:12px 0 0;border-top:1px solid #5a4736;padding-top:12px}
 .dtc-advanced-filters>summary{cursor:pointer;color:#d8b68a;font-size:.87rem;font-weight:700;list-style:revert}
 .dtc-advanced-filters .filters{margin-top:12px}
+
+/* Shared vehicle profile: compact, legible on phones and desktop. */
+#vehicle-picker-dtc{display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin:18px 0;padding:18px;border:1px solid #6b523a;border-radius:10px;background:#211a14;color:#eee0ce}
+#vehicle-picker-dtc h2{margin:0!important;font-size:1.1rem!important;color:#f0ca94!important}
+#vehicle-picker-dtc p{margin:0;line-height:1.55;font-size:.9rem}
+#vehicle-picker-dtc p[hidden]{display:none!important}
+#vehicle-picker-dtc .dtc-vehicle-primary-link{max-width:100%;box-sizing:border-box}
+@media(max-width:600px){#vehicle-picker-dtc{padding:14px;margin:14px 0}#vehicle-picker-dtc .dtc-vehicle-primary-link{width:100%;justify-content:center}}
