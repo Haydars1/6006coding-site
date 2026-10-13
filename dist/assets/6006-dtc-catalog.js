@@ -35,9 +35,9 @@ const html=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 const L=()=>langMap[currentLanguage]||langMap.tr;
 let currentLanguage="tr";
 function detectLanguage(){
- let saved="";try{saved=localStorage.getItem("6006-language")||""}catch(_){}
- const n=(navigator.language||"tr").slice(0,2).toLowerCase();
- return ["tr","de","en"].includes(saved)?saved:(["tr","de","en"].includes(n)?n:"tr");
+ if(window.Locale6006)return window.Locale6006.getLanguage();
+ const preferred=navigator.languages?.length?navigator.languages:[navigator.language||"de"];
+ return preferred.map(x=>String(x).toLowerCase().split(/[-_]/)[0]).find(x=>["de","tr","en"].includes(x))||"de";
 }
 function normalize(s){return String(s||"").toLocaleLowerCase("tr").replace(/[ıİ]/g,"i").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[\s/_-]+/g," ");}
 const entryText=r=>normalize(r[0]+" "+r[1]+" "+r[2]);
@@ -435,7 +435,7 @@ async function init(){
  $("q").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();execute(true);}});
  $("brand").onchange=()=>{state.brand=$("brand").value;execute(true)};
  $("group").onchange=()=>{state.family=$("group").value;execute(true)};
- $("lang").onchange=()=>{currentLanguage=$("lang").value;updateVisualGallery();try{localStorage.setItem("6006-language",currentLanguage)}catch(_){}i18n();renderCodeShelf();if(state.code){const r=state.all.find(x=>x[0]===state.code&&x[1]===state.activeManufacturer);if(r)selectCode(r,false);}else renderList();};
+ $("lang").onchange=()=>{currentLanguage=$("lang").value;window.Locale6006?.setLanguage(currentLanguage);updateVisualGallery();i18n();renderCodeShelf();if(state.code){const r=state.all.find(x=>x[0]===state.code&&x[1]===state.activeManufacturer);if(r)selectCode(r,false);}else renderList();};
  $("topics").addEventListener("click",e=>{const b=e.target.closest("button[data-tag]");if(!b)return;state.category=b.dataset.tag;document.querySelectorAll("#topics button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));execute(true)});
  $("more").onclick=()=>{state.limit+=35;renderList()};
  if(state.query)execute(true);else{state.query="";renderList();$("detay").innerHTML='<div class="empty">'+html(L().choose)+'</div>';}

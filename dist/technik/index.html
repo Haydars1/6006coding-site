@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/assets/6006-locale.js?v=20261013-auto"></script>
+    <script defer src="/assets/6006-technik-locale.js?v=20261013-auto"></script>
     <meta name="theme-color" content="#12100f" />
     <meta name="description" content="Fahrzeugtechnik verständlich einordnen: typische Auto-, Transporter- und Lkw-Probleme, sichere Selbstprüfungen, Warnzeichen und der passende nächste Schritt." />
     <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -496,18 +498,20 @@ html{scroll-padding-top:1.25rem}
         const filters = [...document.querySelectorAll('[data-filter]')];
         const counter = document.querySelector('#topic-count');
         let currentFilter = 'all';
+        const normalizeSearch = (value) => String(value).toLowerCase().replace(/[ıİ]/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         const applyFilter = () => {
-          const query = search.value.trim().toLocaleLowerCase('de-DE');
+          const query = normalizeSearch(search.value.trim());
           let visible = 0;
           topics.forEach((topic) => {
             const matchesFilter = currentFilter === 'all' || topic.dataset.kind.split(' ').includes(currentFilter);
-            const searchText = `${topic.dataset.search} ${topic.textContent}`.toLocaleLowerCase('de-DE');
+            const searchText = normalizeSearch(`${topic.dataset.search} ${topic.textContent}`);
             const matchesSearch = !query || searchText.includes(query);
             const show = matchesFilter && matchesSearch;
             topic.hidden = !show;
             if (show) visible += 1;
           });
-          counter.textContent = visible === 1 ? '1 Technikthema wird angezeigt.' : `${visible} Technikthemen werden angezeigt.`;
+          const language = window.Locale6006?.getLanguage() || document.documentElement.lang;
+          counter.textContent = language === 'tr' ? `${visible} teknik konu gösteriliyor.` : language === 'en' ? `${visible} technical ${visible === 1 ? 'topic is' : 'topics are'} shown.` : visible === 1 ? '1 Technikthema wird angezeigt.' : `${visible} Technikthemen werden angezeigt.`;
         };
         search.addEventListener('input', applyFilter);
         filters.forEach((button) => button.addEventListener('click', () => {

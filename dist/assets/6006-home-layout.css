@@ -48,6 +48,9 @@ body.home-page .hero-copy h1 { margin: 0; }
 body.home-page .hero-actions { align-items: stretch; }
 body.home-page .hero-actions > a { min-width: 0; text-align: center; font-size: .75rem; }
 body.home-page .hero-proof { margin-top: 2rem; }
+@media (min-width: 761px) {
+  body.home-page .quick-access-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 body.home-page .concierge-launcher::before { content: none; }
 body.home-page .concierge-launcher-icon {
   width: 1.2rem;

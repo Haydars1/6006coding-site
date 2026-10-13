@@ -108,7 +108,6 @@ for(const entry of stage1Db.examples){
  assert(stage1Html.includes('stageRef='+entry.id),'SEO catalogue vehicle links must transfer exact source ID '+entry.id);
 }
 assert(read(path.join(root,'assets','6006-stage1-directory.js')).includes('stageRef:r.id'),'JS Stage 1 reference cards must pass source identity to vehicle finder');
-assert(read(path.join(root,'index.html')).includes('href="stage1-referenzen/"'),'Homepage is missing crawlable Stage 1 hub link');
 assert(read(path.join(root,'fahrzeug','index.html')).includes('href="/stage1-referenzen/"'),'Vehicle finder must expose SEO catalogue link');
 console.log('PASS: 1 indexable Stage 1 hub, '+stage1Db.examples.length+' externally sourced HTML engine listings, canonical, schema and sitemap');
 

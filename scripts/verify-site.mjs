@@ -450,17 +450,15 @@ const quickCardStart=homepage.indexOf('<div class="quick-access-grid">');
 const quickCardEnd=homepage.indexOf('</div>\n          </div>\n        </div>\n      </section>',quickCardStart);
 assert(quickCardStart>=0&&quickCardEnd>quickCardStart,'Quick-access section missing');
 const quickCards=homepage.slice(quickCardStart,quickCardEnd);
-assert.equal((quickCards.match(/class="quick-access-card"/g)||[]).length,5,'Homepage should show fault, coding, Stage 1, emission diagnosis and references');
+assert.equal((quickCards.match(/class="quick-access-card"/g)||[]).length,4,'Homepage should show fault, coding, Stage 1 and emission diagnosis');
+assert(!quickCards.includes('stageReferenceCard'),'Motor reference shortcut must not appear on the homepage');
 for(const snippet of [
  'id="stageGuideCard"',
  'Stage 1 · ECU Optimizasyonu',
  'emisyon mevzuatı ve gerekli onaylar',
  'id="emissionsGuideCard"',
  'DPF · EGR/AGR · AdBlue · NOx',
- 'emisyon sistemlerini devre dışı bırakmadan yasal onarım',
- 'id="stageReferenceCard"',
- 'Stage 1 · Motor Referansları',
- '32 markada yayımlanmış 62 üçüncü taraf motor örneğini'
+ 'emisyon sistemlerini devre dışı bırakmadan yasal onarım'
 ])assert(quickCards.includes(snippet),'Missing honest customer-facing home service wording: '+snippet);
 assert(homepage.includes('DPF, EGR, AdBlue &amp; NOx Teşhisi'),'Service card must cover all emission systems including NOx');
 assert(homepage.includes('DPF rejenerasyonu, EGR valfi, AdBlue/SCR dozajı ve NOx sensörü'),'Only compliant diagnostics and repair should be offered');
@@ -475,7 +473,7 @@ for(const localeKey of [
  'Stage 1 · Engine References',
  'Rechtlicher Rahmen: Stage 1 setzt die erforderlichen Genehmigungen'
 ])assert(homepage.includes(localeKey),'TR/DE/EN homepage language regression: '+localeKey);
-console.log('PASS: five compliant quick-service cards, NOx/DPF/AGR/AdBlue diagnostics, Stage 1 approval safeguards and TR/DE/EN copy');
+console.log('PASS: four compliant quick-service cards without motor-reference shortcut, NOx/DPF/AGR/AdBlue diagnostics, Stage 1 approval safeguards and TR/DE/EN copy');
 
 assert(homepage.includes('href="#hizmetler">Hizmetlerimizi gör'),'Homepage needs a direct services CTA');
 for(const name of ['Araç Kodlama &amp; Adaptasyon','ECU Okuma, Yazma &amp; Yedekleme','Arıza Kodu &amp; Canlı Veri Teşhisi'])assert(homepage.includes(name),'Missing advertised service: '+name);
