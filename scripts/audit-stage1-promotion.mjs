@@ -12,6 +12,9 @@ const canonical = value => {
   } catch { return null; }
 };
 const liveUrls = new Set(live.map(r=>canonical(r.sourceUrl)).filter(Boolean));
+// Duplicate URLs must also agree with the values already published. A mismatch
+// signals source drift or a transcription error; never silently accept it.
+const liveByUrl = new Map(live.filter(r=>canonical(r.sourceUrl)).map(r=>[canonical(r.sourceUrl),r]));
 const liveIds = new Set(live.map(r=>r.id).filter(Boolean));
 const seenIds = new Set(), seenUrls = new Set(), held = [], errors = [];
 for (const r of research) {
@@ -25,7 +28,16 @@ for (const r of research) {
   else {
     if (seenUrls.has(url)) flagError('duplicate research URL');
     seenUrls.add(url);
-    if (liveUrls.has(url)) reasons.push('already in live catalogue (source URL)');
+    if (liveUrls.has(url)) {
+      reasons.push('already in live catalogue (source URL)');
+      const published = liveByUrl.get(url);
+      for (const [researchField,liveField] of [
+        ['stockPower','sourceStockHp'],['stockTorque','sourceStockNm'],
+        ['stage1Power','publishedStage1Ps'],['stage1Torque','publishedStage1Nm']
+      ]) {
+        if (r[researchField] !== published[liveField]) flagError('live/research numeric mismatch: ' + researchField);
+      }
+    }
   }
   if (r.id && liveIds.has(r.id)) reasons.push('already in live catalogue (record ID)');
   // Editorial exclusions must remain binding even if numeric thresholds change.
