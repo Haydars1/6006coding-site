@@ -39,7 +39,9 @@ const carPage=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
 const dtcPage=fs.readFileSync(path.join(ROOT,'fehlercodes/index.html'),'utf8');
 assert(carPage.includes('6006-vin-stage1.js')&&carPage.includes('6006-vin-stage1.css'),'VIN interface not mounted');
 assert(dtcPage.includes('6006-video-search.js')&&dtcPage.includes('6006-video-search.css'),'Instant DTC search not mounted');
-assert(fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8').includes('/fahrzeug/#vehicle-selector-6006'),'Vehicle catalog cross-link missing');
+const dtcVehicleCode=fs.readFileSync(path.join(ROOT,'assets/6006-dtc-vehicle.js'),'utf8');
+assert(dtcVehicleCode.includes('/fahrzeug/#vehicle-selector-6006')||dtcVehicleCode.includes('"/fahrzeug/"'), 'Vehicle catalog cross-link missing');
+assert(!dtcVehicleCode.includes('id="dtc-car-form"'), 'Duplicate DTC vehicle form must not return');
 const brandChipsCSS=fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8');
 assert(brandChipsCSS.includes('.vin6006-brand-chips'),'Multi-brand selector layout missing');
 
