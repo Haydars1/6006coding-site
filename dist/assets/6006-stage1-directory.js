@@ -3,9 +3,9 @@
 const vehicle=document.getElementById("vehicle-selector-6006"),head=vehicle?.querySelector(".vin6006-head");
 if(!vehicle||!head||document.getElementById("vin6-stage-directory"))return;
 const words={
-tr:{summary:"Kaynaklı Stage 1 kataloğu",subtitle:"Üçüncü tarafların yayımladığı motor örneklerini marka, model veya motor ismine göre incele.",filter:"Markaya göre filtrele",all:"Tüm markalar",search:"Marka, model veya motor ara",stock:"İlan edilen orijinal",modified:"Üçüncü taraf Stage 1",source:"Kaynak ilanı ↗",vehicle:"Aracı bulucuda seç →",more:"Daha fazla göster",count:"kayıt ·",no:"Bu aramada kaynaklı referans bulunamadı.",warning:"Bu rakamlar 6006 Performance'ın dyno ölçümü veya garantili teklifi değildir. Araç kodu, ECU ve Almanya'daki yasal uygunluk ayrıca doğrulanmalıdır.",loading:"Referans kayıtları yükleniyor…",unavailable:"Kaynaklı motor listesi şu anda açılamadı. Araç seçiciyi kullanabilirsiniz.",manual:"Motorun stok değerlerini ayrıca doğrula",year:"Model yılı",anyYear:"Tüm yıllar",fuel:"Yakıt türü",anyFuel:"Tüm yakıtlar",sort:"Sırala",defaultSort:"Marka / model",sortPs:"İlan edilen PS artışı",sortNm:"İlan edilen Nm artışı",gain:"İlan edilen artış",brands:"marka"},
-de:{summary:"Stage-1-Referenzkatalog",subtitle:"Veröffentlichte Motorbeispiele von Drittanbietern nach Marke oder Modell durchsuchen.",filter:"Marke filtern",all:"Alle Marken",search:"Marke, Modell oder Motor suchen",stock:"Veröffentlichte Serie",modified:"Stage 1 Drittanbieter",source:"Zur Originalquelle ↗",vehicle:"Fahrzeug auswählen →",more:"Mehr anzeigen",count:"Einträge ·",no:"Keine passende veröffentlichte Motorreferenz.",warning:"Keine Messung, Garantie oder Zulassungsbestätigung von 6006 Performance. Motorkennung, ECU und Zulässigkeit in Deutschland gesondert prüfen.",loading:"Referenzen werden geladen…",unavailable:"Der Referenzkatalog ist nicht erreichbar. Bitte Fahrzeugauswahl nutzen.",manual:"Serienwerte zusätzlich bestätigen",year:"Baujahr",anyYear:"Alle Baujahre",fuel:"Kraftstoff",anyFuel:"Alle Kraftstoffe",sort:"Sortieren",defaultSort:"Marke / Modell",sortPs:"Veröffentlichter PS-Zuwachs",sortNm:"Veröffentlichter Nm-Zuwachs",gain:"Veröffentlichter Zuwachs",brands:"Marken"},
-en:{summary:"Published Stage 1 engine examples",subtitle:"Browse publicly advertised third-party examples by make, model or engine.",filter:"Filter by make",all:"All makes",search:"Search make, model or engine",stock:"Advertised stock",modified:"Advertised Stage 1",source:"Original publication ↗",vehicle:"Select this car →",more:"Show more",count:"entries ·",no:"No published reference matches this filter.",warning:"Not 6006 Performance dyno data, a guaranteed quote or German legal approval. Confirm engine, ECU and road-use requirements separately.",loading:"Loading published references…",unavailable:"Cannot load the reference index right now. Please use the vehicle selector.",manual:"Verify factory stock figures",year:"Model year",anyYear:"All years",fuel:"Fuel",anyFuel:"All fuel types",sort:"Sort by",defaultSort:"Make / model",sortPs:"Advertised PS increase",sortNm:"Advertised Nm increase",gain:"Advertised increase",brands:"makes"}
+tr:{summary:"Kaynaklı Stage 1 kataloğu",subtitle:"Üçüncü tarafların yayımladığı motor örneklerini marka, model veya motor ismine göre incele.",filter:"Markaya göre filtrele",all:"Tüm markalar",search:"Marka, model veya motor ara",stock:"İlan edilen orijinal",modified:"Üçüncü taraf Stage 1",source:"Kaynak ilanı ↗",vehicle:"Aracı bulucuda seç →",more:"Daha fazla göster",count:"kayıt ·",no:"Bu aramada kaynaklı referans bulunamadı.",warning:"Bu rakamlar 6006 Performance'ın dyno ölçümü veya garantili teklifi değildir. Araç kodu, ECU ve Almanya'daki yasal uygunluk ayrıca doğrulanmalıdır.",loading:"Referans kayıtları yükleniyor…",unavailable:"Kaynaklı motor listesi şu anda açılamadı. Araç seçiciyi kullanabilirsiniz.",manual:"Motorun stok değerlerini ayrıca doğrula",year:"Model yılı",anyYear:"Tüm yıllar",fuel:"Yakıt türü",anyFuel:"Tüm yakıtlar",sort:"Sırala",defaultSort:"Marka / model",sortPs:"İlan edilen PS artışı",sortNm:"İlan edilen Nm artışı",gain:"İlan edilen artış",brands:"marka",reset:"Filtreleri temizle",share:"Aramayı paylaş",copied:"Arama bağlantısı kopyalandı.",copyManual:"Bağlantıyı aşağıdan seçip kopyalayabilirsiniz."},
+de:{summary:"Stage-1-Referenzkatalog",subtitle:"Veröffentlichte Motorbeispiele von Drittanbietern nach Marke oder Modell durchsuchen.",filter:"Marke filtern",all:"Alle Marken",search:"Marke, Modell oder Motor suchen",stock:"Veröffentlichte Serie",modified:"Stage 1 Drittanbieter",source:"Zur Originalquelle ↗",vehicle:"Fahrzeug auswählen →",more:"Mehr anzeigen",count:"Einträge ·",no:"Keine passende veröffentlichte Motorreferenz.",warning:"Keine Messung, Garantie oder Zulassungsbestätigung von 6006 Performance. Motorkennung, ECU und Zulässigkeit in Deutschland gesondert prüfen.",loading:"Referenzen werden geladen…",unavailable:"Der Referenzkatalog ist nicht erreichbar. Bitte Fahrzeugauswahl nutzen.",manual:"Serienwerte zusätzlich bestätigen",year:"Baujahr",anyYear:"Alle Baujahre",fuel:"Kraftstoff",anyFuel:"Alle Kraftstoffe",sort:"Sortieren",defaultSort:"Marke / Modell",sortPs:"Veröffentlichter PS-Zuwachs",sortNm:"Veröffentlichter Nm-Zuwachs",gain:"Veröffentlichter Zuwachs",brands:"Marken",reset:"Filter zurücksetzen",share:"Suche teilen",copied:"Suchlink kopiert.",copyManual:"Link unten markieren und kopieren."},
+en:{summary:"Published Stage 1 engine examples",subtitle:"Browse publicly advertised third-party examples by make, model or engine.",filter:"Filter by make",all:"All makes",search:"Search make, model or engine",stock:"Advertised stock",modified:"Advertised Stage 1",source:"Original publication ↗",vehicle:"Select this car →",more:"Show more",count:"entries ·",no:"No published reference matches this filter.",warning:"Not 6006 Performance dyno data, a guaranteed quote or German legal approval. Confirm engine, ECU and road-use requirements separately.",loading:"Loading published references…",unavailable:"Cannot load the reference index right now. Please use the vehicle selector.",manual:"Verify factory stock figures",year:"Model year",anyYear:"All years",fuel:"Fuel",anyFuel:"All fuel types",sort:"Sort by",defaultSort:"Make / model",sortPs:"Advertised PS increase",sortNm:"Advertised Nm increase",gain:"Advertised increase",brands:"makes",reset:"Clear filters",share:"Share search",copied:"Search link copied.",copyManual:"Select and copy the link below."}
 };
 const lang=()=>{const l=(document.documentElement.lang||"").toLowerCase();return l.startsWith("tr")?"tr":l.startsWith("de")?"de":"en"};
 const directory=document.createElement("details");directory.id="vin6-stage-directory";directory.className="vin6006-stage-directory";
@@ -15,11 +15,13 @@ directory.innerHTML='<summary id="vin6-directory-toggle"></summary><div class="v
  +'<div><label id="vin6-directory-year-label" for="vin6-directory-year"></label><select id="vin6-directory-year"></select></div>'
  +'<div><label id="vin6-directory-fuel-label" for="vin6-directory-fuel"></label><select id="vin6-directory-fuel"></select></div>'
  +'<div><label id="vin6-directory-sort-label" for="vin6-directory-sort"></label><select id="vin6-directory-sort"></select></div></div>'
++'<div class="vin6006-directory-actions"><button type="button" id="vin6-directory-reset"></button><button type="button" id="vin6-directory-share"></button></div>'
++'<input type="text" id="vin6-directory-share-url" class="vin6006-directory-share-url" aria-label="Shareable Stage 1 catalogue URL" readonly hidden><p id="vin6-directory-share-status" class="vin6006-directory-share-status" role="status" aria-live="polite"></p>'
 +'<p id="vin6-directory-count" role="status" aria-live="polite"></p><div id="vin6-directory-results" class="vin6006-directory-results"></div>'
 +'<button type="button" id="vin6-directory-more" hidden></button><p class="vin6006-directory-warning" id="vin6-directory-warning"></p></div>';
 head.insertAdjacentElement("afterend",directory);
 const e=id=>document.getElementById("vin6-directory-"+id);
-const filter=e("make"),search=e("search"),year=e("year"),fuel=e("fuel"),sort=e("sort"),results=e("results"),more=e("more"),count=e("count");
+const filter=e("make"),search=e("search"),year=e("year"),fuel=e("fuel"),sort=e("sort"),results=e("results"),more=e("more"),count=e("count"),reset=e("reset"),share=e("share"),shareUrl=e("share-url"),shareStatus=e("share-status");
 year.append(option("",""));
 fuel.append(option("",""),option("Diesel","Diesel"),option("Benzin","Benzin"),option("Hybrid","Hybrid"));
 sort.append(option("","make"),option("","gainPs"),option("","gainNm"));
@@ -37,6 +39,7 @@ function labels(){
  e("fuel-label").textContent=t.fuel;fuel.options[0].textContent=t.anyFuel;
  e("sort-label").textContent=t.sort;sort.options[0].textContent=t.defaultSort;
  sort.options[1].textContent=t.sortPs;sort.options[2].textContent=t.sortNm;
+ reset.textContent=t.reset;share.textContent=t.share;
  const current=filter.value;
  filter.replaceChildren(option(t.all,""));
  for(const make of [...new Set(entries.map(x=>x.make))].sort((a,b)=>a.localeCompare(b,"de"))){filter.append(option(make,make));}
@@ -81,7 +84,9 @@ function render(){
   const links=document.createElement("div");links.className="vin6006-directory-links";
   const source=document.createElement("a");source.textContent=t.source;source.href=r.sourceUrl;source.rel="noopener noreferrer";source.target="_blank";
   const vehicleLink=document.createElement("a");vehicleLink.textContent=t.vehicle;
-  const params=new URLSearchParams({brand:r.make,model:r.model,year:String(r.yearFrom),powertrain:r.fuel,stageRef:r.id});
+  const selectedYear=Number(year.value);
+  const vehicleYear=Number.isInteger(selectedYear)&&selectedYear>=r.yearFrom&&selectedYear<=r.yearTo?selectedYear:r.yearFrom;
+  const params=new URLSearchParams({brand:r.make,model:r.model,year:String(vehicleYear),powertrain:r.fuel,stageRef:r.id});
   vehicleLink.href="/fahrzeug/?"+params.toString()+"#vehicle-selector-6006";
   links.append(vehicleLink,source);
   card.append(title,subtitle,data,gain,third,links);
@@ -89,9 +94,52 @@ function render(){
  }
  more.hidden=filtered.length<=shown;
 }
-filter.addEventListener("change",()=>{shown=12;render();});
-search.addEventListener("input",()=>{shown=12;render();});
-for(const control of [year,fuel,sort])control.addEventListener("change",()=>{shown=12;render();});
+// A shared link restores only catalogue filters, never a VIN or vehicle profile.
+const shareKeys={make:"stageMake",q:"stageQ",year:"stageYear",fuel:"stageFuel",sort:"stageSort"};
+function readSharedFilters(){
+ const p=new URL(window.location.href).searchParams;
+ if(!Object.values(shareKeys).some(k=>p.has(k)))return false;
+ search.value=(p.get(shareKeys.q)||"").slice(0,90);
+ const allowed=(control,value)=>[...control.options].some(o=>o.value===value)?value:"";
+ filter.value=allowed(filter,p.get(shareKeys.make)||"");
+ year.value=allowed(year,p.get(shareKeys.year)||"");
+ fuel.value=allowed(fuel,p.get(shareKeys.fuel)||"");
+ sort.value=allowed(sort,p.get(shareKeys.sort)||"make")||"make";
+ directory.open=true;
+ return true;
+}
+function buildShareUrl(){
+ const url=new URL(window.location.href);
+ for(const k of Object.values(shareKeys))url.searchParams.delete(k);
+ for(const [key,value] of [[shareKeys.make,filter.value],[shareKeys.q,search.value.trim().slice(0,90)],[shareKeys.year,year.value],[shareKeys.fuel,fuel.value],[shareKeys.sort,sort.value==="make"?"":sort.value]]){
+  if(value)url.searchParams.set(key,value);
+ }
+ url.hash="vin6-stage-directory";
+ return url.toString();
+}
+function invalidateShare(){
+ shareStatus.textContent="";
+ shareUrl.hidden=true;
+}
+reset.addEventListener("click",()=>{
+ filter.value="";search.value="";year.value="";fuel.value="";sort.value="make";
+ shown=12;invalidateShare();render();search.focus();
+});
+share.addEventListener("click",async()=>{
+ const url=buildShareUrl();
+ shareUrl.value=url;
+ try{
+  if(!navigator.clipboard?.writeText)throw Error("clipboard unavailable");
+  await navigator.clipboard.writeText(url);
+  shareUrl.hidden=true;shareStatus.textContent=words[lang()].copied;
+ }catch(_){
+  shareUrl.hidden=false;shareStatus.textContent=words[lang()].copyManual;
+  shareUrl.focus();shareUrl.select();
+ }
+});
+filter.addEventListener("change",()=>{shown=12;invalidateShare();render();});
+search.addEventListener("input",()=>{shown=12;invalidateShare();render();});
+for(const control of [year,fuel,sort])control.addEventListener("change",()=>{shown=12;invalidateShare();render();});
 more.addEventListener("click",()=>{shown+=12;render();});
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 render();
@@ -107,6 +155,7 @@ fetch("/assets/6006-stage1-references.json?v=20261012-62refs",{cache:"force-cach
  entries.sort((a,b)=>a.make.localeCompare(b.make,"de")||a.model.localeCompare(b.model,"de")||a.yearFrom-b.yearFrom);
  const years=entries.flatMap(x=>[x.yearFrom,x.yearTo]);
  if(years.length){const min=Math.max(1950,Math.min(...years)),max=Math.min(2100,Math.max(...years));for(let y=max;y>=min;y--)year.append(option(String(y),String(y)));}
+ readSharedFilters();
  render();
 }).catch(()=>{problem="loading";render();});
 })();
