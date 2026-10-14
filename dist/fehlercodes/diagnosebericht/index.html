@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#15120f"><meta name="robots" content="noindex,follow">
+<meta name="description" content="6006 Performance: Diagnoseprotokoll für OBD-Fehlercodes, Symptome, Messwerte und Werkstattprüfung lokal erstellen und drucken.">
+<title>6006 Performance — Diagnoseprotokoll</title>
+<link rel="icon" href="/assets/6006-favicon.svg">
+<style>
+:root{color-scheme:dark;--bg:#15120f;--panel:#241d17;--line:#70573d;--gold:#e8c08a;--text:#f5eee5;--muted:#c9b7a2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header,main,footer{max-width:1020px;margin:auto;padding:24px clamp(16px,4vw,36px)}header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+a{color:var(--gold)}.brand{font-weight:850;letter-spacing:.06em;text-decoration:none;color:var(--text)}.lang{display:flex;gap:6px}
+h1{font:normal clamp(2rem,5vw,3.5rem)/1.14 Georgia,serif;margin:14px 0}.eyebrow{font:700 .8rem monospace;letter-spacing:.1em;color:var(--gold)}
+p,.hint{color:var(--muted)}.panel{border:1px solid var(--line);border-radius:12px;padding:clamp(16px,3vw,28px);background:var(--panel);margin:24px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}label{display:block;font-weight:700;font-size:.91rem;margin-bottom:6px}
+input,textarea{display:block;width:100%;background:#110e0c;border:1px solid #957350;color:var(--text);border-radius:6px;padding:11px 13px;font:inherit}
+textarea{min-height:100px;resize:vertical}input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.field{margin-bottom:18px}.field small{display:block;color:var(--muted);margin-top:5px}
+button{font:inherit;cursor:pointer;padding:11px 16px;background:#392a1d;border:1px solid var(--line);border-radius:7px;color:var(--text)}
+button.primary{background:var(--gold);color:#1f170e;font-weight:800;border-color:var(--gold)}button[aria-pressed=true]{color:var(--gold);border-color:var(--gold)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.notice{border-left:3px solid var(--gold);padding:12px 15px;background:#352719;border-radius:4px}
+#preview[hidden]{display:none}#report{white-space:pre-wrap;overflow-wrap:anywhere;background:#110e0c;border:1px solid var(--line);padding:18px;border-radius:7px;font:14px/1.7 ui-monospace,SFMono-Regular,monospace}
+.status{min-height:1.5em;color:var(--gold)}footer{border-top:1px solid var(--line);color:var(--muted);font-size:.82rem}
+@media(max-width:640px){.grid{grid-template-columns:1fr}header{padding-top:15px}}
+@media print{body{background:white;color:#111;font:12pt/1.5 Arial,sans-serif}header,.form-panel,.actions,.notice,.status,footer,.hint{display:none!important}main{max-width:none;padding:0}h1{font:22pt Arial,sans-serif;margin:0 0 12pt}#preview,#preview[hidden]{display:block!important;border:0;padding:0}#report{background:white;color:#111;border:0;padding:0;font:10.5pt/1.55 monospace;white-space:pre-wrap}#preview h2{display:none}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">6006 PERFORMANCE</a><div class="lang" role="group" aria-label="Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="tr" aria-pressed="false">TR</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div></header>
+<main><p class="eyebrow">6006 / OBD-II / DIAGNOSE</p><h1 data-t="heading"></h1><p data-t="intro"></p>
+<section class="panel form-panel"><form id="form" autocomplete="off">
+<div class="grid">
+<div class="field"><label for="make" data-t="make"></label><input id="make" maxlength="70" required></div>
+<div class="field"><label for="model" data-t="model"></label><input id="model" maxlength="90" required></div>
+<div class="field"><label for="year" data-t="year"></label><input id="year" type="number" min="1950" max="2035" inputmode="numeric"></div>
+<div class="field"><label for="engine" data-t="engine"></label><input id="engine" maxlength="90"></div>
+<div class="field"><label for="mileage" data-t="mileage"></label><input id="mileage" maxlength="50"></div>
+<div class="field"><label for="scanDate" data-t="scanDate"></label><input id="scanDate" type="date"></div>
+</div>
+<div class="field"><label for="codes" data-t="codes"></label><textarea id="codes" maxlength="8000" placeholder="P0299, P0401, U0100"></textarea><small data-t="codesHint"></small></div>
+<div class="field"><label for="symptoms" data-t="symptoms"></label><textarea id="symptoms" maxlength="4000"></textarea></div>
+<div class="field"><label for="freeze" data-t="freeze"></label><textarea id="freeze" maxlength="4000"></textarea></div>
+<div class="field"><label for="checks" data-t="checks"></label><textarea id="checks" maxlength="4000"></textarea></div>
+<div class="field"><label for="next" data-t="next"></label><textarea id="next" maxlength="4000"></textarea></div>
+<div class="actions"><button class="primary" type="submit" data-t="generate"></button><button type="button" id="clear" data-t="clear"></button></div>
+</form></section>
+<p class="notice" data-t="privacy"></p>
+<section class="panel" id="preview" hidden><h2 data-t="preview"></h2><pre id="report"></pre><div class="actions"><button type="button" id="copy" data-t="copy"></button><button type="button" id="print" data-t="print"></button><button type="button" id="txt" data-t="download"></button></div></section>
+<p class="status" id="status" role="status" aria-live="polite"></p><p class="hint" data-t="disclaimer"></p><p><a href="/fehlercodes/" data-t="back"></a></p>
+</main><footer>© 6006 Performance · DE / TR / EN</footer>
+<script>
+'use strict';
+const dictionary={
+de:{heading:'OBD-Diagnoseprotokoll erstellen',intro:'Fahrzeugdaten, Fehlercodes, Symptome und eigene Prüfergebnisse zu einem druckbaren Werkstattprotokoll zusammenfassen.',make:'Hersteller *',model:'Modell *',year:'Baujahr',engine:'Motorisierung',mileage:'Kilometerstand',scanDate:'Prüfdatum',codes:'Fehlercodes / Scantext',codesHint:'P/B/C/U-Codes werden ohne Duplikate erkannt. Andere Textteile bleiben als Rohnotiz erhalten.',symptoms:'Symptome und Beobachtungen',freeze:'Freeze-Frame / Messwerte',checks:'Durchgeführte Prüfungen',next:'Offene Fragen / nächste Prüfschritte',generate:'Protokoll erstellen',clear:'Felder leeren',privacy:'Alle Eingaben bleiben in diesem Browser. Es gibt keinen Upload und keine automatische Speicherung. Druck und Download werden lokal erstellt.',preview:'Diagnoseprotokoll',copy:'Text kopieren',print:'Drucken / PDF',download:'TXT herunterladen',disclaimer:'Dieses Protokoll dokumentiert Beobachtungen; Fehlercodes allein beweisen keinen Bauteildefekt. Herstellervorgaben und fahrzeugspezifische Diagnose beachten.',back:'Zum Fehlercode-Katalog',codesOut:'Eindeutige Fehlercodes',rawOut:'Scantext / Notizen',noCodes:'Keine gültigen Codes erkannt',created:'Protokoll erstellt.',copied:'Text kopiert.',copyFailed:'Kopieren nicht möglich. Text manuell markieren.',empty:'Bitte Hersteller und Modell angeben.'},
+tr:{heading:'OBD arıza teşhis raporu oluştur',intro:'Araç bilgilerini, arıza kodlarını, belirtileri ve yapılan kontrolleri yazdırılabilir bir servis raporunda birleştir.',make:'Marka *',model:'Model *',year:'Model yılı',engine:'Motor',mileage:'Kilometre',scanDate:'Kontrol tarihi',codes:'Arıza kodları / tarama metni',codesHint:'P/B/C/U kodları tekrarları kaldırılarak ayıklanır. Diğer metinler ham not olarak korunur.',symptoms:'Belirtiler ve gözlemler',freeze:'Freeze-frame / ölçüm değerleri',checks:'Yapılan kontroller',next:'Açık sorular / sonraki kontrol adımları',generate:'Rapor oluştur',clear:'Alanları temizle',privacy:'Tüm bilgiler bu tarayıcıda kalır. Sunucuya yükleme veya otomatik kayıt yapılmaz. Yazdırma ve indirme yerel olarak gerçekleşir.',preview:'Teşhis raporu',copy:'Metni kopyala',print:'Yazdır / PDF',download:'TXT indir',disclaimer:'Bu rapor gözlemleri kaydeder; tek başına arıza kodu parça arızasını kanıtlamaz. Üretici talimatlarına ve araç özelinde teşhise uy.',back:'Arıza kodu kataloğuna dön',codesOut:'Benzersiz arıza kodları',rawOut:'Tarama metni / notlar',noCodes:'Geçerli kod bulunamadı',created:'Rapor oluşturuldu.',copied:'Metin kopyalandı.',copyFailed:'Kopyalanamadı. Metni elle seçebilirsin.',empty:'Marka ve model gir.'},
+en:{heading:'Create an OBD diagnostic report',intro:'Combine vehicle details, fault codes, symptoms and performed checks into a printable workshop report.',make:'Make *',model:'Model *',year:'Model year',engine:'Engine',mileage:'Mileage',scanDate:'Inspection date',codes:'Fault codes / scan text',codesHint:'P/B/C/U codes are deduplicated. Other text is preserved as raw notes.',symptoms:'Symptoms and observations',freeze:'Freeze-frame / live readings',checks:'Checks performed',next:'Open questions / next diagnostic steps',generate:'Generate report',clear:'Clear fields',privacy:'All inputs stay in this browser. No upload or automatic storage. Printing and downloads are created locally.',preview:'Diagnostic report',copy:'Copy text',print:'Print / PDF',download:'Download TXT',disclaimer:'This report records observations; a fault code alone does not prove a component failure. Follow manufacturer guidance and vehicle-specific diagnosis.',back:'Back to fault code catalog',codesOut:'Unique fault codes',rawOut:'Scan text / notes',noCodes:'No valid codes detected',created:'Report generated.',copied:'Text copied.',copyFailed:'Copy unavailable. Select the text manually.',empty:'Enter a make and model.'}
+};
+const el=id=>document.getElementById(id);
+let lang=/^tr/i.test(navigator.language)?'tr':/^en/i.test(navigator.language)?'en':'de';
+const t=key=>dictionary[lang][key];
+function extractCodes(raw){const found=new Set();for(const match of String(raw).toUpperCase().matchAll(/(?:^|[^A-Z0-9])([PBCU][0-3][0-9A-F]{3})(?=$|[^A-Z0-9])/g)){found.add(match[1]);if(found.size>=150)break;}return [...found];}
+function fields(){return ['make','model','year','engine','mileage','scanDate','codes','symptoms','freeze','checks','next'];}
+function buildReport(){
+  if(!el('make').value.trim()||!el('model').value.trim())throw Error('empty');
+  const values=Object.fromEntries(fields().map(key=>[key,el(key).value.trim()]));
+  const codes=extractCodes(values.codes);
+  const section=(key,value)=>t(key)+'\n'+(value||'—')+'\n';
+  return '6006 PERFORMANCE — '+t('preview')+'\n'+'='.repeat(46)+'\n\n'+
+  ['make','model','year','engine','mileage','scanDate'].map(key=>section(key,values[key])).join('\n')+'\n'+
+  section('codesOut',codes.join(', ')||t('noCodes'))+'\n'+
+  section('rawOut',values.codes)+'\n'+
+  ['symptoms','freeze','checks','next'].map(key=>section(key,values[key])).join('\n')+'\n'+t('disclaimer');
+}
+function translate(){document.documentElement.lang=lang;document.title='6006 Performance — '+t('heading');document.querySelectorAll('[data-t]').forEach(node=>node.textContent=t(node.dataset.t));document.querySelectorAll('[data-lang]').forEach(node=>node.setAttribute('aria-pressed',String(node.dataset.lang===lang)));if(!el('preview').hidden)el('report').textContent=buildReport();}
+document.querySelectorAll('[data-lang]').forEach(button=>button.addEventListener('click',()=>{lang=button.dataset.lang;translate();}));
+el('form').addEventListener('submit',event=>{event.preventDefault();try{el('report').textContent=buildReport();el('preview').hidden=false;el('status').textContent=t('created');el('preview').scrollIntoView({behavior:'smooth',block:'start'});}catch(error){el('status').textContent=t('empty');}});
+el('clear').addEventListener('click',()=>{el('form').reset();el('preview').hidden=true;el('report').textContent='';el('status').textContent='';el('make').focus();});
+el('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(el('report').textContent);el('status').textContent=t('copied');}catch(_){el('status').textContent=t('copyFailed');}});
+el('print').addEventListener('click',()=>{if(!el('preview').hidden)window.print();});
+el('txt').addEventListener('click',()=>{if(el('preview').hidden)return;const blob=new Blob(['\ufeff'+el('report').textContent],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='6006-diagnosebericht.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+translate();
+</script></body></html>
