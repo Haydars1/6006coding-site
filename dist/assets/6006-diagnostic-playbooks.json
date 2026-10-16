@@ -1,0 +1,528 @@
+{
+  "version": 1,
+  "sources": [
+    {"id": "hella-aftertreatment", "title": "HELLA TECH WORLD — Exhaust gas aftertreatment: design, function and diagnostics", "url": "https://www.hella.com/techworld/us/technical/exhaust-technology/exhaust-gas-aftertreatment-design-diagnostics/"},
+    {"id": "hella-agr", "title": "HELLA TECH WORLD — Exhaust gas recirculation: structure, diagnosis and replacement", "url": "https://www.hella.com/techworld/us/technical/car-electronics-and-electrics/exhaust-gas-recirculation/"},
+    {"id": "hella-scr-pump", "title": "HELLA TECH WORLD — AdBlue pumps: function, contamination and pressure supply", "url": "https://www.hella.com/techworld/us/passenger-car-parts/vehicle-electronics/adblue-pumps/"},
+    {"id": "hella-turbo", "title": "HELLA TECH WORLD — Electronic boost pressure control and turbocharger actuator testing", "url": "https://www.hella.com/techworld/us/technical/car-electronics-and-electrics/electronic-boost-pressure-control-turbocharger-actuator-testing/"}
+  ],
+  "families": {
+    "dpf_sensor": {
+      "title": {"de": "DPF-Drucksensor: Signal, Leitungen und Schläuche prüfen", "tr": "DPF basınç sensörü: sinyal, kablo ve hortum kontrolü", "en": "DPF pressure sensor: signal, wiring and hose checks"},
+      "symptoms": {
+        "de": ["Motorkontrollleuchte oder DPF-Meldung; Regeneration wird möglicherweise gesperrt.", "Druckwert bleibt stehen, springt oder passt nicht zum Motorzustand.", "Leistungsverlust kann auftreten; der Code allein beweist keinen zugesetzten Filter."],
+        "tr": ["Motor veya DPF uyarısı; rejenerasyon engellenebilir.", "Basınç değeri sabit kalır, sıçrar veya motorun durumuyla uyuşmaz.", "Güç kaybı olabilir; bu kod tek başına filtrenin tıkalı olduğunu kanıtlamaz."],
+        "en": ["Engine or DPF warning; regeneration may be inhibited.", "Pressure reading is fixed, erratic or inconsistent with the engine state.", "Reduced power is possible; this code alone does not prove the filter is blocked."]
+      },
+      "steps": {
+        "de": [
+          "Vor dem Löschen Fehlerstatus und Freeze-Frame speichern: Drehzahl, Last, Temperatur und DPF-Druck mit Einheit. Zusätzliche Spannungs-, Temperatur- und Sensorcodes zuerst notieren; sie können die Druckauswertung verfälschen.",
+          "Bei kalter Abgasanlage den Sensor anhand des Motorplans finden. Vorhandene Druckschläuche vom Filter bis zum Sensor verfolgen: Scheuerstellen, Risse, Knicke, lose Anschlüsse und Vertauschungen suchen. Anschlüsse vor dem Abnehmen markieren; niemals in den Sensor hineinblasen.",
+          "Zündung ein, Motor aus: Druckwert und Diagnoseeinheit aufzeichnen. Ohne Abgasstrom muss der Wert zur fahrzeugspezifischen Nullpunkt-Toleranz passen. Ein fester hoher oder negativer Wert lenkt zuerst zu Signal, Nullpunkt oder Schlauchführung.",
+          "Nur wenn keine Sperrbedingung vorliegt, bei Leerlauf und einer vom Hersteller erlaubten Prüfdrehzahl Druck, Drehzahl und Abgastemperatur gemeinsam protokollieren. Auf eine nachvollziehbare Änderung achten; Grenzwerte nur aus der Motor-Prüfanweisung übernehmen.",
+          "Zündung ausschalten und die Abschaltzeit abwarten. Stecker auf Feuchtigkeit, Korrosion und zurückgedrückte Pins prüfen. Bei Signalfehlern mit Schaltplan und geeignetem Messadapter Versorgung, Masse und Signalleitung prüfen lassen; keine fremde Spannung einspeisen.",
+          "Ist das elektrische Signal plausibel, die abgekühlten Druckleitungen nach Herstellerverfahren auf Durchgang und korrekte Zuordnung prüfen. Sensor und Filter nicht durch Druckluft belasten. Erst danach den gemessenen Filterdruck für eine Verstopfungsdiagnose verwenden."
+        ],
+        "tr": [
+          "Kodları silmeden durumunu ve donmuş kareyi kaydet: devir, yük, sıcaklık ve birimiyle DPF basıncı. Ek besleme, sıcaklık veya sensör kodlarını da yaz; bunlar basınç değerlendirmesini yanıltabilir.",
+          "Egzoz soğukken motor şemasından sensörü bul. Filtre ile sensör arasındaki mevcut basınç hortumlarını takip edip sürtünme, çatlak, kıvrılma, gevşeme ve ters bağlantı ara. Sökmek gerekiyorsa bağlantıları işaretle; sensörün içine hava üfleme.",
+          "Kontak açık, motor kapalıyken basıncı ve birimini kaydet. Egzoz akışı yokken değer o motorun sıfır noktası toleransına uymalıdır. Sabit yüksek veya negatif değer önce sinyal, sıfır noktası veya hortum bağlantısının kontrolünü gerektirir.",
+          "Engelleyici bir arıza yoksa rölantide ve üreticinin izin verdiği kontrol devrinde basıncı, devri ve egzoz sıcaklığını birlikte kaydet. Değişim motorun durumuyla açıklanabilmeli; sınır değerleri yalnızca ilgili motorun kontrol talimatından al.",
+          "Kontağı kapatıp sistemin kapanma süresini bekle. Sokette nem, oksitlenme ve geriye kaçmış pin ara. Sinyal arızasında besleme, şase ve sinyal hattını doğru devre şeması ve ölçüm adaptörüyle kontrol ettir; hatta dışarıdan gerilim verme.",
+          "Elektrik sinyali makulse soğumuş basınç hatlarının geçişini ve doğru bağlantısını üreticinin yöntemiyle kontrol et. Sensörü veya filtreyi basınçlı havayla zorlama. Filtre tıkanıklığını ancak bu kontrollerden sonra güvenilir basınç verisiyle değerlendir."
+        ],
+        "en": [
+          "Before clearing anything, save code status and freeze-frame data: rpm, load, temperature and DPF pressure with its unit. Record accompanying supply, temperature and sensor codes; these can invalidate pressure interpretation.",
+          "With the exhaust cold, locate the sensor using the engine diagram. Follow any pressure hoses from filter to sensor and look for rubbing, cracks, kinks, loose joints or reversed connections. Mark connections before removal; never blow air into the sensor.",
+          "With ignition on and engine off, record pressure and its displayed unit. Without exhaust flow, the reading should meet the vehicle-specific zero-point tolerance. A fixed high or negative reading directs attention to signal, offset or hose routing first.",
+          "If no inhibit condition is present, log pressure, rpm and exhaust temperature together at idle and at the manufacturer-approved test speed. Look for a response consistent with the operating condition; obtain limits from the relevant engine test procedure.",
+          "Switch ignition off and allow the system shutdown time. Inspect connectors for water, corrosion and pushed-back pins. For signal faults, have supply, ground and signal checked using the correct wiring diagram and test adapter; do not inject external voltage.",
+          "If the electrical signal is plausible, check the cooled pressure lines for passage and correct connection using the manufacturer procedure. Do not pressurise the sensor or filter with compressed air. Only then use filter pressure to assess restriction."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "Drucksignal bereits bei Motor aus unplausibel; P2454 oder P2455 ist aktiv.", "action": "Versorgung, Masse, Kurzschluss und Unterbrechung nach Schaltplan eingrenzen. Ein zugesetzter DPF erklärt keinen elektrischen Low-/High-Code automatisch."},
+          {"finding": "Elektrische Werte stimmen, aber ein Schlauch ist gerissen, geknickt, undicht oder vertauscht.", "action": "Leitung fachgerecht ersetzen oder richtig verlegen. Anschlüsse nach Motorplan zuordnen und Nullpunkt sowie Druckverlauf erneut messen."},
+          {"finding": "Leitungen und Verkabelung sind geprüft; der Sensor bleibt fest oder springt bei stabilen Bedingungen.", "action": "Sensor gegen Herstellertest beziehungsweise Referenzmessung prüfen. Erst bei bestätigtem Defekt den passenden Sensor ersetzen und vorgeschriebene Anpassung durchführen."},
+          {"finding": "Nullpunkt und Sensor sind plausibel; Filterdruck ist unter der vorgeschriebenen Prüflast tatsächlich erhöht.", "action": "Zum DPF-Beladungsleitfaden wechseln. Ruß, Asche und die Ursache fehlender Regeneration unterscheiden; keinen Sensortausch auf Verdacht durchführen."}
+        ],
+        "tr": [
+          {"finding": "Motor kapalıyken bile basınç mantıksız; P2454 veya P2455 aktif.", "action": "Besleme, şase, kısa devre ve kopukluğu devre şemasıyla ayır. Tıkalı DPF elektriksel düşük/yüksek sinyal kodunu kendiliğinden açıklamaz."},
+          {"finding": "Elektrik değerleri doğru ama hortum çatlak, kıvrılmış, kaçırıyor veya ters bağlı.", "action": "Hattı uygun parçayla onar ya da doğru güzergâha yerleştir. Motor şemasına göre bağlayıp sıfır noktasını ve basınç değişimini yeniden ölç."},
+          {"finding": "Hatlar ve kablo kontrol edildi; sabit koşullarda sensör takılı kalıyor veya sıçrıyor.", "action": "Sensörü üreticinin testi veya referans ölçümle doğrula. Arızası kanıtlanırsa doğru sensörü değiştir ve gereken adaptasyonu uygula."},
+          {"finding": "Sıfır noktası ve sensör makul; belirtilen kontrol yükünde filtre basıncı gerçekten yüksek.", "action": "DPF yükü rehberine geç. Kurum, kül ve rejenerasyonun neden tamamlanamadığını ayır; sensörü tahminen değiştirme."}
+        ],
+        "en": [
+          {"finding": "Pressure is implausible with the engine off; P2454 or P2455 is active.", "action": "Isolate supply, ground, short circuit or open circuit using the wiring diagram. A restricted DPF does not automatically explain an electrical low/high code."},
+          {"finding": "Electrical checks pass but a hose is split, kinked, leaking or incorrectly connected.", "action": "Repair or replace the line and route it correctly. Confirm connections against the engine diagram, then repeat zero-point and pressure-response checks."},
+          {"finding": "Lines and wiring have been checked; the sensor remains fixed or erratic under stable conditions.", "action": "Confirm the sensor with the manufacturer test or a reference measurement. Replace only a confirmed faulty sensor and perform any required adaptation."},
+          {"finding": "Sensor and zero point are plausible; pressure is genuinely excessive under the prescribed test load.", "action": "Continue with the DPF loading guide. Distinguish soot, ash and the cause of failed regeneration rather than replacing a sensor on speculation."}
+        ]
+      },
+      "repair": {
+        "de": ["Nachgewiesene Schlauch-, Stecker- oder Kabelschäden reparieren; nur einen bestätigten fehlerhaften Sensor gegen die motorpassende Ausführung ersetzen.", "Sensor-Abgleich nur ausführen, wenn die Herstelleranweisung ihn vorsieht. Ruß- oder Aschewerte nicht zurücksetzen, um einen Druckfehler zu verstecken."],
+        "tr": ["Kanıtlanan hortum, soket veya kablo hasarını onar; yalnızca arızası doğrulanan sensörü motora uygun parçayla değiştir.", "Sensör adaptasyonunu ancak üretici istiyorsa yap. Basınç arızasını gizlemek için kurum veya kül hesabını sıfırlama."],
+        "en": ["Repair confirmed hose, connector or wiring damage; replace a proven faulty sensor with the correct engine-specific part.", "Perform sensor adaptation only if required by the manufacturer. Do not reset soot or ash calculations to conceal a pressure fault."]
+      },
+      "verify": {
+        "de": ["Den Motor-aus-Nullpunkt und denselben erlaubten Drucktest wiederholen; Vorher-/Nachherwerte mit gleicher Einheit vergleichen.", "Nach dokumentierter Reparatur Fehler löschen, den vorgesehenen Prüfzyklus durchführen und erneut auf aktive sowie anstehende Codes prüfen. Ein noch nicht abgeschlossener Monitor ist kein bestandener Test."],
+        "tr": ["Motor kapalı sıfır noktasını ve aynı izinli basınç testini tekrarla; önceki ve sonraki değerleri aynı birimle karşılaştır.", "Onarım kaydından sonra kodları sil, ilgili kontrol döngüsünü tamamla ve aktif/bekleyen kodları yeniden oku. Monitör tamamlanmamışsa test geçmiş sayılmaz."],
+        "en": ["Repeat the engine-off baseline and the same approved pressure test; compare before/after values in the same unit.", "After documenting the repair, clear codes, perform the prescribed verification cycle and scan for active and pending codes. An incomplete monitor is not a passed test."]
+      },
+      "stop": {"de": "Druckschläuche und Stecker nicht an heißer oder laufender Abgasanlage lösen. Elektrische Pinprüfungen brauchen den richtigen Schaltplan; bei unplausiblen Sensorwerten keine Regeneration starten.", "tr": "Sıcak veya çalışan egzoz sisteminde basınç hortumu ve soket sökme. Pin ölçümü için doğru devre şeması gerekir; sensör verileri makul değilken rejenerasyon başlatma.", "en": "Do not disconnect pressure hoses or connectors on a hot or running exhaust system. Pin testing requires the correct wiring diagram; do not initiate regeneration with implausible sensor data."},
+      "sourceIds": ["hella-aftertreatment"]
+    },
+    "dpf_load": {
+      "title": {"de": "DPF: Beladung, Regenerationssperre oder Filterwirkung unterscheiden", "tr": "DPF: yük, rejenerasyon engeli ve filtre verimini ayır", "en": "DPF: distinguish loading, regeneration inhibition and filtration efficiency"},
+      "symptoms": {
+        "de": ["DPF-Warnung, häufige oder abgebrochene Regeneration.", "Leistungsbegrenzung oder erhöhter Verbrauch.", "Ein Effizienzcode kann auch auf Undichtigkeiten oder einen beschädigten Filter hinweisen."],
+        "tr": ["DPF uyarısı, sık veya yarıda kalan rejenerasyon.", "Güç sınırlaması veya artan tüketim.", "Verim kodu kaçak veya hasarlı filtreyle de ilişkili olabilir."],
+        "en": ["DPF warning, frequent regeneration or regeneration that fails to finish.", "Reduced power or increased fuel consumption.", "An efficiency code may also involve exhaust leaks or a damaged filter."]
+      },
+      "steps": {
+        "de": [
+          "Freeze-Frame und zusätzliche Codes speichern. Im Diagnosegerät berechnete Rußmasse, Ascheangabe, Abstand zur letzten Regeneration und den angezeigten Sperrgrund getrennt aufrufen; Ruß und Asche sind nicht dasselbe.",
+          "Zuerst den Drucksensor-Leitfaden abarbeiten. Bei Motor aus den Nullpunkt prüfen und bei erlaubter Prüflast den Druckverlauf protokollieren. Einen Filter nicht aufgrund eines defekten Sensors als zugesetzt einstufen.",
+          "Am kalten Motor die Abgastemperatur-Sensorwerte untereinander und mit der Umgebung vergleichen. Ein auffällig abweichender Sensor oder ein aktiver Temperatursensorcode muss vor einer Beladungsbewertung geklärt werden.",
+          "Bei abgekühltem Abgasstrang Filtergehäuse und Verbindungen auf Risse, lose Schellen und Rußspuren prüfen. Bei P2002 auch die Filterwirkung nach Herstellerverfahren untersuchen; niedriger Druck allein beweist keinen intakten Filter.",
+          "Sperrgründe auslesen: zum Beispiel Temperatur-, AGR-, Ladedruck- oder Einspritzfehler. Ölstand nach Betriebsanleitung prüfen und steigenden Ölstand dokumentieren. Die Ursache für häufig gescheiterte Regeneration zuerst beheben.",
+          "Ruß-/Ascheangaben und geprüften Druck mit den Freigabekriterien dieses Motors vergleichen. Die nächste Maßnahme aus dem Herstellerverfahren ableiten: Ursachenreparatur, freigegebene professionelle Reinigung, Ersatz oder eine nur unter zulässigen Bedingungen ausgeführte Werkstatt-Regeneration."
+        ],
+        "tr": [
+          "Donmuş kareyi ve ek kodları kaydet. Cihazdan hesaplanan kurum miktarını, kül bilgisini, son rejenerasyondan beri geçen süre/mesafeyi ve engel nedenini ayrı ayrı aç; kurum ile kül aynı değildir.",
+          "Önce basınç sensörü rehberini uygula. Motor kapalı sıfır noktasını kontrol et ve izin verilen test yükünde basıncı kaydet. Arızalı sensörün verisiyle filtreye tıkalı teşhisi koyma.",
+          "Motor soğukken egzoz sıcaklık sensörlerini birbirleriyle ve ortamla karşılaştır. Belirgin biçimde farklı okuyan sensörü veya aktif sıcaklık sensörü kodunu filtre yükünü değerlendirmeden önce çöz.",
+          "Egzoz soğuyunca filtre gövdesi ve birleşimlerde çatlak, gevşek kelepçe ve kurum izi ara. P2002 için üreticinin filtre verimi kontrolünü de uygula; düşük basınç tek başına sağlam filtre demek değildir.",
+          "Rejenerasyonu engelleyen sıcaklık, AGR, turbo veya enjeksiyon arızalarını cihazdan oku. Yağ seviyesini kullanım kılavuzuna göre kontrol et ve yükseliyorsa kaydet. Sık yarım kalan rejenerasyonun sebebini önce gider.",
+          "Kurum/kül bilgisi ve doğrulanmış basıncı bu motorun izin koşullarıyla karşılaştır. Üretici prosedürüne göre sebebi onar, izinli profesyonel temizlik veya değişim planla; atölye rejenerasyonu yalnızca sistemin izin koşulları sağlanırsa değerlendirilir."
+        ],
+        "en": [
+          "Save freeze-frame data and related codes. Separately display calculated soot loading, ash information, time/distance since regeneration and the reported inhibit reason. Soot and ash are different conditions.",
+          "Complete the pressure-sensor guide first. Check its engine-off baseline and log pressure under the approved test load. Do not diagnose a restricted filter from a faulty sensor reading.",
+          "With the engine cold, compare exhaust-temperature sensor readings with each other and ambient conditions. Resolve a clearly inconsistent reading or active temperature-sensor code before evaluating loading.",
+          "Once the exhaust is cold, inspect the filter housing and joints for cracks, loose clamps and soot tracks. For P2002, follow the manufacturer's filtration-efficiency test too; low pressure alone does not prove the filter is intact.",
+          "Read regeneration inhibit conditions, including temperature, EGR, boost or injection faults. Check oil level as described in the handbook and document a rising level. Repair the reason repeated regenerations cannot finish first.",
+          "Compare loading information and verified pressure with the engine's release criteria. Use the manufacturer procedure to choose cause repair, approved professional cleaning or replacement. Workshop regeneration is an option only when all specified conditions permit it."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "Temperatur- oder Drucksignal unplausibel; Regeneration gesperrt.", "action": "Sensor, Leitung oder den angezeigten Sperrgrund zuerst reparieren. Beladung anschließend mit gültigen Messwerten neu bewerten."},
+          {"finding": "Rußbeladung und Druck erhöht; Filterzustand und Herstellerfreigabe erlauben weitere Behandlung.", "action": "Die Ursache des Rußaufbaus beheben. Nur das freigegebene Verfahren wählen; eine Fahrt oder Zwangsregeneration ist nicht für jede Beladung zulässig."},
+          {"finding": "Aschebeladung beziehungsweise Einschränkung bleibt nach zulässiger Rußbehandlung bestehen.", "action": "Asche wird nicht wie Ruß verbrannt. Herstellergerechte Reinigung oder Filterersatz anhand bestätigter Messwerte planen."},
+          {"finding": "P2002 mit plausiblen Sensoren; Filterwirkung schlecht oder Gehäuse/Verbindungen undicht.", "action": "Undichtigkeit reparieren und Filterelement nach dem Effizienz-Prüfverfahren beurteilen. Ein gerissenes Element wird durch Regeneration nicht repariert."}
+        ],
+        "tr": [
+          {"finding": "Sıcaklık veya basınç sinyali mantıksız; rejenerasyon engellenmiş.", "action": "Önce sensör, hat veya cihazın gösterdiği engel nedenini onar. Filtre yükünü sonra geçerli ölçümlerle yeniden değerlendir."},
+          {"finding": "Kurum ve basınç yüksek; filtre durumu ve üretici koşulları işlemi mümkün kılıyor.", "action": "Kurum birikmesinin sebebini gider. Yalnızca izinli yöntemi seç; sürüş veya zorunlu rejenerasyon her yük seviyesinde uygun değildir."},
+          {"finding": "İzinli kurum işlemi sonrasında kül yükü veya kısıtlama sürüyor.", "action": "Kül, kurum gibi yanmaz. Doğrulanan ölçümlere göre üreticiye uygun temizlik veya filtre değişimi planla."},
+          {"finding": "Sensörler makulken P2002 var; filtre verimi kötü veya gövde/bağlantı kaçırıyor.", "action": "Kaçağı onar ve filtre elemanını verim kontrolüyle değerlendir. Çatlamış bir eleman rejenerasyonla düzelmez."}
+        ],
+        "en": [
+          {"finding": "Temperature or pressure data is implausible and regeneration is inhibited.", "action": "Repair the sensor, line or reported inhibit condition first. Reassess loading with valid measurements afterwards."},
+          {"finding": "Soot and pressure are elevated, and filter condition plus manufacturer criteria allow treatment.", "action": "Repair the cause of soot accumulation. Choose only an approved procedure; driving or forced regeneration is not permitted at every loading level."},
+          {"finding": "Ash loading or restriction remains after an approved soot treatment.", "action": "Ash does not burn away like soot. Plan manufacturer-approved cleaning or replacement based on confirmed measurements."},
+          {"finding": "P2002 with plausible sensors, poor filtration or leaking housing/joints.", "action": "Repair leakage and assess the filter element using the specified efficiency test. Regeneration will not repair a cracked element."}
+        ]
+      },
+      "repair": {
+        "de": ["Den belegten Sensor-, Luft-, AGR- oder Einspritzfehler zuerst beheben; einen bestätigten Filterdefekt fachgerecht reinigen oder ersetzen lassen.", "Beladungs-/Aschewerte nur nach der tatsächlich ausgeführten und vom Hersteller definierten Reinigung oder Erneuerung anpassen. Filter oder Überwachung nicht deaktivieren."],
+        "tr": ["Doğrulanan sensör, hava, AGR veya enjeksiyon arızasını önce gider; kanıtlanmış filtre sorunu için uygun temizlik ya da değişim yaptır.", "Kurum/kül hesabını yalnızca gerçekten yapılan ve üreticinin tanımladığı temizlik veya değişim sonrası uyarla. Filtreyi veya izleme sistemini devre dışı bırakma."],
+        "en": ["Repair the confirmed sensor, air-system, EGR or injection fault first; have a proven filter problem cleaned or replaced using the approved method.", "Adapt loading/ash values only after the actual cleaning or replacement specified by the manufacturer. Do not disable the filter or its monitoring."]
+      },
+      "verify": {
+        "de": ["Druck bei gleicher erlaubter Prüflast und gleichem Temperaturzustand erneut messen; Sperrgrund und Regenerationsstatus kontrollieren.", "Den vorgesehenen DPF-Monitor abschließen und nach erneutem Betrieb aktive/anstehende Codes auslesen. Ein verschwundenes Warnsymbol allein belegt keine erfolgreiche Reparatur."],
+        "tr": ["Aynı izinli yük ve sıcaklık koşulunda basıncı tekrar ölç; rejenerasyon durumunu ve engel nedenini kontrol et.", "İlgili DPF monitörünü tamamlayıp çalışmadan sonra aktif/bekleyen kodları tekrar oku. Uyarı lambasının sönmesi tek başına onarımın başarılı olduğunu kanıtlamaz."],
+        "en": ["Repeat pressure checks at the same approved load and comparable temperature; inspect regeneration status and inhibit reasons.", "Complete the prescribed DPF monitor and rescan for active/pending codes after operation. A warning lamp going out alone does not prove the repair succeeded."]
+      },
+      "stop": {"de": "Bei P246C, erheblichem Leistungsverlust, steigendem Ölstand oder einem als unzulässig markierten Beladungszustand keine Regenerationsfahrt oder eigene Zwangsregeneration versuchen. Heiße Abgasanlage und Brandgefahr erfordern einen freigegebenen Werkstattablauf.", "tr": "P246C, ciddi güç kaybı, yükselen yağ seviyesi veya izin verilmeyen filtre yükünde rejenerasyon sürüşü ya da kendi başına zorunlu rejenerasyon deneme. Sıcak egzoz ve yangın riski nedeniyle işlem uygun atölye prosedürüyle yapılır.", "en": "With P246C, severe power loss, rising oil level or loading outside permitted limits, do not attempt a regeneration drive or DIY forced regeneration. Exhaust heat and fire risk require the approved workshop procedure."},
+      "sourceIds": ["hella-aftertreatment"]
+    },
+    "agr": {
+      "title": {"de": "AGR-Durchfluss: Ventilbewegung, Luftmasse und Kanäle prüfen", "tr": "AGR/EGR akışı: valf hareketi, hava kütlesi ve kanal kontrolü", "en": "EGR flow: check valve movement, air mass and passages"},
+      "symptoms": {
+        "de": ["Motorkontrollleuchte und zu geringer erkannter AGR-Durchfluss.", "Ruckeln, unruhiger Lauf oder Leistungsverlust können auftreten.", "Eine Rückmeldung der Ventilposition beweist noch keinen freien Abgasweg."],
+        "tr": ["Motor uyarısı ve yetersiz algılanan AGR/EGR akışı.", "Silkeleme, düzensiz çalışma veya güç kaybı görülebilir.", "Valf konumunun doğru görünmesi egzoz kanalının açık olduğunu kanıtlamaz."],
+        "en": ["Engine warning and insufficient detected EGR flow.", "Hesitation, rough running or power loss may occur.", "Correct reported valve position does not prove the exhaust passage is clear."]
+      },
+      "steps": {
+        "de": [
+          "P0401 samt Freeze-Frame und weiteren Luftmassen-, Ladedruck- oder Ventilcodes speichern. Mit Motorcode und Systemplan feststellen, ob die AGR elektrisch oder mit Unterdruck betätigt wird.",
+          "Am kalten Motor AGR-Leitungen, Stecker und gegebenenfalls Unterdruckschläuche verfolgen. An Knicken, Rissen, loser Steckverbindung und Rußspuren erkennt man mögliche Leck- oder Ansteuerungsstellen.",
+          "Mit geeignetem Diagnosegerät AGR-Sollposition, Istposition und Luftmasse zusammen anzeigen. Den freigegebenen Stellgliedtest ausführen und beobachten, ob die Istposition der Anforderung ohne Hängenbleiben folgt; nicht in den bewegten Mechanismus greifen.",
+          "Unter den für den AGR-Test vorgeschriebenen Motorbedingungen Luftmassen-Sollwert und Istwert während des Öffnens/Schließens vergleichen. Die erwartete Reaktion aus dem Motorverfahren nehmen; Änderungen des Luftmassenwerts helfen Bewegung von tatsächlichem Durchfluss zu unterscheiden.",
+          "Bei Unterdruckbetätigung Versorgung und Membran mit einer Handpumpe nach Herstellertest prüfen lassen; zeigt die Anzeige einen Druckverlust, Leckstelle oder Ventilmembran eingrenzen. Bei elektrischer Betätigung Versorgung, Masse und Rückmeldung anhand des Schaltplans prüfen.",
+          "Bewegt sich das Ventil korrekt, aber der Durchfluss bleibt zu klein, zugängliche AGR-Kanäle und Kühler nach der Ausbauanweisung auf Ablagerungen prüfen lassen. Luftmassenmessung und Ansauglecks gegenprüfen, bevor das Ventil verurteilt wird."
+        ],
+        "tr": [
+          "P0401, donmuş kare ve hava kütlesi, turbo veya valfle ilgili ek kodları kaydet. Motor kodu ve şemayla AGR'nin elektrikle mi vakumla mı çalıştığını belirle.",
+          "Motor soğukken AGR hatlarını, soketleri ve varsa vakum hortumlarını takip et. Kıvrılma, çatlak, gevşek soket ve kurum izi kaçak veya kumanda sorununun yerini gösterebilir.",
+          "Uyumlu cihazda istenen AGR konumunu, gerçek konumu ve hava kütlesini birlikte aç. İzinli aktüatör testinde gerçek konumun komutu takılmadan izleyip izlemediğini gözle; hareketli mekanizmaya elini sokma.",
+          "AGR kontrolünün belirtilen motor koşullarında valf açılıp kapanırken istenen ve ölçülen hava kütlesini karşılaştır. Beklenen tepkiyi ilgili motor prosedüründen al; hava kütlesindeki değişim valf hareketiyle gerçek akışı ayırmaya yardımcı olur.",
+          "Vakumlu sistemde besleme ve diyaframı üreticinin testiyle el pompası kullanarak kontrol ettir; basınç kaybı varsa hortum kaçağı ile diyaframı ayır. Elektrikli sistemde besleme, şase ve geri bildirim hattını doğru şemayla kontrol et.",
+          "Valf hareket ediyor ama akış hâlâ düşükse AGR kanalları ve soğutucusunu sökme talimatına göre birikinti yönünden kontrol ettir. Valfi arızalı saymadan hava kütlesi ölçümünü ve emme kaçaklarını da doğrula."
+        ],
+        "en": [
+          "Save P0401, freeze-frame data and accompanying air-mass, boost or valve codes. Use the engine code and system diagram to identify electric or vacuum EGR actuation.",
+          "With the engine cold, follow EGR pipes, connectors and any vacuum hoses. Look for kinks, splits, loose connections and soot tracks that can identify leakage or actuation problems.",
+          "Display commanded EGR position, actual position and air mass together on a suitable scan tool. Run the approved actuator test and observe whether position follows the command smoothly. Keep clear of the moving mechanism.",
+          "Under the specified EGR test conditions, compare requested and measured air mass as the valve opens and closes. Use the engine procedure for the expected response; air-mass changes help distinguish valve movement from actual flow.",
+          "For vacuum actuation, have supply and diaphragm tested with a hand pump according to the manufacturer procedure. If pressure decays, isolate hose leakage from diaphragm failure. For electric actuation, check supply, ground and feedback using the correct diagram.",
+          "If the valve moves correctly but flow remains low, have accessible EGR passages and the cooler inspected for deposits following the removal procedure. Cross-check air-mass measurement and intake leaks before condemning the valve."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "Keine Ventilbewegung und Unterdruckversorgung undicht oder fehlend.", "action": "Schlauch, Druckwandler oder Versorgung entsprechend dem Testbefund reparieren; Ventilmembran separat auf Dichtheit prüfen."},
+          {"finding": "Elektrische Ansteuerung fehlt oder Positionssignal ist unplausibel.", "action": "Stecker, Verkabelung und Versorgung nach Schaltplan prüfen. Einen Ventiltausch erst nach bestätigtem internen Defekt vornehmen."},
+          {"finding": "Ventilposition folgt, Luftmassen-/Durchflussreaktion bleibt aus.", "action": "Verengte Kanäle oder Kühler, falsche Luftmassenmessung und Ansauglecks unterscheiden. Nur bestätigte Ablagerungen nach freigegebenem Verfahren entfernen."},
+          {"finding": "Ventil klemmt oder interne Rückmeldung versagt trotz korrekter Ansteuerung.", "action": "Herstellerfreigabe für Reinigung prüfen; beschädigtes beziehungsweise nicht instandsetzbares Ventil mit passender Ausführung erneuern und erforderliche Anpassung ausführen."}
+        ],
+        "tr": [
+          {"finding": "Valf hareket etmiyor; vakum beslemesi yok veya kaçırıyor.", "action": "Testin gösterdiği hortum, vakum kumanda valfi veya besleme sorununu onar; valf diyaframının sızdırmazlığını ayrıca kontrol et."},
+          {"finding": "Elektrik kumandası yok veya konum sinyali mantıksız.", "action": "Soket, kablo ve beslemeyi devre şemasıyla kontrol et. Valfi ancak iç arızası doğrulanınca değiştir."},
+          {"finding": "Valf komutu izliyor fakat hava kütlesi/akış tepkisi gelmiyor.", "action": "Daralmış kanal/soğutucu, yanlış hava kütlesi ölçümü ve emme kaçağını ayır. Yalnızca kanıtlanan birikintiyi izinli yöntemle temizle."},
+          {"finding": "Doğru kumandaya rağmen valf takılıyor veya iç konum geri bildirimi çalışmıyor.", "action": "Üretici temizliğe izin veriyor mu kontrol et; hasarlı veya onarılamayan valfi uygun parçayla değiştir ve gerekiyorsa adaptasyon yap."}
+        ],
+        "en": [
+          {"finding": "No valve movement; vacuum supply is absent or leaking.", "action": "Repair the hose, control transducer or supply identified by testing. Check valve-diaphragm sealing separately."},
+          {"finding": "Electrical command is absent or position feedback is implausible.", "action": "Test connectors, wiring and supply using the diagram. Replace the valve only after confirming an internal fault."},
+          {"finding": "Position follows the command but air-mass/flow response is missing.", "action": "Distinguish restricted passages/cooler, inaccurate air-mass measurement and intake leaks. Remove confirmed deposits only using the approved method."},
+          {"finding": "The valve binds or internal feedback fails despite correct control.", "action": "Check whether cleaning is approved; replace a damaged or non-serviceable valve with the correct unit and complete any required adaptation."}
+        ]
+      },
+      "repair": {
+        "de": ["Bestätigte Unterdruck-, Stecker- oder Leitungsfehler reparieren; Reinigung oder Ersatz des Ventils/Kühlers nach Herstellerverfahren auswählen.", "Dichtungen, Flüssigkeiten und Lernverfahren der konkreten Ausführung verwenden. AGR nicht stilllegen und keinen Blinddeckel als Reparatur einsetzen."],
+        "tr": ["Kanıtlanan vakum, soket veya hat arızasını onar; valf/soğutucu temizliğini ya da değişimini üreticinin yöntemine göre seç.", "Araca uygun conta, sıvı ve öğrenme işlemini kullan. AGR'yi kapatma veya körleme plakasını onarım olarak uygulama."],
+        "en": ["Repair confirmed vacuum, connector or line faults; choose valve/cooler cleaning or replacement using the manufacturer procedure.", "Use the correct seals, fluids and learning procedure for the variant. Do not disable EGR or use a blanking plate as a repair."]
+      },
+      "verify": {
+        "de": ["Stellgliedtest mit Soll-/Istposition und Luftmassenreaktion wiederholen; behobene Leckstelle auf Dichtheit prüfen.", "Nach dokumentierter Reparatur den AGR-Prüfzyklus abschließen und aktive/anstehende Codes kontrollieren. Ein zurückgesetztes Lernfeld ersetzt keinen bestandenen Durchflusstest."],
+        "tr": ["Aktüatör testini istenen/gerçek konum ve hava kütlesi tepkisiyle tekrarla; onarılan kaçağın sızdırmazlığını kontrol et.", "Onarım kaydından sonra AGR kontrol döngüsünü tamamlayıp aktif/bekleyen kodlara bak. Öğrenme değerini sıfırlamak başarılı akış testi yerine geçmez."],
+        "en": ["Repeat actuator testing with commanded/actual position and air-mass response; verify the repaired joint is sealed.", "After documenting the repair, complete the EGR verification cycle and check active/pending codes. Reset learning values are not a substitute for a successful flow test."]
+      },
+      "stop": {"de": "AGR und Kühler nur kalt und nach Ausbauanweisung öffnen; Kühlmittelaustritt und heiße Abgase sind möglich. Bei Stellgliedtests Abstand halten und keine nicht vorgegebene Spannung an das Ventil anlegen.", "tr": "AGR ve soğutucuyu yalnızca soğukken sökme talimatına göre aç; soğutma sıvısı ve sıcak egzoz riski vardır. Aktüatör testinde uzak dur ve valfe belirtilmeyen harici gerilim verme.", "en": "Open EGR components and coolers only when cold and according to the removal procedure; coolant and hot exhaust hazards apply. Keep clear during actuator tests and do not apply unspecified external voltage."},
+      "sourceIds": ["hella-agr", "hella-aftertreatment"]
+    },
+    "scr_supply": {
+      "title": {"de": "AdBlue-Versorgung: Füllstand und Druckaufbau unterscheiden", "tr": "AdBlue beslemesi: seviye ile basınç oluşumunu ayır", "en": "AdBlue supply: distinguish fluid level from pressure build-up"},
+      "symptoms": {
+        "de": ["AdBlue-/SCR-Warnung oder Reststreckenmeldung bis zur Startsperre.", "Zu geringer gemeldeter Füllstand oder unzureichender Reduktionsmitteldruck.", "Weiße Kristallspuren an undichten Leitungen oder Verbindungen können auffallen."],
+        "tr": ["AdBlue/SCR uyarısı veya yeniden çalıştırmayı engelleyen geri sayım.", "Düşük bildirilen sıvı seviyesi ya da yetersiz AdBlue basıncı.", "Kaçıran hat ve birleşimlerde beyaz kristal izi görülebilir."],
+        "en": ["AdBlue/SCR warning or distance countdown to a no-restart condition.", "Reported low fluid level or insufficient reductant pressure.", "White crystal deposits may be visible around leaking lines or joints."]
+      },
+      "steps": {
+        "de": [
+          "Fehlerstatus, Reststreckenmeldung und Freeze-Frame speichern. Füllstand, Tanktemperatur, Druck-Soll/Ist und Pumpenfreigabe getrennt anzeigen. P203F betrifft Füllstand; P20E8 betrifft den Druck und bestätigt keinen leeren Tank.",
+          "Füllstand nach Betriebsanleitung prüfen; nur geeignetes, sauberes AdBlue aus verschlossenem Gebinde nachfüllen und die Mindestnachfüllmenge sowie Erkennungszeit des Fahrzeugs beachten. Bei Verdacht auf Diesel, Wasser oder Schmutz im Tank nicht weiter nachfüllen oder Pumpentests starten.",
+          "Nach Systemabschaltung und Druckabbau Tank, zugängliche Leitungen und Anschlüsse auf Nässe, weiße Ablagerungen, Scheuerstellen und lose Stecker ansehen. Kristalle markieren eine mögliche Leckstelle; sie sind allein kein Beweis für einen Pumpendefekt.",
+          "Mit geeignetem Gerät den freigegebenen Druckaufbautest aufrufen. Soll- und Istdruck sowie Pumpenstatus über die Testdauer aufzeichnen. Prüfen, ob eine Heizungs-, Temperatur- oder Versorgungssperre den Test verhindert; Druckvorgaben nur aus dem Motorverfahren verwenden.",
+          "Baut sich der Druck nicht auf, mit Schaltplan Sicherung, Pumpenversorgung, Masse und Drucksensor-Rückmeldung prüfen lassen. Bei korrekter Versorgung die freigegebene Filter-/Ansaug- und Leitungsprüfung nutzen; nicht durch Öffnen einer Druckleitung prüfen.",
+          "Sind Druckaufbau und Sensor plausibel, bei verbleibender SCR-Wirkungsstörung den herstellergeführten Dosiertest durchführen lassen. Menge, Dosierventil und Kristallbildung nur mit geeignetem Prüfaufbau beurteilen; danach zum NOx-/SCR-Wirkungsleitfaden wechseln."
+        ],
+        "tr": [
+          "Kod durumunu, kalan mesafe uyarısını ve donmuş kareyi kaydet. Seviye, tank sıcaklığı, istenen/gerçek basınç ve pompa izin durumunu ayrı aç. P203F seviyeyi, P20E8 basıncı bildirir; basınç kodu tankın boş olduğunu kanıtlamaz.",
+          "Seviyeyi kullanım kılavuzuna göre kontrol et; sadece temiz, kapalı ambalajdan uygun AdBlue doldur. Aracın minimum ekleme miktarına ve seviye algılama süresine uy. Tankta mazot, su veya kir şüphesi varsa ekleme yapma ve pompa testi başlatma.",
+          "Sistem kapandıktan ve basınç boşaldıktan sonra tankı, ulaşılabilir hatları ve birleşimleri ıslaklık, beyaz birikinti, sürtünme ve gevşek soket yönünden incele. Kristal olası kaçak yerini gösterir; tek başına pompa arızasını kanıtlamaz.",
+          "Uyumlu cihazla izinli basınç oluşturma testini aç. Test boyunca istenen/gerçek basıncı ve pompa durumunu kaydet. Isıtma, sıcaklık veya besleme engeli testi durduruyor mu bak; basınç sınırlarını ilgili motor prosedüründen al.",
+          "Basınç oluşmuyorsa doğru devre şemasıyla sigorta, pompa beslemesi, şase ve basınç sensörü geri bildirimini kontrol ettir. Besleme doğruysa izinli filtre/emiş ve hat kontrolünü kullan; basınçlı hattı açarak test etme.",
+          "Basınç ve sensör makulken SCR verim sorunu sürüyorsa üreticinin dozaj testini uygun atölye düzeneğiyle yaptır. Miktarı, dozaj valfini ve kristal birikimini bu testte değerlendir; sonra NOx/SCR verimi rehberine geç."
+        ],
+        "en": [
+          "Save code status, countdown warnings and freeze-frame data. Display level, tank temperature, requested/actual pressure and pump enable status separately. P203F concerns level; P20E8 concerns pressure and does not prove the tank is empty.",
+          "Check level using the handbook. Refill only with suitable clean AdBlue from a sealed container and follow the vehicle's minimum refill quantity and recognition time. If fuel, water or dirt contamination is suspected, do not top up or initiate pump tests.",
+          "After system shutdown and pressure release, inspect the tank, accessible lines and joints for wetness, white deposits, rubbing and loose connectors. Crystals can mark a leak; they do not by themselves prove pump failure.",
+          "Run the approved pressure-build test with a suitable scan tool. Log requested/actual pressure and pump status for the test duration. Check for heater, temperature or supply inhibit conditions; obtain pressure criteria from the engine procedure.",
+          "If pressure does not build, have the fuse, pump supply, ground and pressure-sensor feedback checked using the diagram. With correct supply, use the approved filter/suction and line checks; do not test by opening a pressurised line.",
+          "If pressure and sensor data are plausible but SCR efficiency remains faulty, have the manufacturer-guided dosing test performed with appropriate workshop equipment. Assess quantity, dosing valve and crystallisation, then continue with the NOx/SCR efficiency guide."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "P203F und tatsächlich niedriger Füllstand; keine Hinweise auf Verunreinigung.", "action": "Nach Betriebsanleitung korrekt nachfüllen und Erkennung abwarten. Bleibt die Füllstandanzeige trotz bestätigter Füllung falsch, Füllstandsensor und Verkabelung prüfen."},
+          {"finding": "Weiße Spuren oder Nässe an einer Verbindung; Druck bleibt zu niedrig.", "action": "Die Leckstelle nach Druckabbau instand setzen und den Druckaufbau wiederholen. Nicht automatisch die gesamte Pumpe ersetzen."},
+          {"finding": "Pumpenfreigabe fehlt oder Versorgung/Temperaturfunktion ist fehlerhaft.", "action": "Angezeigte Sperre, Sicherung, Versorgung oder Heizung nach Prüfplan reparieren; ein nicht freigegebener Test belegt keine mechanisch defekte Pumpe."},
+          {"finding": "Versorgung stimmt; Leitungen/Sensor sind geprüft, trotzdem kein ausreichender Druck.", "action": "Filter, Ansaugweg und Pumpeneinheit mit Herstellertests eingrenzen. Bestätigten Fehler reparieren; passende Einheit gegebenenfalls anlernen und den Dosiertest wiederholen."}
+        ],
+        "tr": [
+          {"finding": "P203F var ve seviye gerçekten düşük; kirlenme belirtisi yok.", "action": "Kılavuza göre doğru miktarı doldur ve algılama süresini bekle. Doğrulanmış doluma rağmen gösterge yanlışsa seviye sensörünü ve kablosunu kontrol et."},
+          {"finding": "Birleşimde beyaz iz veya ıslaklık var; basınç düşük kalıyor.", "action": "Basınç boşaldıktan sonra kaçağı onar ve basınç testini tekrarla. Bütün pompayı otomatik olarak değiştirme."},
+          {"finding": "Pompa izni yok veya besleme/sıcaklık işlevi arızalı.", "action": "Cihazın gösterdiği engeli, sigortayı, beslemeyi veya ısıtmayı kontrol planıyla onar. İzin verilmeyen test mekanik pompa arızasını kanıtlamaz."},
+          {"finding": "Besleme doğru; hat ve sensör kontrol edildi ama basınç yine yeterli değil.", "action": "Filtre, emiş yolu ve pompayı üretici testleriyle ayır. Kanıtlanan sorunu onar; gerekiyorsa doğru üniteyi tanıtıp dozaj testini tekrarla."}
+        ],
+        "en": [
+          {"finding": "P203F with genuinely low level and no contamination evidence.", "action": "Refill correctly according to the handbook and allow recognition time. If the display remains incorrect despite confirmed filling, test the level sensor and wiring."},
+          {"finding": "White deposits or wetness at a joint; pressure remains low.", "action": "Repair the leak after pressure release and repeat pressure testing. Do not automatically replace the entire pump."},
+          {"finding": "Pump operation is not enabled, or supply/temperature control is faulty.", "action": "Repair the reported inhibit condition, fuse, supply or heater using the test plan. A test that is not enabled does not prove a mechanically defective pump."},
+          {"finding": "Supply is correct and lines/sensor are checked, but pressure is still insufficient.", "action": "Isolate the filter, suction path and pump using manufacturer tests. Repair the confirmed fault, teach in the correct unit if required, and repeat dosing verification."}
+        ]
+      },
+      "repair": {
+        "de": ["Füllstand-, Leitungs-, Versorgungs- oder Pumpenfehler nach dem Messergebnis reparieren. Verunreinigtes System nur nach dem passenden Entleerungs-/Reinigungsverfahren instand setzen.", "Eine Startsperre erst nach Ursachenreparatur mit dem vorgesehenen Verfahren aufheben. SCR nicht deaktivieren; keine Emulatoren als Fehlerlösung verwenden."],
+        "tr": ["Seviye, hat, besleme veya pompa sorununu ölçüm sonucuna göre onar. Kirlenmiş sistemi yalnızca uygun boşaltma/temizleme prosedürüyle düzelt.", "Çalıştırma engelini sebebi onardıktan sonra belirtilen yöntemle kaldır. SCR'yi devre dışı bırakma; arızayı emülatörle gizleme."],
+        "en": ["Repair level, line, supply or pump faults according to measurements. Restore a contaminated system only using the applicable drain/cleaning procedure.", "Release any no-restart condition using the prescribed process after repairing the cause. Do not disable SCR or use an emulator to conceal the fault."]
+      },
+      "verify": {
+        "de": ["Füllstanderkennung, Druckaufbau und Dosiervorgang nach dem Motor-Prüfplan wiederholen; reparierte Verbindungen auf Leckspuren kontrollieren.", "SCR-Freigabe und Warn-/Reststreckenstatus prüfen. Den erforderlichen Monitor durchführen und aktive/anstehende Codes erneut lesen; Nachfüllen allein bestätigt keine behobene Druckstörung."],
+        "tr": ["Motorun kontrol planıyla seviye algılamayı, basınç oluşumunu ve dozajı tekrar kontrol et; onarılan birleşimlerde kaçak izi ara.", "SCR izin durumunu ve uyarı/geri sayımı kontrol et. Gereken monitörü çalıştırıp aktif/bekleyen kodları yeniden oku; sıvı eklemek tek başına basınç sorununun çözüldüğünü kanıtlamaz."],
+        "en": ["Repeat level recognition, pressure build-up and dosing checks using the engine test plan; inspect repaired joints for leakage.", "Check SCR enable status and warning/countdown status. Complete the required monitor and reread active/pending codes; topping up alone does not confirm a repaired pressure fault."]
+      },
+      "stop": {"de": "Bei Verunreinigung oder Startsperrenmeldung nicht mit wiederholtem Löschen weiterprobieren. Druckleitungen erst nach Hersteller-Druckabbau öffnen; Dosierversuche an heißem Abgas benötigen geeignete Werkstattausrüstung.", "tr": "Kirlenme veya çalıştırma engeli uyarısında tekrar tekrar kod silerek deneme yapma. Hatları yalnızca üreticinin basınç boşaltma işleminden sonra aç; sıcak egzozda dozaj testi uygun atölye ekipmanı gerektirir.", "en": "Do not repeatedly clear codes to work around contamination or a no-restart warning. Open lines only after manufacturer-specified pressure release; dosing tests at hot exhaust components require suitable workshop equipment."},
+      "sourceIds": ["hella-scr-pump", "hella-aftertreatment"]
+    },
+    "nox": {
+      "title": {"de": "NOx und SCR: Sensorfehler von fehlender Umwandlung trennen", "tr": "NOx ve SCR: sensör arızasını düşük dönüşümden ayır", "en": "NOx and SCR: distinguish sensor faults from poor conversion"},
+      "symptoms": {
+        "de": ["Motorkontrollleuchte, SCR-/AdBlue-Warnung oder Startsperren-Countdown.", "NOx-Wert fehlt, bleibt stehen oder wird als ungültig angezeigt.", "Ein SCR-Effizienzcode allein beweist weder einen defekten Sensor noch einen defekten Katalysator."],
+        "tr": ["Motor, SCR/AdBlue uyarısı veya çalıştırma engeli geri sayımı.", "NOx değeri yok, sabit kalıyor veya geçersiz işaretleniyor.", "SCR verim kodu tek başına ne sensörün ne katalizörün arızalı olduğunu kanıtlar."],
+        "en": ["Engine or SCR/AdBlue warning, possibly with a no-restart countdown.", "NOx reading is absent, fixed or marked invalid.", "An SCR efficiency code alone proves neither a failed sensor nor a failed catalyst."]
+      },
+      "steps": {
+        "de": [
+          "Codes einschließlich Hersteller-Untercode und Freeze-Frame speichern. Sensor anhand des Abgasplans zuordnen: P2200/P2201/P2202/P2203 betreffen Bank 1 Sensor 1, P229F Bank 1 Sensor 2. Nicht nur nach Steckerform bestellen.",
+          "Bei kalter Anlage Kabel vom Sensor zur eigenen Elektronik verfolgen. Nach Hitzeschäden, Scheuern, Wasser, Korrosion und losen Halterungen suchen; Gehäuse und Kabel bilden bei vielen Ausführungen eine gemeinsame Einheit.",
+          "Mit Schaltplan Sicherung, Versorgung, Masse und gegebenenfalls Datenkommunikation prüfen lassen. Low-/High- oder Kommunikationsfehler vor einer SCR-Wirkungsbewertung beheben; kein Prüfsignal in die Sensorleitung einspeisen.",
+          "Im Diagnosegerät Sensorbereitschaft, Heizungsstatus, Abgastemperatur und NOx zusammen anzeigen. Kalte, nicht bereite oder als ungültig markierte Werte nicht als Abgasbefund werten. Betriebsbedingungen des Hersteller-Monitors abwarten.",
+          "Bei betriebsbereiten Sensoren, wenn vorhanden, NOx vor/nach SCR, Temperatur, Motorlast und Dosierfreigabe gemeinsam protokollieren. Die Zeitverzögerung durch Abgaslauf und Sensorreaktion beachten; einzelne Momentwerte oder eine universelle Prozentgrenze sind kein gültiger Effizienztest.",
+          "Bleibt P20EE trotz gültiger NOx-Werte, AdBlue-Qualität, Druck-/Dosiertest und Abgasleckprüfung nach Herstellerablauf einbeziehen. Einen Katalysator erst beurteilen, wenn Sensorik, Dosierung und die vorgeschriebenen Monitorbedingungen nachweislich stimmen."
+        ],
+        "tr": [
+          "Üreticinin alt kodu ve donmuş kareyle birlikte kodları kaydet. Sensörü egzoz şemasından belirle: P2200/P2201/P2202/P2203 Bank 1 Sensör 1, P229F Bank 1 Sensör 2 içindir. Parçayı sadece soketin şekline göre seçme.",
+          "Sistem soğukken sensör kablosunu kendi elektronik kutusuna kadar takip et. Isı hasarı, sürtünme, su, oksitlenme ve gevşek tutucu ara; birçok tipte kablo, prob ve elektronik birlikte tek ünitedir.",
+          "Sigorta, besleme, şase ve varsa veri iletişimini doğru devre şemasıyla kontrol ettir. Düşük/yüksek sinyal veya iletişim arızasını SCR veriminden önce çöz; sensör hattına dışarıdan test gerilimi verme.",
+          "Cihazda sensör hazır durumunu, ısıtma durumunu, egzoz sıcaklığını ve NOx'i birlikte aç. Soğuk, hazır olmayan veya geçersiz işaretli değeri egzoz sonucu sayma. Üreticinin monitör koşullarının oluşmasını bekle.",
+          "Sensörler hazırken varsa SCR öncesi/sonrası NOx'i, sıcaklığı, motor yükünü ve dozaj izin durumunu birlikte kaydet. Egzozun ilerlemesi ve sensör tepkisi nedeniyle zaman gecikmesini hesaba kat; tek anlık değer veya evrensel yüzde eşiğiyle verim kararı verme.",
+          "Geçerli NOx ölçümüne rağmen P20EE sürüyorsa üretici akışıyla AdBlue kalitesini, basınç/dozaj testini ve egzoz kaçaklarını değerlendir. Katalizöre ancak sensör, dozaj ve belirtilen monitör koşulları doğrulandıktan sonra karar ver."
+        ],
+        "en": [
+          "Save codes, manufacturer subcodes and freeze-frame data. Locate the sensor using the exhaust diagram: P2200/P2201/P2202/P2203 concern Bank 1 Sensor 1; P229F concerns Bank 1 Sensor 2. Do not select a part by connector appearance alone.",
+          "With the system cold, follow the probe cable to its electronics module. Look for heat damage, rubbing, water, corrosion and loose mounts. On many variants, probe, cable and electronics are supplied as one unit.",
+          "Have the fuse, supply, ground and any data communication checked using the wiring diagram. Resolve low/high-signal or communication faults before evaluating SCR efficiency. Do not inject a test voltage into sensor lines.",
+          "Display sensor readiness, heater status, exhaust temperature and NOx together. Do not interpret cold, not-ready or invalid readings as exhaust evidence. Wait for the manufacturer-defined monitor operating conditions.",
+          "With sensors ready, log upstream/downstream SCR NOx where fitted, temperature, engine load and dosing enable status together. Allow for exhaust travel and sensor response delay; a single instantaneous reading or universal percentage is not a valid efficiency test.",
+          "If P20EE remains with valid NOx data, include fluid quality, pressure/dosing tests and exhaust-leak checks in the manufacturer workflow. Assess the catalyst only after sensor operation, dosing and required monitor conditions have been verified."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "Versorgung, Masse oder Kommunikation des betroffenen Sensors fehlt.", "action": "Leitungs-, Stecker- oder Versorgungsfehler reparieren und Sensorbereitschaft erneut prüfen. Der NOx-Code allein rechtfertigt noch keinen Sensorersatz."},
+          {"finding": "Versorgung stimmt; der freigegebene Sensortest bestätigt interne Signal- oder Heizungsstörung.", "action": "Die richtige Bank-/Sensor-Ausführung als Einheit erneuern und vorgeschriebene Inbetriebnahme durchführen. Vor- und Nach-SCR-Sensor nicht vertauschen."},
+          {"finding": "NOx-Sensoren melden gültig, aber Dosierfreigabe oder Reduktionsmitteldruck fehlt.", "action": "Zum AdBlue-Versorgungsleitfaden wechseln. Die belegte Dosier-/Druckstörung reparieren, bevor SCR-Umwandlung bewertet wird."},
+          {"finding": "Sensorik, Dosierung und Monitorbedingungen stimmen; SCR-Wirkung bleibt unzureichend.", "action": "Hersteller-Effizienzprüfung auf Abgasleck, Dosiermenge und Katalysatorzustand abschließen. Katalysator nur bei bestätigtem Defekt ersetzen."}
+        ],
+        "tr": [
+          {"finding": "İlgili sensörün beslemesi, şasesi veya iletişimi yok.", "action": "Kablo, soket veya besleme sorununu onar ve sensörün hazır durumunu yeniden kontrol et. NOx kodu tek başına sensör değişimini haklı çıkarmaz."},
+          {"finding": "Besleme doğru; izinli sensör testi iç sinyal veya ısıtma arızasını doğruluyor.", "action": "Doğru bank/sensör tipini ünite olarak değiştir ve gereken devreye alma işlemini uygula. SCR öncesi ve sonrası sensörü karıştırma."},
+          {"finding": "NOx sensörleri geçerli ölçüyor ama dozaj izni veya AdBlue basıncı yok.", "action": "AdBlue besleme rehberine geç. SCR dönüşümünü değerlendirmeden önce doğrulanan dozaj/basınç sorununu gider."},
+          {"finding": "Sensör, dozaj ve monitör koşulları doğru; SCR dönüşümü yetersiz kalıyor.", "action": "Üreticinin verim kontrolünü egzoz kaçağı, dozaj miktarı ve katalizör durumu için tamamla. Katalizörü yalnızca arızası doğrulanırsa değiştir."}
+        ],
+        "en": [
+          {"finding": "The affected sensor lacks supply, ground or communication.", "action": "Repair the wiring, connector or supply fault and recheck sensor readiness. A NOx code alone does not justify replacing the sensor."},
+          {"finding": "Supply is correct; the approved sensor test confirms an internal signal or heater fault.", "action": "Replace the correct bank/sensor variant as a unit and carry out required commissioning. Do not interchange upstream and downstream sensors."},
+          {"finding": "NOx sensors report valid data, but dosing enable or reductant pressure is missing.", "action": "Continue with the AdBlue supply guide. Repair the confirmed dosing/pressure fault before evaluating SCR conversion."},
+          {"finding": "Sensors, dosing and monitor conditions are correct, but SCR conversion remains inadequate.", "action": "Complete the manufacturer efficiency test for exhaust leaks, dosing quantity and catalyst condition. Replace the catalyst only after confirming its failure."}
+        ]
+      },
+      "repair": {
+        "de": ["Bestätigte Verkabelungs-, Sensor-, Dosier- oder Abgasleckfehler reparieren. Ersatzsensor und Software/Inbetriebnahme anhand Motor und Einbauposition auswählen.", "Keine pauschale Reinigung einer NOx-Sonde und keine Änderung ihrer Kennwerte vornehmen. SCR/NOx-Überwachung nicht abschalten."],
+        "tr": ["Kanıtlanan kablo, sensör, dozaj veya egzoz kaçağını onar. Yeni sensörü ve devreye alma/yazılım işlemini motorla takıldığı konuma göre seç.", "NOx probuna rastgele temizlik uygulama veya ölçüm karakterini değiştirme. SCR/NOx izlemesini kapatma."],
+        "en": ["Repair confirmed wiring, sensor, dosing or exhaust-leak faults. Select replacement sensor and commissioning/software requirements by engine and installation position.", "Do not apply an unapproved cleaning method to a NOx probe or alter its calibration. Do not disable SCR/NOx monitoring."]
+      },
+      "verify": {
+        "de": ["Bereitschaft und gültige NOx-Messung nach Reparatur erneut protokollieren; gegebenenfalls Druck- und Dosiertest wiederholen.", "Den fahrzeugspezifischen SCR-Monitor unter erlaubten Bedingungen abschließen. Fehlerstatus und Reststreckenmeldung erneut prüfen; ein gelöschter Speicher oder ein noch nicht gelaufener Monitor belegt keinen Erfolg."],
+        "tr": ["Onarımdan sonra sensörün hazır durumunu ve geçerli NOx ölçümünü yeniden kaydet; gerekirse basınç ve dozaj testini tekrarla.", "Araca özel SCR monitörünü izin verilen koşullarda tamamla. Kod durumunu ve geri sayımı tekrar kontrol et; silinmiş hafıza veya henüz çalışmamış monitör başarı kanıtı değildir."],
+        "en": ["Log sensor readiness and valid NOx data again after repair; repeat pressure and dosing tests if applicable.", "Complete the vehicle-specific SCR monitor under permitted conditions. Recheck code and countdown status; cleared memory or a monitor that has not run does not establish success."]
+      },
+      "stop": {"de": "Sensoren und Elektronik nicht an heißer Abgasanlage lösen; Messungen nur mit passendem Schaltplan ausführen. Bei Startsperren-Countdown zeitnah Ursachenprüfung planen und die Meldung nicht durch wiederholtes Löschen umgehen.", "tr": "Sensör ve elektronik ünitesini sıcak egzozda sökme; ölçümü uygun devre şemasıyla yap. Çalıştırma engeli geri sayımı varsa sebebi gecikmeden kontrol ettir; tekrar kod silerek uyarıyı aşmaya çalışma.", "en": "Do not remove sensors or electronics from a hot exhaust; use the correct wiring diagram for testing. Arrange cause diagnosis promptly if a no-restart countdown is present; do not try to bypass it by repeatedly clearing codes."},
+      "sourceIds": ["hella-aftertreatment", "hella-scr-pump"]
+    },
+    "turbo": {
+      "title": {"de": "Zu wenig Ladedruck: Luftweg, Messung und Regelung prüfen", "tr": "Düşük turbo basıncı: hava yolu, ölçüm ve kumanda kontrolü", "en": "Underboost: check the air path, measurement and control"},
+      "symptoms": {
+        "de": ["Schwache Beschleunigung, Notlauf oder Motorkontrollleuchte.", "Zischen oder auffällige Ladedruckabweichung unter Last.", "P0299 bedeutet nicht automatisch einen defekten Turbolader."],
+        "tr": ["Zayıf hızlanma, koruma modu veya motor uyarısı.", "Yükte ıslık/hava sesi veya belirgin basınç sapması.", "P0299 otomatik olarak turbonun arızalı olduğu anlamına gelmez."],
+        "en": ["Poor acceleration, limp mode or an engine warning.", "Hissing or a noticeable boost deviation under load.", "P0299 does not automatically mean the turbocharger has failed."]
+      },
+      "steps": {
+        "de": [
+          "Freeze-Frame und zusätzliche Luftmassen-, Drucksensor-, AGR- oder Aktuatorcodes speichern. Motortyp und Laderregelung ermitteln: Unterdruck, elektrischer Aktuator oder ein anderes System.",
+          "Bei kaltem Motor den Luftweg vom Luftfilter über Lader und Ladeluftkühler bis zum Motor verfolgen. Unterseiten von Schläuchen mit Licht prüfen: Riss, lose Schelle, abgerutschte Dichtung und frische Ölspuren an einer Verbindung können eine Leckstelle anzeigen.",
+          "Zündung ein, Motor aus: Umgebungsdruck und Saugrohr-/Ladedruck mit derselben Einheit vergleichen. Sicherstellen, ob das Gerät Absolut- oder Relativdruck zeigt; unplausible Grundwerte zuerst mit dem Hersteller-Sensortest klären.",
+          "Nur bei sicherer Freigabe Soll-/Istladedruck, Drehzahl, Last und Aktuatorposition während des vorgeschriebenen Tests protokollieren. Beim Fahren ein Mitfahrer oder die Aufzeichnungsfunktion nutzen; nicht während der Fahrt am Gerät bedienen.",
+          "Den freigegebenen Stellgliedtest ausführen lassen und prüfen, ob Position beziehungsweise Hebel der Anforderung folgt. Bei Unterdrucksystemen Versorgung und Schlauchdichtheit getrennt prüfen; bei elektrischen Systemen Versorgung, Rückmeldung und Kommunikation nach Schaltplan prüfen.",
+          "Wenn Regelung und Sensor plausibel sind, den Ladeluftweg mit dem für diesen Motor zugelassenen Dichtheitsverfahren prüfen lassen. Danach Ansaug-/Abgasrestriktion und Ladermechanik beurteilen; keine beliebige Druckluft einspeisen und keine Stellstange verstellen."
+        ],
+        "tr": [
+          "Donmuş kare ve hava kütlesi, basınç sensörü, AGR veya aktüatör ek kodlarını kaydet. Motoru ve turbo kumandasını belirle: vakumlu, elektrikli aktüatörlü veya farklı bir sistem.",
+          "Motor soğukken hava filtresinden turbo ve ara soğutucu üzerinden motora kadar hava yolunu izle. Hortum altlarını ışıkla incele: çatlak, gevşek kelepçe, yerinden çıkmış conta ve birleşimde taze yağ izi kaçak yerini gösterebilir.",
+          "Kontak açık, motor kapalıyken ortam basıncı ve emme/turbo basıncını aynı birimle karşılaştır. Cihazın mutlak mı göreli basınç mı gösterdiğini belirle; mantıksız başlangıç değerini önce üreticinin sensör testiyle çöz.",
+          "Test güvenli biçimde uygunsa belirtilen kontrolde istenen/gerçek basıncı, devri, yükü ve aktüatör konumunu kaydet. Sürüşte cihazı sürücü kullanmasın; kayıt özelliği veya yolcu yardımı kullan.",
+          "İzinli aktüatör testini yaptırıp konumun veya kolun komutu takip etmesine bak. Vakumlu sistemde besleme ve hortum sızdırmazlığını ayrı kontrol et; elektrikli sistemde besleme, geri bildirim ve iletişimi doğru şemayla kontrol et.",
+          "Kumanda ve sensör makulse bu motora izin verilen sızdırmazlık testiyle turbo hava hattını kontrol ettir. Sonra emme/egzoz kısıtlamasını ve turbo mekaniğini değerlendir; rastgele basınçlı hava verme ve aktüatör kol ayarını değiştirme."
+        ],
+        "en": [
+          "Save freeze-frame data and accompanying air-mass, pressure-sensor, EGR or actuator codes. Identify the engine and boost-control type: vacuum, electric actuator or another system.",
+          "With the engine cold, trace the air path from filter through turbo and intercooler to the engine. Use a light to inspect hose undersides for splits, loose clamps, displaced seals and fresh oil tracks at joints that may indicate leakage.",
+          "With ignition on and engine off, compare atmospheric and manifold/boost pressure in the same unit. Check whether the tool displays absolute or gauge pressure. Resolve implausible baseline readings using the manufacturer sensor test first.",
+          "Only if testing is safe and permitted, log requested/actual boost, rpm, load and actuator position during the prescribed test. Use a passenger or logging function when driving; the driver must not operate the tool.",
+          "Have the approved actuator test performed and observe whether position or linkage follows the command. On vacuum systems, check supply and hose sealing separately. On electric systems, test supply, feedback and communication using the diagram.",
+          "If control and sensor data are plausible, have the charge-air path checked using the leak-test method approved for the engine. Then assess intake/exhaust restriction and turbo mechanics. Do not apply arbitrary compressed air or alter actuator-rod adjustment."
+        ]
+      },
+      "branches": {
+        "de": [
+          {"finding": "Leck im Ladeluftschlauch, an Dichtung oder Kühler bestätigt.", "action": "Betroffenes Teil fachgerecht reparieren/ersetzen und Dichtheit sowie Soll-/Istladedruck erneut prüfen."},
+          {"finding": "Grunddruck ist unplausibel oder Luftmassen-/Drucksensorcode ist aktiv.", "action": "Sensorversorgung, Verkabelung und Messung zuerst prüfen. Ein falscher Messwert darf nicht zur Verurteilung des Laders führen."},
+          {"finding": "Aktuator folgt nicht; Unterdruck, Versorgung oder Kommunikation ist fehlerhaft.", "action": "Die nachgewiesene Ansteuerungsstörung reparieren. Klemmt die Geometrie, Lader und Aktuator als abgestimmte Einheit prüfen; nicht durch Verstellen der Stange kompensieren."},
+          {"finding": "Luftweg, Sensoren und Regelung geprüft; Druck bleibt zu gering oder mechanische Schäden erkennbar.", "action": "Ansaug-/Abgasrestriktion, Ölversorgung und Laderzustand fachgerecht beurteilen. Ersatz oder Kalibrierung erst nach bestätigtem Befund und passender Herstelleranweisung durchführen."}
+        ],
+        "tr": [
+          {"finding": "Turbo hava hortumu, conta veya ara soğutucuda kaçak doğrulandı.", "action": "İlgili parçayı doğru şekilde onar/değiştir; sızdırmazlığı ve istenen/gerçek basıncı tekrar kontrol et."},
+          {"finding": "Başlangıç basıncı mantıksız veya hava kütlesi/basınç sensörü kodu aktif.", "action": "Önce sensör beslemesini, kablosunu ve ölçümünü kontrol et. Yanlış ölçüm yüzünden turboya arızalı teşhisi koyma."},
+          {"finding": "Aktüatör komutu izlemiyor; vakum, besleme veya iletişim arızalı.", "action": "Kanıtlanan kumanda sorununu onar. Geometri sıkışıyorsa turbo ve aktüatörü eşlenmiş ünite olarak kontrol et; kol ayarını değiştirerek telafi etme."},
+          {"finding": "Hava yolu, sensör ve kumanda kontrol edildi; basınç düşük veya mekanik hasar görülüyor.", "action": "Emme/egzoz kısıtlamasını, yağ beslemesini ve turbo durumunu uygun biçimde değerlendir. Değişim veya kalibrasyonu yalnızca doğrulanan bulgu ve doğru üretici talimatıyla yap."}
+        ],
+        "en": [
+          {"finding": "A charge-air hose, seal or intercooler leak is confirmed.", "action": "Repair/replace the affected part correctly, then repeat sealing and requested/actual boost checks."},
+          {"finding": "Baseline pressure is implausible or an air-mass/pressure-sensor code is active.", "action": "Check sensor supply, wiring and measurement first. An incorrect reading must not lead to condemning the turbo."},
+          {"finding": "Actuator does not follow; vacuum, supply or communication is faulty.", "action": "Repair the confirmed control fault. If the geometry binds, assess turbo and actuator as a matched unit; do not compensate by changing rod adjustment."},
+          {"finding": "Air path, sensors and control are verified, but pressure remains low or mechanical damage is visible.", "action": "Assess intake/exhaust restriction, oil supply and turbo condition professionally. Replace or calibrate only after confirming the cause and following the correct manufacturer procedure."}
+        ]
+      },
+      "repair": {
+        "de": ["Bestätigte Luftleck-, Sensor- oder Ansteuerungsfehler zuerst reparieren. Ein Laderersatz muss auch die Ursache und Ölversorgung berücksichtigen.", "Aktuator, Lader und Kalibrierung müssen zur Ausführung passen. Äußerlich gleiche Aktuatoren sind nicht automatisch austauschbar; Gestänge und Anschläge nicht frei einstellen."],
+        "tr": ["Kanıtlanan hava kaçağı, sensör veya kumanda arızasını önce onar. Turbo değişiminde arızanın sebebini ve yağ beslemesini de değerlendir.", "Aktüatör, turbo ve kalibrasyon ilgili tipe uymalıdır. Dıştan aynı görünen aktüatörler her zaman birbirinin yerine geçmez; kol ve dayama ayarını rastgele değiştirme."],
+        "en": ["Repair confirmed air leaks, sensor or control faults first. Turbo replacement must also address the cause and oil supply.", "Actuator, turbo and calibration must match the variant. Actuators that look alike are not necessarily interchangeable; do not freely adjust linkage or stops."]
+      },
+      "verify": {
+        "de": ["Den freigegebenen Soll-/Istladedrucktest bei vergleichbaren Bedingungen wiederholen; reparierte Luftverbindungen und Aktuatorfunktion prüfen.", "Nach der vorgeschriebenen Inbetriebnahme und dem Prüfzyklus erneut nach aktiven/anstehenden Codes suchen. Eine kurze fehlerfreie Leerlaufphase prüft den Ladedruck unter Last nicht."],
+        "tr": ["Benzer koşullarda izinli istenen/gerçek turbo basıncı testini tekrarla; onarılan hava bağlantılarını ve aktüatör işlevini kontrol et.", "Gereken devreye alma ve kontrol döngüsü sonrası aktif/bekleyen kodları yeniden oku. Rölantide kısa süre kod çıkmaması yükte turbo basıncını doğrulamaz."],
+        "en": ["Repeat the approved requested/actual boost test under comparable conditions; verify repaired air joints and actuator operation.", "After required commissioning and the test cycle, rescan for active/pending codes. A brief fault-free idle does not verify boost under load."]
+      },
+      "stop": {"de": "Bei starkem Ölrauch, auffälligen mechanischen Geräuschen oder unkontrolliert steigender Drehzahl Motor sicher abstellen und keinen weiteren Lasttest durchführen. An laufenden Aktuatoren und heißem Lader nicht arbeiten.", "tr": "Yoğun yağ dumanı, belirgin mekanik ses veya kontrolsüz yükselen devirde motoru güvenli şekilde durdur ve yük testi yapma. Hareketli aktüatör ve sıcak turbo üzerinde çalışma.", "en": "With heavy oil smoke, abnormal mechanical noise or uncontrolled engine speed, stop the engine safely and do not continue load testing. Keep clear of operating actuators and hot turbo components."},
+      "sourceIds": ["hella-turbo", "hella-aftertreatment", "hella-agr"]
+    }
+  },
+  "codes": {
+    "P2452": {
+      "family": "dpf_sensor",
+      "title": {"de": "Partikelfilter-Drucksensor A: Stromkreis", "tr": "Partikül filtresi basınç sensörü A: devre arızası", "en": "Particulate filter pressure sensor A circuit"},
+      "meaning": {"de": "Fehler im Stromkreis des Partikelfilter-Drucksensors A. Der Code benennt keine bestätigte Filterverstopfung.", "tr": "Partikül filtresi basınç sensörü A devresinde arıza algılanmış. Kod doğrulanmış bir filtre tıkanıklığı bildirmez.", "en": "A fault is detected in pressure sensor A's circuit. This is not a confirmed filter-blockage diagnosis."},
+      "focus": {"de": "Stecker, Versorgung, Masse und Signalleitung zuerst prüfen; anschließend Druckschläuche und Nullpunkt.", "tr": "Önce soket, besleme, şase ve sinyal hattını; sonra basınç hortumlarını ve sıfır noktasını kontrol et.", "en": "Check connector, supply, ground and signal first, then pressure hoses and zero-point plausibility."},
+      "related": ["P2453", "P2454", "P2455", "P2463"]
+    },
+    "P2453": {
+      "family": "dpf_sensor",
+      "title": {"de": "Partikelfilter-Drucksensor A: Bereich/Funktion", "tr": "Partikül filtresi basınç sensörü A: aralık/performans", "en": "Particulate filter pressure sensor A circuit range/performance"},
+      "meaning": {"de": "Das Drucksensor-A-Signal passt nicht zum erwarteten Bereich oder Verhalten. Ursache kann Sensor, Verkabelung oder Druckübertragung sein.", "tr": "Basınç sensörü A sinyali beklenen aralık veya davranışla uyuşmuyor. Sensör, kablo ya da basıncın sensöre iletilmesi kaynaklı olabilir.", "en": "Sensor A's signal does not match its expected range or behaviour. The sensor, wiring or pressure-transfer path may be involved."},
+      "focus": {"de": "Motor-aus-Nullpunkt und dynamischen Druckverlauf mit korrekter Schlauchführung vergleichen; keine pauschale Spannungsschwelle verwenden.", "tr": "Doğru hortum bağlantısıyla motor kapalı sıfır noktasını ve çalışırken basınç değişimini karşılaştır; evrensel voltaj eşiği kullanma.", "en": "Compare the engine-off baseline and pressure response with correct hose routing; do not use a universal voltage threshold."},
+      "related": ["P2452", "P2454", "P2455", "P2002"]
+    },
+    "P2454": {
+      "family": "dpf_sensor",
+      "title": {"de": "Partikelfilter-Drucksensor A: Signal zu niedrig", "tr": "Partikül filtresi basınç sensörü A: düşük devre sinyali", "en": "Particulate filter pressure sensor A circuit low"},
+      "meaning": {"de": "Der Steuergeräte-Eingang für Drucksensor A ist als zu niedrig erkannt. Elektrisches Signal und tatsächlicher Abgasdruck sind nicht dasselbe.", "tr": "Basınç sensörü A için kontrol ünitesindeki giriş düşük algılanmış. Elektrik sinyali ile gerçek egzoz basıncı aynı şey değildir.", "en": "The control-unit input for sensor A is detected as low. An electrical low signal is not the same as low exhaust pressure."},
+      "focus": {"de": "Versorgung, Masse, Unterbrechung und Kurzschluss nach dem fahrzeugspezifischen Schaltplan eingrenzen.", "tr": "Besleme, şase, kopukluk ve kısa devreyi araca özel devre şemasıyla ayır.", "en": "Isolate supply, ground, open circuits and shorts using the vehicle-specific wiring diagram."},
+      "related": ["P2452", "P2453", "P2455"]
+    },
+    "P2455": {
+      "family": "dpf_sensor",
+      "title": {"de": "Partikelfilter-Drucksensor A: Signal zu hoch", "tr": "Partikül filtresi basınç sensörü A: yüksek devre sinyali", "en": "Particulate filter pressure sensor A circuit high"},
+      "meaning": {"de": "Der Steuergeräte-Eingang für Drucksensor A ist als zu hoch erkannt. Das belegt keinen mechanisch zugesetzten Filter.", "tr": "Basınç sensörü A için kontrol ünitesindeki giriş yüksek algılanmış. Bu, filtrenin mekanik olarak tıkalı olduğunu kanıtlamaz.", "en": "The control-unit input for sensor A is detected as high. This does not establish a mechanically blocked filter."},
+      "focus": {"de": "Signal bereits bei Motor aus prüfen und elektrische Ursache vor einer DPF-Beladungsbewertung klären.", "tr": "Motor kapalıyken sinyali kontrol et; DPF yüküne karar vermeden elektriksel sebebi çöz.", "en": "Check the signal with the engine off and resolve the electrical cause before assessing DPF loading."},
+      "related": ["P2452", "P2453", "P2454", "P2463"]
+    },
+    "P2002": {
+      "family": "dpf_load",
+      "title": {"de": "Partikelfilter-Wirkungsgrad unter Schwelle: Bank 1", "tr": "Partikül filtresi verimi eşik altında: Bank 1", "en": "Particulate filter efficiency below threshold: Bank 1"},
+      "meaning": {"de": "Die überwachte Partikelfilterwirkung auf Bank 1 liegt unter der erwarteten Schwelle. Der Code bedeutet nicht zwangsläufig hohe Rußbeladung.", "tr": "Bank 1 üzerindeki izlenen partikül filtresi verimi beklenen eşiğin altında. Kod mutlaka yüksek kurum yükü anlamına gelmez.", "en": "Monitored particulate-filter efficiency on Bank 1 is below its expected threshold. The code does not necessarily mean high soot loading."},
+      "focus": {"de": "Sensorplausibilität, Abgaslecks und Filterelement prüfen; ein beschädigtes Element nicht mit Regeneration behandeln.", "tr": "Sensörün makullüğünü, egzoz kaçaklarını ve filtre elemanını kontrol et; hasarlı elemanı rejenerasyonla düzeltmeye çalışma.", "en": "Check sensor plausibility, exhaust leaks and the filter element; regeneration does not repair a damaged element."},
+      "related": ["P2453", "P2463", "P246C"]
+    },
+    "P2463": {
+      "family": "dpf_load",
+      "title": {"de": "Partikelfilter eingeschränkt: Rußansammlung, Bank 1", "tr": "Partikül filtresi kısıtlı: kurum birikimi, Bank 1", "en": "Particulate filter restriction: soot accumulation, Bank 1"},
+      "meaning": {"de": "Das System erkennt eine Einschränkung durch Rußansammlung auf Bank 1. Beladungsberechnung und Sensorsignale müssen gemeinsam geprüft werden.", "tr": "Sistem Bank 1 üzerinde kurum birikimine bağlı kısıtlama algılıyor. Yük hesabıyla sensör sinyalleri birlikte kontrol edilmelidir.", "en": "The system detects restriction associated with soot accumulation on Bank 1. Evaluate loading calculations together with sensor signals."},
+      "focus": {"de": "Gültigen Differenzdruck, Ruß-/Ascheangaben und Regenerationssperre vergleichen; Freigabe für jede Behandlung motorbezogen prüfen.", "tr": "Geçerli fark basıncını, kurum/kül bilgisini ve rejenerasyon engelini karşılaştır; işlem iznini ilgili motora göre kontrol et.", "en": "Compare valid differential pressure, soot/ash information and regeneration inhibits; check engine-specific permission for any treatment."},
+      "related": ["P246C", "P2453", "P2002", "P0401"]
+    },
+    "P246C": {
+      "family": "dpf_load",
+      "title": {"de": "Partikelfilter eingeschränkt: erzwungene Leistungsbegrenzung, Bank 1", "tr": "Partikül filtresi kısıtlı: zorunlu güç sınırlaması, Bank 1", "en": "Particulate filter restriction: forced limited power, Bank 1"},
+      "meaning": {"de": "Wegen erkannter Partikelfiltereinschränkung begrenzt das System die Leistung auf Bank 1. Das Wort forced beschreibt hier die Leistungsbegrenzung, nicht eine Regenerationsanweisung.", "tr": "Algılanan partikül filtresi kısıtlaması nedeniyle sistem Bank 1 için gücü sınırlar. Buradaki forced ifadesi güç sınırlamasıdır; rejenerasyon başlat talimatı değildir.", "en": "The system limits power because of detected particulate-filter restriction on Bank 1. Forced refers to the power limitation, not an instruction to start regeneration."},
+      "focus": {"de": "Sperrgründe, Ölstand und bestätigte Beladung prüfen; keine pauschale Autobahn- oder Zwangsregenerations-Empfehlung.", "tr": "Engel nedenini, yağ seviyesini ve doğrulanmış yükü kontrol et; herkese otoyol veya zorunlu rejenerasyon önerme.", "en": "Check inhibits, oil level and confirmed loading; do not prescribe a generic motorway drive or forced regeneration."},
+      "related": ["P2463", "P2453", "P2002"]
+    },
+    "P0401": {
+      "family": "agr",
+      "title": {"de": "AGR A: zu geringer Durchfluss erkannt", "tr": "AGR/EGR A: yetersiz akış algılandı", "en": "EGR A flow insufficient detected"},
+      "meaning": {"de": "Der überwachte Abgasrückführungsdurchfluss des Systems A ist zu gering. Ventil, Kanäle, Ansteuerung und Luftmassenmessung können beteiligt sein.", "tr": "A sistemi için izlenen egzoz gazı geri dönüşüm akışı yetersiz. Valf, kanal, kumanda veya hava kütlesi ölçümü kaynaklı olabilir.", "en": "Monitored exhaust-gas recirculation flow for system A is insufficient. The valve, passages, control or air-mass measurement may be involved."},
+      "focus": {"de": "Ventil-Soll/Ist und Luftmassenreaktion gemeinsam prüfen; Bewegung ist kein Nachweis für freien Durchfluss.", "tr": "İstenen/gerçek valf konumunu hava kütlesi tepkisiyle birlikte kontrol et; hareket etmesi akışın açık olduğunu kanıtlamaz.", "en": "Check commanded/actual valve position together with air-mass response; movement does not prove unobstructed flow."},
+      "related": ["P2463", "P0299"]
+    },
+    "P0299": {
+      "family": "turbo",
+      "title": {"de": "Turbolader/Kompressor A: zu geringer Ladedruck", "tr": "Turbo/süperşarj A: yetersiz basınç", "en": "Turbocharger/supercharger A underboost condition"},
+      "meaning": {"de": "Die erkannte Aufladung des Systems A erreicht die erwartete Vorgabe nicht. Der Fehler benennt noch kein bestätigtes defektes Bauteil.", "tr": "A sisteminin ölçülen basıncı beklenen hedefe ulaşmıyor. Kod henüz doğrulanmış arızalı bir parça belirtmez.", "en": "Detected boost for system A does not achieve the expected target. The code does not identify a confirmed failed component."},
+      "focus": {"de": "Luftleck, Grunddruck-Messung und Aktuatorregelung vor einem Laderersatz prüfen; Absolut- und Relativdruck nicht vermischen.", "tr": "Turbo değişiminden önce hava kaçağı, başlangıç basınç ölçümü ve aktüatör kumandasını kontrol et; mutlak ve göreli basıncı karıştırma.", "en": "Check air leaks, baseline pressure measurement and actuator control before turbo replacement; do not mix absolute and gauge pressure."},
+      "related": ["P0401", "P2463"]
+    },
+    "P20E8": {
+      "family": "scr_supply",
+      "title": {"de": "Reduktionsmitteldruck zu niedrig", "tr": "AdBlue/indirgeme sıvısı basıncı düşük", "en": "Reductant pressure too low"},
+      "meaning": {"de": "Der erfasste Druck des Reduktionsmittelsystems ist zu niedrig. Füllstand, Leck, Versorgung, Pumpe oder Druckmessung müssen getrennt geprüft werden.", "tr": "İndirgeme sıvısı sisteminde algılanan basınç yetersiz. Seviye, kaçak, besleme, pompa ve basınç ölçümü ayrı kontrol edilmelidir.", "en": "Detected reductant-system pressure is insufficient. Check level, leakage, supply, pump operation and pressure measurement separately."},
+      "focus": {"de": "Soll-/Istdruck und Pumpenfreigabe protokollieren; der Code bestätigt weder einen leeren Tank noch eine defekte Pumpe.", "tr": "İstenen/gerçek basıncı ve pompa izin durumunu kaydet; kod ne boş tankı ne arızalı pompayı tek başına kanıtlar.", "en": "Log requested/actual pressure and pump enable status; the code alone proves neither an empty tank nor a failed pump."},
+      "related": ["P203F", "P20EE", "P2201", "P229F"]
+    },
+    "P203F": {
+      "family": "scr_supply",
+      "title": {"de": "Reduktionsmittel-Füllstand zu niedrig", "tr": "AdBlue/indirgeme sıvısı seviyesi düşük", "en": "Reductant level too low"},
+      "meaning": {"de": "Das System meldet zu wenig Reduktionsmittel im Tank. Tatsächlichen Füllstand und Erkennung prüfen; dies ist kein Druckcode.", "tr": "Sistem tankta yetersiz indirgeme sıvısı bildiriyor. Gerçek seviyeyi ve algılamayı kontrol et; bu bir basınç kodu değildir.", "en": "The system reports insufficient reductant in the tank. Check actual level and level recognition; this is not a pressure code."},
+      "focus": {"de": "Nach Betriebsanleitung korrekt nachfüllen und Erkennungsbedingungen beachten. Bei bestätigtem Füllstand Sensor/Verkabelung prüfen.", "tr": "Kılavuza uygun miktarı doldur ve algılama koşullarına uy. Seviye doğrulandığı hâlde kod sürüyorsa sensör/kabloyu kontrol et.", "en": "Refill according to the handbook and follow recognition conditions. If level is confirmed but the code remains, test sensor/wiring."},
+      "related": ["P20E8", "P20EE"]
+    },
+    "P20EE": {
+      "family": "nox",
+      "title": {"de": "SCR-NOx-Katalysatorwirkung unter Schwelle: Bank 1, Katalysator 1", "tr": "SCR NOx katalizör verimi eşik altında: Bank 1, Katalizör 1", "en": "SCR NOx catalyst efficiency below threshold: Bank 1, Catalyst 1"},
+      "meaning": {"de": "Der SCR-Monitor erkennt unzureichende NOx-Umwandlung an Bank 1 Katalysator 1. Das ist noch kein Beweis für einen defekten Katalysator.", "tr": "SCR monitörü Bank 1 Katalizör 1 üzerinde yetersiz NOx dönüşümü algılıyor. Bu, katalizör arızasının kesin kanıtı değildir.", "en": "The SCR monitor detects insufficient NOx conversion at Bank 1 Catalyst 1. This is not yet proof of catalyst failure."},
+      "focus": {"de": "Gültige NOx-Sensorwerte, Betriebsbedingungen, Abgasdichtheit und Reduktionsmitteldosierung vor dem Katalysator beurteilen.", "tr": "Katalizöre karar vermeden geçerli NOx verisini, çalışma koşullarını, egzoz sızdırmazlığını ve sıvı dozajını kontrol et.", "en": "Verify valid NOx data, operating conditions, exhaust sealing and reductant dosing before judging the catalyst."},
+      "related": ["P20E8", "P203F", "P2201", "P229F"]
+    },
+    "P2200": {
+      "family": "nox",
+      "title": {"de": "NOx-Sensor-Stromkreis: Bank 1, Sensor 1", "tr": "NOx sensörü devresi: Bank 1, Sensör 1", "en": "NOx sensor circuit: Bank 1, Sensor 1"},
+      "meaning": {"de": "Fehler im NOx-Sensorstromkreis Bank 1 Sensor 1. Hersteller-Untercode zur genauen elektrischen Einordnung mitlesen.", "tr": "Bank 1 Sensör 1 NOx devresinde arıza. Elektriksel türünü belirlemek için üreticinin alt kodunu da oku.", "en": "A fault is detected in the NOx sensor circuit for Bank 1 Sensor 1. Read the manufacturer subcode to identify the electrical fault type."},
+      "focus": {"de": "Sensorposition nach Abgasplan bestimmen und Versorgung, Masse, Kabel sowie Kommunikation prüfen.", "tr": "Sensör konumunu egzoz şemasından belirle; besleme, şase, kablo ve iletişimi kontrol et.", "en": "Locate the sensor from the exhaust diagram and check supply, ground, wiring and communication."},
+      "related": ["P2201", "P2202", "P2203", "P20EE"]
+    },
+    "P2201": {
+      "family": "nox",
+      "title": {"de": "NOx-Sensor Bereich/Funktion: Bank 1, Sensor 1", "tr": "NOx sensörü aralık/performans: Bank 1, Sensör 1", "en": "NOx sensor circuit range/performance: Bank 1, Sensor 1"},
+      "meaning": {"de": "Signalverhalten des NOx-Sensors Bank 1 Sensor 1 ist außerhalb der erwarteten Plausibilität. Kalte oder nicht bereite Werte dürfen nicht als Defektbeweis verwendet werden.", "tr": "Bank 1 Sensör 1 NOx sinyalinin davranışı beklenen makullük dışında. Soğuk veya hazır olmayan değer arıza kanıtı sayılmaz.", "en": "Signal behaviour from Bank 1 Sensor 1 is outside expected plausibility. Cold or not-ready readings must not be treated as proof of failure."},
+      "focus": {"de": "Bereitschaft, Heizung, Temperatur und Signalverlauf gemeinsam prüfen; Hersteller-Sensortest verwenden.", "tr": "Hazır durumunu, ısıtmayı, sıcaklığı ve sinyal değişimini birlikte kontrol et; üreticinin sensör testini kullan.", "en": "Check readiness, heater operation, temperature and signal response together using the manufacturer sensor test."},
+      "related": ["P2200", "P2202", "P2203", "P229F", "P20EE"]
+    },
+    "P2202": {
+      "family": "nox",
+      "title": {"de": "NOx-Sensor-Signal zu niedrig: Bank 1, Sensor 1", "tr": "NOx sensörü düşük devre sinyali: Bank 1, Sensör 1", "en": "NOx sensor circuit low: Bank 1, Sensor 1"},
+      "meaning": {"de": "Der NOx-Sensoreingang Bank 1 Sensor 1 wird als zu niedrig erkannt. Das ist kein Nachweis besonders niedriger NOx-Emissionen.", "tr": "Bank 1 Sensör 1 NOx devresi girişi düşük algılanmış. Bu, NOx emisyonunun düşük olduğuna dair kanıt değildir.", "en": "The circuit input for Bank 1 Sensor 1 is detected as low. This does not establish low NOx emissions."},
+      "focus": {"de": "Mit Untercode und Schaltplan elektrische Signalursache eingrenzen, bevor die Abgaswirkung beurteilt wird.", "tr": "Egzoz verimini değerlendirmeden alt kod ve devre şemasıyla elektriksel sinyal sebebini ayır.", "en": "Use the subcode and wiring diagram to isolate the electrical signal fault before assessing exhaust performance."},
+      "related": ["P2200", "P2201", "P2203"]
+    },
+    "P2203": {
+      "family": "nox",
+      "title": {"de": "NOx-Sensor-Signal zu hoch: Bank 1, Sensor 1", "tr": "NOx sensörü yüksek devre sinyali: Bank 1, Sensör 1", "en": "NOx sensor circuit high: Bank 1, Sensor 1"},
+      "meaning": {"de": "Der NOx-Sensoreingang Bank 1 Sensor 1 wird als zu hoch erkannt. Hoher elektrischer Eingang und gemessene NOx-Konzentration sind getrennt zu bewerten.", "tr": "Bank 1 Sensör 1 NOx devresi girişi yüksek algılanmış. Yüksek elektrik girişi ile ölçülen NOx yoğunluğu ayrı değerlendirilir.", "en": "The circuit input for Bank 1 Sensor 1 is detected as high. High electrical input and measured NOx concentration must be assessed separately."},
+      "focus": {"de": "Stecker, Verkabelung und Sensorversorgung nach Schaltplan prüfen; keine pauschale ppm- oder Spannungsschwelle ableiten.", "tr": "Soket, kablo ve sensör beslemesini doğru şemayla kontrol et; evrensel ppm veya voltaj sınırı çıkarma.", "en": "Check connector, wiring and supply using the diagram; do not infer a universal ppm or voltage threshold."},
+      "related": ["P2200", "P2201", "P2202", "P20EE"]
+    },
+    "P229F": {
+      "family": "nox",
+      "title": {"de": "NOx-Sensor Bereich/Funktion: Bank 1, Sensor 2", "tr": "NOx sensörü aralık/performans: Bank 1, Sensör 2", "en": "NOx sensor circuit range/performance: Bank 1, Sensor 2"},
+      "meaning": {"de": "Das Signal des NOx-Sensors Bank 1 Sensor 2 liegt außerhalb des erwarteten Bereichs oder Verhaltens. Die konkrete Einbauposition anhand des Abgasplans bestätigen.", "tr": "Bank 1 Sensör 2 NOx sinyali beklenen aralık veya davranışla uyuşmuyor. Gerçek montaj konumunu egzoz şemasından doğrula.", "en": "The NOx signal from Bank 1 Sensor 2 is outside its expected range or behaviour. Confirm the actual installation position with the exhaust diagram."},
+      "focus": {"de": "Sensor 2 von Sensor 1 unterscheiden; Bereitschaft, Signal, Dosierung und die zulässigen SCR-Prüfbedingungen getrennt beurteilen.", "tr": "Sensör 2'yi Sensör 1'den ayır; hazır durumunu, sinyali, dozajı ve izinli SCR kontrol koşullarını ayrı değerlendir.", "en": "Distinguish Sensor 2 from Sensor 1; evaluate readiness, signal, dosing and permitted SCR test conditions separately."},
+      "related": ["P2201", "P20EE", "P20E8"]
+    }
+  }
+}

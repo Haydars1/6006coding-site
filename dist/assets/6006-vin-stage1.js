@@ -6,7 +6,13 @@ const w={
 tr:{kicker:"6006 / ARAÇ & MOTOR BULUCU",head:"Aracını seç, motorunu ve arıza kodlarını gör.",intro:"Şasi numarasından markayı belirle veya marka, model, yıl, yakıt ve motor seç. Mevcut katalogdaki motor verileri, Stage 1 ön değerlendirmesi ve ilgili OBD kodları tek ekranda.",all:"Tüm arıza kodları",vin:"Şasi numarası (VIN)",vinHelp:"17 karakterli VIN için önce yerel üretici kodlarına bakılır; tanınmazsa yalnızca ilk 3 karakter NHTSA'ya sorgulanır. Tam VIN gönderilmez veya kaydedilmez. Üretici/model/motor doğrulanmalıdır.",decode:"Markayı bul",invalid:"VIN 17 karakter olmalı ve I, O, Q içermemeli.",unsupported:"Bu VIN'den marka güvenilir biçimde belirlenemedi. Markayı listeden seçebilirsin.",found:"VIN'den belirlenen marka",make:"Marka",model:"Model",year:"Model yılı",fuel:"Yakıt",engine:"Motor / varyant",other:"Listede yoksa motor kodu",power:"Orijinal güç (PS)",torque:"Orijinal tork (Nm)",choose:"Seçin",allFuel:"Tümü",noneMotor:"Listede bulunmuyor / elle gir",loading:"Motor varyantları yükleniyor…",selected:"Seçilen araç",stage:"Stage 1 ön değerlendirmesi",old:"Orijinal",new:"Stage 1 (tahmini)",value:"Değer",hp:"Güç",nm:"Tork",noData:"Güç / tork verisi yok. Ruhsattaki veya üretici belgesindeki değerleri gir.",noTune:"Bu motor için güvenilir Stage 1 tahmini yok. Motor, ECU yazılımı ve şanzıman doğrulanarak teklif hazırlanmalı.",tuneCaution:"Stage 1 aralıkları turbo motorlarda yalnızca genel matematiksel örnektir; ölçüm, onaylı kalibrasyon, TÜV veya garanti değildir. Gerçek hedef ECU, şanzıman, kondisyon ve mevzuata bağlıdır.",common:"İlgili arıza kodları",codeCaution:"Bunlar bu araca özel arıza istatistiği değildir. Sisteme ilişkin kontrol edilebilecek örnek kodlardır; tanımlar üreticiye göre değişebilir.",open:"Teşhis kataloğunda aç",openStage:"Stage 1 sayfasına geç",empty:"Önce marka ve model seç. Motor varyantı varsa listeden seç; bulunamazsa elle ekle.",variant:"Açık araç veritabanı / örnek kayıt. OEM doğrulaması değildir.",manual:"Elle girilen değerler kullanıcı beyanıdır; üretici verisi olarak gösterilmez.",variantCount:"motor varyantı",noVariants:"Bu seçimde motor verisi yok; alttaki alana motor kodu gir.",reviewWarning:"Referans güç verisi tutarsız veya hibrit sistem gücü belirsiz; ruhsat/üretici kaynağıyla doğrulayın.",searchLabel:"Motor, nesil veya şanzıman içinde ara",familyWarning:"Motor kaydı seçilen serinin tam karşılığı değil; aynı model ailesinden. Şasi ve motor koduyla doğrulayın.",fuels:{Diesel:"Dizel",Benzin:"Benzin",Hybrid:"Hibrit",PHEV:"Şarj edilebilir hibrit",Electric:"Elektrik",LPG:"LPG",CNG:"CNG"}},
 de:{kicker:"6006 / FAHRZEUG & MOTORFINDER",head:"Fahrzeug wählen, Motor und Fehlercodes sehen.",intro:"Marke über VIN-Anfang bestimmen oder Marke, Modell, Baujahr, Kraftstoff und Motor manuell wählen. Motor-Referenzdaten, Stage-1-Vorprüfung und passende OBD-Themen auf einer Seite.",all:"Alle Fehlercodes",vin:"Fahrgestellnummer (FIN/VIN)",vinHelp:"Hersteller wird zuerst lokal gesucht; andernfalls werden nur die ersten 3 Stellen bei NHTSA abgefragt. Die vollständige FIN wird nicht versendet oder gespeichert. Fahrzeug und Motor separat bestätigen.",decode:"Marke erkennen",invalid:"Die VIN muss 17 Zeichen haben und darf I, O, Q nicht enthalten.",unsupported:"Hersteller nicht sicher erkennbar. Bitte Marke manuell wählen.",found:"Aus VIN erkannte Marke",make:"Marke",model:"Modell",year:"Baujahr",fuel:"Kraftstoff",engine:"Motorvariante",other:"Motorkennbuchstabe, falls nicht gelistet",power:"Serienleistung (PS)",torque:"Seriendrehmoment (Nm)",choose:"Wählen",allFuel:"Alle",noneMotor:"Nicht gelistet / manuell eingeben",loading:"Motorvarianten werden geladen…",selected:"Ausgewähltes Fahrzeug",stage:"Stage 1 Vorprüfung",old:"Serie",new:"Stage 1 (Schätzung)",value:"Wert",hp:"Leistung",nm:"Drehmoment",noData:"Keine Leistungs-/Drehmomentwerte vorhanden. Werte bitte aus verlässlichen Fahrzeugpapieren prüfen.",noTune:"Für diesen Motor liegt keine verifizierte Stage-1-Prognose vor. Ein Angebot erfordert Motor-, Steuergerät- und Getriebeprüfung.",tuneCaution:"Die Stage-1-Spannen sind nur rechnerische Beispiele für Turbomotoren, keine Messung, geprüfte Kalibrierung, TÜV-Zusage oder Garantie. Zielwerte hängen von Softwarestand, Getriebe, Zustand und Rechtslage ab.",common:"Relevante Fehlercodes",codeCaution:"Keine statistisch nachgewiesenen typischen Defekte dieses Fahrzeugs. Es handelt sich um mögliche Prüfcodes; herstellerspezifische Bedeutungen können abweichen.",open:"Im Diagnosekatalog öffnen",openStage:"Stage-1-Seite öffnen",empty:"Bitte Marke und Modell wählen. Motorvariante auswählen oder fehlende Variante manuell ergänzen.",variant:"Offene Fahrzeugreferenz / Beispieldaten, keine OEM-Bestätigung.",manual:"Manuelle Daten werden nicht als Herstellerangabe dargestellt.",variantCount:"Motorvarianten",noVariants:"Für diese Auswahl fehlen Motordaten. Motorkennung unten manuell eingeben.",reviewWarning:"Referenzleistung widersprüchlich oder Hybrid-Systemleistung unklar; bitte mit Fahrzeugpapieren bestätigen.",searchLabel:"Motor, Generation oder Getriebe suchen",familyWarning:"Motorreferenz stammt aus der Modellfamilie, nicht aus einer bestätigten exakten Baureihe. FIN und Motorkennung prüfen.",fuels:{Diesel:"Diesel",Benzin:"Benzin",Hybrid:"Hybrid",PHEV:"Plug-in-Hybrid",Electric:"Elektro",LPG:"Autogas (LPG)",CNG:"Erdgas (CNG)"}},
 en:{kicker:"6006 / VEHICLE & ENGINE FINDER",head:"Choose your vehicle, inspect engine and fault codes.",intro:"Identify manufacturer from VIN prefix, or choose make, model, year, fuel and engine. View engine reference data, preliminary Stage 1 guidance and related DTCs.",all:"All fault codes",vin:"Vehicle identification number (VIN)",vinHelp:"Manufacturer is checked locally first; if unknown, only the 3-character prefix is sent to NHTSA. The full VIN is never transmitted or stored. Verify make, model and engine.",decode:"Find make",invalid:"VIN must have 17 characters and cannot contain I, O or Q.",unsupported:"Manufacturer could not be identified reliably. Please choose the make.",found:"Make identified from VIN",make:"Make",model:"Model",year:"Model year",fuel:"Fuel",engine:"Engine variant",other:"Engine code if missing",power:"Stock power (PS)",torque:"Stock torque (Nm)",choose:"Choose",allFuel:"All",noneMotor:"Not listed / enter manually",loading:"Loading engine variants…",selected:"Selected vehicle",stage:"Stage 1 preliminary assessment",old:"Stock",new:"Stage 1 (estimate)",value:"Value",hp:"Power",nm:"Torque",noData:"No stock power or torque data. Confirm them from reliable vehicle records.",noTune:"No verified Stage 1 forecast for this engine. The engine, ECU and gearbox must be checked before quotation.",tuneCaution:"Stage 1 ranges are generic mathematical examples for turbocharged engines only; not measured results, approved calibrations, road-legal promises or guarantees. Actual targets depend on ECU, gearbox, condition and regulations.",common:"Related fault codes",codeCaution:"These codes are examples to investigate, not established failure statistics for this vehicle. Manufacturer-specific meanings can differ.",open:"Open diagnosis catalog",openStage:"Open Stage 1 page",empty:"Choose make and model. Select an engine variant or enter one manually.",variant:"Open vehicle reference data / examples; not OEM verified.",manual:"Manually entered values are not presented as manufacturer specifications.",variantCount:"engine variants",noVariants:"No engine data for this selection. Enter engine code manually below.",reviewWarning:"Conflicting reference power or unclear hybrid system output; verify from vehicle records.",searchLabel:"Search engine, generation or gearbox",familyWarning:"Engine reference belongs to the model family, not a verified exact generation. Confirm with VIN and engine code.",fuels:{Diesel:"Diesel",Benzin:"Petrol",Hybrid:"Hybrid",PHEV:"Plug-in hybrid",Electric:"Electric",LPG:"LPG",CNG:"CNG"}}};
-function lang(){const l=String(document.documentElement.lang||"").slice(0,2);return w[l]?l:"de";}
+const experienceWords={
+tr:{stage:"Stage 1 sonucu / kaynak karşılaştırması",new:"Yayımlanan Stage 1",pending:"Doğrulanmış sonuç yok",difference:"Fark",chooseEngine:"Stage 1 karşılaştırması için model yılı ve motor seç. Listede yoksa motor adını ve doğruladığın stok değerleri gir.",vinNext:"Marka belirlendi. Avrupa araçlarında VIN başlangıcı model, motor ve donanımı doğrulamaz; bunları aşağıdan seçerek devam et.",vinContinue:"Model ve motor seç →",vinLocal:"Yerel üretici kodu",vinRemote:"NHTSA üretici kaydı",vinUnavailable:"Üretici kaydı bulunamadı. NHTSA Avrupa araçlarının tamamını kapsamaz; marka, model ve motoru listeden seçerek devam edebilirsin.",browse:"Bu markanın Stage 1 örneklerine bak →",sourceResult:"Aşağıdaki karşılaştırma üçüncü tarafın yayımladığı değerlerdir; 6006 Performance ölçümü veya aracına verilmiş bir güç garantisi değildir.",ambiguous:"Önceki motor adı birden fazla varyantla eşleşiyor. Doğru nesil ve şanzımanı listeden seç; motor otomatik seçilmedi."},
+de:{stage:"Stage-1-Ergebnis / Quellenvergleich",new:"Veröffentlichte Stage 1",pending:"Kein bestätigtes Ergebnis",difference:"Differenz",chooseEngine:"Für einen Stage-1-Vergleich Baujahr und Motor wählen. Fehlende Varianten mit Motorbezeichnung und bestätigten Serienwerten ergänzen.",vinNext:"Marke erkannt. Der VIN-Anfang bestätigt bei europäischen Fahrzeugen weder Modell noch Motor oder Ausstattung. Diese Angaben unten auswählen.",vinContinue:"Modell und Motor auswählen →",vinLocal:"Lokaler Herstellercode",vinRemote:"NHTSA-Herstellerverzeichnis",vinUnavailable:"Kein Hersteller gefunden. NHTSA deckt nicht alle europäischen Fahrzeuge ab. Marke, Modell und Motor können manuell gewählt werden.",browse:"Stage-1-Beispiele dieser Marke ansehen →",sourceResult:"Der Vergleich zeigt veröffentlichte Angaben eines Drittanbieters; keine Messung von 6006 Performance und keine zugesicherte Leistung für Ihr Fahrzeug.",ambiguous:"Die gespeicherte Motorbezeichnung passt zu mehreren Varianten. Baureihe und Getriebe auswählen; kein Motor wurde automatisch gewählt."},
+en:{stage:"Stage 1 result / source comparison",new:"Published Stage 1",pending:"No confirmed result",difference:"Difference",chooseEngine:"Choose model year and engine for a Stage 1 comparison. Add a missing engine with its name and confirmed stock figures.",vinNext:"Make identified. A European VIN prefix does not confirm model, engine or equipment; choose those details below to continue.",vinContinue:"Choose model and engine →",vinLocal:"Local manufacturer code",vinRemote:"NHTSA manufacturer record",vinUnavailable:"No manufacturer found. NHTSA does not cover every European vehicle; select make, model and engine manually to continue.",browse:"Browse Stage 1 examples for this make →",sourceResult:"This comparison shows a third party's advertised figures; it is not a 6006 Performance measurement or a power guarantee for your vehicle.",ambiguous:"The saved engine name matches several variants. Select the generation and gearbox; no engine was selected automatically."}
+};
+for(const language of Object.keys(experienceWords))Object.assign(w[language],experienceWords[language]);
+function lang(){const l=String(window.Locale6006?.getLanguage?.()||document.documentElement.lang||"").slice(0,2);return w[l]?l:"de";}
 function t(key){return w[lang()][key];}
 const section=document.createElement("section");section.id="vehicle-selector-6006";section.className="vin6006-wrap";
 section.innerHTML='<div class="vin6006-frame"><div class="vin6006-head"><div><p class="vin6006-kicker" id="vin6-kicker"></p><h2 id="vin6-heading"></h2><p id="vin6-intro"></p></div><a href="/fehlercodes/" id="vin6-all"></a></div>'
@@ -22,6 +28,17 @@ section.innerHTML='<div class="vin6006-frame"><div class="vin6006-head"><div><p 
 tab.insertAdjacentElement("beforebegin",section);
 const $=id=>document.getElementById("vin6-"+id);
 const make=$("make"),model=$("model"),year=$("year"),fuel=$("fuel"),engine=$("engine"),manual=$("manual"),ps=$("ps"),nm=$("nm"),report=$("result"),feedback=$("feedback");
+const vinNext=document.createElement("div");vinNext.className="vin6006-next";vinNext.hidden=true;
+const vinNextText=document.createElement("p"),vinNextButton=document.createElement("button");vinNextButton.type="button";
+vinNext.append(vinNextText,vinNextButton);feedback.insertAdjacentElement("afterend",vinNext);
+vinNextButton.addEventListener("click",()=>{model.scrollIntoView({behavior:"smooth",block:"center"});model.focus({preventScroll:true});});
+let vinStatus={kind:"",make:"",source:""};
+function renderVinStatus(){
+ const kind=vinStatus.kind;
+ feedback.textContent=kind==="found"?t("found")+": "+vinStatus.make+" · "+t(vinStatus.source):kind==="loading"?brandText[lang()].checking:kind==="invalid"?t("invalid"):kind==="unavailable"?t("vinUnavailable"):"";
+ vinNext.hidden=kind!=="found";vinNextText.textContent=t("vinNext");vinNextButton.textContent=t("vinContinue");
+ $("decode").disabled=kind==="loading";$("decode").setAttribute("aria-busy",String(kind==="loading"));
+}
 // Quick links show that the finder is not limited to Volkswagen.
 // The native make dropdown remains the complete catalogue, not the buttons below.
 
@@ -100,12 +117,21 @@ const stageRefCopy={
  en:{title:"Published Stage 1 example",none:"No safely matched published example is available for this engine and year. Check the engine code and ECU before requesting a quote.",kind:"Third-party advertised example, not measured by 6006 Performance.",before:"Advertised stock",after:"Advertised Stage 1",warning:"Not a tested target for this vehicle, a guarantee or German road-legal approval. Confirm ECU version, engine and vehicle condition.",source:"View original publication ↗"}
 };
 const referenceBox=document.createElement("aside");referenceBox.className="vin6006-stage-reference";referenceBox.id="vin6-stage-reference";
-referenceBox.innerHTML='<h5 id="vin6-ref-title"></h5><p id="vin6-ref-description"></p><div id="vin6-ref-values" hidden></div><p id="vin6-ref-warning" hidden></p><a id="vin6-ref-source" rel="noopener noreferrer" target="_blank" hidden></a>';
+referenceBox.innerHTML='<h5 id="vin6-ref-title"></h5><p id="vin6-ref-description"></p><div id="vin6-ref-values" hidden></div><p id="vin6-ref-warning" hidden></p><a id="vin6-ref-source" rel="noopener noreferrer" target="_blank" hidden></a><a id="vin6-ref-browse" href="/stage1-referenzen/"></a>';
 $("stage-note").insertAdjacentElement("afterend",referenceBox);
+$("ref-browse").addEventListener("click",event=>{
+ const directory=document.getElementById("vin6-stage-directory"),filter=document.getElementById("vin6-directory-make"),search=document.getElementById("vin6-directory-search");
+ if(!directory||!filter||!search)return;
+ event.preventDefault();directory.open=true;
+ const found=[...filter.options].find(o=>clean(o.value)===clean(make.value));
+ filter.value=found?.value||"";search.value=found?"":make.value;
+ filter.dispatchEvent(new Event("change",{bubbles:true}));
+ directory.scrollIntoView({behavior:"smooth",block:"start"});search.focus({preventScroll:true});
+});
 let stage1Published=[];
 const transferredReferenceId=(new URLSearchParams(location.search).get("stageRef")||"").trim();
 function matchPublishedStage(){
- const selected=engine.value!==""?variants[Number(engine.value)]:null;
+ const selected=selectedVariant();
  const selectedYear=Number(year.value);
  if(!Number.isInteger(selectedYear)||selectedYear<1950||selectedYear>2100)return null;
  for(const item of stage1Published){
@@ -131,14 +157,15 @@ function renderStageReference(){
  const txt=stageRefCopy[lang()],match=matchPublishedStage();
  const heading=$("ref-title"),desc=$("ref-description"),values=$("ref-values"),warning=$("ref-warning"),source=$("ref-source");
  heading.textContent=txt.title;
+ $("ref-browse").textContent=t("browse");
  values.hidden=!match;warning.hidden=!match;source.hidden=!match;
  if(!match){desc.textContent=txt.none;values.replaceChildren();source.removeAttribute("href");return;}
- desc.textContent=txt.kind;
+ desc.textContent=txt.kind+" · "+match.publisher;
  values.replaceChildren();
- for(const [title,psVal,nmVal] of [[txt.before,match.publishedStockPs,match.publishedStockNm],[txt.after,match.publishedStage1Ps,match.publishedStage1Nm]]){
+ for(const [title,value,unit] of [[t("difference")+" · "+t("hp"),match.publishedStage1Ps-match.publishedStockPs,"PS"],[t("difference")+" · "+t("nm"),match.publishedStage1Nm-match.publishedStockNm,"Nm"]]){
   const item=document.createElement("div");item.className="vin6006-ref-value";
   const label=document.createElement("span");label.textContent=title;
-  const data=document.createElement("strong");data.textContent=psVal+" PS · "+nmVal+" Nm";
+  const data=document.createElement("strong");data.textContent=(value>0?"+":"")+value+" "+unit;
   item.append(label,data);values.append(item);
  }
  warning.textContent=txt.warning+" · "+match.publisher;
@@ -157,7 +184,7 @@ async function loadPublishedStageReferences(){
    Number.isInteger(x.yearFrom)&&Number.isInteger(x.yearTo)&&
    [x.sourceStockHp,x.sourceStockNm,x.publishedStockPs,x.publishedStockNm,x.publishedStage1Ps,x.publishedStage1Nm]
       .every(n=>Number.isInteger(n)&&n>0&&n<=1500));
-  if(make.value&&model.value)renderStageReference();
+  if(make.value&&model.value)renderReport();
  }catch(e){/* Missing upstream reference files must not break vehicle or quote search. */}
 }
 
@@ -266,12 +293,14 @@ function renderMakeButtons(){
 }
 otherBrands.addEventListener("click",()=>{make.scrollIntoView({behavior:"smooth",block:"center"});make.focus({preventScroll:true});});
 const fuelKeys=["","Diesel","Benzin","Hybrid","PHEV","Electric","LPG","CNG"];
-let variants=[],busy=0,memory={};
+let variants=[],busy=0,memory={},manualGearbox="",manualGeneration="",restoreAmbiguous=false;
 const preferred=new URLSearchParams(location.search);
 try{memory=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"{}")||{};}catch(e){}
 function option(select,value,name){select.append(new Option(name,value));}
 function fill(select,entries,label){select.replaceChildren();option(select,"",label||t("choose"));entries.forEach(item=>option(select,item[0],item[1]));}
 function numeric(value){const num=Number(value);return Number.isFinite(num)&&num>0&&num<=3000?Math.round(num):null;}
+function selectedVariant(){return /^\d+$/.test(engine.value)?variants[Number(engine.value)]||null:null;}
+function variantKey(v){return v?JSON.stringify([v.model||"",v.generation||"",v.engine||"",v.fuel||"",v.transmission||"",v.from||"",v.to||"",v.hp??"",v.nm??""]):"";}
 function readFuel(value){
 const v=String(value||"").toLowerCase();
 if(/plug[ -]?in|phev/.test(v))return"PHEV";
@@ -298,6 +327,7 @@ function translate(){
 const labels={kicker:"kicker",heading:"head",intro:"intro",all:"all", "vin-label":"vin",decode:"decode","vin-help":"vinHelp",lmake:"make",lmodel:"model",lyear:"year",lfuel:"fuel",lengine:"engine",lmanual:"other",lps:"power",lnm:"torque","result-head":"selected",stagehead:"stage",codehead:"common",th1:"value",th2:"old",th3:"new","code-note":"codeCaution","stage-link":"openStage","dtc-link":"open"};
 for(const [id,key]of Object.entries(labels)){$(id).textContent=t(key);}
 renderMakeButtons();
+renderVinStatus();
 if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));fuel.value=value;}
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
 engineSearchLabel.textContent=w[lang()].searchLabel;
@@ -355,6 +385,8 @@ engineField.append(variantSummary);
 let visibleVariants=[];
 let manuallyEditedStock=false;
 function renderEngines(preserve){
+ const previous=preserve!==""&&/^\d+$/.test(String(preserve))?variants[Number(preserve)]:null;
+ const preservedKey=variantKey(previous);
  variants=findVariants();
  const query=clean(engineSearch.value||"");
  visibleVariants=[];
@@ -363,50 +395,77 @@ function renderEngines(preserve){
   const searchable=clean([v.engine,v.generation,v.fuel,v.transmission,v.hp,v.nm].join(" "));
   if(!query||searchable.includes(query))visibleVariants.push(i);
  }
- const current=Number(preserve);
+ const current=preservedKey?variants.findIndex(v=>variantKey(v)===preservedKey):-1;
  const choices=visibleVariants.map(i=>{
   const v=variants[i],stock=stockPower(v),torque=stockTorque(v),review=stockNeedsReview(v);
-  const meta=[v.generation,v.fuel,v.from&&v.to?v.from+"–"+v.to:v.from||v.to].filter(Boolean).join(" · ");
+  const meta=[v.generation,v.transmission,v.fuel,v.from&&v.to?v.from+"–"+v.to:v.from||v.to].filter(Boolean).join(" · ");
   const label=String(v.engine)+(stock?" · "+stock+" PS":"")+(torque?" · "+torque+" Nm":"")+(review?" · ⚠":"");
   return [String(i),label+" · "+meta];
  });
  fill(engine,choices,t("noneMotor"));
- if(preserve!==""&&Number.isInteger(current)&&choices.some(x=>x[0]===String(current)))engine.value=String(current);
+ if(current>=0&&choices.some(x=>x[0]===String(current)))engine.value=String(current);
  variantSummary.textContent=variants.length?
   visibleVariants.length+" / "+variants.length+" "+w[lang()].variantCount:
   w[lang()].noVariants;
+ if(restoreAmbiguous)variantSummary.textContent+=" · "+t("ambiguous");
  if(engine.value==="")showReport(false);
 }
 function showReport(flag){report.hidden=!flag;}
 function saveChoice(){
 if(!make.value||!model.value)return;
-try{sessionStorage.setItem("6006-vehicle-choice",JSON.stringify({brand:make.value,model:model.value,year:year.value,powertrain:fuel.value,engine:manual.value||variants[Number(engine.value)]?.engine||"",ps:ps.value,gearbox:""}));}catch(e){}
+const v=selectedVariant();
+try{sessionStorage.setItem("6006-vehicle-choice",JSON.stringify({schemaVersion:2,brand:make.value,model:model.value,year:year.value,powertrain:fuel.value,engine:manual.value.trim()||v?.engine||"",ps:ps.value,nm:nm.value,gearbox:v?.transmission||manualGearbox,generation:v?.generation||manualGeneration,variantKey:variantKey(v),selectionKind:v?"catalog":manual.value.trim()?"manual":"",manuallyEditedStock}));}catch(e){}
 }
-function vehicleParams(){const p=new URLSearchParams();const props={brand:make.value,model:model.value,year:year.value,powertrain:fuel.value,engine:manual.value.trim()||((engine.value!=="")?variants[Number(engine.value)]?.engine:""),ps:ps.value};for(const [k,v]of Object.entries(props))if(v)p.set(k,v);return p;}
+function vehicleParams(){const p=new URLSearchParams(),v=selectedVariant();const props={brand:make.value,model:model.value,year:year.value,powertrain:fuel.value,engine:manual.value.trim()||v?.engine||"",ps:ps.value,nm:nm.value,gearbox:v?.transmission||manualGearbox,generation:v?.generation||manualGeneration,variantKey:variantKey(v)};for(const [k,value]of Object.entries(props))if(value)p.set(k,value);return p;}
 function relatedCodes(){
-const name=clean(manual.value||variants[Number(engine.value)]?.engine),f=fuel.value||readFuel(name);
-if(f==="Diesel")return [["P0299","Ladedruck / Turbo"],["P0401","AGR / EGR"],["P2002","DPF"],["P0101","Luftmassenmesser"]];
-if(f==="Benzin"||f==="LPG"||f==="CNG")return [["P0300","Zündaussetzer / Misfire"],["P0171","Gemisch zu mager"],["P0420","Katalysator"],["P0101","Luftmassenmesser"]];
-if(f==="Electric")return [["U0100","Steuergerätekommunikation"],["U0121","ABS-Kommunikation"],["C0035","Raddrehzahlsignal"]];
-return [["P0101","Luftmassensignal"],["P0700","Getriebesteuerung"],["U0100","Netzwerk / CAN"]];
+const v=selectedVariant(),name=clean(manual.value.trim()||v?.engine),f=fuel.value||readFuel(v?.fuel||name);
+const descriptions={tr:{P0299:"Turbo / düşük basınç",P0401:"AGR / EGR akışı",P2002:"DPF verimi",P0101:"Hava kütlesi ölçümü",P0300:"Yanma / ateşleme kesintisi",P0171:"Fakir yakıt karışımı",P0420:"Katalizör verimi",U0100:"Motor kontrol ünitesi iletişimi",U0121:"ABS iletişimi",C0035:"Tekerlek hız sinyali",P0700:"Şanzıman kontrolü"},de:{P0299:"Ladedruck / Turbo",P0401:"AGR / EGR",P2002:"DPF",P0101:"Luftmassenmesser",P0300:"Zündaussetzer",P0171:"Gemisch zu mager",P0420:"Katalysator",U0100:"Motorsteuergerätekommunikation",U0121:"ABS-Kommunikation",C0035:"Raddrehzahlsignal",P0700:"Getriebesteuerung"},en:{P0299:"Boost / turbo pressure",P0401:"EGR flow",P2002:"DPF efficiency",P0101:"Air mass measurement",P0300:"Combustion misfire",P0171:"Fuel mixture too lean",P0420:"Catalyst efficiency",U0100:"Engine control communication",U0121:"ABS communication",C0035:"Wheel speed signal",P0700:"Transmission control"}};
+const codes=f==="Diesel"?["P0299","P0401","P2002","P0101"]:["Benzin","LPG","CNG"].includes(f)?["P0300","P0171","P0420","P0101"]:f==="Electric"?["U0100","U0121","C0035"]:["P0101","P0700","U0100"];
+return codes.map(code=>[code,descriptions[lang()][code]]);
+}
+function renderRelatedCodes(){
+ const container=$("code-list");
+ const entries=relatedCodes().map(([code,description])=>{
+  const params=vehicleParams();params.set("code",code);
+  return {code,description,href:"/fehlercodes/?"+params.toString()};
+ });
+ const signature=JSON.stringify(entries);
+ if(container.dataset.signature===signature)return;
+ // Keep existing anchors connected during blur/change. Replacing them between
+ // pointerdown and click would discard the visitor's first navigation attempt.
+ const existing=new Map([...container.children].map(a=>[a.dataset.code,a]));
+ entries.forEach(({code,description,href},index)=>{
+  let a=existing.get(code);existing.delete(code);
+  if(!a){
+   a=document.createElement("a");a.dataset.code=code;
+   const strong=document.createElement("strong"),span=document.createElement("span"),arrow=document.createElement("b");
+   strong.textContent=code;arrow.textContent="›";a.append(strong,span,arrow);
+  }
+  if(a.getAttribute("href")!==href)a.setAttribute("href",href);
+  if(a.children[1].textContent!==description)a.children[1].textContent=description;
+  if(container.children[index]!==a)container.insertBefore(a,container.children[index]||null);
+ });
+ for(const a of existing.values())a.remove();
+ container.dataset.signature=signature;
 }
 function renderReport(){
 if(!make.value||!model.value){showReport(false);return;}
 showReport(true);
-const v=engine.value===""?null:variants[Number(engine.value)],name=manual.value.trim()||(v?.engine||"");
+const v=selectedVariant(),name=manual.value.trim()||(v?.engine||""),match=matchPublishedStage();
 const basePS=numeric(ps.value)||(v?stockPower(v):null),baseNM=numeric(nm.value)||(v?stockTorque(v):null);
-$("identity").textContent=[make.value,model.value,year.value,(!fuel.value?"":w[lang()].fuels[fuel.value]),name].filter(Boolean).join(" · ");
+$("identity").textContent=[make.value,model.value,year.value,(!fuel.value?"":w[lang()].fuels[fuel.value]),name,v?.generation||manualGeneration,v?.transmission||manualGearbox].filter(Boolean).join(" · ");
 const f=fuel.value||readFuel(name);
 // A source engine rating cannot determine a specific calibration result.
-const plusPS="—",plusNM="—";
+const plusPS=match?.publishedStage1Ps??null,plusNM=match?.publishedStage1Nm??null;
+$("th2").textContent=match?stageRefCopy[lang()].before:t("old");
+$("th3").textContent=match?t("new"):t("pending");
 const table=$("metrics");table.replaceChildren();
-for(const [label,original,forecast,unit]of [[t("hp"),basePS,plusPS,"PS"],[t("nm"),baseNM,plusNM,"Nm"]]){
-const tr=document.createElement("tr");for(const value of [label,original?original+" "+unit:"—",forecast==="—"?"—":forecast+" "+unit]){const td=document.createElement("td");td.textContent=value;tr.append(td);}table.append(tr);
+for(const [label,original,forecast,unit]of [[t("hp"),match?.publishedStockPs??basePS,plusPS,"PS"],[t("nm"),match?.publishedStockNm??baseNM,plusNM,"Nm"]]){
+const tr=document.createElement("tr");for(const value of [label,original?original+" "+unit:"—",forecast?forecast+" "+unit:"—"]){const td=document.createElement("td");td.textContent=value;tr.append(td);}table.append(tr);
 }
-$("stage-note").textContent=t("noTune")+" "+(!basePS||!baseNM?t("noData"):"")+(v&&stockNeedsReview(v)?" "+w[lang()].reviewWarning:"");
+$("stage-note").textContent=match?t("sourceResult"):(!name||!year.value?t("chooseEngine"):t("noTune"))+" "+(!basePS||!baseNM?t("noData"):"")+(v&&stockNeedsReview(v)?" "+w[lang()].reviewWarning:"");
 renderStageReference();
-const codes=$("code-list");codes.replaceChildren();
-relatedCodes().forEach(([code,description])=>{const a=document.createElement("a");const params=vehicleParams();params.set("code",code);a.href="/fehlercodes/?"+params.toString();const strong=document.createElement("strong"),span=document.createElement("span"),arrow=document.createElement("b");strong.textContent=code;span.textContent=description;arrow.textContent="›";a.append(strong,span,arrow);codes.append(a);});
+renderRelatedCodes();
 $("stage-link").href="/?"+vehicleParams().toString()+"#aracin";
 $("dtc-link").href="/fehlercodes/?"+vehicleParams().toString();
 $("provenance").textContent=t("variant")+(v&&stockNeedsReview(v)?" · "+w[lang()].reviewWarning:"")+(v&&clean(v.model)!==clean(model.value)?" · "+w[lang()].familyWarning:"")+(manuallyEditedStock?" · "+t("manual"):"");
@@ -429,7 +488,7 @@ const wmi={
 "1C4":"Jeep","1J4":"Jeep","1HG":"Honda","1N4":"Nissan","5N1":"Nissan","3N1":"Nissan",
 "5YJ":"Tesla","7SA":"Tesla","JTH":"Lexus","NMT":"Toyota","JS1":"Suzuki","KM8":"Hyundai","KMT":"Genesis","LDC":"Peugeot"
 };
-function selectManufacturer(raw){
+function selectManufacturer(raw,source="vinLocal"){
  const aliases={MERCEDESBENZ:"Mercedes-Benz",MERCEDESAMG:"Mercedes-Amg",VOLKSWAGEN:"Volkswagen",SKODA:"Škoda",SEAT:"SEAT",CHEVROLET:"Chevrolet",LANDROVER:"Land Rover",TOYOTAMOTOR:"Toyota",BMW:"BMW",ROLLSROYCE:"Rolls-Royce",ALFAROMEO:"Alfa Romeo"};
  const name=aliases[normalizeMake(raw).toUpperCase()]||raw;
  const normalized=normalizeMake(name);
@@ -437,7 +496,7 @@ function selectManufacturer(raw){
  if(!matched&&!name)return false;
  if(!matched)option(make,name,name);
  make.value=matched?.value||name;
- feedback.textContent=t("found")+": "+make.value;
+ vinStatus={kind:"found",make:make.value,source};renderVinStatus();
  make.dispatchEvent(new Event("change",{bubbles:true}));
  renderMakeButtons();
  return true;
@@ -446,10 +505,10 @@ let lookupId=0;
 async function identify(){
  const full=$("vin").value.trim().replace(/\s|-/g,"").toUpperCase();
  $("vin").value=full;const token=++lookupId;
- if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(full)){feedback.textContent=t("invalid");return;}
+ if(!/^[A-HJ-NPR-Z0-9]{17}$/.test(full)){vinStatus={kind:"invalid"};renderVinStatus();return;}
  const prefix=full.slice(0,3);
  if(wmi[prefix]){selectManufacturer(wmi[prefix]);return;}
- feedback.textContent=brandText[lang()].checking;
+ vinStatus={kind:"loading"};renderVinStatus();
  // NHTSA's WMI endpoint sees the *three-character manufacturer prefix only*.
  // It does not receive the full VIN; European domestic-only makes may not be found.
  try{
@@ -462,13 +521,14 @@ async function identify(){
   if(token!==lookupId)return;
   const records=Array.isArray(data.Results)?data.Results:[];
   const identified=records.find(x=>x&&x.Make&&String(x.Make).trim());
-  if(identified&&selectManufacturer(String(identified.Make).trim()))return;
+  if(identified&&selectManufacturer(String(identified.Make).trim(),"vinRemote"))return;
  }catch(e){if(token!==lookupId)return;}
- if(token===lookupId)feedback.textContent=brandText[lang()].noMatch;
+ if(token===lookupId){vinStatus={kind:"unavailable"};renderVinStatus();}
 }
 function syncVariant(){
-const v=engine.value===""?null:variants[Number(engine.value)];
+const v=selectedVariant();restoreAmbiguous=false;manualGearbox="";manualGeneration="";
 if(v){manuallyEditedStock=false;manual.value="";ps.value=stockPower(v)||"";nm.value=stockTorque(v)||"";if(!fuel.value&&readFuel(v.fuel||v.engine))fuel.value=readFuel(v.fuel||v.engine);}
+else{ps.value="";nm.value="";}
 renderReport();
 }
 async function makeChanged(keep){
@@ -489,15 +549,18 @@ fill(fuel,fuelKeys.slice(1).map(k=>[k,w[lang()].fuels[k]]),t("allFuel"));
 fillMakes();populateModels("");renderEngines("");
 $("decode").addEventListener("click",identify);
 $("vin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();identify();}});
-make.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";year.value="";makeChanged("");renderMakeButtons();});
-model.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";fuel.value="";modelChanged();});
-year.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
-fuel.addEventListener("change",()=>{manual.value="";ps.value="";nm.value="";renderEngines("");renderReport();});
+$("vin").addEventListener("input",()=>{lookupId++;vinStatus={kind:""};renderVinStatus();});
+function clearVariant(){manual.value="";ps.value="";nm.value="";manualGearbox="";manualGeneration="";restoreAmbiguous=false;manuallyEditedStock=false;engineSearch.value="";}
+make.addEventListener("change",()=>{clearVariant();fuel.value="";year.value="";if(vinStatus.kind==="found"&&vinStatus.make!==make.value){vinStatus={kind:""};renderVinStatus();}makeChanged("");renderMakeButtons();});
+model.addEventListener("change",()=>{clearVariant();fuel.value="";modelChanged();});
+year.addEventListener("change",()=>{clearVariant();renderEngines("");renderReport();});
+fuel.addEventListener("change",()=>{clearVariant();renderEngines("");renderReport();});
 engine.addEventListener("change",syncVariant);
 engineSearch.addEventListener("input",()=>{const old=engine.value;renderEngines(old);if(engine.value!==old){manuallyEditedStock=false;ps.value="";nm.value="";renderReport();}});
 
 manual.addEventListener("change",renderReport);
 manual.addEventListener("input",()=>{
+ restoreAmbiguous=false;manualGearbox="";manualGeneration="";
  if(manual.value.trim()&&engine.value!==""){
   engine.value="";ps.value="";nm.value="";
  }
@@ -508,19 +571,38 @@ window.addEventListener("6006-makes-ready",()=>{const current=make.value;fillMak
 window.addEventListener("6006-models-ready",e=>{if(e.detail?.brand===make.value){const current=model.value;populateModels(current);}});
 new MutationObserver(()=>{translate();if(activeTransferredReference){transferLabels(transferMessageKind);}}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 const externalMake=preferred.get("brand"),externalModel=preferred.get("model");
-const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model));
+const sameSavedVehicle=(!externalMake||normalizeMake(externalMake)===normalizeMake(memory.brand))&&(!externalModel||clean(externalModel)===clean(memory.model))&&(!preferred.has("year")||preferred.get("year")===String(memory.year||""))&&(!preferred.has("engine")||clean(preferred.get("engine"))===clean(memory.engine))&&(!preferred.has("powertrain")||preferred.get("powertrain")===String(memory.powertrain||""));
 const stored=sameSavedVehicle&&!transferredReferenceId&&!preferred.has("engineSearch")?memory:{};
-const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||"",engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)};
+const initial={make:externalMake||stored.brand||"",model:externalModel||stored.model||"",year:preferred.get("year")||stored.year||"",fuel:preferred.get("powertrain")||stored.powertrain||"",engine:preferred.get("engine")||stored.engine||"",ps:preferred.get("ps")||stored.ps||"",nm:preferred.get("nm")||stored.nm||"",gearbox:preferred.get("gearbox")||stored.gearbox||"",generation:preferred.get("generation")||stored.generation||"",variantKey:(preferred.get("variantKey")||stored.variantKey||"").slice(0,1000),manuallyEditedStock:preferred.has("manuallyEditedStock")?preferred.get("manuallyEditedStock")==="1":Boolean(stored.manuallyEditedStock),engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)};
 async function restore(){
 if(initial.make){if(![...make.options].some(o=>o.value===initial.make))option(make,initial.make,initial.make);make.value=initial.make;populateModels(initial.model);
 if(initial.model)model.value=initial.model;}
 if(initial.year&&[...year.options].some(o=>o.value===initial.year))year.value=initial.year;
 if(initial.fuel&&fuelKeys.includes(initial.fuel))fuel.value=initial.fuel;
 if(initial.ps)ps.value=initial.ps;
+if(initial.nm)nm.value=initial.nm;
+manualGearbox=String(initial.gearbox).slice(0,90);manualGeneration=String(initial.generation).slice(0,100);
 if(initial.engineSearch)engineSearch.value=initial.engineSearch;
 if(initial.engine)manual.value=initial.engine;
 translate();
-if(make.value){await makeChanged(initial.model);if(model.value){renderEngines("");const found=variants.findIndex(v=>clean(v.engine)===clean(initial.engine));if(found>=0){engine.value=String(found);manual.value="";syncVariant();}else renderReport();}}
+if(make.value){await makeChanged(initial.model);if(model.value){
+ renderEngines("");
+ // Only the complete stable identity may restore an automatic selection.
+ // A reused engine label can belong to another generation or gearbox.
+ const matches=initial.variantKey?variants.map((v,i)=>({v,i})).filter(x=>variantKey(x.v)===initial.variantKey):[];
+ if(matches.length===1){
+  engine.value=String(matches[0].i);manual.value="";syncVariant();
+  if(initial.manuallyEditedStock||(initial.ps&&numeric(initial.ps)!==stockPower(matches[0].v))||(initial.nm&&numeric(initial.nm)!==stockTorque(matches[0].v))){
+   ps.value=initial.ps;nm.value=initial.nm;manuallyEditedStock=true;renderReport();
+  }
+ }else{
+  manual.value=initial.engine;ps.value=initial.ps;nm.value=initial.nm;
+  manuallyEditedStock=Boolean(initial.engine||initial.ps||initial.nm);
+  restoreAmbiguous=Boolean(initial.engine&&variants.filter(v=>clean(v.engine)===clean(initial.engine)).length>1);
+  if(restoreAmbiguous)variantSummary.textContent+=" · "+t("ambiguous");
+  renderReport();
+ }
+}}
 // Search links from the OPEN motor directory only supply a search hint.
 // Apply it after all async brand/model work so it cannot be overwritten.
 // Never treat community HP/Nm as verified stock values or select ECU automatically.

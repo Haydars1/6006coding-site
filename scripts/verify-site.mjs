@@ -23,7 +23,7 @@ assert(stageFinderJS.includes('vehicleQuickNext'),'Stage 1 search is missing a n
 assert(stageFinderJS.includes('font-size:16px!important'),'iPhone field font size causes unwanted zoom');
 assert(stageFinderJS.includes('quick.blur()'),'Find button does not dismiss keyboard');
 assert(stageFinderJS.includes('yearSelect')&&stageFinderJS.includes('engineVariantSelect'),'Missing engine navigation');
-assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('20261011-searchaction'),'Homepage missing asset version');
+assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('6006-vehicle-catalog.js?v=20261013-journey'),'Homepage missing asset version');
 console.log('PASS: Mobile Find Vehicle visibly confirms choice and navigates to engine');
 
 const vinJs=path.join(ROOT,'assets/6006-vin-stage1.js');
@@ -151,7 +151,7 @@ assert(stageRefDb.examples.find(x=>x.id==='mitsubishi-asx-2016-did114-brp')?.man
 assert(stageRefDb.examples.find(x=>x.id==='subaru-forester-2008-boxerd150-brp')?.publishedStage1Ps===180,'Subaru stage 1 must not inherit stage 2 200 PS');
 console.log('PASS: Six additional motor advertisements, three newly covered makes, strict model/torque validation');
 const stage1CarHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
-assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261012-fullengines'),'Stage 1 source transfer must use fresh script version');
+assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261013-journey'),'Stage 1 source transfer must use fresh script version');
 assert(vinCode.includes('preferred.has("engineSearch")'),'Open community motor search hint must ignore stale saved vehicle');
 assert(vinCode.includes('engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)'),'Community engine links must not preload stock or tuning information');
 assert(vinCode.includes('if(initial.engineSearch)engineSearch.value=initial.engineSearch'),'Open motor link must narrow search without auto-certifying engine/gearbox');
@@ -253,7 +253,7 @@ assert(passatSuggestions.some(x=>x.model.includes('Passat B8')),'Passat B8 sugge
 const quickScript=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
 assert(quickScript.includes('vehicleQuickResults')&&quickScript.includes('aria-expanded')&&quickScript.includes('chooseSuggestion(item)'),'Mobile dropdown UI missing');
 const homeSearch=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
-assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261011-searchaction'),'Homepage must cache-bust vehicle search');
+assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261013-journey'),'Homepage must cache-bust vehicle search');
 console.log('PASS: Golf / Passat model-only search, variants, mobile suggestions and cache bust');
 assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
 assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
@@ -392,7 +392,7 @@ assert(allEngineCode.includes('engineSearch')&&allEngineCode.includes('limit+=20
 assert(vinCode.includes('if(initial.engineSearch&&!transferredReferenceId)'),'Search hint must be restored AFTER async make/model loading');
 assert(vinCode.includes('engineSearch.value=initial.engineSearch;\n renderEngines(\"\");\n engine.value=\"\";'),'Open motor links must filter engine results without confirming a variant');
 assert(vinCode.includes('ps.value=\"\";\n nm.value=\"\";\n manuallyEditedStock=false;'),'Community reference must not silently populate verified stock power');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v=20261012-fullengines-handoff'),'Corrected motor search hint cache version not published');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v=20261013-journey'),'Corrected motor search hint cache version not published');
 
 assert(allEngineCode.includes('inquiryDraft('),'Search result must prepare a specific engine inquiry message');
 assert(allEngineCode.includes('https://wa.me/491788354756?text=')&&allEngineCode.includes('encodeURIComponent(draft)'),'Customer-initiated WhatsApp inquiry must use business contact and URL encoding');

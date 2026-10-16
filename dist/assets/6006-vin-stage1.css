@@ -19,6 +19,13 @@
 .vin6006-vin-row button:hover,.vin6006-action:hover{background:#f1c992}
 .vin6006-vin-help{font-size:.7rem;color:#bbad9d;line-height:1.5;margin:6px 0 0}
 .vin6006-vin-feedback{margin:7px 0 0;color:#f1c78e;font-size:.8rem;min-height:1.1rem}
+.vin6006-vin-row button:disabled{opacity:.7;cursor:wait}
+.vin6006-next{display:grid;gap:10px;margin:12px 0 0;padding:12px;border:1px solid #72573a;border-radius:7px;background:#242019}
+.vin6006-next[hidden]{display:none}
+.vin6006-next p{margin:0;color:#e8d0b1;font-size:.78rem;line-height:1.6}
+.vin6006-next button{justify-self:start;padding:11px 14px;min-height:44px;border:1px solid #c69a63;border-radius:6px;background:#d4ae7e;color:#17120c;font-weight:750;cursor:pointer}
+.vin6006-next button:focus-visible{outline:2px solid #f2d7aa;outline-offset:2px}
+.vin6006-table th{overflow-wrap:anywhere;line-height:1.4}
 .vin6006-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
 .vin6006-result{margin-top:20px;border-top:1px solid #5c4833;padding-top:22px}
 .vin6006-result[hidden]{display:none}
@@ -100,6 +107,8 @@
 .vin6006-ref-value strong{font-size:1.01rem;color:#f4e5d3;letter-spacing:.005em}
 .vin6006-stage-reference #vin6-ref-warning{font-size:.72rem;color:#d8b58e}
 .vin6006-stage-reference #vin6-ref-source{color:#f6d29c;text-decoration:underline;text-underline-offset:3px;display:inline-flex;padding:5px 0;font-size:.76rem;font-weight:750}
+.vin6006-stage-reference #vin6-ref-browse{display:flex;margin-top:10px;color:#f6d29c;text-decoration:underline;text-underline-offset:3px;font-size:.78rem;line-height:1.5;min-height:36px;align-items:center}
+@media(max-width:600px){.vin6006-field :is(select,input){font-size:16px}.vin6006-next button{justify-self:stretch;text-align:center}}
 @media(max-width:440px){#vin6-ref-values:not([hidden]){grid-template-columns:1fr}.vin6006-stage-reference{padding:13px}}
 
 /* Reference deep-link handoff: provenance first, customer approval for uncertain data. */

@@ -3,6 +3,10 @@
 // mass-publish near-duplicate pages or fabricate vehicle-specific OEM data.
 import fs from 'node:fs';
 import path from 'node:path';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
+const playbookUI=require('../dist/assets/6006-diagnostic-playbooks.js');
+const playbooks=JSON.parse(fs.readFileSync('dist/assets/6006-diagnostic-playbooks.json','utf8'));
 const ROOT='dist';
 const base='https://6006coding.de';
 const rows=[
@@ -609,10 +613,36 @@ rows.push(...[
   ]
 ]);
 
+// Focused, source-backed workflows add missing codes and enrich existing guides.
+for(const [code,entry] of Object.entries(playbooks.codes)){
+ if(rows.some(row=>row[0]===code))continue;
+ const family=playbooks.families[entry.family];
+ rows.push([code,entry.title.de,family.title.de,entry.meaning.de,family.symptoms.de.join(';'),family.branches.de.map(branch=>branch.finding).join(';'),family.steps.de.join(';'),family.stop.de,entry.related.join(',')]);
+}
 const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const split=s=>s.split(';').map(x=>x.trim()).filter(Boolean);
+function focusedArticle(code){
+ const entry=playbooks.codes[code],family=playbooks.families[entry.family];
+ const url=base+'/fehlercodes/'+code.toLowerCase()+'/';
+ const subset={version:playbooks.version,sources:playbooks.sources.filter(source=>family.sourceIds.includes(source.id)),families:{[entry.family]:family},codes:{[code]:entry}};
+ const ld={'@context':'https://schema.org','@type':'TechArticle',headline:code+' – '+entry.title.de,description:entry.meaning.de,url,inLanguage:'de',publisher:{'@type':'Organization',name:'6006 Performance',url:base+'/'},citation:subset.sources.map(source=>source.url)};
+ return '<!doctype html>\n<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+ +'<script src="/assets/6006-locale.js?v=20261013-auto"></script><title>'+esc(code+': '+entry.title.de)+' | 6006 Performance</title>'
+ +'<meta name="description" content="'+esc(entry.meaning.de)+'"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+url+'">'
+ +'<link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#171513">'
+ +'<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="stylesheet" href="/assets/6006-diagnostic-playbooks.css?v=20261013-guides">'
+ +'<script type="application/ld+json">'+JSON.stringify(ld).replaceAll('<','\\u003c')+'</script></head><body>'
+ +'<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/" data-guide-label="guides">Diagnoseanleitungen</a><a href="/fahrzeug/" data-guide-label="stage">Fahrzeug / Stage 1</a></nav></header>'
+ +'<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a> / '+esc(code)+'</nav>'
+ +'<div data-diagnostic-article="'+esc(code)+'">'+playbookUI.render(playbooks,code,'de',true)+'</div>'
+ +'<div class="bottomnav"><a href="/fehlercodes/?code='+encodeURIComponent(code)+'" data-guide-label="all">Alle Fehlercodes</a><a href="/fahrzeug/" data-guide-label="choose">Fahrzeug auswählen</a></div></main>'
+ +'<footer data-guide-label="footer">6006 Performance · Fahrzeugdiagnose und Reparaturwissen</footer>'
+ +'<script type="application/json" id="6006-playbook-data">'+JSON.stringify(subset).replaceAll('<','\\u003c')+'</script>'
+ +'<script defer src="/assets/6006-diagnostic-playbooks.js?v=20261013-guides"></script></body></html>\n';
+}
 function article(r){
  const [code,title,system,meaning,symptoms,causes,checks,warning,related]=r;
+ if(playbooks.codes[code])return focusedArticle(code);
  const slug=code.toLowerCase(),url=base+'/fehlercodes/'+slug+'/';
  const name=code+' – '+title;
  const description=code+' Fehlercode: Bedeutung, Symptome, mögliche Ursachen und Diagnose-Schritte. '+system+' bei 6006 Performance verständlich erklärt.';

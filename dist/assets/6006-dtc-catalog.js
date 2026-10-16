@@ -29,7 +29,9 @@ outlines.tr.catalyst={name:"Katalizör / lambda sensörü",causes:["Katalizör �
 const mapped=outlines.tr;
 const groups={turbo:"luft",dpf:"abgas",adblue:"abgas",fuel:"kraftstoff",brake:"antrieb",network:"antrieb",transmission:"antrieb",cooling:"luft",oil:"luft",airbag:"antrieb",body:"antrieb",sensor:"luft",ignition:"luft",steering:"antrieb",generic:"all"};
 const aliases={tr:["tr"],de:["de"],en:["en"]};
-const state={data:[],all:[],query:"",brand:"ALL",family:"all",category:"all",limit:35,display:[],code:"",activeManufacturer:""};
+const state={data:[],all:[],query:"",brand:"ALL",brandOrigin:"all",family:"all",category:"all",limit:35,display:[],code:"",activeManufacturer:""};
+let finishSearchReady;
+const searchReady=new Promise(resolve=>{finishSearchReady=resolve;});
 let curatedGuides = new Set();
 const html=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const L=()=>langMap[currentLanguage]||langMap.tr;
@@ -41,13 +43,35 @@ function detectLanguage(){
 }
 function normalize(s){return String(s||"").toLocaleLowerCase("tr").replace(/[ıİ]/g,"i").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[\s/_-]+/g," ");}
 const entryText=r=>normalize(r[0]+" "+r[1]+" "+r[2]);
+const vehicleWords={
+ tr:{vehicle:"Seçili araç",missing:"Araç henüz seçilmedi",filter:"Kod tanımı filtresi",fallback:"Bu marka için ayrı üretici kaydı bulunmuyor. Yalnızca genel tanımlar gösteriliyor; bu aracın üretici onayı veya kesin parça teşhisi değildir.",different:"Kod tanımı filtresi seçili aracın markasından farklı. Araçla eşleştirmeden onarım sonucu çıkarma.",choose:"Araç seç veya değiştir",context:"Araç ve kod bağlamı"},
+ de:{vehicle:"Ausgewähltes Fahrzeug",missing:"Noch kein Fahrzeug ausgewählt",filter:"Filter der Code-Definitionen",fallback:"Für diese Marke ist kein eigener Herstellerdatensatz vorhanden. Es werden nur allgemeine Definitionen angezeigt; keine OEM-Bestätigung für dieses Fahrzeug.",different:"Der Definitionsfilter weicht von der ausgewählten Fahrzeugmarke ab. Vor einer Reparatur zuerst die richtige Zuordnung prüfen.",choose:"Fahrzeug wählen oder ändern",context:"Fahrzeug und Code-Zuordnung"},
+ en:{vehicle:"Selected vehicle",missing:"No vehicle selected yet",filter:"Code-definition filter",fallback:"No manufacturer-specific dataset is available for this make. Only generic definitions are shown; this is not OEM confirmation for this vehicle.",different:"The definition filter differs from the selected vehicle make. Verify the correct vehicle definition before drawing repair conclusions.",choose:"Choose or change vehicle",context:"Vehicle and code context"}
+};
+function vehicleProfile(){try{const v=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"null");return v&&typeof v==="object"&&!Array.isArray(v)?v:null;}catch(_){return null;}}
+function catalogManufacturer(value){
+ const key=normalize(value).replace(/[^a-z0-9]/g,"");
+ const alias={vw:"VOLKSWAGEN",volkswagen:"VOLKSWAGEN",mercedesbenz:"MERCEDES",mercedes:"MERCEDES",chevrolet:"CHEVY",chevy:"CHEVY",generalmotors:"GM"};
+ const wanted=alias[key]||String(value||"").toUpperCase();
+ return (state.data.manufacturers||[]).find(make=>make!=="OTHER"&&(make===wanted||normalize(make).replace(/[^a-z0-9]/g,"")===key))||null;
+}
+function definitionContext(){
+ const words=vehicleWords[currentLanguage]||vehicleWords.de,v=vehicleProfile();
+ const profileName=v&&v.brand?[v.brand,v.model,v.year,v.engine].filter(x=>typeof x==="string"||typeof x==="number").filter(Boolean).join(" · "):"";
+ const vehicleMake=v?.brand?catalogManufacturer(v.brand):null;
+ const filter=state.brand==="ALL"?L().allBrands:state.brand==="GENERIC"?L().generic:state.brand;
+ const note=v?.brand&&!vehicleMake&&state.brand==="GENERIC"?words.fallback:v?.brand&&state.brand!=="ALL"&&state.brand!=="GENERIC"&&state.brand!==vehicleMake?words.different:"";
+ return {profile:v,profileName,brand:state.brand,origin:state.brandOrigin,filter,note,vehicleLabel:words.vehicle,missing:words.missing,filterLabel:words.filter};
+}
+function contextReport(){const c=definitionContext();return [c.vehicleLabel+": "+(c.profileName||c.missing),c.filterLabel+": "+c.filter,c.note].filter(Boolean).join("\n");}
+function contextMarkup(){const c=definitionContext(),words=vehicleWords[currentLanguage]||vehicleWords.de;return '<section class="dtc-report-vehicle"><h3>'+html(words.context)+'</h3><p><strong>'+html(c.vehicleLabel)+':</strong> '+html(c.profileName||c.missing)+'<br><strong>'+html(c.filterLabel)+':</strong> '+html(c.filter)+'</p>'+(c.note?'<p class="notice">'+html(c.note)+'</p>':'')+'<p><a href="/fahrzeug/#vehicle-selector-6006">'+html(words.choose)+' →</a></p></section>';}
 function area(d,code){
  const x=d.toLowerCase();
  if(code.startsWith("U"))return "network";
  if(code.startsWith("B"))return /air.?bag|restraint|srs|seatbelt|seat belt|deployment|frontal stage|squib|pretensioner|crash sensor|inflator|occupant classification/.test(x)?"airbag":"body";
  if(code.startsWith("C"))return /steer|suspension|yaw|angle|chassis|rack|tie rod|damping/.test(x)?"steering":"brake";
  if(/turbo|supercharg|boost|wastegate|charge.air|charge pressure/.test(x))return"turbo";
- if(/particulate|soot|regeneration|dpf|diesel filter/.test(x))return"dpf";
+ if(/particulate|soot|regeneration|\bdpf\b|diesel filter/.test(x))return"dpf";
  if(/exhaust gas recirculation|egr/.test(x))return"egr";
  if(/catalyst|catalytic converter|oxygen sensor|lambda sensor/.test(x))return"catalyst";
  if(/reductant|scr |nox|urea|adblue/.test(x))return"adblue";
@@ -67,7 +91,7 @@ function area(d,code){
 const forcedArea={P0299:"turbo",P2002:"dpf",P2452:"dpf",P2453:"dpf",P2463:"dpf",P20EE:"adblue",P204F:"adblue",P2201:"adblue",P0401:"egr",P0420:"catalyst",P0104:"sensor",U0100:"network",P0700:"transmission"};
 function kind(row){return forcedArea[row[0]]||area(row[2],row[0]);}
 const aliasPatterns={
-dpf:/particulate|soot|regeneration|diesel filter|dpf/i,
+dpf:/particulate|soot|regeneration|diesel filter|\bdpf\b/i,
 turbo:/turbo|supercharg|boost|wastegate|charge.air/i,
 adblue:/reductant|scr |nox|urea|adblue/i,
 egr:/egr|exhaust gas recirculation/i,
@@ -86,7 +110,7 @@ const aliasUser={
 "akü":"battery","aku":"battery","egzoz":"dpf","partikül":"dpf","partikul":"dpf","hava yastığı":"airbag","hava yastigi":"airbag",
 "turbo":"turbo","basınç":"turbo","basinc":"turbo","can":"network","haberleşme":"network","haberlesme":"network",
 "motor arıza":"ignition","tekleme":"ignition","yağ":"oil","yag":"oil","soğutma":"cooling","sogutma":"cooling","kuhlung":"cooling","lenkung":"steering","kraftstoff":"fuel","getriebe":"transmission","bremse":"brake","zundung":"ignition","atesleme":"ignition","sensorler":"sensor","sensoren":"sensor","katalizor":"catalyst","katalysator":"catalyst","govde":"body","karosserie":"body",
-"adblue":"adblue","scr":"adblue","nox":"adblue","dpf":"dpf","egr":"egr"
+"adblue":"adblue","scr":"adblue","nox":"adblue","dpf":"dpf","egr":"egr","agr":"egr"
 };
 function userPattern(q){
  const n=normalize(q);
@@ -98,8 +122,8 @@ function userPattern(q){
 }
 function isCodeish(q){return /^[PBCU][0-9A-Z-]{3,9}$/i.test(q)}
 function brandPriority(row){return (row[1]===state.brand?0:(row[1]==="GENERIC"?1:2))}
-function filterRows(){
- const q=state.query.trim().toUpperCase();
+function matchingRows(query=state.query){
+ const q=String(query||"").trim().toUpperCase();
  const patt=q&&!/^[PBCU][0-9A-F]{4}$/i.test(q)?userPattern(q):null;
  let rows=state.all.filter(r=>{
   if(state.savedOnly&&!userSavedCodes.has(r[0]))return false;
@@ -117,9 +141,11 @@ function filterRows(){
  });
  if(q) rows.sort((a,b)=>(a[0]===q?0:1)-(b[0]===q?0:1)||brandPriority(a)-brandPriority(b)||a[0].localeCompare(b[0]));
  else rows.sort((a,b)=>brandPriority(a)-brandPriority(b)||a[0].localeCompare(b[0]));
- state.display=rows;
  return rows;
 }
+function filterRows(){const rows=matchingRows();state.display=rows;return rows;}
+// Autocomplete shares the catalog's actual filters, ranking and translated aliases.
+window.DTCSearch6006=Object.freeze({ready:searchReady,findRows:matchingRows,filters:()=>({brand:state.brand,family:state.family,category:state.category,savedOnly:state.savedOnly}),context:definitionContext});
 function updateURL(code){
  const u=new URL(location.href);
  u.searchParams.delete("q");u.searchParams.delete("code");
@@ -337,13 +363,13 @@ const save=make(userSavedCodes.has(row[0])?shelfLanguage("unstar"):shelfLanguage
  save.textContent=userSavedCodes.has(row[0])?shelfLanguage("unstar"):shelfLanguage("star");renderCodeShelf();renderList();
 });
 const copyBtn=make(shelfLanguage("copy"),async()=>{
- const note=[row[0]+" · "+row[1],row[2],guide.name,"","Olası nedenler / Causes:",...guide.causes.map((c,i)=>(i+1)+". "+c),"","Kontrol sırası / Checks:",...steps.map((c,i)=>(i+1)+". "+c),"","6006 Performance · Teşhis ön bilgisi, kesin parça teşhisi değildir.","",location.href].join("\n");
+ const note=["6006 Performance",contextReport(),"",row[0]+" · "+row[1],row[2],guide.name,"",L().causes,...guide.causes.map((c,i)=>(i+1)+". "+c),"",L().checks,...steps.map((c,i)=>(i+1)+". "+c),"",window.DiagnosticPlaybooks6006?.report?.(row[0],currentLanguage)||"","",L().verify,location.href].join("\n");
  const feedback=actions.querySelector(".u6006-feedback");
  try{if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("Clipboard");await navigator.clipboard.writeText(note);feedback.textContent=shelfLanguage("ok")}catch(e){feedback.textContent=shelfLanguage("error");const ta=document.createElement("textarea");ta.value=note;ta.style.width="100%";ta.setAttribute("aria-label","Copy report");actions.append(ta);ta.focus();ta.select()}
 });
 make(currentLanguage==="tr"?"Teşhis raporunu indir":currentLanguage==="de"?"Diagnosebericht herunterladen":"Download diagnostic report",()=>{
 const symptoms=guide.limited?[]:(DIAGRAMS[kind(row)]||DIAGRAMS.generic).symptoms.map(x=>x[{tr:0,de:1,en:2}[currentLanguage]||0]);
-const note=["6006 Performance",new Date().toLocaleString(),row[0]+" · "+row[1],row[2],guide.name,"",visualLabel("symptoms"),...symptoms,"",L().causes,...guide.causes,"",L().checks,...steps,"",L().verify,location.href].join("\n");
+const note=["6006 Performance",new Date().toLocaleString(),contextReport(),"",row[0]+" · "+row[1],row[2],guide.name,"",visualLabel("symptoms"),...symptoms,"",L().causes,...guide.causes,"",L().checks,...steps,"",window.DiagnosticPlaybooks6006?.report?.(row[0],currentLanguage)||"","",L().verify,location.href].join("\n");
 const link=document.createElement("a");link.href=URL.createObjectURL(new Blob(["\ufeff"+note],{type:"text/plain;charset=utf-8"}));link.download="6006-"+row[0]+"-"+currentLanguage+".txt";link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
 });
 make(shelfLanguage("print"),()=>window.print());
@@ -367,7 +393,7 @@ function selectCode(row,scroll){
  const service='<p class="dtc-help"><a href="'+html(inquiry)+'" rel="noopener noreferrer" target="_blank">'+html(currentLanguage==="tr"?"Bu arıza için teknik değerlendirme iste":currentLanguage==="de"?"Technische Beurteilung anfragen":"Request technical diagnosis")+' →</a></p>';
  $("detay").innerHTML=
   '<div class="detail-head"><span class="code-big">'+html(row[0])+'</span><span class="pill">'+html(banner)+'</span></div>'+
-  '<h2>'+html(currentLanguage==="tr"&&overrides[row[0]]?overrides[row[0]][0]:d.name)+'</h2>'+
+  '<h2>'+html(currentLanguage==="tr"&&overrides[row[0]]?overrides[row[0]][0]:d.name)+'</h2>'+contextMarkup()+
   '<p class="small">'+html(L().english)+'</p><p>'+html(description)+'</p>'+
   (triage?.limited?'':photoMain(row,type)+visualSchematic(row,type))+
   '<div class="notice">'+html(L().verify)+'</div>'+targeted+knowledge+
@@ -380,6 +406,7 @@ function selectCode(row,scroll){
  recordRecent(row);
  attachCodeTools(row,d,steps);
  connectDiagram();
+ document.dispatchEvent(new CustomEvent('6006:dtc-selected',{detail:{code:row[0],manufacturer:row[1],description:row[2],language:currentLanguage}}));
  renderList();
  if(scroll){$("detay").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});$("detay").focus({preventScroll:true});}
 }
@@ -399,6 +426,7 @@ function i18n(){
  const t=L();$("main-title").textContent=t.title;$("main-lead").textContent=t.lead;$("search-label").textContent=t.search;$("submit").textContent=t.submit;$("label-brand").textContent=t.brand;$("label-family").textContent=t.family;$("results-title").textContent=t.results;$("unique-label").textContent=t.unique;$("total-label").textContent=t.codes;$("brand-label").textContent=t.makers;$("search-hint").textContent=t.hint;
  $("q").placeholder=currentLanguage==="tr"?"Örn. P0299, P0104, DPF, turbo, AdBlue, ABS...":currentLanguage==="de"?"z. B. P0299, P0104, DPF, Turbo, ABS...":"e.g. P0299, P0104, DPF, turbo, ABS...";
  $("brand").options[0].textContent=t.allBrands;
+ const genericOption=Array.from($("brand").options).find(o=>o.value==="GENERIC");if(genericOption)genericOption.textContent=t.generic;
  const familyLabels={tr:["Hepsi","P · Motor & şanzıman","B · Gövde / hava yastığı","C · Şasi / fren / direksiyon","U · Ağ / CAN iletişimi"],de:["Alle","P · Motor & Getriebe","B · Karosserie / Airbag","C · Fahrwerk / Bremse / Lenkung","U · Netzwerk / CAN"],en:["All","P · Engine & transmission","B · Body / airbag","C · Chassis / brakes / steering","U · Network / CAN"]};
 const topicLabels={tr:{all:"Tümü",emissions:"Egzoz / EGR",air:"Hava / emiş",fuel:"Yakıt",brake:"Fren / ABS"},de:{all:"Alle",emissions:"Abgas / AGR",air:"Luft / Ansaugung",fuel:"Kraftstoff",brake:"Bremse / ABS"},en:{all:"All",emissions:"Exhaust / EGR",air:"Air / intake",fuel:"Fuel",brake:"Brakes / ABS"}};
 $("topics").querySelectorAll("button").forEach(b=>{const text=topicLabels[currentLanguage][b.dataset.tag];if(text)b.textContent=text});
@@ -415,11 +443,14 @@ async function init(){
  $("total-unique").textContent=new Set(state.all.map(r=>r[0])).size.toLocaleString();
  $("total-brands").textContent=data.manufacturers.filter(x=>x!=="GENERIC"&&x!=="OTHER").length;
  for(const b of data.manufacturers.filter(x=>x!=="GENERIC"&&x!=="OTHER")){const o=document.createElement("option");o.value=b;o.textContent=b;$("brand").append(o);}
+ $("brand").add(new Option(L().generic,"GENERIC"),1);
  const url=new URL(location.href),params=url.searchParams;
  state.query=params.get("q")||params.get("code")||"";
  if(!state.query&&/^#[pbc u][0-9a-f]{4}$/i.test(url.hash))state.query=url.hash.slice(1).toUpperCase();
- state.brand=(params.get("brand")||"ALL").toUpperCase();
- if(!Array.from($("brand").options).some(o=>o.value===state.brand))state.brand="ALL";
+ const storedVehicle=vehicleProfile();
+ if(params.has("brand")){state.brandOrigin="url";const requested=params.get("brand");state.brand=String(requested).toUpperCase()==="ALL"?"ALL":catalogManufacturer(requested)||"ALL";}
+ else if(storedVehicle?.brand){state.brandOrigin="vehicle";state.brand=catalogManufacturer(storedVehicle.brand)||"GENERIC";}
+ else{state.brandOrigin="all";state.brand="ALL";}
  state.family=(params.get("family")||"all").toUpperCase();
  if(!["P","B","C","U"].includes(state.family))state.family="all";
  const group={luft:"air",kraftstoff:"fuel",abgas:"emissions",antrieb:"transmission"};
@@ -433,12 +464,14 @@ async function init(){
  document.querySelectorAll("#topics button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.tag===state.category)));
  $("submit").onclick=()=>execute(true);
  $("q").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();execute(true);}});
- $("brand").onchange=()=>{state.brand=$("brand").value;execute(true)};
+ $("brand").onchange=()=>{state.brand=$("brand").value;state.brandOrigin="manual";execute(true);document.dispatchEvent(new Event("6006:dtc-context"));};
  $("group").onchange=()=>{state.family=$("group").value;execute(true)};
  $("lang").onchange=()=>{currentLanguage=$("lang").value;window.Locale6006?.setLanguage(currentLanguage);updateVisualGallery();i18n();renderCodeShelf();if(state.code){const r=state.all.find(x=>x[0]===state.code&&x[1]===state.activeManufacturer);if(r)selectCode(r,false);}else renderList();};
  $("topics").addEventListener("click",e=>{const b=e.target.closest("button[data-tag]");if(!b)return;state.category=b.dataset.tag;document.querySelectorAll("#topics button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));execute(true)});
  $("more").onclick=()=>{state.limit+=35;renderList()};
  if(state.query)execute(true);else{state.query="";renderList();$("detay").innerHTML='<div class="empty">'+html(L().choose)+'</div>';}
+ finishSearchReady(true);document.dispatchEvent(new Event("6006:dtc-context"));
 }
-init().catch(e=>{console.error("6006 DTC catalog",e);$("count").textContent=L().error;$("items").textContent=L().error;});
+addEventListener("pageshow",()=>{searchReady.then(ok=>{if(!ok)return;if(state.brandOrigin==="vehicle"||state.brandOrigin==="all"){const v=vehicleProfile();state.brand=v?.brand?catalogManufacturer(v.brand)||"GENERIC":"ALL";state.brandOrigin=v?.brand?"vehicle":"all";$("brand").value=state.brand;execute(false);}document.dispatchEvent(new Event("6006:dtc-context"));});});
+init().catch(e=>{finishSearchReady(false);console.error("6006 DTC catalog",e);$("count").textContent=L().error;$("items").textContent=L().error;});
 })();

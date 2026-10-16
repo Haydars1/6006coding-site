@@ -24,15 +24,17 @@ links.forEach((a,i)=>{const g=w.groups[i];a.setAttribute("aria-label",groups[i]+
 labels();
 new MutationObserver(labels).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 function norm(value){return String(value||"").toLocaleLowerCase("en").replace(/[ıİ]/g,"i").normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
-function catalog(){if(defs)return Promise.resolve(defs);if(!loader)loader=fetch("/assets/6006-dtc-catalog.json",{cache:"force-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();}).then(data=>{if(!Array.isArray(data.defs))throw Error("Missing DTC definitions");return defs=data.defs;}).catch(e=>{loader=null;throw e;});return loader;}
+function catalog(){if(window.DTCSearch6006)return window.DTCSearch6006.ready.then(ok=>{if(!ok)throw Error("Catalog unavailable");return window.DTCSearch6006;});if(defs)return Promise.resolve(defs);if(!loader)loader=fetch("/assets/6006-dtc-catalog.json",{cache:"force-cache"}).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();}).then(data=>{if(!Array.isArray(data.defs))throw Error("Missing DTC definitions");return defs=data.defs;}).catch(e=>{loader=null;throw e;});return loader;}
 function state(open){popup.hidden=!open;input.setAttribute("aria-expanded",String(open));if(!open){options=[];chosen=-1;input.removeAttribute("aria-activedescendant");}}
-function linkTo(row){return "/fehlercodes/?code="+encodeURIComponent(row[0])+(row[1]==="GENERIC"?"":"&brand="+encodeURIComponent(row[1]));}
+function linkTo(row){const filters=window.DTCSearch6006?.filters?.()||{},params=new URLSearchParams({code:row[0]});const make=filters.brand&&filters.brand!=="ALL"?filters.brand:row[1]!=="GENERIC"?row[1]:"";if(make)params.set("brand",make);if(filters.family&&filters.family!=="all")params.set("family",filters.family);if(filters.category&&filters.category!=="all")params.set("category",filters.category);return "/fehlercodes/?"+params.toString();}
 const synonyms={krank:"crankshaft|crank",kurbel:"crankshaft|crank",nocken:"camshaft",eksantrik:"camshaft",abs:"abs|wheel speed|brake",fren:"brake|abs|wheel speed",turbo:"turbo|boost|supercharg",dpf:"particulate|soot|diesel filter|regenerat",adblue:"reductant|nox|scr|urea",egr:"exhaust gas recirculation|egr",agr:"exhaust gas recirculation|egr",yakit:"fuel|injector|rail",sanziman:"transmission|gear|shift",atesleme:"ignition|misfire|spark",katalizor:"catalyst|catalytic",sogutma:"coolant|cooling|temperature",airbag:"airbag|restraint|srs",steuergerat:"module|ecu|ecm|control unit"};
 function findRows(query){
+if(window.DTCSearch6006){const seen=new Set();return window.DTCSearch6006.findRows(query).filter(row=>{if(seen.has(row[0]))return false;seen.add(row[0]);return true;}).slice(0,9);}
 const q=norm(query).trim(),wanted=q.toUpperCase(),brand=document.getElementById("brand")?.value||"ALL",matches=[],seen=new Set();
 const sy=synonyms[q],regex=sy?new RegExp(sy,"i"):null;
 for(const row of defs){if(!Array.isArray(row)||row.length<3)continue;const code=String(row[0]),make=String(row[1]),description=String(row[2]);const desc=norm(description),codeText=norm(code);
-let weight=0;if(code.toUpperCase()===wanted)weight=100;else if(codeText.startsWith(q))weight=90;else if(codeText.includes(q)&&q.length>1)weight=70;else if(q.length>1&&(desc.includes(q)||norm(make).includes(q)))weight=40;else if(regex?.test(description))weight=30;
+const family=document.getElementById("group")?.value||"all";if(brand!=="ALL"&&make!==brand&&make!=="GENERIC")continue;if(family!=="all"&&code[0]!==family)continue;
+let weight=0;if(code.toUpperCase()===wanted)weight=100;else if(codeText.startsWith(q))weight=90;else if(codeText.includes(q)&&q.length>1)weight=70;else if(q.length>1&&((desc.includes(q)&&(q!=="dpf"||/\bdpf\b/i.test(description)))||norm(make).includes(q)))weight=40;else if(regex?.test(description))weight=30;
 if(weight){weight+=(make===brand?7:make==="GENERIC"?5:0);matches.push({row,weight});}
 }
 matches.sort((a,b)=>b.weight-a.weight||String(a.row[0]).localeCompare(String(b.row[0])));
@@ -45,7 +47,7 @@ rows.forEach((row,index)=>{const link=create("a","dtc-video-option");link.href=l
 state(true);
 }
 function current(){return String(input.value||"").trim();}
-function show(){const key=++seq,q=current();draw([],words[locale()].loading);catalog().then(()=>{if(key!==seq||document.activeElement!==input)return;draw(findRows(q||"P0"),null);}).catch(()=>{if(key===seq&&document.activeElement===input)draw([],words[locale()].failed);});}
+function show(){const key=++seq,q=current();draw([],words[locale()].loading);catalog().then(()=>{if(key!==seq||document.activeElement!==input)return;draw(findRows(q),null);}).catch(()=>{if(key===seq&&document.activeElement===input)draw([],words[locale()].failed);});}
 input.addEventListener("focus",show);
 input.addEventListener("input",()=>{clearTimeout(debounce);debounce=setTimeout(show,110);});
 input.addEventListener("keydown",e=>{if(popup.hidden)return;
@@ -56,6 +58,6 @@ if(e.key==="Enter"&&chosen>=0&&options[chosen]){e.preventDefault();e.stopImmedia
 popup.addEventListener("pointerdown",e=>{if(e.target.closest("a"))return;e.preventDefault();});
 document.addEventListener("pointerdown",e=>{if(!bar.contains(e.target))state(false);});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")state(false);});
-document.getElementById("lang")?.addEventListener("change",()=>{labels();if(!popup.hidden&&defs)draw(findRows(current()||"P0"),null);});
+document.getElementById("lang")?.addEventListener("change",()=>{labels();if(!popup.hidden&&(defs||window.DTCSearch6006))draw(findRows(current()),null);});
 window.addEventListener("pagehide",()=>{clearTimeout(debounce);});
 })();

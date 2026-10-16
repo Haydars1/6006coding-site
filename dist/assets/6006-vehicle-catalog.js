@@ -190,11 +190,19 @@ const word={
  de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",missingBrand:"Marke fehlt? Hier eingeben",addBrand:"Marke hinzufügen",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Für den genauen Motor Baujahr, Kraftstoff, Motorcode, Serienleistung und Getriebe ergänzen. Keine erfundenen Stage-1-Werte."},
  en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",missingBrand:"Make missing? Enter it here",addBrand:"Add make",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Enter year, fuel, engine code, stock power and gearbox to identify the variant. No invented Stage 1 figures."}
 };
-function lang(){let v;try{v=localStorage.getItem("6006-language");}catch(_){}return word[v]?v:word[document.documentElement.lang]?document.documentElement.lang:"de";}
+function lang(){const v=String(window.Locale6006?.getLanguage?.()||document.documentElement.lang||"").slice(0,2);return word[v]?v:"de";}
 const tr=k=>word[lang()][k];
 const field=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+const variantIdentity=v=>v?JSON.stringify([v.model||"",v.generation||"",v.engine||"",v.fuel||"",v.transmission||"",v.from||"",v.to||"",v.hp??"",v.nm??""]):"";
+let homeVariant=null,homeExtraProfile=null;
+function sameHomeProfile(profile){return profile&&norm(profile.brand)===norm(field("brandSelect"))&&norm(profile.model)===norm(field("modelSelect"))&&String(profile.year||"")===field("yearSelect")&&norm(profile.engine)===norm(field("engineInput"));}
 function details(){return [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"]].map(x=>field(x[0])?tr(x[1])+": "+field(x[0]):"").filter(Boolean).join(" · ");}
-function params(){const q=new URLSearchParams();[["yearSelect","year"],["fuelSelect","powertrain"],["engineInput","engine"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{if(field(x[0]))q.set(x[1],field(x[0]));});return q;}
+function params(){const q=new URLSearchParams();[["yearSelect","year"],["fuelSelect","powertrain"],["engineInput","engine"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{if(field(x[0]))q.set(x[1],field(x[0]));});
+ const selected=sameHomeProfile(homeVariant)?homeVariant.variant:null;
+ const extra=selected?{nm:selected.nm,generation:selected.generation,gearbox:selected.transmission,variantKey:variantIdentity(selected)}:sameHomeProfile(homeExtraProfile)?homeExtraProfile:{};
+ for(const key of ["nm","generation","gearbox","variantKey"])if(extra[key])q.set(key,String(extra[key]));
+ if(selected&&Number(field("powerInput"))!==Math.round(Number(selected.hp)*1.01387))q.set("manuallyEditedStock","1");
+ return q;}
 function install(){
  const brand=document.getElementById("brandSelect"), model=document.getElementById("modelSelect"), grid=document.querySelector(".estimate-card .select-grid");
  if(!brand||!model||!grid||document.getElementById("yearSelect"))return;
@@ -270,7 +278,7 @@ function install(){
  const powerNote=document.createElement('p');powerNote.id='enginePowerNote';powerNote.setAttribute('role','status');powerNote.hidden=true;variantField.append(powerNote);
  let powerReview=false;
  function updatePowerNote(){powerNote.hidden=!powerReview;powerNote.textContent=lang()==='tr'?'Güç verisi belirsiz: kaynak alanları uyuşmuyor veya hibrit motor/toplam sistem gücü ayrımı gerekli. Ruhsattaki doğrulanmış stok PS değerini elle girin.':lang()==='de'?'Leistungsangabe unklar: Quellfelder weichen ab oder Hybrid-Motor- und Systemleistung müssen unterschieden werden. Bestätigte Serienleistung in PS anhand der Fahrzeugunterlagen selbst eintragen.':'Power reference needs review: source fields differ or hybrid engine and total system power need distinction. Enter confirmed stock PS from the vehicle documents.';}
- let selectedVariants=[];
+ let selectedVariants=[],pendingVariantKey="";
  function variantOptions(){
    selectedVariants=engineVariants(brand.value,model.value,field("yearSelect"));
    variantSelect.replaceChildren(new Option("—",""));
@@ -278,6 +286,13 @@ function install(){
      const label=(v.generation?v.generation+" · ":"")+v.engine+(v.hp&&!referencePowerNeedsReview(v)?" · "+v.hp+" HP":"")+(v.nm?" · "+v.nm+" Nm":"");
      variantSelect.add(new Option(label.slice(0,155),String(index)));
    });
+   const savedKey=sameHomeProfile(homeVariant)?variantIdentity(homeVariant.variant):pendingVariantKey;
+   const restored=savedKey?selectedVariants.map((v,index)=>({v,index})).filter(x=>variantIdentity(x.v)===savedKey):[];
+   if(restored.length===1){
+     const {v,index}=restored[0];variantSelect.value=String(index);
+     homeVariant={brand:brand.value,model:model.value,year:field("yearSelect"),engine:v.engine,variant:v};pendingVariantKey="";
+     save();
+   }
    variantField.hidden=selectedVariants.length===0;
    showQuickResult();
  }
@@ -285,9 +300,10 @@ function install(){
    engineSuggestions();loadOpenBrand(brand.value).then(variantOptions);variantOptions();
  }
  variantSelect.addEventListener("change",()=>{
-   if(!variantSelect.value)return;
+   if(!variantSelect.value){homeVariant=null;homeExtraProfile=null;pendingVariantKey="";return;}
    const variant=selectedVariants[Number(variantSelect.value)];if(!variant)return;
    document.getElementById("engineInput").value=variant.engine;
+   homeVariant={brand:brand.value,model:model.value,year:field("yearSelect"),engine:variant.engine,variant};homeExtraProfile=null;pendingVariantKey="";
    powerReview=referencePowerNeedsReview(variant);updatePowerNote();
    document.getElementById("powerInput").value=variant.hp&&!powerReview?String(Math.round(variant.hp*1.01387)):'';
    if(variant.fuel){
@@ -423,14 +439,18 @@ function install(){
  document.getElementById("customModelButton").addEventListener("click",manual);
  document.getElementById("customModelInput").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();manual();}});
  const ids=["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"];
- ids.forEach(id=>{const e=document.getElementById(id);e.addEventListener("change",()=>model.dispatchEvent(new Event("change",{bubbles:true})));if(e.tagName==="INPUT")e.addEventListener("blur",()=>model.dispatchEvent(new Event("change",{bubbles:true})));});
- function save(){try{sessionStorage.setItem("6006-vehicle-choice",JSON.stringify({brand:brand.value,model:model.value,...Object.fromEntries(params())}));}catch(_){}}
+ ids.forEach(id=>{const e=document.getElementById(id);e.addEventListener("change",()=>{if(id!=="powerInput"){homeVariant=null;homeExtraProfile=null;pendingVariantKey="";}model.dispatchEvent(new Event("change",{bubbles:true}));});if(e.tagName==="INPUT")e.addEventListener("blur",()=>model.dispatchEvent(new Event("change",{bubbles:true})));});
+ function save(){try{sessionStorage.setItem("6006-vehicle-choice",JSON.stringify({schemaVersion:2,brand:brand.value,model:model.value,...Object.fromEntries(params()),selectionKind:sameHomeProfile(homeVariant)?"catalog":field("engineInput")?"manual":""}));}catch(_){}}
  [brand,model,...ids.map(x=>document.getElementById(x))].forEach(e=>e.addEventListener("change",save));
  const q=new URLSearchParams(location.search);
- let stored={};try{stored=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"{}");}catch(_){}
+ let stored={};try{stored=JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"{}")||{};}catch(_){}
+ const sameSavedVehicle=(!q.has("brand")||norm(q.get("brand"))===norm(stored.brand))&&(!q.has("model")||norm(q.get("model"))===norm(stored.model))&&(!q.has("year")||q.get("year")===String(stored.year||""))&&(!q.has("engine")||norm(q.get("engine"))===norm(stored.engine))&&(!q.has("powertrain")||q.get("powertrain")===String(stored.powertrain||""));
+ if(!sameSavedVehicle)stored={};
  if(q.has("brand")||stored.brand){
+   pendingVariantKey=(q.get("variantKey")||stored.variantKey||"").slice(0,1000);
    selectCar({brand:q.get("brand")||stored.brand,model:q.get("model")||stored.model||""});
-   [["yearSelect","year"],["engineInput","engine"],["fuelSelect","powertrain"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{const value=q.get(x[1])||stored[x[1]]||"";if(value)document.getElementById(x[0]).value=value;});
+   [["yearSelect","year"],["engineInput","engine"],["fuelSelect","powertrain"],["powerInput","ps"],["gearboxSelect","gearbox"]].forEach(x=>{let value=q.get(x[1])||stored[x[1]]||"";if(x[1]==="gearbox"&&value){const k=String(value).toLowerCase();value=/dct|dsg|dual/.test(k)?"DSG/DCT":/manual|manuel|schalt|\bmt\b/.test(k)?"Manuel":/cvt/.test(k)?"CVT":/auto|otomatik/.test(k)?"Otomatik":value;}if(value)document.getElementById(x[0]).value=value;});
+   homeExtraProfile={brand:brand.value,model:model.value,year:field("yearSelect"),engine:field("engineInput"),nm:q.get("nm")||stored.nm||"",generation:q.get("generation")||stored.generation||"",gearbox:q.get("gearbox")||stored.gearbox||""};
    model.dispatchEvent(new Event("change",{bubbles:true}));
  }
 }
