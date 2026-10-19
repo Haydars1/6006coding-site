@@ -638,7 +638,7 @@ function focusedArticle(code){
  +'<div class="bottomnav"><a href="/fehlercodes/?code='+encodeURIComponent(code)+'" data-guide-label="all">Alle Fehlercodes</a><a href="/fahrzeug/" data-guide-label="choose">Fahrzeug auswählen</a></div></main>'
  +'<footer data-guide-label="footer">6006 Performance · Fahrzeugdiagnose und Reparaturwissen</footer>'
  +'<script type="application/json" id="6006-playbook-data">'+JSON.stringify(subset).replaceAll('<','\\u003c')+'</script>'
- +'<script defer src="/assets/6006-diagnostic-playbooks.js?v=20261013-guides"></script></body></html>\n';
+ +'<script defer src="/assets/6006-diagnostic-playbooks.js?v=20261019-services"></script></body></html>\n';
 }
 function article(r){
  const [code,title,system,meaning,symptoms,causes,checks,warning,related]=r;

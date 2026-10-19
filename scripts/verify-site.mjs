@@ -4,7 +4,7 @@ import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import vm from 'node:vm';
 const ROOT='dist';
-const SERVICES_VERSION='20261016-services';
+const SERVICES_VERSION='20261019-services';
 const pages=['index.html','fahrzeug/index.html','reparatur-wartung/index.html','fehlercodes/index.html','technik/index.html'];
 for(const f of pages){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing required page: ${f}`);
