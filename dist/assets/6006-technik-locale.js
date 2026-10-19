@@ -5,7 +5,7 @@
   // and the original German document remain intact; no translation proxy is used.
   const common = new Map([
     ["Direkt zu den Technikthemen", ["Teknik konulara geç", "Skip to technical topics"]],
-    ["Stage 1", ["Stage 1", "Stage 1"]],
+    ["Fahrzeugsoftware", ["Araç yazılımı", "Vehicle software"]],
     ["Schnellsuche", ["Hızlı arama", "Quick search"]],
     ["Fehlercode-Wissen", ["Arıza kodu rehberi", "Fault-code guide"]],
     ["Technik-Ratgeber", ["Teknik rehber", "Technical guide"]],

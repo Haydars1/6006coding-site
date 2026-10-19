@@ -632,7 +632,7 @@ function focusedArticle(code){
  +'<link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#171513">'
  +'<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="stylesheet" href="/assets/6006-diagnostic-playbooks.css?v=20261013-guides">'
  +'<script type="application/ld+json">'+JSON.stringify(ld).replaceAll('<','\\u003c')+'</script></head><body>'
- +'<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/" data-guide-label="guides">Diagnoseanleitungen</a><a href="/fahrzeug/" data-guide-label="stage">Fahrzeug / Stage 1</a></nav></header>'
+ +'<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/" data-guide-label="guides">Diagnoseanleitungen</a><a href="/fahrzeug/" data-guide-label="stage">Fahrzeugkatalog</a></nav></header>'
  +'<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a> / '+esc(code)+'</nav>'
  +'<div data-diagnostic-article="'+esc(code)+'">'+playbookUI.render(playbooks,code,'de',true)+'</div>'
  +'<div class="bottomnav"><a href="/fehlercodes/?code='+encodeURIComponent(code)+'" data-guide-label="all">Alle Fehlercodes</a><a href="/fahrzeug/" data-guide-label="choose">Fahrzeug auswählen</a></div></main>'
@@ -655,7 +655,7 @@ function article(r){
  +'<link rel="canonical" href="'+url+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(name)+'"><meta property="og:description" content="'+esc(description)+'">'
  +'<meta property="og:url" content="'+url+'"><meta name="theme-color" content="#1a1714"><link rel="icon" type="image/svg+xml" href="/assets/6006-favicon.svg">'
  +'<link rel="stylesheet" href="/assets/6006-seo.css"><script type="application/ld+json">'+JSON.stringify(ld)+'</script></head>'
- +'<body><header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/">Fehlerlösungen</a><a href="/#aracin">Stage 1</a><a href="/reparatur-wartung/">Reparatur</a></nav></header>'
+ +'<body><header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/">Fehlerlösungen</a><a href="/#aracin">Fahrzeugsoftware</a><a href="/reparatur-wartung/">Reparatur</a></nav></header>'
  +'<main class="main"><nav aria-label="Brotkrumen" class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/">Fehlercodes</a> / '+code+'</nav>'
  +'<article><span class="kicker">FEHLERCODE · '+esc(system)+'</span><h1>'+esc(code)+': '+esc(title)+' – was tun?</h1>'
  +'<p class="lead">'+esc(meaning)+'</p>'
@@ -680,7 +680,7 @@ const sections=[
  '<meta name="description" content="Häufige OBD-Fehlercodes von P0299 bis U0100 verständlich erklärt: Symptome, Ursachen und praktische Prüfreihenfolge für die Fahrzeugdiagnose.">',
  '<meta name="robots" content="index,follow"><link rel="canonical" href="'+base+'/fehlercodes/loesungen/">',
  '<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"></head><body>',
- '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/">Start</a><a href="/fehlercodes/">Alle DTC</a><a href="/#aracin">Stage 1</a></nav></header>',
+ '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/">Start</a><a href="/fehlercodes/">Alle DTC</a><a href="/#aracin">Fahrzeugsoftware</a></nav></header>',
  '<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / Fehlerlösungen</nav><span class="kicker">DIAGNOSE · OBD · KONTROLLSCHRITTE</span><h1>Fehlercodes verstehen. Ursachen prüfen. Defekte gezielt beheben.</h1>',
  '<p class="lead">Von Motorkontrollleuchte über Turbo- und DPF-Probleme bis zu ABS- und CAN-Fehlern: Wählen Sie einen Code für Bedeutung, typische Symptome und die sichere Prüfreihenfolge. Die Hinweise ersetzen keine Prüfung der konkreten Fahrzeugvariante.</p>',
  '<div class="codegrid">'+rows.map(r=>'<a href="/fehlercodes/'+r[0].toLowerCase()+'/"><strong>'+esc(r[0])+'</strong><span>'+esc(r[1])+'</span><small>'+esc(r[2])+'</small></a>').join('')+'</div>',

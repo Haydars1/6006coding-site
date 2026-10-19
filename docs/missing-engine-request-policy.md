@@ -9,7 +9,7 @@ Kullanıcı kendi bilgilerini (marka, model, yıl, motor kodu, gerekiyorsa oriji
 1. Gelen mesajda marka, model, kasa/generation, yıl, yakıt türü, motor kodu ve ECU/yazılım numarasını kontrol et.
 2. Eksik ya da şüpheli bilgi için müşteriyle görüş. Özellikle beygir gücü ile PS/HP ve motorun toplam hibrit sistem gücünü birbirinden ayır.
 3. Kamuya açık güvenilir kaynak (tercihen üretici) bulunmadan stok motor verisini doğrulanmış teknik bilgi olarak siteye ekleme.
-4. Stage 1 ilanında kaynak URL'si, tam motor/generation uyumu, yayımlayan firma ve stok PS/Nm tutarlılığı şartlarını uygula. `docs/stage1-reference-policy.md` içindeki kurallara uy.
+4. Yazılım ve kodlama uygunluğunu motor/generation, ECU donanımı, mevcut yazılım sürümü ve desteklenen işlevlere göre ayrı kontrol et. Katalogda aracın bulunması belirli bir kodlama veya kalibrasyonun uygulanabileceğini doğrulamaz. Güç artışı ilanlarını hizmet sonucu olarak ekleme.
 5. Siteye eklenecek bilgilerden kişisel verileri, tam VIN'i, plakayı, ad/soyadı ve iletişim detaylarını çıkar. Kullanıcı mesajını herkese açık katalog girdisi yapma.
 6. Eklenen düzeltme için site testlerini çalıştır, güncellemeyi GitHub üzerinden gözden geçir ve canlı yayında gerçek model/motor eşleşmesini doğrula.
 
@@ -18,5 +18,5 @@ Kullanıcı kendi bilgilerini (marka, model, yıl, motor kodu, gerekiyorsa oriji
 - Müşteri **model listesinde olmayan** aracı da kendi marka/model adıyla bildirebilir.
 - Yılı veya motor kodunu bilen kullanıcı bir talep hazırlayabilir; ikisi de bilinmiyorsa önce daha fazla bilgi istenir.
 - TR / DE / EN arayüzü vardır. iPhone giriş alanlarında 16px metin kullanılır; WhatsApp/e-posta bağlantıları her ekrana sığar.
-- Üçüncü taraf ilanlarda belirtilen güç artışları 6006 Performance ölçümü, garantisi veya Almanya TÜV/yasal onayı sayılmaz.
+- Bir yazılım/kodlama işlemi için araç özelinde uygunluk ve gerekiyorsa onay şartları kontrol edilir; katalog girdisi üretici onayı veya genel bir izin sayılmaz.
 - Bu form müşteriden veriyi otomatik toplamıyor; ayrıca analytics veya izleme çerezi eklemiyor.

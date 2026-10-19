@@ -4,6 +4,7 @@ import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import vm from 'node:vm';
 const ROOT='dist';
+const SERVICES_VERSION='20261016-services';
 const pages=['index.html','fahrzeug/index.html','reparatur-wartung/index.html','fehlercodes/index.html','technik/index.html'];
 for(const f of pages){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing required page: ${f}`);
@@ -17,13 +18,13 @@ const codes=new Set(db.defs.map(r=>r[0]));
 for(const c of ['P0299','P2002','P0401','P204F','C0035','U0100'])assert(codes.has(c),`Missing DTC ${c}`);
 const categories=['turbo','dpf','adblue','egr','fuel','transmission','brake','network','airbag','cooling','oil','steering','ignition','sensor','catalyst','body','generic'];
 for(const cat of categories)assert(fs.existsSync(path.join(ROOT,'assets/realparts',cat+'.webp')),`Missing part illustration ${cat}`);
-const stageFinderJS=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
-assert(stageFinderJS.includes('vehicleQuickConfirmation'),'Stage 1 search does not show visible confirmation');
-assert(stageFinderJS.includes('vehicleQuickNext'),'Stage 1 search is missing a next step');
-assert(stageFinderJS.includes('font-size:16px!important'),'iPhone field font size causes unwanted zoom');
-assert(stageFinderJS.includes('quick.blur()'),'Find button does not dismiss keyboard');
-assert(stageFinderJS.includes('yearSelect')&&stageFinderJS.includes('engineVariantSelect'),'Missing engine navigation');
-assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('6006-vehicle-catalog.js?v=20261013-journey'),'Homepage missing asset version');
+const vehicleFinderJS=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
+assert(vehicleFinderJS.includes('vehicleQuickConfirmation'),'Vehicle search does not show visible confirmation');
+assert(vehicleFinderJS.includes('vehicleQuickNext'),'Vehicle search is missing a next step');
+assert(vehicleFinderJS.includes('font-size:16px!important'),'iPhone field font size causes unwanted zoom');
+assert(vehicleFinderJS.includes('quick.blur()'),'Find button does not dismiss keyboard');
+assert(vehicleFinderJS.includes('yearSelect')&&vehicleFinderJS.includes('engineVariantSelect'),'Missing engine navigation');
+assert(fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('6006-vehicle-catalog.js?v='+SERVICES_VERSION),'Homepage missing asset version');
 console.log('PASS: Mobile Find Vehicle visibly confirms choice and navigates to engine');
 
 const vinJs=path.join(ROOT,'assets/6006-vin-stage1.js');
@@ -59,24 +60,24 @@ assert(vinCode.includes('matchesFuel(v,fuel.value)'),'Make-independent fuel matc
 assert(vinCode.includes('Gasoline')||vinCode.includes('gasoline'),'Gasoline must be classified as petrol');
 assert(vinCode.includes('Natural Gas')||vinCode.includes('natural gas'),'CNG model classification missing');
 assert(vinCode.includes('stockNeedsReview(v)')&&vinCode.includes('referencePowerNeedsReview'),'Reference power cross-check missing');
-assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified universal Stage 1 estimates must not be shown as calibration targets');
+assert(!vinCode.includes('showRange(')&&!vinCode.includes('canEstimate=Boolean('),'Unverified power increases must not be shown as calibration targets');
 assert(vinCode.includes('sameSavedVehicle'),'Vehicle memory must not leak specifications across different models');
 assert(vinCode.includes('familyWarning'),'Model-family matches must carry explicit uncertainty');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('20261012-62refs'),'Stage 1 reference asset version must bust caches');
+assert(carPage.includes('6006-vin-stage1.js?v='+SERVICES_VERSION),'Vehicle service interface must bust stale comparison caches');
 const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
 assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
-console.log('PASS: Full engine matching, fuel categorization, data provenance and Stage 1 safety');
+console.log('PASS: Full engine matching, fuel categorization, data provenance and stock power safeguards');
 const quoteSection=vinCode.slice(vinCode.indexOf('const quoteCopy='),vinCode.indexOf('const popularMakes='));
-assert(quoteSection.length>2000,'Stage 1 quote request module missing');
+assert(quoteSection.length>2000,'Vehicle service request request module missing');
 assert(quoteSection.includes('https://wa.me/')&&quoteSection.includes('mailto:'),'Both business contact channels missing');
 assert(quoteSection.includes('6006performance@gmail.com')&&quoteSection.includes('491788354756'),'Business contact targets changed');
 assert(quoteSection.includes('Number.isSafeInteger(mileage)')&&quoteSection.includes('mileage<=2000000'),'Vehicle mileage mishandled');
 assert(quoteSection.includes('contactWaNumber')&&quoteSection.includes('encodeURIComponent(message)'),'Quote message is not encoded safely');
 assert(!quoteSection.includes('document.getElementById("vin6-vin")')&&!quoteSection.includes('$("vin")'),'Full VIN must not be included in contact message');
-assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(make.value&&model.value&&engineCode)'),'Quote actions must require an engine');
+assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(make.value&&model.value&&(year.value||engineCode))'),'Service inquiry requires make/model plus year or engine');
 assert(quoteSection.includes('stockNeedsReview(selected)'),'Unverified engine values must be marked in quote');
-assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Stage 1 quote form CSS not found');
-console.log('PASS: Multi-language Stage 1 inquiry, correct business contacts, user-initiated handoff and VIN privacy');
+assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Vehicle service request form CSS not found');
+console.log('PASS: Multi-language service inquiry, correct business contacts, user-initiated handoff and VIN privacy');
 
 const missingRequestJs=path.join(ROOT,'assets/6006-missing-request.js');
 const missingRequestCss=path.join(ROOT,'assets/6006-missing-request.css');
@@ -92,113 +93,31 @@ assert(!missingCode.includes('vin6-vin')&&!missingCode.includes('fetch(')&&!miss
 assert(missingCode.includes('aria-disabled')&&missingCode.includes('removeAttribute("href")'),'Invalid requests must not open contact links');
 assert(missingCode.includes('report a missing')||missingCode.includes('Report a missing'),'Missing motor information must be visibly discoverable');
 assert(fs.readFileSync(missingRequestCss,'utf8').includes('@media(max-width:600px)'),'Missing request iPhone layout not configured');
-assert(carPage.includes('/assets/6006-missing-request.js?v=20261012-missing-engine')&&carPage.includes('/assets/6006-missing-request.css?v=20261012-missing-engine'),'Missing engine form not mounted with cache version');
+assert(carPage.includes('/assets/6006-missing-request.js?v='+SERVICES_VERSION)&&carPage.includes('/assets/6006-missing-request.css?v=20261012-missing-engine'),'Missing engine form not mounted with cache version');
 assert(fs.existsSync('docs/missing-engine-request-policy.md'),'Manual approval policy for reported catalogue entries missing');
 console.log('PASS: Privacy-safe missing make/model/engine requests, translated UI, working business contacts');
 
-const stageRefFile=path.join(ROOT,'assets/6006-stage1-references.json');
-assert(fs.existsSync(stageRefFile),'Stage 1 published references missing');
-const stageRefDb=JSON.parse(fs.readFileSync(stageRefFile,'utf8'));
-assert(stageRefDb.schemaVersion===1&&Array.isArray(stageRefDb.examples),'Stage 1 reference schema invalid');
-assert(stageRefDb.examples.length>=62,'Expected sixty-two externally sourced Stage 1 advertisements');
-const seenStageRef=new Set();
-for(const ref of stageRefDb.examples){
- assert(typeof ref.id==='string'&&ref.id.length>7&&!seenStageRef.has(ref.id),'Stage 1 reference id duplicated or missing');
- seenStageRef.add(ref.id);
- assert(ref.classification==='third-party-advertised','Unqualified Stage 1 claims are forbidden');
- assert(typeof ref.make==='string'&&ref.make.length>=2&&typeof ref.model==='string'&&ref.model.length>=2,'Stage 1 source must identify make and model');
- assert(Number.isInteger(ref.yearFrom)&&Number.isInteger(ref.yearTo)&&ref.yearFrom>=1980&&ref.yearTo>=ref.yearFrom,'Stage 1 year window invalid');
- assert(typeof ref.publisher==='string'&&ref.publisher.length>=4,'Stage 1 publisher attribution missing');
- assert(/^https:\/\/[^\s]+$/.test(ref.sourceUrl),'Third-party Stage 1 needs a direct HTTPS source');
- assert(typeof ref.fuel==='string'&&ref.fuel.length>2,'Stage 1 fuel type missing');
- assert(Number.isInteger(ref.sourceStockHp)&&ref.sourceStockHp>30&&ref.sourceStockHp<=1200,'Stock engine HP invalid');
- assert(Number.isInteger(ref.sourceStockNm)&&ref.sourceStockNm>30&&ref.sourceStockNm<=1600,'Stock engine Nm invalid');
- for(const k of ['publishedStockPs','publishedStockNm','publishedStage1Ps','publishedStage1Nm'])assert(Number.isInteger(ref[k])&&ref[k]>30&&ref[k]<=1600,'Stage 1 reference number invalid: '+k);
- assert(ref.publishedStage1Ps>ref.publishedStockPs&&ref.publishedStage1Ps<=ref.publishedStockPs*1.6,'Implausible Stage 1 PS claim');
- assert(ref.publishedStage1Nm>ref.publishedStockNm&&ref.publishedStage1Nm<=ref.publishedStockNm*1.7,'Implausible Stage 1 Nm claim');
- assert(ref.manualOnly?(typeof ref.manualEngineContains==='string'&&ref.manualEngineContains.length>=6):(typeof ref.enginePrefix==='string'&&ref.enginePrefix.length>=4&&typeof ref.generationContains==='string'),'Stage 1 matching conditions missing');
+// Public comparisons are retired; archived data must never re-enter the service UI.
+const retiredAssets=['6006-stage1-references.json','6006-stage1-seo-summary.json','6006-stage1-directory.js','6006-stage1-directory.css','6006-stage1-seo-filter.js','6006-stage1-seo.css','6006-stage1-open-engine-finder.js'];
+const retiredHub=fs.readFileSync(path.join(ROOT,'stage1-referenzen','index.html'),'utf8');
+assert(retiredHub.includes('noindex')&&retiredHub.includes('location.replace')&&retiredHub.includes('/#aracin'),'Retired comparison route must redirect visitors to vehicle services and stay out of search indexes');
+assert(!/stage[\s-]+1\b|publishedStage1|stage-item/i.test(retiredHub),'Retired route must not republish old offers or power values');
+for(const file of retiredAssets)assert(!fs.existsSync(path.join(ROOT,'assets',file)),'Retired comparison asset still public: '+file);
+for(const token of ['matchPublishedStage','applyTransferredStageReference','publishedStage1Ps','publishedStage1Nm','6006-stage1-references.json','vin6-ref-source'])
+ assert(!vinCode.includes(token),'Vehicle service interface still loads retired source comparisons: '+token);
+for(const page of pages){
+ const html=fs.readFileSync(path.join(ROOT,page),'utf8');
+ assert(!/stage[\s-]+1\b/i.test(html),'Retired advertising remains in main page copy: '+page);
+ assert(!/href=["'][^"']*stage1-referenzen/i.test(html),'Main page still links to retired comparisons: '+page);
+ assert(!/src=["'][^"']*6006-stage1-(?:directory|seo|open)/i.test(html),'Main page still loads retired browser: '+page);
 }
-assert(vinCode.includes('function matchPublishedStage()')&&vinCode.includes('function renderStageReference()'),'Source-linked reference UI not connected');
-assert(vinCode.includes('manualOnly')&&vinCode.includes('sourceStockNm')&&vinCode.includes('manuallyEditedStock'),'Strict reference matching missing');
-assert(vinCode.includes('third-party-advertised')&&vinCode.includes('vin6-ref-source'),'Third-party attribution missing');
-const requiredReferenceMakes=['BMW','Volkswagen','Audi','Renault','Opel','SEAT','Škoda','Peugeot','Mercedes-Benz','Nissan','Hyundai','Ford'];
-for(const make of requiredReferenceMakes)assert(stageRefDb.examples.some(r=>r.make===make),'Missing reviewed Stage 1 reference make: '+make);
-const knownStageRefIds=['audi-a4-b9-2tdi-150-brp','audi-a4-b8-2tdi-150-brp','renault-clio-iv-ph2-dci90-brp','opel-astra-k-cdti136-brp','volkswagen-golf8-2tdi150-brp','seat-leon-5f-act150-brp','skoda-octavia4-2tdievo150-brp','peugeot-308iii-bluehdi130-brp','mercedes-aclass-w177-220d194-brp','audi-a4-35tdi-2019-150-brp'];
-for(const id of knownStageRefIds)assert(seenStageRef.has(id),'Missing reviewed Stage 1 advertisement '+id);
-const latestStageRefIds=["audi-a3-8v-fl-2tdi-150-2016-brp","audi-a3-8y-35tdi-2020-brp","nissan-qashqai-j11-fl-15dci110-brp","hyundai-i30-2018-10tgdi120-brp","hyundai-i30-2018-14tgdi140-brp","ford-focus-mk4-10ecoboost125-brp","ford-focus-mk3-10ecoboost125-brp","peugeot-208-ii-puretech75-brp","bmw-3series-gt-f34-320d190-brp"];
-for(const id of latestStageRefIds)assert(seenStageRef.has(id),'Missing newly reviewed Stage 1 advertisement '+id);
-assert(stageRefDb.examples.some(r=>r.id==='bmw-3series-gt-f34-320d190-brp'&&r.model==='3 Series Gran Turismo'&&r.sourceUrl.includes('/5685-serie-3-gt/')),'BMW Gran Turismo reference must be model-specific');
-const newSourceIds=["kia-sportage-ivph2-crdi136-2018-brp","bmw-5series-g30-520d-190-2019-brp","bmw-5series-lci-520d-190-2021-brp","dacia-duster-2010-dci90-brp","mazda-cx5-2015-skyactivd150-brp","seat-ateca-2016-2tdi150-brp","seat-ateca-2020-2tdi150-brp","renault-megane-iv-dci110-2016-brp","renault-megane-iii-dci90-2008-brp","renault-megane-iii-dci110-2008-brp","renault-megane-iii-dci110-2012-brp","honda-civic-10th-dtec120-brp","toyota-avensis-t270-d4d143-brp","fiat-tipo-multijet120-brp","skoda-kodiaq-2021-2tdi150-brp","volkswagen-polo-a0-tsi115-brp","opel-corsa-f-turbo100-brp"];
-for(const id of newSourceIds)assert(seenStageRef.has(id),'Missing source-linked Stage 1 example '+id);
-assert(new Set(stageRefDb.examples.map(x=>x.make)).size>=32,'Stage 1 public examples should cover at least 32 makes');
-assert(vinCode.includes('if(manual.value.trim()&&engine.value!=="")'),'Manual engine entry must clear the previously selected catalogue variant');
+assert(!/stage[\s-]+1\b/i.test(vinCode),'Vehicle interface still advertises the retired feature');
+assert(vinCode.includes('if(manual.value.trim()&&engine.value!=="")'),'Manual entry must clear the selected catalogue engine');
 assert(vinCode.includes('engine.value="";ps.value="";nm.value=""'),'Manual engine must clear stale stock power and torque');
-const expansionSourceIds=["volvo-xc60ii-d4-190-2017-brp","alfa-giulia-22jtd150-2016-brp","alfa-giulia-22jtd180-2016-brp","alfa-giulia-22jtd210-2019-brp","alfa-stelvio-22jtd190-2020-brp","citroen-c3iii-12t-puretech110-brp","citroen-c3-aircross-12gpf110-brp","suzuki-vitara-14-boosterjet129-brp","mini-hatch-f56lci-coopers192-brp","cupra-formentor-15tsi150-brp","cupra-leon-20tsi245-brp","smart-fortwo-453-09t90-brp","porsche-macan-95b-20tfsi245-brp","porsche-cayenne-958-30tdi262-brp"];
-for(const id of expansionSourceIds)assert(seenStageRef.has(id),'Unpublished reviewed external motor source '+id);
-for(const make of ["Volvo","Alfa Romeo","Citroën","Suzuki","MINI","Cupra","Smart","Porsche"])
- assert(stageRefDb.examples.some(x=>x.make===make),'Newly reviewed Stage 1 brand missing: '+make);
-assert(stageRefDb.examples.find(x=>x.id==="mini-hatch-f56lci-coopers192-brp")?.enginePrefix==="Cooper S 2.0L 6MT",'MINI DKG7 automatic must not inherit manual Stage 1 value');
-assert(stageRefDb.examples.find(x=>x.id==="smart-fortwo-453-09t90-brp")?.manualOnly,'Smart 135/136Nm mismatch must never auto-match');
-assert(stageRefDb.examples.find(x=>x.id==="citroen-c3iii-12t-puretech110-brp")?.manualOnly,'C3 mismatched open-reference torque must not auto-match');
-assert(stageRefDb.examples.find(x=>x.id==="suzuki-vitara-14-boosterjet129-brp")?.fuel==="Hybrid",'Suzuki 129PS hybrid must not be confused with petrol');
-assert.equal(new Set(stageRefDb.examples.map(x=>x.sourceUrl)).size,stageRefDb.examples.length,'Sources should have distinct publisher URLs');
-console.log('PASS: 58 source-linked examples, 29 brands, eight new makes and exact gearbox/hybrid protections');
-const latestSourceIds=["jeep-renegade-2014-jtdm140-brp","jeep-renegade-2018-mjt140-brp","jeep-renegade-2018-gse120-brp","mitsubishi-asx-2016-did114-brp","subaru-forester-2008-boxerd150-brp","peugeot-2008ii-2020-bluehdi130-brp"];
-for(const id of latestSourceIds)assert(seenStageRef.has(id),'Missing latest publisher-backed Stage 1 example: '+id);
-for(const brand of ['Jeep','Mitsubishi','Subaru'])assert(stageRefDb.examples.some(x=>x.make===brand),'New brand reference absent: '+brand);
-for(const id of latestSourceIds)assert(stageRefDb.examples.find(x=>x.id===id)?.manualOnly,'Ambiguous open motor data must require confirmed engine and stock output: '+id);
-assert(stageRefDb.examples.find(x=>x.id==='mitsubishi-asx-2016-did114-brp')?.manualEngineContains==='ASX 1.6 DID','ASX shared model category requires ASX-specific manual identification');
-assert(stageRefDb.examples.find(x=>x.id==='subaru-forester-2008-boxerd150-brp')?.publishedStage1Ps===180,'Subaru stage 1 must not inherit stage 2 200 PS');
-console.log('PASS: Six additional motor advertisements, three newly covered makes, strict model/torque validation');
-const stage1CarHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
-assert(stage1CarHtml.includes('6006-vin-stage1.js?v=20261013-journey'),'Stage 1 source transfer must use fresh script version');
-assert(vinCode.includes('preferred.has("engineSearch")'),'Open community motor search hint must ignore stale saved vehicle');
-assert(vinCode.includes('engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)'),'Community engine links must not preload stock or tuning information');
-assert(vinCode.includes('if(initial.engineSearch)engineSearch.value=initial.engineSearch'),'Open motor link must narrow search without auto-certifying engine/gearbox');
-assert(vinCode.includes('transferredReferenceId')&&vinCode.includes('applyTransferredStageReference'),'Source-specific deep linking not enabled');
-assert(vinCode.includes('stage1Published.find(r=>r.id===transferredReferenceId)'),'Transferred source must be checked against the published data');
-assert(vinCode.includes('Number(year.value)<item.yearFrom')&&vinCode.includes('fuel.value!==item.fuel'),'Transferred data must verify model year and fuel');
-assert(vinCode.includes('const matches=variants.map')&&vinCode.includes('if(unique.length===1)'),'Only unique verified motor variants may be automatically selected');
-assert(vinCode.includes('transferredButton.addEventListener("click"')&&vinCode.includes('item.manualOnly'),'Manual-only sources must require customer confirmation');
-assert(vinCode.includes('publishedMatch.publisher+" · "+publishedMatch.id'),'Quote draft must keep publisher and source identification');
-const stage1DirectoryJs=fs.readFileSync(path.join(ROOT,'assets','6006-stage1-directory.js'),'utf8');
-assert(stage1DirectoryJs.includes('stageRef:r.id'),'Stage 1 directory must transfer selected engine source ID');
-assert(fs.readFileSync(path.join(ROOT,'assets','6006-vin-stage1.css'),'utf8').includes('.vin6006-transfer'),'Transferred-source note lacks mobile styling');
-console.log('PASS: Source-specific Stage 1 deep-links, explicit confirmation, safe preselection and quote provenance');
-const newMakeIds=["jaguar-xe-x760-20t200-2015-brp","jaguar-xe-x760-lci-p250-2020-brp","landrover-evoque-l538-ed4-150-2015-brp","ds-ds7crossback-20bluehdi180-2017-brp"];
-for(const id of newMakeIds)assert(seenStageRef.has(id),'Missing Jaguar/Land Rover/DS sourced motor example '+id);
-for(const makeName of ["Jaguar","Land Rover","DS"])assert(stageRefDb.examples.some(x=>x.make===makeName),'Unrepresented new brand '+makeName);
-assert(stageRefDb.examples.find(x=>x.id==="ds-ds7crossback-20bluehdi180-2017-brp")?.model==="AUTOMOBILES DS 7",'DS open catalogue name must be explicitly matched');
-assert(stageRefDb.examples.find(x=>x.id==="landrover-evoque-l538-ed4-150-2015-brp")?.manualOnly,'Different Land Rover generations must never share tuning results automatically');
-assert(stageRefDb.examples.find(x=>x.id==="jaguar-xe-x760-lci-p250-2020-brp")?.yearFrom===2020,'Jaguar P250 must be restricted to facelift 2 source years');
-assert(stageRefDb.examples.find(x=>x.id==="jaguar-xe-x760-20t200-2015-brp")?.sourceStockHp===200,'Jaguar 200HP source must remain distinct from P250');
-console.log('PASS: 62 source-backed Stage 1 references covering 32 makes, explicit Jaguar generation and DS/Land Rover source validation');
-const directoryJS=path.join(ROOT,'assets/6006-stage1-directory.js'),directoryCSS=path.join(ROOT,'assets/6006-stage1-directory.css');
-assert(fs.existsSync(directoryJS)&&fs.existsSync(directoryCSS),'Searchable public Stage 1 browser assets missing');
-execFileSync(process.execPath,['--check',directoryJS],{stdio:'pipe'});
-const dirCode=fs.readFileSync(directoryJS,'utf8');
-assert(dirCode.includes('vin6-stage-directory')&&dirCode.includes('getFiltered()'),'Public catalogue must support search and make selection');
-assert(dirCode.includes('URLSearchParams')&&dirCode.includes('/fahrzeug/?'),'Public catalogue must link back to matching vehicle selector');
-assert(dirCode.includes('6006-stage1-references.json?v=20261012-62refs'),'Stage 1 browser asset must use fresh data');
-assert(!dirCode.includes('innerHTML=r.')&&!dirCode.includes('eval('),'Untrusted publisher data must not be injected as executable markup');
-assert(fs.readFileSync(directoryCSS,'utf8').includes('@media(max-width:650px)'),'Public reference browser is not mobile responsive');
-assert(carPage.includes('/assets/6006-stage1-directory.js?v=20261012-62refs')&&carPage.includes('/assets/6006-stage1-directory.css?v=20261012-62refs'),'Public source browser not mounted on vehicle page');
-console.log('PASS: 38 published examples, 18 makes, source links, manual engine correction and mobile searchable catalogue');
-assert(vinCode.includes('clean(selected.model)!==clean(model.value)'),'Cross-model stock engines cannot trigger a Stage 1 advertisement');
-assert(vinCode.includes('stockNeedsReview(selected)'),'Disputed source power must never trigger Stage 1 estimates');
-assert(stageRefDb.examples.filter(x=>x.manualOnly).every(x=>x.manualEngineContains.length>=6),'Manual-only source must require explicit engine text');
-console.log('PASS: 21 source-linked Stage 1 examples across 12 makes; exact model and reference-power safeguards');
-
-assert(vinCode.includes('if(fuel.value!==item.fuel)continue;'),'Published Stage 1 results must not appear without matching fuel');
-assert(vinCode.includes('20261012-62refs'),'38-reference Stage 1 data version not updated');
-const sources=new Set();
-for(const x of stageRefDb.examples){assert(!sources.has(x.sourceUrl),'Duplicate third-party source URL');sources.add(x.sourceUrl);}
-assert(!vinCode.includes('canEstimate=Boolean('),'Unverified tuning values must not be invented');
-assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-stage-reference'),'Stage 1 source card styles missing');
-assert(fs.existsSync('docs/stage1-reference-policy.md'),'Source vetting policy missing');
-console.log('PASS: Strictly sourced tuning references, motor/year/stocks matching and calibrated disclaimers');
-
-
+assert(vinCode.includes('preferred.has("engineSearch")'),'Open motor search hint must ignore a stale saved vehicle');
+assert(vinCode.includes('engineSearch:(preferred.get("engineSearch")||"").trim().slice(0,90)'),'Open motor links must remain bounded search hints');
+assert(vinCode.includes('if(initial.engineSearch)engineSearch.value=initial.engineSearch'),'Open motor links must narrow search without certifying a variant');
+console.log('PASS: Retired comparison sources and browser assets removed; legacy hub redirects to vehicle services');
 
 console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback, iPhone controls');
 const videoCode=fs.readFileSync(videoJs,'utf8');
@@ -253,7 +172,7 @@ assert(passatSuggestions.some(x=>x.model.includes('Passat B8')),'Passat B8 sugge
 const quickScript=fs.readFileSync(path.join(ROOT,'assets/6006-vehicle-catalog.js'),'utf8');
 assert(quickScript.includes('vehicleQuickResults')&&quickScript.includes('aria-expanded')&&quickScript.includes('chooseSuggestion(item)'),'Mobile dropdown UI missing');
 const homeSearch=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
-assert(homeSearch.includes('6006-vehicle-catalog.js?v=20261013-journey'),'Homepage must cache-bust vehicle search');
+assert(homeSearch.includes('6006-vehicle-catalog.js?v='+SERVICES_VERSION),'Homepage must cache-bust vehicle search');
 console.log('PASS: Golf / Passat model-only search, variants, mobile suggestions and cache bust');
 assert(finder.models('Volkswagen').includes('Passat B8 2.0 TDI'),'Engine-specific profiles missing');
 assert(finder.brands().includes('MG'),'Expanded manufacturers missing');
@@ -384,24 +303,23 @@ for(const [make,model] of [['Volkswagen','Passat'],['BMW','3 Series'],['Mercedes
  assert(globalEngineIndex.models.some(m=>globalEngineIndex.makes[m[0]]===make&&m[1].includes(model)),'Major make/model missing from global search: '+make+' '+model);
 const finderHtml=fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8');
 for(const file of ['6006-full-engine-directory.js','6006-full-engine-directory.css'])
- assert(finderHtml.includes('/assets/'+file+'?v=20261012-direct-inquiry'),'Live vehicle finder must load current '+file);
+ assert(finderHtml.includes('/assets/'+file+'?v='+SERVICES_VERSION),'Live vehicle finder must load current '+file);
 execFileSync(process.execPath,['--check',path.join(ROOT,'assets','6006-full-engine-directory.js')],{stdio:'pipe'});
 const allEngineCode=fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.js'),'utf8');
 assert(allEngineCode.includes('engine-search.json?v=20261012-all-engines'),'Search UI must load generated global engine data on demand');
 assert(allEngineCode.includes('engineSearch')&&allEngineCode.includes('limit+=20'),'Search must pass an engine hint and paginate without auto-selecting ECU variants');
-assert(vinCode.includes('if(initial.engineSearch&&!transferredReferenceId)'),'Search hint must be restored AFTER async make/model loading');
+assert(vinCode.includes('if(initial.engineSearch)'),'Search hint must be restored AFTER async make/model loading');
 assert(vinCode.includes('engineSearch.value=initial.engineSearch;\n renderEngines(\"\");\n engine.value=\"\";'),'Open motor links must filter engine results without confirming a variant');
 assert(vinCode.includes('ps.value=\"\";\n nm.value=\"\";\n manuallyEditedStock=false;'),'Community reference must not silently populate verified stock power');
-assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v=20261013-journey'),'Corrected motor search hint cache version not published');
+assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v='+SERVICES_VERSION),'Corrected motor search hint cache version not published');
 
 assert(allEngineCode.includes('inquiryDraft('),'Search result must prepare a specific engine inquiry message');
 assert(allEngineCode.includes('https://wa.me/491788354756?text=')&&allEngineCode.includes('encodeURIComponent(draft)'),'Customer-initiated WhatsApp inquiry must use business contact and URL encoding');
-assert(allEngineCode.includes('Keine bestätigte Stage-1-Leistung oder Garantie'),'German customer message must disclose unverified motor references');
-assert(allEngineCode.includes('Stage 1 sonucu/garantisi değildir'),'Turkish customer message must disclose no Stage 1 guarantee');
-assert(allEngineCode.includes('Not a confirmed Stage 1 result or guarantee'),'English customer message must disclose no Stage 1 guarantee');
+assert(allEngineCode.includes('nicht OEM-bestätigt')&&allEngineCode.includes('OEM onaylı değil')&&allEngineCode.includes('not OEM verified'),'All three languages must distinguish open stock references from verified vehicle specifications');
+assert(!/stage[\s-]+1\b/i.test(allEngineCode),'Engine directory must describe software, coding and diagnostics without gain advertising');
 assert(allEngineCode.includes('vin6006-full-actions')&&allEngineCode.includes('actions.append(ask,contact)'),'Both inspect-vehicle and ask-by-WhatsApp CTAs must be shown');
 assert(!allEngineCode.includes('vin6-vin')&&!allEngineCode.includes('sendBeacon('),'Do not automatically send or collect full VIN and visitor data');
-assert(finderHtml.includes('6006-full-engine-directory.js?v=20261012-direct-inquiry')&&finderHtml.includes('6006-full-engine-directory.css?v=20261012-direct-inquiry'),'New direct-contact assets must have cache-busted URLs');
+assert(finderHtml.includes('6006-full-engine-directory.js?v='+SERVICES_VERSION)&&finderHtml.includes('6006-full-engine-directory.css?v='+SERVICES_VERSION),'New direct-contact assets must have cache-busted URLs');
 assert(fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.css'),'utf8').includes('.vin6006-full-actions'),'Responsive dual CTAs missing stylesheet');
 assert(!allEngineCode.includes('publishedStage1Ps')&&!allEngineCode.includes('publishedStage1Nm'),'Open engine data must not claim third-party tuning gains');
 assert(allEngineCode.includes('databaseLicense')||fs.readFileSync(globalSearchFile,'utf8').includes('databaseLicense'),'ODbL source attribution missing');
@@ -450,35 +368,20 @@ const quickCardStart=homepage.indexOf('<div class="quick-access-grid">');
 const quickCardEnd=homepage.indexOf('</div>\n          </div>\n        </div>\n      </section>',quickCardStart);
 assert(quickCardStart>=0&&quickCardEnd>quickCardStart,'Quick-access section missing');
 const quickCards=homepage.slice(quickCardStart,quickCardEnd);
-assert.equal((quickCards.match(/class="quick-access-card"/g)||[]).length,4,'Homepage should show fault, coding, Stage 1 and emission diagnosis');
-assert(!quickCards.includes('stageReferenceCard'),'Motor reference shortcut must not appear on the homepage');
-for(const snippet of [
- 'id="stageGuideCard"',
- 'Stage 1 · ECU Optimizasyonu',
- 'emisyon mevzuatı ve gerekli onaylar',
- 'id="emissionsGuideCard"',
- 'DPF · EGR/AGR · AdBlue · NOx',
- 'emisyon sistemlerini devre dışı bırakmadan yasal onarım'
-])assert(quickCards.includes(snippet),'Missing honest customer-facing home service wording: '+snippet);
-assert(homepage.includes('DPF, EGR, AdBlue &amp; NOx Teşhisi'),'Service card must cover all emission systems including NOx');
-assert(homepage.includes('DPF rejenerasyonu, EGR valfi, AdBlue/SCR dozajı ve NOx sensörü'),'Only compliant diagnostics and repair should be offered');
-assert(homepage.includes('Yasal kapsam: Stage 1 işlemleri gerekli onay ve tescil şartlarına bağlıdır.'),'Stage 1 legal prerequisites missing');
-for(const localeKey of [
- 'Stage 1 · ECU-Optimierung',
- 'Stage 1 · ECU Optimisation',
- 'DPF · AGR · AdBlue · NOx',
- 'DPF · EGR · AdBlue · NOx',
- 'Diagnoseleistungen ansehen',
- 'Stage 1 · Motor-Referenzkatalog',
- 'Stage 1 · Engine References',
- 'Rechtlicher Rahmen: Stage 1 setzt die erforderlichen Genehmigungen'
-])assert(homepage.includes(localeKey),'TR/DE/EN homepage language regression: '+localeKey);
-console.log('PASS: four compliant quick-service cards without motor-reference shortcut, NOx/DPF/AGR/AdBlue diagnostics, Stage 1 approval safeguards and TR/DE/EN copy');
+assert.equal((quickCards.match(/class="quick-access-card"/g)||[]).length,4,'Homepage should retain four direct service entry points');
+assert(!quickCards.includes('stageReferenceCard'),'Motor reference shortcut must not return');
+assert(!/stage[\s-]+1\b/i.test(homepage),'Homepage copy and translations must not advertise the retired comparison');
+assert(homepage.includes('id="emissionsGuideCard"'),'Emissions diagnosis must remain available');
+assert(homepage.includes('DPF, EGR, AdBlue &amp; NOx Teşhisi'),'Technical emissions diagnosis remains available without deletion claims');
+assert(catalogCode.includes('vehicle-service-overview'),'Selected vehicle must show an informative software and coding service overview');
+for(const unsafe of ['id="psValue"','id="nmValue"','class="dyno-chart"','class="power-grid"'])
+ assert(!homepage.includes(unsafe),'Retired tuned-power presentation remains: '+unsafe);
+console.log('PASS: Four direct service cards and vehicle software overview without power-gain advertising');
 
 assert(homepage.includes('href="#hizmetler">Hizmetlerimizi gör'),'Homepage needs a direct services CTA');
 for(const name of ['Araç Kodlama &amp; Adaptasyon','ECU Okuma, Yazma &amp; Yedekleme','Arıza Kodu &amp; Canlı Veri Teşhisi'])assert(homepage.includes(name),'Missing advertised service: '+name);
 assert(homepage.includes('"Wie können wir Ihrem Fahrzeug helfen?"'),'Missing German service finder copy');
-assert(homepage.includes('ECU-Softwareoptimierung, Fahrzeugcodierung'),'Missing German SEO focus');
+assert(/(?:Motorsoftware|Fahrzeugsoftware|Softwareoptimierung)/.test(homepage)&&homepage.includes('Fahrzeugcodierung'),'Missing German software and coding focus');
 console.log('PASS: commercial ECU, vehicle coding and OBD diagnostics homepage with TR/DE/EN copy');
 console.log('PASS: ECU scene, photo controls, 3D links and animation assets are absent from homepage');
 for(const folder of ['ecu-final','ecu3d','ecu3d-real']){

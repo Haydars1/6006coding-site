@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Browser regression checks for the vehicle → Stage 1 → diagnosis journey.
+/* Browser regression checks for vehicle software, coding and diagnosis journeys.
  * Run a local server for dist, then:
  * JOURNEY_BASE_URL=http://127.0.0.1:8766 node scripts/verify-journey-browser.cjs
  */
@@ -145,37 +145,107 @@ async function main() {
     await finish(env);
   });
 
-  await run('Matched published Stage 1 values show stock, result, difference and original citation', async () => {
-    const env = await pageFor(); const {page} = env;
-    const params = new URLSearchParams({brand:'Volkswagen',model:'Passat B8',year:'2016',powertrain:'Diesel',engine:'2.0 TDI CRLB',ps:'150',nm:'340',stageRef:'vw-passat-b8-crl-150-ecuperformance'});
+  await run('Legacy comparison bookmarks cannot inject an engine or stock power', async () => {
+    const env = await pageFor(); const {page} = env; const requests = [];
+    page.on('request', request => requests.push(request.url()));
+    const params = new URLSearchParams({brand:'Volkswagen',model:'Passat B8',year:'2016',stageRef:'vw-passat-b8-crl-150-ecuperformance'});
     await finder(page, '/fahrzeug/?'+params);
-    await page.waitForFunction(() => document.querySelector('#vin6-ref-source')?.getAttribute('href'));
-    const table = await page.locator('#vin6-metrics').innerText();
-    for (const value of ['150 PS','190 PS','340 Nm','420 Nm']) assert.ok(table.includes(value), 'Comparison must show '+value);
-    const comparison = await page.locator('#vin6-result').innerText();
-    for (const value of ['+40 PS','+80 Nm']) assert.ok(comparison.includes(value), 'Published-reference difference must show '+value);
-    const citation = await page.locator('#vin6-ref-source').getAttribute('href');
-    assert.match(citation, /^https:\/\/www\.ecuperformance\.net\//);
-    assert.match(await page.locator('#vin6-stage-note').innerText(), /Dritt|6006 Performance|veröffentlicht/i);
-    assert.ok(!(await page.locator('#vin6-ref-source').isHidden()));
-    await noOverflow(page);
-    await page.fill('#vin6-ps', '151'); await page.locator('#vin6-ps').dispatchEvent('change');
-    assert.ok(await page.locator('#vin6-ref-source').isHidden(), 'Changed stock power invalidates the source match');
-    assert.ok(!(await page.locator('#vin6-metrics').innerText()).includes('190 PS'), 'Never infer the published output for different stock power');
+    await page.waitForFunction(() => document.querySelector('#vin6-model')?.value === 'Passat B8');
+    assert.equal(await page.inputValue('#vin6-engine'), '');
+    assert.equal(await page.inputValue('#vin6-manual'), '');
+    assert.equal(await page.inputValue('#vin6-ps'), '');
+    assert.equal(await page.inputValue('#vin6-nm'), '');
+    const choice = await stored(page);
+    assert.ok(!choice || (!choice.engine && !choice.ps && !choice.nm), 'A retired source identifier must not populate the saved vehicle');
+    assert.ok(requests.every(url => !/6006-stage1-(?:references|directory|seo|open)/.test(url)), 'Retired reference data and browsers must not be loaded');
+    assert.equal(await page.locator('#vin6-ref-source').count(), 0);
     await finish(env);
   });
 
-  await run('An unmatched engine shows no invented Stage 1 result and offers source browsing', async () => {
+  await run('Stock vehicle specifications stay separate from software and coding services', async () => {
+    const env = await pageFor(); const {page} = env;
+    const params = new URLSearchParams({brand:'Volkswagen',model:'Passat B8',year:'2016',powertrain:'Diesel',engine:'2.0 TDI CRLB',ps:'150',nm:'340',stageRef:'vw-passat-b8-crl-150-ecuperformance'});
+    await finder(page, '/fahrzeug/?'+params);
+    await page.waitForFunction(() => !document.querySelector('#vin6-result')?.hidden);
+    const table = await page.locator('#vin6-metrics').innerText();
+    for (const value of ['150 PS','340 Nm']) assert.ok(table.includes(value), 'Entered stock reference must show '+value);
+    assert.equal(await page.locator('#vin6-result thead th').count(), 2, 'Technical table has specification and stock columns only');
+    assert.doesNotMatch(table, /190 PS|420 Nm|\+40|\+80/);
+    assert.equal(await page.locator('#vin6-ref-source').count(), 0);
+    assert.equal(await page.locator('#vin6-services article').count(), 3);
+    const services = await page.locator('#vin6-services').innerText();
+    assert.match(services, /Softwarestand/); assert.match(services, /Spiegelanklappen/); assert.match(services, /Fehlercodes/);
+    assert.doesNotMatch(await page.locator('#vin6-result').innerText(), /stage[\s-]*1\b|\+\d+\s*(?:PS|Nm)/i);
+    assert.equal(await page.locator('#vin6-result a[href*="stage1-referenzen"]').count(), 0);
+    const requestURL = new URL(await page.locator('#vin6-quote-whatsapp').getAttribute('href'));
+    const request = requestURL.searchParams.get('text');
+    assert.match(request, /2\.0 TDI CRLB/); assert.match(request, /Software|Codierung/);
+    assert.doesNotMatch(request, /stage[\s-]*1\b|\+40|\+80/i);
+    await noOverflow(page);
+    await page.fill('#vin6-ps', '151'); await page.locator('#vin6-ps').dispatchEvent('change');
+    assert.match(await page.locator('#vin6-metrics').innerText(), /151 PS/);
+    assert.doesNotMatch(await page.locator('#vin6-metrics').innerText(), /190 PS|420 Nm/);
+    await page.locator('#vin6-stage-link').click();
+    await page.waitForURL(url => url.pathname === '/' && url.hash === '#hizmetler');
+    assert.ok(await page.locator('#hizmetler').isVisible(), 'The software and coding link opens the real services section');
+    await finish(env);
+  });
+
+  await run('An unlisted engine still offers useful services without invented power output', async () => {
     const env = await pageFor('en-GB'); const {page} = env;
     await finder(page, '/fahrzeug/?brand=Volkswagen&model=Golf&year=2016&powertrain=Diesel&engine=unknown-custom-engine&ps=147&nm=331');
     await page.waitForFunction(() => !document.querySelector('#vin6-result')?.hidden);
-    assert.ok(await page.locator('#vin6-ref-source').isHidden());
+    assert.equal(await page.locator('#vin6-ref-source').count(), 0);
     const table = await page.locator('#vin6-metrics').innerText();
     assert.match(table, /147 PS/); assert.match(table, /331 Nm/);
     assert.doesNotMatch(table, /1[89]\d PS|4[0-9]\d Nm/);
-    assert.match(await page.locator('#vin6-stage-note').innerText(), /no|not|confirmed|verified/i);
-    const links = await page.locator('#vin6-result a[href*="stage1-referenzen"]').count();
-    assert.ok(links > 0, 'Unmatched variant can browse published references');
+    assert.match(await page.locator('#vin6-provenance').innerText(), /manual|manufacturer/i);
+    const services = await page.locator('#vin6-services').innerText();
+    assert.match(services, /software version/); assert.match(services, /mirror folding/); assert.match(services, /live measurements/);
+    assert.match(await page.locator('#vin6-eligibility').innerText(), /does not confirm/);
+    assert.equal(await page.locator('#vin6-result a[href*="stage1-referenzen"]').count(), 0);
+    await finish(env);
+  });
+
+  for (const [locale, words] of Object.entries({
+    'de-DE': {heading:'Motorsoftware & Fahrzeugcodierung', home:/Software.*Codierung|Software.*Fahrzeugcodierung/s, comfort:/Spiegel|Komfort/, credit:/Ausstattungs- und Software-Kompatibilität werden am Fahrzeug geprüft/, data:'Offene Daten', language:'de'},
+    'tr-TR': {heading:'Motor yazılımı & araç kodlama', home:/yazılım.*kodlama/is, comfort:/ayna|konfor/i, credit:/Donanım ve yazılım uyumu araç üzerinde doğrulanır/, data:'Açık veri', language:'tr'},
+    'en-GB': {heading:'Engine software & vehicle coding', home:/software.*coding/is, comfort:/mirror|comfort/i, credit:/Equipment and software compatibility are checked on the vehicle/, data:'Open data', language:'en'}
+  })) {
+    await run(words.language+' mobile vehicle services replace public gain calculators', async () => {
+      const env = await pageFor(locale, 320); const {page} = env;
+      await page.goto(base + '/');
+      await page.waitForSelector('#vehicle-service-overview', {state:'attached'});
+      assert.equal(await page.locator('html').getAttribute('lang'), words.language);
+      const home = await page.locator('#aracin').innerText();
+      assert.match(home, words.home);
+      assert.match(home, words.comfort);
+      assert.match(await page.locator('.vehicle-data-credit').innerText(), words.credit);
+      assert.equal(await page.locator('.vehicle-data-credit a[href="/assets/vehicle-data/index.json"]').innerText(), words.data);
+      assert.ok(await page.locator('.vehicle-data-credit a[href*="opendatacommons.org/licenses/odbl/"]').isVisible(), 'Source licence attribution remains visible');
+      if (words.language !== 'tr') assert.doesNotMatch(await page.locator('.vehicle-data-credit').innerText(), /Araç ve motor referans verileri|Donanım ve yazılım uyumu|Açık veri/, 'Attribution must not retain Turkish copy in another phone language');
+      assert.doesNotMatch(home, /stage[\s-]*1\b|\+\d+\s*(?:PS|Nm)/i);
+      assert.equal(await page.locator('#psValue,#nmValue,.power-grid,.dyno-chart').count(), 0, 'No power gain display or dyno chart remains');
+      assert.equal(await page.locator('a[href*="stage1-referenzen"]').count(), 0);
+      await noOverflow(page);
+      await finder(page);
+      assert.equal(await page.locator('#vin6-heading').innerText(), words.heading);
+      assert.equal(await page.locator('#vin6-quote-whatsapp').getAttribute('href'), null, 'An incomplete vehicle cannot send a fabricated request');
+      await noOverflow(page); await finish(env);
+    });
+  }
+
+  await run('Retired comparison bookmark opens vehicle services instead of an old offer', async () => {
+    const env = await pageFor(); const {page} = env;
+    const response = await env.context.request.get(base + '/stage1-referenzen/');
+    const redirect = await response.text();
+    assert.match(redirect, /noindex/);
+    assert.match(redirect, /location\.replace/);
+    assert.doesNotMatch(redirect, /stage[\s-]+1\b|publishedStage1|stage-item/i);
+    await page.goto(base + '/stage1-referenzen/');
+    await page.waitForURL(url => url.pathname === '/' && url.hash === '#aracin');
+    await page.waitForSelector('#vehicle-service-overview', {state:'attached'});
+    assert.doesNotMatch(await page.locator('#aracin').innerText(), /stage[\s-]*1\b/i);
     await finish(env);
   });
 

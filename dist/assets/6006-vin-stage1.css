@@ -73,7 +73,7 @@
 @media(max-width:600px){#vin6-engine-search{font-size:16px!important}}
 
 
-/* Accessible, independent Stage 1 / ECU quotation handoff */
+/* Optional vehicle-software and coding service request. */
 .vin6006-quote{margin-top:24px;padding:clamp(16px,2.2vw,24px);border:1px solid rgba(203,157,98,.48);border-radius:12px;background:linear-gradient(150deg,#282018,#151410);color:#f3e8da}
 .vin6006-quote-top{margin-bottom:19px}
 .vin6006-quote-eyebrow{font-size:.68rem;letter-spacing:.12em;font-weight:800;color:#ddb47f;margin:0 0 6px}
@@ -96,28 +96,15 @@
 .vin6006-quote-privacy{margin:12px 0 0;color:#baa992;font-size:.73rem;line-height:1.6}
 @media(max-width:600px){.vin6006-quote-grid{grid-template-columns:1fr}.vin6006-quote-note{grid-column:auto}.vin6006-quote-actions{flex-direction:column}.vin6006-quote-actions a{width:100%;min-width:0;flex:none}.vin6006-quote-grid .vin6006-field input{font-size:16px!important}}
 
-/* Third-party examples are separate from Stage 1 targets and 6006 service offers. */
-.vin6006-stage-reference{margin-top:16px;padding:15px 16px;border:1px solid rgba(200,161,109,.47);border-radius:9px;background:#242018}
-.vin6006-stage-reference h5{font-size:.94rem;line-height:1.4;color:#f4d7ae;margin:0 0 8px;font-weight:750}
-.vin6006-stage-reference p{color:#dbccb8;font-size:.79rem;line-height:1.55;margin:5px 0 10px}
-#vin6-ref-values:not([hidden]){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
-#vin6-ref-values[hidden],#vin6-ref-warning[hidden],#vin6-ref-source[hidden]{display:none!important}
-.vin6006-ref-value{padding:10px;background:#151513;border:1px solid #645038;border-radius:6px;display:flex;flex-direction:column;gap:5px}
-.vin6006-ref-value span{color:#c8b8a4;font-size:.71rem}
-.vin6006-ref-value strong{font-size:1.01rem;color:#f4e5d3;letter-spacing:.005em}
-.vin6006-stage-reference #vin6-ref-warning{font-size:.72rem;color:#d8b58e}
-.vin6006-stage-reference #vin6-ref-source{color:#f6d29c;text-decoration:underline;text-underline-offset:3px;display:inline-flex;padding:5px 0;font-size:.76rem;font-weight:750}
-.vin6006-stage-reference #vin6-ref-browse{display:flex;margin-top:10px;color:#f6d29c;text-decoration:underline;text-underline-offset:3px;font-size:.78rem;line-height:1.5;min-height:36px;align-items:center}
-@media(max-width:600px){.vin6006-field :is(select,input){font-size:16px}.vin6006-next button{justify-self:stretch;text-align:center}}
-@media(max-width:440px){#vin6-ref-values:not([hidden]){grid-template-columns:1fr}.vin6006-stage-reference{padding:13px}}
-
-/* Reference deep-link handoff: provenance first, customer approval for uncertain data. */
-.vin6006-transfer{margin:11px 0 16px;border:1px solid #ae8559;background:#201a15;padding:14px 16px;border-radius:9px;color:#e7d6c3;display:flex;flex-direction:column;gap:8px}
-.vin6006-transfer[hidden]{display:none!important}
-.vin6006-transfer h3{margin:0;color:#f4d7a8;font-size:.93rem;line-height:1.4}
-.vin6006-transfer p{margin:0;color:#e6ccaa;font-size:.8rem;line-height:1.55}
-.vin6006-transfer button{align-self:flex-start;border-radius:6px;border:1px solid #a87d48;background:#dcb27e;color:#181310;cursor:pointer;padding:12px 14px;min-height:44px;font-size:.83rem;font-weight:800}
-.vin6006-transfer button[hidden]{display:none}
-.vin6006-transfer button:focus-visible,.vin6006-transfer a:focus-visible{outline:2px solid #f0cd98;outline-offset:2px}
-.vin6006-transfer a{color:#f4c88e;font-size:.79rem;text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:35px}
-@media(max-width:440px){.vin6006-transfer{padding:12px}.vin6006-transfer button{width:100%;text-align:center}}
+/* Stock facts are a vehicle reference, separate from supported service work. */
+.vin6006-table td:last-child{color:#eddbc4;font-weight:700}
+.vin6006-service-overview{margin-top:20px;padding:20px;border:1px solid #70583c;border-radius:10px;background:#211c16}
+.vin6006-service-overview>h4{margin:0 0 9px;color:#f0d4ae;font-size:1.08rem;line-height:1.4}
+.vin6006-service-overview>p{margin:0;color:#d3c3b0;font-size:.82rem;line-height:1.65;max-width:780px}
+.vin6006-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:17px}
+.vin6006-service-grid article{padding:16px;border:1px solid #5b4834;border-radius:8px;background:#171511;min-width:0}
+.vin6006-service-grid h5{margin:0 0 8px;color:#e8c99f;font-size:.86rem;line-height:1.45}
+.vin6006-service-grid p{margin:0;color:#cabcaa;font-size:.78rem;line-height:1.65}
+.vin6006-service-overview>.vin6006-note{margin-top:15px;color:#c0ad94;font-size:.74rem}
+@media(max-width:800px){.vin6006-service-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.vin6006-field :is(select,input){font-size:16px}.vin6006-next button{justify-self:stretch;text-align:center}.vin6006-service-overview{padding:16px}.vin6006-service-grid article{padding:14px}}

@@ -42,6 +42,12 @@ for(const [code,rows] of grouped){
 }
 for(const file of files){
  const html=read(file), relative=path.relative(root,file).replaceAll('\\','/');
+ // Manufacturer airbag definitions legitimately include "Stage 1 Deployment".
+ // Check navigation and gain UI without censoring technical DTC definitions.
+ const navigation=[...html.matchAll(/<(?:header|nav)\b[^>]*>[\s\S]*?<\/(?:header|nav)>/gi)].map(m=>m[0]).join(' ');
+ assert(!/stage[\s-]+1\b/i.test(navigation),'Retired advertising remains in navigation: '+relative);
+ assert(!/id=["'](?:psValue|nmValue)["']|class=["'](?:power-grid|dyno-chart)["']/i.test(html),'Retired power calculator remains on an indexable page: '+relative);
+ assert(!/href=["'][^"']*stage1-referenzen/i.test(html),'Indexable page links to retired comparisons: '+relative);
  const url=new URL('/'+relative.replace(/index\.html$/,''),base);
  const canonicals=[...html.matchAll(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)/g)];
  assert.equal(canonicals.length,1,'Canonical missing/duplicated '+relative);
@@ -65,51 +71,19 @@ for(const file of files){
  }
  for(const json of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g))JSON.parse(json[1]);
 }
-const stage1HubPath=path.join(root,'stage1-referenzen','index.html');
-const stage1Html=read(stage1HubPath);
-const stage1Db=JSON.parse(read(path.join(root,'assets','6006-stage1-references.json')));
 const openDataIndex=JSON.parse(read(path.join(root,'assets','vehicle-data','index.json')));
 assert(openDataIndex.totalEngines>=30000,'Open motor data should contain over 30k source engine entries');
 assert(openDataIndex.makes.length>=160,'Open motor data should cover over 160 reference makes');
-assert(stage1Html.includes('id="stage1-open-engine-finder"'),'Stage 1 page missing broad source motor search section');
-assert(stage1Html.includes(openDataIndex.totalEngines.toLocaleString('de-DE')+' Motorvarianten'),'Stage 1 open-motor count should come from source index');
-assert(stage1Html.includes(openDataIndex.totalModels.toLocaleString('de-DE')+' Modelle'),'Stage 1 open-model count missing');
-assert(stage1Html.includes('https://github.com/gor3a/vehicle-makes-models'),'Open data catalogue attribution missing');
-assert(stage1Html.includes('/assets/6006-stage1-open-engine-finder.js?v=20261012-full-engines'),'Open motor browser asset script missing');
-assert(stage1Html.includes('id="stage1-open-brand"')&&stage1Html.includes('id="stage1-open-model"')&&stage1Html.includes('id="stage1-open-results"'),'Open motor finder fields not mounted');
-const openEngineJs=read(path.join(root,'assets','6006-stage1-open-engine-finder.js'));
-assert(openEngineJs.includes('/assets/vehicle-data/index.json')&&openEngineJs.includes('encodeURIComponent(bucket.slug)'),'Open motor finder must lazy load per-brand ODbL data');
-assert(openEngineJs.includes('engineSearch:String(v.engine||"").slice(0,90)'),'Open motor selection must be a search hint, not a confirmed ECU variant');
-assert(!openEngineJs.includes('publishedStage1Ps')&&!openEngineJs.includes('publishedStage1Nm'),'Generic community engine data must never invent Stage 1 figures');
-assert(read(path.join(root,'assets','6006-stage1-seo.css')).includes('.stage-open-engine'),'Open motor browser must have a responsive card style');
+assert(openDataIndex.license==='ODbL-1.0'&&openDataIndex.databaseLicense,'Vehicle identification catalogue must retain its data-license attribution');
+assert(!urls.some(url=>url.includes('/stage1-referenzen/')),'Retired comparison pages must not remain in the sitemap');
+const retiredHub=read(path.join(root,'stage1-referenzen','index.html'));
+assert(retiredHub.includes('noindex')&&retiredHub.includes('location.replace')&&retiredHub.includes('/#aracin'),'Saved comparison-hub links must lead to the vehicle service overview');
+assert(retiredHub.includes('href="/#aracin"'),'Retired hub requires a working fallback link without JavaScript');
+assert(retiredHub.includes('rel="canonical" href="'+base+'/"'),'Retired hub must identify the live home page as canonical');
+assert(!/stage[\s-]+1\b|stage-item|publishedStage1/i.test(retiredHub),'Retired redirect page must not republish old offerings');
+for(const asset of ['6006-stage1-references.json','6006-stage1-seo-summary.json','6006-stage1-directory.js','6006-stage1-directory.css','6006-stage1-seo-filter.js','6006-stage1-seo.css','6006-stage1-open-engine-finder.js'])
+ assert(!fs.existsSync(path.join(root,'assets',asset)),'Retired comparison data or browser remains public: '+asset);
+console.log('PASS: Open vehicle data retained; source comparisons and sitemap advertising retired with a working legacy fallback');
 
-const stage1Summary=JSON.parse(read(path.join(root,'assets','6006-stage1-seo-summary.json')));
-assert(urlSet.has(base+'/stage1-referenzen/'),'Missing crawlable Stage 1 catalogue URL from sitemap');
-assert.equal((urls.filter(u=>u.includes('/stage1-referenzen/'))).length,1,'One canonical Stage 1 hub, not many thin SEO pages');
-assert.equal(stage1Summary.entryCount,stage1Db.examples.length,'Stage 1 SEO data must match vehicle source data');
-assert.equal(stage1Summary.brandCount,new Set(stage1Db.examples.map(x=>x.make)).size,'Wrong Stage 1 SEO make count');
-assert.equal((stage1Html.match(/class="stage-item"/g)||[]).length,stage1Db.examples.length,'All Stage 1 motor rows must render as HTML');
-assert(stage1Html.includes('/assets/6006-stage1-seo-filter.js?v=20261012-62refs'),'Static SEO hub missing progressive search');
-const searchJs=read(path.join(root,'assets','6006-stage1-seo-filter.js'));
-assert(searchJs.includes('stage-seo-search')&&searchJs.includes('stage-item')&&searchJs.includes('stage-brand'),'Client-side search not connected to crawlable source cards');
-assert(searchJs.includes('hidden=!ok')&&searchJs.includes('section.hidden=visible===0'),'Search must filter engine rows and brand groups correctly');
-assert(read(path.join(root,'assets','6006-stage1-seo.css')).includes('.stage-item[hidden]'),'Search must hide nonmatching cards on mobile');
-assert(stage1Db.examples.length>=58&&stage1Summary.brandCount>=29,'Published Stage 1 source expansion missing');
-assert(stage1Html.includes('rel="canonical" href="'+base+'/stage1-referenzen/"'),'Stage 1 SEO canonical wrong');
-assert(stage1Html.includes('name="robots" content="index,follow'),'Stage 1 hub must remain indexable');
-assert(stage1Html.includes(stage1Db.examples.length+' veröffentlichte Beispiele'),'Stage 1 hub count not readable without JavaScript');
-assert(stage1Html.includes('kein')||stage1Html.includes('keine'),'Source limitations must be explicit');
-for(const entry of stage1Db.examples){
- assert(stage1Html.includes('id="ref-'+entry.id+'"'),'Stage 1 missing crawlable motor id '+entry.id);
- assert(stage1Html.includes(entry.sourceUrl.replaceAll('&','&amp;')),'Stage 1 original source URL not linked '+entry.id);
- assert(stage1Html.includes(entry.publishedStage1Ps+' PS / '+entry.publishedStage1Nm+' Nm'),'Stage 1 display fields incorrect '+entry.id);
-}
-for(const entry of stage1Db.examples){
- assert(stage1Html.includes('stageRef='+entry.id),'SEO catalogue vehicle links must transfer exact source ID '+entry.id);
-}
-assert(read(path.join(root,'assets','6006-stage1-directory.js')).includes('stageRef:r.id'),'JS Stage 1 reference cards must pass source identity to vehicle finder');
-assert(read(path.join(root,'fahrzeug','index.html')).includes('href="/stage1-referenzen/"'),'Vehicle finder must expose SEO catalogue link');
-console.log('PASS: 1 indexable Stage 1 hub, '+stage1Db.examples.length+' externally sourced HTML engine listings, canonical, schema and sitemap');
-
-assert.equal(urls.length,grouped.size-noindex+171,'Unexpected sitemap coverage');
+assert.equal(urls.length,grouped.size-noindex+170,'Unexpected sitemap coverage');
 console.log(`PASS: ${files.size} HTML pages, ${links} internal links/assets/fragments, canonical URLs and JSON-LD; ${noindex} placeholder-only pages excluded from sitemap`);

@@ -5,7 +5,7 @@
     <meta name="google-adsense-account" content="ca-pub-7331900145381998" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ECU-Softwareoptimierung, Chiptuning, Fahrzeugcodierung und OBD-Diagnose bei 6006 Performance. Individuelles Angebot anfragen und Fehlercodes kostenlos nachlesen." />
+    <meta name="description" content="Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und Fehlerdiagnose bei 6006 Performance. Fahrzeug wählen und passende Software- und Codierleistungen kennenlernen." />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <meta name="theme-color" content="#302a23" />
     <meta name="color-scheme" content="dark light" />
@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="6006 Performance" />
     <meta property="og:url" content="https://6006coding.de/" />
     <meta property="og:title" content="6006 Performance – ECU Software, Codierung & Diagnose" />
-    <meta property="og:description" content="Fehlercodes verständlich erklärt, Fahrzeugwissen, Wartung, Reparatur und Stage 1." />
+    <meta property="og:description" content="Motorsoftware, Fahrzeugcodierung, Komfortfunktionen, Fehlercodes und Fahrzeugwissen." />
     <meta property="og:locale" content="de_DE" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,7 +48,7 @@
             "url": "https://6006coding.de/",
             "email": "6006performance@gmail.com",
             "telephone": "+49 178 8354756",
-            "description": "Fahrzeugspezifische ECU-Softwareoptimierung, Chiptuning, Fahrzeugcodierung, Steuergeräte-Auslesen und Diagnose nach Eignungsprüfung.",
+            "description": "Fahrzeugspezifischer Software-Service, Fahrzeugcodierung, Komfortfunktionen, Steuergeräte-Auslesen und Fehlerdiagnose.",
             "logo": "https://6006coding.de/assets/6006-mark-white.png",
             "contactPoint": [{
               "@type": "ContactPoint",
@@ -308,15 +308,6 @@
       .power-stat .label { color: var(--cloud); font-family: var(--mono); font-size: .61rem; letter-spacing: .07em; text-transform: uppercase; }
       .power-stat .value { margin-top: .55rem; font-size: clamp(1.45rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -.075em; }
       .power-stat .gain { margin-top: .32rem; color: var(--lime); font-family: var(--mono); font-size: .72rem; }
-      .dyno-chart { width: 100%; height: 10rem; margin-top: .35rem; overflow: visible; }
-      .chart-grid { stroke: rgba(186,199,203,.12); stroke-width: 1; }
-      .chart-stock { fill: none; stroke: var(--cloud); stroke-width: 2; stroke-dasharray: 7 7; opacity: .8; }
-      .chart-stage { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; }
-      .chart-fill { opacity: .18; }
-      .chart-legend { display: flex; gap: 1rem; align-items: center; color: var(--cloud); font-family: var(--mono); font-size: .62rem; }
-      .legend-item { display: inline-flex; align-items: center; gap: .42rem; }
-      .legend-line { width: 1.2rem; height: 2px; background: var(--teal); }
-      .legend-line.stock { opacity: .8; background: repeating-linear-gradient(90deg, var(--cloud) 0 5px, transparent 5px 8px); }
       .estimate-foot { display: flex; gap: .7rem; margin-top: 1.1rem; padding: .85rem .9rem; border-radius: .7rem; color: #c9d7d9; background: rgba(44,183,171,.09); font-size: .73rem; line-height: 1.5; }
       .estimate-foot span { color: var(--teal); font-family: var(--mono); }
 
@@ -524,14 +515,6 @@
       .power-stat { min-height: 8.7rem; padding: 1.15rem; border: 0; border-radius: 0; background: #1b1c1a; }
       .power-stat .value { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.55rem); font-weight: 500; letter-spacing: -.06em; }
       .power-stat .gain { color: var(--copper); font-size: .67rem; }
-      .dyno-chart { margin-top: .7rem; }
-      .chart-grid { stroke: rgba(242, 238, 229, .1); }
-      .chart-stock { stroke: #9f9b91; }
-      .chart-stage { stroke: var(--copper); }
-      .chart-fill { opacity: .12; }
-      .chart-legend { color: var(--cloud); font-size: .59rem; }
-      .legend-line { background: var(--copper); }
-      .legend-line.stock { background: repeating-linear-gradient(90deg, #9f9b91 0 5px, transparent 5px 8px); }
       .estimate-foot { margin-top: 1.2rem; border-radius: 0; color: #cac3b8; background: transparent; border-top: 1px solid rgba(242, 238, 229, .16); padding: 1rem 0 0; font-size: .72rem; }
       .estimate-foot span { color: var(--copper); }
 
@@ -624,12 +607,8 @@
       .hero-copy > p { animation-delay: 390ms; }
       .hero-copy .hero-actions { animation-delay: 510ms; }
       .hero-copy .hero-proof { animation-delay: 640ms; }
-      .estimate-wrap.visible .chart-stage { stroke-dasharray: 720; stroke-dashoffset: 720; animation: traceCurve 1.5s 380ms cubic-bezier(.22,1,.36,1) forwards; }
-      .estimate-wrap.visible .chart-stock { opacity: 0; animation: stockAppear 700ms 240ms ease forwards; }
-      .estimate-wrap.visible .chart-fill { opacity: 0; animation: fillAppear 700ms 240ms ease forwards; }
       .estimate-card.data-refresh .power-stat, .estimate-card.data-refresh .vehicle-ident { animation: dataRefresh 520ms cubic-bezier(.22,1,.36,1) both; }
       .estimate-card.data-refresh .power-stat:nth-child(2) { animation-delay: 70ms; }
-      .estimate-card.data-refresh .chart-stage { stroke-dasharray: 720; stroke-dashoffset: 720; animation: traceCurve 950ms 120ms cubic-bezier(.22,1,.36,1) forwards; }
       .fault-result.result-enter { animation: resultRefresh 480ms cubic-bezier(.22,1,.36,1) both; }
       .category-chip, .field select, .service-card { transition-duration: 220ms; transition-timing-function: cubic-bezier(.22,1,.36,1); }
 
@@ -1143,7 +1122,7 @@ html{scroll-padding-top:1.25rem}
 .ecub__light{display:none!important}
 </style>
 
-    <link rel="stylesheet" href="/assets/6006-home-layout.css?v=20261013-auto-locale" />
+    <link rel="stylesheet" href="/assets/6006-home-layout.css?v=20261016-services" />
 </head>
   <body class="home-page">
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
@@ -1205,11 +1184,11 @@ html{scroll-padding-top:1.25rem}
                 <span class="quick-access-action" id="repairGuideAction">Hizmetleri gör</span>
               </a>
               <a class="quick-access-card" href="#aracin" id="stageGuideCard">
-                <div><h3>Stage 1 · ECU Optimizasyonu</h3><p>Motor, ECU, emisyon mevzuatı ve gerekli onaylar kontrol edilerek araç özelinde değerlendirilir.</p></div>
+                <div><h3>Motor Yazılımı &amp; Araç Kodlama</h3><p>Yazılım sürümü kontrolü, araca uygun ayarlar ve desteklenen konfor özellikleri.</p></div>
                 <span class="quick-access-action">Aracını seç →</span>
               </a>
               <a class="quick-access-card" href="#hizmetler" id="emissionsGuideCard">
-                <div><h3>DPF · EGR/AGR · AdBlue · NOx</h3><p>Sensör, dozaj ve rejenerasyon teşhisi; emisyon sistemlerini devre dışı bırakmadan yasal onarım.</p></div>
+                <div><h3>Egzoz Sistemi &amp; Uyarı Lambaları</h3><p>Motor lambası, filtre ve AdBlue uyarılarında arıza kaynağının canlı verilerle incelenmesi.</p></div>
                 <span class="quick-access-action">Teşhis hizmetlerini gör →</span>
               </a>
             </div>
@@ -1229,21 +1208,21 @@ html{scroll-padding-top:1.25rem}
         <div class="shell vehicle-grid">
           <div class="vehicle-intro reveal">
             <div class="section-copy">
-              <p class="eyebrow">Stage 1 keşfi</p>
-              <h2 id="vehicle-title">Potansiyeli abartmadan, aralıklarla göster.</h2>
-              <p>Rakamları kesin vaat gibi değil; motor kodu, yakıt, çevresel koşullar ve mekanik sağlıkla birlikte yorumlanan teknik bir başlangıç olarak sunuyoruz.</p>
+              <p class="eyebrow">Motor yazılımı ve araç kodlama</p>
+              <h2 id="vehicle-title">Aracının özelliklerini tanı. Sana uygun ayarı bul.</h2>
+              <p>Motor yazılımının mevcut sürümünü kontrol ediyor, desteklenen özellikleri araca uygun şekilde ayarlıyoruz. Gaz tepkisi, kullanım beklentin ve konfor işlevleri için önce aracının donanımını ve teknik durumunu birlikte değerlendiriyoruz.</p>
             </div>
-            <ul class="intro-notes" aria-label="Stage 1 değerlendirme ilkeleri">
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce sağlık:</strong> Aktif motor veya aktarma arızası varsa kalibrasyon öncesi teşhis gerekir.</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce doğrulama:</strong> Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce denge:</strong> Tork hedefi, şanzıman ve kullanım biçimine göre planlanır.</span></li>
+            <ul class="intro-notes" aria-label="Yazılım ve kodlama hizmetleri">
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Yazılım kontrolü:</strong> Motor kontrol ünitesi, mevcut sürüm ve uyumlu seçenekler incelenir.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Konfor özellikleri:</strong> Desteklenen araçlarda ayna, kilitleme, aydınlatma ve gösterge ayarları.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce ve sonra:</strong> İşlem öncesi kayıt, uygun yazılım yedeği ve işlem sonrası işlev kontrolü.</span></li>
             </ul>
           </div>
 
           <div class="estimate-wrap reveal">
-            <section class="estimate-card" id="estimateCard" aria-label="Stage 1 tahmin kartı">
+            <section class="estimate-card" id="estimateCard" aria-label="Araç ve hizmet seçimi">
               <div class="calc-top">
-                <h3>Stage 1 tahmini</h3>
+                <h3>Aracını seç, seçenekleri gör</h3>
                 <span class="calc-status" id="stageStatus"><i class="status-signal" aria-hidden="true"></i>Araç seçin</span>
               </div>
               <div class="select-grid">
@@ -1259,35 +1238,18 @@ html{scroll-padding-top:1.25rem}
               <div class="vehicle-ident">
                 <div>
                   <p class="mono" id="vehicleYears">ARAÇ SEÇİMİ BEKLİYOR</p>
-                  <h4 id="vehicleName">Stage 1 için araç seçin</h4>
+                  <h4 id="vehicleName">Aracınız için seçenekleri görün</h4>
                   <p id="vehicleEngine">Önce marka, ardından model / motor seçin.</p>
                 </div>
                 <span class="vehicle-badge">Önce seçim</span>
               </div>
-              <div class="power-grid" aria-live="polite">
-                <div class="power-stat">
-                  <div class="label">Güç</div>
-                  <div class="value" id="psValue">—</div>
-                  <div class="gain" id="psGain">—</div>
-                </div>
-                <div class="power-stat">
-                  <div class="label">Tork</div>
-                  <div class="value" id="nmValue">—</div>
-                  <div class="gain" id="nmGain">—</div>
-                </div>
+              <div class="software-options" aria-label="Hizmet seçenekleri">
+                <div><span aria-hidden="true">01</span><strong>Motor yazılımı</strong><p>Mevcut sürüm, kontrol ünitesi uyumu ve kullanımına uygun seçenekler.</p></div>
+                <div><span aria-hidden="true">02</span><strong>Araç kodlama</strong><p>Desteklenen donanımlarda konfor, aydınlatma ve gösterge ayarları.</p></div>
+                <div><span aria-hidden="true">03</span><strong>Teşhis ve kontrol</strong><p>Arıza kayıtları, canlı sensör verileri ve işlem sonrası işlev testi.</p></div>
               </div>
-              <svg class="dyno-chart" viewBox="0 0 600 160" role="img" aria-label="Stok ve Stage 1 örnek güç eğrisi">
-                <defs>
-                  <linearGradient id="stageFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#2CB7AB" stop-opacity=".75"/><stop offset="1" stop-color="#2CB7AB" stop-opacity="0"/></linearGradient>
-                </defs>
-                <path class="chart-grid" d="M0 130H600M0 85H600M0 40H600M100 0V140M250 0V140M400 0V140M550 0V140" />
-                <path class="chart-fill" fill="url(#stageFill)" d="M10 133 C105 128 122 106 180 84 S292 52 350 39 S500 18 590 12 L590 140 L10 140 Z" />
-                <path class="chart-stock" d="M10 138 C110 135 135 119 184 102 S290 71 350 61 S505 42 590 36" />
-                <path class="chart-stage" d="M10 133 C105 128 122 106 180 84 S292 52 350 39 S500 18 590 12" />
-              </svg>
-              <div class="chart-legend" aria-label="Grafik açıklaması"><span class="legend-item"><i class="legend-line stock"></i>Stok güç</span><span class="legend-item"><i class="legend-line"></i>Stage 1 hedefi</span></div>
-              <div class="estimate-foot"><span aria-hidden="true">[i]</span><div>Bu değerler bilgi amaçlı aralıklardır. Kesin sonuç motor kodu, mekanik kontrol ve ölçüm koşullarında farklılaşabilir.</div></div>
-              <p class="vehicle-data-credit" style="color:#d9c6b0;font-size:.67rem;line-height:1.6;margin:.8rem 0">Araç ve motor referans verileri: <a href="https://github.com/gor3a/vehicle-makes-models" target="_blank" rel="noopener noreferrer">vehicle-makes-models</a> / <a href="https://www.autoevolution.com/" target="_blank" rel="noopener noreferrer">autoevolution</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a> · <a href="/assets/vehicle-data/index.json">Açık veri</a>. OEM onaylı veya doğrulanmış tuning verisi değildir.</p>
+              <div class="estimate-foot"><span aria-hidden="true">[i]</span><div>Her özellik her araçta bulunmaz. Seçiminiz araç kataloğunu açar; yapılabilecek işlemler donanım ve yazılım kontrolüyle netleşir.</div></div>
+              <p class="vehicle-data-credit" style="color:#d9c6b0;font-size:.67rem;line-height:1.6;margin:.8rem 0"><span>Araç ve motor referans verileri:</span> <a href="https://github.com/gor3a/vehicle-makes-models" target="_blank" rel="noopener noreferrer">vehicle-makes-models</a> / <a href="https://www.autoevolution.com/" target="_blank" rel="noopener noreferrer">autoevolution</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a> · <a href="/assets/vehicle-data/index.json">Açık veri</a>. <span>Donanım ve yazılım uyumu araç üzerinde doğrulanır.</span></p>
               <div class="estimate-request">
                 <button class="context-request" id="stageInquiry" type="button">
                   <span class="context-request-title">Bu araç için kişisel değerlendirme iste</span>
@@ -1303,8 +1265,8 @@ html{scroll-padding-top:1.25rem}
 
       <section class="ecu-after" id="ecu-summary" aria-labelledby="ecuAfterTitle">
         <div class="ecu-after__inner">
-          <h2 id="ecuAfterTitle"><span data-ecu-flow-text="summaryA">ECU açılır.</span> <em data-ecu-flow-text="summaryB">Güç şekillenir.</em></h2>
-          <p data-ecu-flow-text="summary">Gerçek Stage 1 sonucu yalnızca aracın motor kodu, mevcut durumu ve doğrulanmış verilerle değerlendirilir.</p>
+          <h2 id="ecuAfterTitle"><span data-ecu-flow-text="summaryA">Aracını tanıyoruz.</span> <em data-ecu-flow-text="summaryB">Ayarını sana uyduruyoruz.</em></h2>
+          <p data-ecu-flow-text="summary">Yazılım sürümü, desteklenen özellikler ve canlı veriler incelenir. İşlem kapsamı aracının donanımına ve ihtiyacına göre belirlenir.</p>
         </div>
       </section>
 
@@ -1354,10 +1316,10 @@ html{scroll-padding-top:1.25rem}
               <h2 id="services-title">Aracın için yazılım, kodlama ve teşhis.</h2>
               <p>Marka, model, yıl, motor ve istediğiniz hizmeti paylaşın. Uygunluk kontrolünden sonra aracınıza özel teklif isteyin.</p>
             </div>
-            <p class="compliance-key">Yasal kapsam: Stage 1 işlemleri gerekli onay ve tescil şartlarına bağlıdır. DPF, EGR/AGR, AdBlue/SCR ve NOx emisyon sistemlerinin devre dışı bırakılması yerine teşhis ve uygun onarım esas alınır.</p>
+            <p class="compliance-key">Her işlem aracın donanımına ve yazılımına göre değerlendirilir. Gerekli onaylar işlemden önce netleştirilir; emisyon sistemlerinde teşhis ve onarım esas alınır.</p>
           </div>
           <div class="services-grid">
-<a class="service-card reveal" href="#aracin"><span class="service-number">01</span><span class="service-tag">Chiptuning</span><h3>ECU Yazılımı &amp; Stage 1</h3><p>Motor/ECU uyumu, teknik durum ve gerekli onaylar kontrol edilerek Stage 1 uygunluğu değerlendirilir.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="#aracin"><span class="service-number">01</span><span class="service-tag">Software-Service</span><h3>Motor Yazılımı &amp; Ayarlar</h3><p>Mevcut yazılım sürümünün kontrolü, uyumlu yazılım işlemleri ve kullanım beklentinize göre araç özelinde değerlendirme.</p><i class="service-line" aria-hidden="true"></i></a>
 <a class="service-card reveal" href="#iletisim"><span class="service-number">02</span><span class="service-tag">Codierung</span><h3>Araç Kodlama &amp; Adaptasyon</h3><p>Desteklenen modellerde kontrol ünitesi kodlama, adaptasyonlar ve konfor özellikleri.</p><i class="service-line" aria-hidden="true"></i></a>
 <a class="service-card reveal" href="fehlercodes/"><span class="service-number">03</span><span class="service-tag">OBD / Live-Daten</span><h3>Arıza Kodu &amp; Canlı Veri Teşhisi</h3><p>Hata kodları, freeze-frame ve sensör verileriyle sorunların olası nedenlerini değerlendirme.</p><i class="service-line" aria-hidden="true"></i></a>
 <a class="service-card reveal" href="#iletisim"><span class="service-number">04</span><span class="service-tag">ECU Backup</span><h3>ECU Okuma, Yazma &amp; Yedekleme</h3><p>Uyumlu kontrol ünitelerinde orijinal yazılım yedeği ve ECU dosya işlemleri için ön kontrol.</p><i class="service-line" aria-hidden="true"></i></a>
@@ -1373,11 +1335,11 @@ html{scroll-padding-top:1.25rem}
           <div class="process-copy reveal">
             <p class="eyebrow">6006 yaklaşımı</p>
             <h2 id="process-title">Dosya değil, ölçülü karar.</h2>
-            <p>Her araç, güç hedefinden önce mevcut durumuyla ele alınır. Bu yaklaşım hem sonucu hem de iletişimi daha güvenilir kılar.</p>
+            <p>Önce aracının mevcut durumunu ve istediğin özelliği anlıyoruz. Uygun işlemi belirliyor, değişikliği kaydediyor ve sonucu kontrol ediyoruz.</p>
           </div>
           <ol class="process-list reveal">
             <li><div><h3>Oku ve doğrula</h3><p>Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
-            <li><div><h3>Kalibre et</h3><p>Hedefler, yakıt kalitesi ve aktarma limitleriyle uyumlu biçimde belirlenir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Araca uygun ayarla</h3><p>Desteklenen işlevler, mevcut donanım ve kullanım ihtiyacına göre ayarlanır.</p></div><i class="process-marker" aria-hidden="true"></i></li>
             <li><div><h3>Kontrol et</h3><p>Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
           </ol>
         </div>
@@ -1408,7 +1370,7 @@ html{scroll-padding-top:1.25rem}
       </div>
       <div class="concierge-messages" id="assistantMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
       <div class="concierge-quick" id="assistantQuick">
-        <button type="button" data-assistant-intent="stage">Stage 1</button>
+        <button type="button" data-assistant-intent="software">Yazılım ve kodlama</button>
         <button type="button" data-assistant-intent="dtc">Hata kodu</button>
         <button type="button" data-assistant-intent="consult">Danışmanlık</button>
       </div>
@@ -1429,22 +1391,21 @@ html{scroll-padding-top:1.25rem}
     </footer>
 
     <script defer src="/assets/6006-language-bridge.js"></script>
-    <script src="/assets/6006-vehicle-catalog.js?v=20261013-journey"></script>
+    <script src="/assets/6006-vehicle-catalog.js?v=20261016-services"></script>
     <script>
       const vehicles = [
-        { brand: "BMW", name: "320i G20", years: "2019–2024", engine: "2.0T B48 · Benzin · Otomatik", stock: { ps: 184, nm: 300 }, stage: { ps: [240, 250], nm: [380, 400] } },
-        { brand: "BMW", name: "320d G20", years: "2019–2024", engine: "2.0T B47 · Dizel · Otomatik", stock: { ps: 190, nm: 400 }, stage: { ps: [220, 230], nm: [440, 460] } },
-        { brand: "Audi", name: "A3 8V 1.4 TFSI", years: "2014–2020", engine: "1.4T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 }, stage: { ps: [175, 185], nm: [280, 300] } },
-        { brand: "Audi", name: "A3 8V 1.6 TDI", years: "2014–2020", engine: "1.6TDI · Dizel · Otomatik/Manuel", stock: { ps: 110, nm: 250 }, stage: { ps: [140, 145], nm: [310, 320] } },
-        { brand: "Mercedes-Benz", name: "C200 W205", years: "2015–2021", engine: "2.0T · Benzin · Otomatik", stock: { ps: 184, nm: 300 }, stage: { ps: [230, 245], nm: [360, 390] } },
-        { brand: "Mercedes-Benz", name: "E220d W213", years: "2016–2023", engine: "2.0TDI · Dizel · Otomatik", stock: { ps: 194, nm: 400 }, stage: { ps: [220, 230], nm: [460, 500] } },
-        { brand: "Volkswagen", name: "Golf VII 1.5 TSI", years: "2017–2020", engine: "1.5T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 }, stage: { ps: [180, 190], nm: [290, 310] } },
-        { brand: "Volkswagen", name: "Passat B8 2.0 TDI", years: "2015–2023", engine: "2.0TDI · Dizel · DSG", stock: { ps: 150, nm: 340 }, stage: { ps: [185, 195], nm: [390, 410] } },
-        { brand: "Ford", name: "Focus IV 1.5 EcoBlue", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 120, nm: 300 }, stage: { ps: [145, 155], nm: [340, 360] } },
-        { brand: "Peugeot", name: "308 1.5 BlueHDi", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 130, nm: 300 }, stage: { ps: [155, 165], nm: [350, 370] } }
+        { brand: "BMW", name: "320i G20", years: "2019–2024", engine: "2.0T B48 · Benzin · Otomatik", stock: { ps: 184, nm: 300 } },
+        { brand: "BMW", name: "320d G20", years: "2019–2024", engine: "2.0T B47 · Dizel · Otomatik", stock: { ps: 190, nm: 400 } },
+        { brand: "Audi", name: "A3 8V 1.4 TFSI", years: "2014–2020", engine: "1.4T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 } },
+        { brand: "Audi", name: "A3 8V 1.6 TDI", years: "2014–2020", engine: "1.6TDI · Dizel · Otomatik/Manuel", stock: { ps: 110, nm: 250 } },
+        { brand: "Mercedes-Benz", name: "C200 W205", years: "2015–2021", engine: "2.0T · Benzin · Otomatik", stock: { ps: 184, nm: 300 } },
+        { brand: "Mercedes-Benz", name: "E220d W213", years: "2016–2023", engine: "2.0TDI · Dizel · Otomatik", stock: { ps: 194, nm: 400 } },
+        { brand: "Volkswagen", name: "Golf VII 1.5 TSI", years: "2017–2020", engine: "1.5T · Benzin · Otomatik/Manuel", stock: { ps: 150, nm: 250 } },
+        { brand: "Volkswagen", name: "Passat B8 2.0 TDI", years: "2015–2023", engine: "2.0TDI · Dizel · DSG", stock: { ps: 150, nm: 340 } },
+        { brand: "Ford", name: "Focus IV 1.5 EcoBlue", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 120, nm: 300 } },
+        { brand: "Peugeot", name: "308 1.5 BlueHDi", years: "2018–2024", engine: "1.5TDI · Dizel · Otomatik/Manuel", stock: { ps: 130, nm: 300 } }
       ];
 
-      // Stage 1 rakamları yalnızca yukarıdaki doğrulanmış örnek profiller için gösterilir.
       // Aşağıdaki geniş dizin, ziyaretçinin aracını bulmasını ve bakım/tamir kataloğuna
       // geçmesini sağlar; doğrulanmamış araçlar için tahmini güç veya tork uydurulmaz.
       const vehicleDirectory = {
@@ -1509,34 +1470,166 @@ html{scroll-padding-top:1.25rem}
       ];
 
       const languageContent = {
-        tr: {
-          catalog: "GÜNCEL KATALOG", sample: "Örnek veri", related: "eşleşme", likely: "Muhtemel başlıklar", next: "Güvenli sonraki adım", noResultLabel: "SONUÇ YOK", noResultTitle: "Bu arama için bir kod bulunamadı.", noResultBody: "Örn. P0299, P2002 veya “turbo” deneyebilirsin. OBD kodu, üreticiye ve alt koda göre değişebilir.",
-          category: { "Hava/Turbo": "Hava / Turbo", "Yakıt": "Yakıt", "Egzoz & Emisyon": "Egzoz & Emisyon", "Şanzıman": "Şanzıman", "Sensörler": "Sensörler", "Haberleşme": "Haberleşme" },
-          severity: { "Kontrol gerekli": "Kontrol gerekli", "Öncelikli kontrol": "Öncelikli kontrol", "Teşhis önerilir": "Teşhis önerilir", "Ayrıntı kodu gerekli": "Ayrıntı kodu gerekli" },
-          assistant: {
-            launcher: "Akıllı danışman", title: "Akıllı danışman", reset: "Sıfırla", close: "Asistanı kapat", input: "Aracınızı veya kodunuzu yazın", send: "Gönder", whatsapp: "WhatsApp’ta devam et", privacy: "Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.",
-            quick: { stage: "Stage 1", dtc: "Hata kodu", consult: "Danışmanlık" }, greeting: "Aracınız için doğru ilk bilgiyi birlikte netleştirelim. Stage 1, hata kodu veya danışmanlık konusunu seçebilirsiniz.", stage: "Seçtiğiniz araç profili için Stage 1 değerleri aşağıdadır.", stageNeedVehicle: "Stage 1 aralığı için araç marka/modeli, motor/yakıt, yıl ve şanzımanı yazın. Örn. “Passat B8 2.0 TDI 150 PS DSG, 2018”.", dtc: "Hata kodunu (ör. P0299) ve mümkünse belirtiyi yazın. Kod tek başına kesin teşhis değildir.", consult: "Araç marka/modeli, motor, yıl ve beklentinizi yazın. Size WhatsApp için düzenli bir talep özeti hazırlayacağım.", generic: "Size Stage 1, hata kodu veya teknik danışmanlık konusunda yardımcı olabilirim. Aracınızı ya da hata kodunu yazabilirsiniz.", legal: "DPF, EGR veya AdBlue sistemini devre dışı bırakma konusunda yardımcı olamam. Hata kodunu veya belirtileri paylaşın; üretici standartlarına uygun teşhis ve onarım seçeneklerini netleştirelim.", safety: "Bu belirti güvenlik veya motor sağlığı açısından öncelikli olabilir. Aracı zorlamayın; profesyonel teşhis değerlendirmesi alın.", dtcFound: "Bu kod için sitedeki teknik rehbere yönlendirdim. Canlı veri ve araç bağlamı olmadan kesin parça kararı verilmemelidir.", waIntro: "Merhaba 6006 Performance, teknik danışmanlık talebim var.", waVehicle: "Araç", waVehicleMissing: "Araç: henüz seçilmedi", waStage: "Katalog Stage 1", waRequest: "Talep", waNote: "Not"
-          }
-        },
-        de: {
-          catalog: "AKTUELLER KATALOG", sample: "Beispieldaten", related: "Treffer für", likely: "Mögliche Ursachen", next: "Sicherer nächster Schritt", noResultLabel: "KEIN TREFFER", noResultTitle: "Für diese Suche wurde kein Code gefunden.", noResultBody: "Versuchen Sie z. B. P0299, P2002 oder „Turbo“. OBD-Codes können je nach Hersteller und Untercode variieren.",
-          category: { "Hava/Turbo": "Luft / Turbo", "Yakıt": "Kraftstoff", "Egzoz & Emisyon": "Abgas & Emissionen", "Şanzıman": "Getriebe", "Sensörler": "Sensoren", "Haberleşme": "Kommunikation" },
-          severity: { "Kontrol gerekli": "Prüfung erforderlich", "Öncelikli kontrol": "Vorrangige Prüfung", "Teşhis önerilir": "Diagnose empfohlen", "Ayrıntı kodu gerekli": "Detailcode erforderlich" },
-          assistant: {
-            launcher: "Technikassistent", title: "Technikassistent", reset: "Zurücksetzen", close: "Assistent schließen", input: "Fahrzeug oder Fehlercode eingeben", send: "Senden", whatsapp: "Weiter auf WhatsApp", privacy: "Die Angaben bleiben nur auf diesem Gerät. Den vorbereiteten Überblick senden Sie selbst über WhatsApp.",
-            quick: { stage: "Stage 1", dtc: "Fehlercode", consult: "Beratung" }, greeting: "Lassen Sie uns die passenden ersten Angaben für Ihr Fahrzeug klären. Wählen Sie Stage 1, Fehlercode oder Beratung.", stage: "Hier sind die Stage-1-Werte für das ausgewählte Fahrzeugprofil.", stageNeedVehicle: "Für eine Stage-1-Spanne nennen Sie bitte Marke/Modell, Motor/Kraftstoff, Baujahr und Getriebe. Beispiel: „Passat B8 2.0 TDI 150 PS DSG, 2018“.", dtc: "Senden Sie den Fehlercode (z. B. P0299) und möglichst das Symptom. Ein Code allein ist keine eindeutige Diagnose.", consult: "Schreiben Sie Marke/Modell, Motor, Baujahr und Ihr Ziel. Ich bereite eine strukturierte Anfrage für WhatsApp vor.", generic: "Ich helfe Ihnen bei Stage 1, Fehlercodes oder einer technischen Beratung. Schreiben Sie Ihr Fahrzeug oder den Fehlercode.", legal: "Bei der Deaktivierung von DPF, EGR oder AdBlue kann ich nicht helfen. Teilen Sie Fehlercode oder Symptome mit; wir klären herstellerkonforme Diagnose- und Instandsetzungsoptionen.", safety: "Dieses Symptom kann für die Sicherheit oder den Motorschutz kritisch sein. Bitte das Fahrzeug nicht weiter belasten und professionell prüfen lassen.", dtcFound: "Für diesen Code finden Sie in der technischen Übersicht einen ersten Hinweis. Ohne Live-Daten und Fahrzeugkontext sollte keine endgültige Teileentscheidung getroffen werden.", waIntro: "Hallo 6006 Performance, ich möchte eine technische Beratung.", waVehicle: "Fahrzeug", waVehicleMissing: "Fahrzeug: noch nicht ausgewählt", waStage: "Stage-1-Katalogwert", waRequest: "Anfrage", waNote: "Notiz"
-          }
-        },
-        en: {
-          catalog: "CURRENT CATALOGUE", sample: "Sample data", related: "match", likely: "Likely causes", next: "Safe next step", noResultLabel: "NO RESULT", noResultTitle: "No code was found for this search.", noResultBody: "Try P0299, P2002 or “turbo”. OBD codes may vary by manufacturer and subcode.",
-          category: { "Hava/Turbo": "Air / turbo", "Yakıt": "Fuel", "Egzoz & Emisyon": "Exhaust & emissions", "Şanzıman": "Transmission", "Sensörler": "Sensors", "Haberleşme": "Communication" },
-          severity: { "Kontrol gerekli": "Check required", "Öncelikli kontrol": "Priority check", "Teşhis önerilir": "Diagnosis recommended", "Ayrıntı kodu gerekli": "Detail code required" },
-          assistant: {
-            launcher: "Smart concierge", title: "Smart concierge", reset: "Reset", close: "Close assistant", input: "Enter your vehicle or code", send: "Send", whatsapp: "Continue in WhatsApp", privacy: "Details stay only on this device. You send the prepared summary yourself in WhatsApp.",
-            quick: { stage: "Stage 1", dtc: "Fault code", consult: "Consultation" }, greeting: "Let’s clarify the right first details for your vehicle. Choose Stage 1, fault code or consultation.", stage: "Here are the Stage 1 figures for the selected vehicle profile.", stageNeedVehicle: "For a Stage 1 range, provide make/model, engine/fuel, year and gearbox. Example: “Passat B8 2.0 TDI 150 PS DSG, 2018”.", dtc: "Send the fault code (for example P0299) and, if possible, the symptom. A code alone is not a definitive diagnosis.", consult: "Write the make/model, engine, year and your objective. I’ll prepare a structured WhatsApp request.", generic: "I can help with Stage 1, fault codes or technical consultation. Write your vehicle or fault code.", legal: "I can’t help deactivate DPF, EGR or AdBlue systems. Share the fault code or symptoms and we can identify manufacturer-aligned diagnostic and repair options.", safety: "This symptom may need priority attention for safety or engine protection. Please do not stress the vehicle and arrange professional diagnosis.", dtcFound: "The technical guide includes a first note for this code. No final part decision should be made without live data and vehicle context.", waIntro: "Hello 6006 Performance, I would like technical advice.", waVehicle: "Vehicle", waVehicleMissing: "Vehicle: not selected yet", waStage: "Stage 1 catalogue range", waRequest: "Request", waNote: "Note"
-          }
-        }
-      };
+  "tr": {
+    "catalog": "GÜNCEL KATALOG",
+    "sample": "Örnek veri",
+    "related": "eşleşme",
+    "likely": "Muhtemel başlıklar",
+    "next": "Güvenli sonraki adım",
+    "noResultLabel": "SONUÇ YOK",
+    "noResultTitle": "Bu arama için bir kod bulunamadı.",
+    "noResultBody": "Örn. P0299, P2002 veya “turbo” deneyebilirsin. OBD kodu, üreticiye ve alt koda göre değişebilir.",
+    "category": {
+      "Hava/Turbo": "Hava / Turbo",
+      "Yakıt": "Yakıt",
+      "Egzoz & Emisyon": "Egzoz & Emisyon",
+      "Şanzıman": "Şanzıman",
+      "Sensörler": "Sensörler",
+      "Haberleşme": "Haberleşme"
+    },
+    "severity": {
+      "Kontrol gerekli": "Kontrol gerekli",
+      "Öncelikli kontrol": "Öncelikli kontrol",
+      "Teşhis önerilir": "Teşhis önerilir",
+      "Ayrıntı kodu gerekli": "Ayrıntı kodu gerekli"
+    },
+    "assistant": {
+      "launcher": "Akıllı danışman",
+      "title": "Akıllı danışman",
+      "reset": "Sıfırla",
+      "close": "Asistanı kapat",
+      "input": "Aracınızı veya kodunuzu yazın",
+      "send": "Gönder",
+      "whatsapp": "WhatsApp’ta devam et",
+      "privacy": "Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.",
+      "quick": {
+        "dtc": "Hata kodu",
+        "consult": "Danışmanlık",
+        "software": "Yazılım ve kodlama"
+      },
+      "greeting": "Yazılım hizmetleri, araç kodlama veya arıza kodları hakkında yardımcı olabilirim. Marka, model, yıl ve öğrenmek istediğiniz özelliği yazın.",
+      "dtc": "Hata kodunu (ör. P0299) ve mümkünse belirtiyi yazın. Kod tek başına kesin teşhis değildir.",
+      "consult": "Araç marka/modeli, motor, yıl ve beklentinizi yazın. Size WhatsApp için düzenli bir talep özeti hazırlayacağım.",
+      "generic": "Motor yazılımı, araç kodlama, konfor özellikleri ve arıza teşhisi hakkında yardımcı olabilirim. Aracınızı ve istediğiniz işlemi yazın.",
+      "legal": "DPF, EGR veya AdBlue sistemini devre dışı bırakma konusunda yardımcı olamam. Hata kodunu veya belirtileri paylaşın; üretici standartlarına uygun teşhis ve onarım seçeneklerini netleştirelim.",
+      "safety": "Bu belirti güvenlik veya motor sağlığı açısından öncelikli olabilir. Aracı zorlamayın; profesyonel teşhis değerlendirmesi alın.",
+      "dtcFound": "Bu kod için sitedeki teknik rehbere yönlendirdim. Canlı veri ve araç bağlamı olmadan kesin parça kararı verilmemelidir.",
+      "waIntro": "Merhaba 6006 Performance, teknik danışmanlık talebim var.",
+      "waVehicle": "Araç",
+      "waVehicleMissing": "Araç: henüz seçilmedi",
+      "waRequest": "Talep",
+      "waNote": "Not",
+      "software": "Motor yazılımı sürümü ve uyumlu ayarlar incelenir. Desteklenen araçlarda ayna, kilitleme, aydınlatma ve gösterge işlevleri ayarlanabilir. Hangi özelliği istediğinizi yazın; araç donanımına göre değerlendirelim.",
+      "softwareNeedVehicle": "Yazılım ve kodlama için marka/model, yıl, motor ve istediğiniz özelliği yazın. Örneğin: “Golf 7, 2018, ayna katlama ve gösterge ayarları”."
+    }
+  },
+  "de": {
+    "catalog": "AKTUELLER KATALOG",
+    "sample": "Beispieldaten",
+    "related": "Treffer für",
+    "likely": "Mögliche Ursachen",
+    "next": "Sicherer nächster Schritt",
+    "noResultLabel": "KEIN TREFFER",
+    "noResultTitle": "Für diese Suche wurde kein Code gefunden.",
+    "noResultBody": "Versuchen Sie z. B. P0299, P2002 oder „Turbo“. OBD-Codes können je nach Hersteller und Untercode variieren.",
+    "category": {
+      "Hava/Turbo": "Luft / Turbo",
+      "Yakıt": "Kraftstoff",
+      "Egzoz & Emisyon": "Abgas & Emissionen",
+      "Şanzıman": "Getriebe",
+      "Sensörler": "Sensoren",
+      "Haberleşme": "Kommunikation"
+    },
+    "severity": {
+      "Kontrol gerekli": "Prüfung erforderlich",
+      "Öncelikli kontrol": "Vorrangige Prüfung",
+      "Teşhis önerilir": "Diagnose empfohlen",
+      "Ayrıntı kodu gerekli": "Detailcode erforderlich"
+    },
+    "assistant": {
+      "launcher": "Technikassistent",
+      "title": "Technikassistent",
+      "reset": "Zurücksetzen",
+      "close": "Assistent schließen",
+      "input": "Fahrzeug oder Fehlercode eingeben",
+      "send": "Senden",
+      "whatsapp": "Weiter auf WhatsApp",
+      "privacy": "Die Angaben bleiben nur auf diesem Gerät. Den vorbereiteten Überblick senden Sie selbst über WhatsApp.",
+      "quick": {
+        "dtc": "Fehlercode",
+        "consult": "Beratung",
+        "software": "Software & Codierung"
+      },
+      "greeting": "Ich helfe bei Software-Service, Fahrzeugcodierung und Fehlercodes. Nennen Sie Marke, Modell, Baujahr und die gewünschte Funktion.",
+      "dtc": "Senden Sie den Fehlercode (z. B. P0299) und möglichst das Symptom. Ein Code allein ist keine eindeutige Diagnose.",
+      "consult": "Schreiben Sie Marke/Modell, Motor, Baujahr und Ihr Ziel. Ich bereite eine strukturierte Anfrage für WhatsApp vor.",
+      "generic": "Ich helfe bei Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und Fehlerdiagnose. Nennen Sie Ihr Fahrzeug und den gewünschten Service.",
+      "legal": "Bei der Deaktivierung von DPF, EGR oder AdBlue kann ich nicht helfen. Teilen Sie Fehlercode oder Symptome mit; wir klären herstellerkonforme Diagnose- und Instandsetzungsoptionen.",
+      "safety": "Dieses Symptom kann für die Sicherheit oder den Motorschutz kritisch sein. Bitte das Fahrzeug nicht weiter belasten und professionell prüfen lassen.",
+      "dtcFound": "Für diesen Code finden Sie in der technischen Übersicht einen ersten Hinweis. Ohne Live-Daten und Fahrzeugkontext sollte keine endgültige Teileentscheidung getroffen werden.",
+      "waIntro": "Hallo 6006 Performance, ich möchte eine technische Beratung.",
+      "waVehicle": "Fahrzeug",
+      "waVehicleMissing": "Fahrzeug: noch nicht ausgewählt",
+      "waRequest": "Anfrage",
+      "waNote": "Notiz",
+      "software": "Wir prüfen den Softwarestand und passende Einstellungen. Bei unterstützten Fahrzeugen lassen sich Spiegel-, Verriegelungs-, Licht- und Anzeigefunktionen anpassen. Welche Funktion wünschen Sie? Die Möglichkeiten hängen von der Fahrzeugausstattung ab.",
+      "softwareNeedVehicle": "Für Software und Codierung nennen Sie bitte Marke/Modell, Baujahr, Motor und gewünschte Funktion. Zum Beispiel: „Golf 7, 2018, Spiegelanklappung und Anzeigeeinstellungen“."
+    }
+  },
+  "en": {
+    "catalog": "CURRENT CATALOGUE",
+    "sample": "Sample data",
+    "related": "match",
+    "likely": "Likely causes",
+    "next": "Safe next step",
+    "noResultLabel": "NO RESULT",
+    "noResultTitle": "No code was found for this search.",
+    "noResultBody": "Try P0299, P2002 or “turbo”. OBD codes may vary by manufacturer and subcode.",
+    "category": {
+      "Hava/Turbo": "Air / turbo",
+      "Yakıt": "Fuel",
+      "Egzoz & Emisyon": "Exhaust & emissions",
+      "Şanzıman": "Transmission",
+      "Sensörler": "Sensors",
+      "Haberleşme": "Communication"
+    },
+    "severity": {
+      "Kontrol gerekli": "Check required",
+      "Öncelikli kontrol": "Priority check",
+      "Teşhis önerilir": "Diagnosis recommended",
+      "Ayrıntı kodu gerekli": "Detail code required"
+    },
+    "assistant": {
+      "launcher": "Smart concierge",
+      "title": "Smart concierge",
+      "reset": "Reset",
+      "close": "Close assistant",
+      "input": "Enter your vehicle or code",
+      "send": "Send",
+      "whatsapp": "Continue in WhatsApp",
+      "privacy": "Details stay only on this device. You send the prepared summary yourself in WhatsApp.",
+      "quick": {
+        "dtc": "Fault code",
+        "consult": "Consultation",
+        "software": "Software & coding"
+      },
+      "greeting": "I can help with vehicle software, coding and fault codes. Enter the make, model, year and the function you would like.",
+      "dtc": "Send the fault code (for example P0299) and, if possible, the symptom. A code alone is not a definitive diagnosis.",
+      "consult": "Write the make/model, engine, year and your objective. I’ll prepare a structured WhatsApp request.",
+      "generic": "I can help with engine software, vehicle coding, comfort functions and fault diagnosis. Enter your vehicle and the service you need.",
+      "legal": "I can’t help deactivate DPF, EGR or AdBlue systems. Share the fault code or symptoms and we can identify manufacturer-aligned diagnostic and repair options.",
+      "safety": "This symptom may need priority attention for safety or engine protection. Please do not stress the vehicle and arrange professional diagnosis.",
+      "dtcFound": "The technical guide includes a first note for this code. No final part decision should be made without live data and vehicle context.",
+      "waIntro": "Hello 6006 Performance, I would like technical advice.",
+      "waVehicle": "Vehicle",
+      "waVehicleMissing": "Vehicle: not selected yet",
+      "waRequest": "Request",
+      "waNote": "Note",
+      "software": "We check the software version and compatible settings. Supported vehicles may allow mirror, locking, lighting and display functions to be adjusted. Tell us which function you want; availability depends on the equipment in your vehicle.",
+      "softwareNeedVehicle": "For software and coding, provide make/model, year, engine and the function you want. For example: “Golf 7, 2018, folding mirrors and display settings”."
+    }
+  }
+};
 
       const quickAccessCopy = {
         tr: {
@@ -1571,80 +1664,83 @@ html{scroll-padding-top:1.25rem}
         }
       };
 
-      const stageCopy = {
-        tr: {
-          brandPlaceholder: "Marka seçin",
-          modelFirst: "Önce marka seçin",
-          modelPlaceholder: "Model / motor seçin",
-          statusEmpty: "Araç seçin",
-          statusReady: "Veri hazır",
-          emptyYears: "ARAÇ SEÇİMİ BEKLİYOR",
-          emptyName: "Stage 1 için araç seçin",
-          emptyEngine: "Önce marka, ardından model / motor seçin.",
-          emptyBadge: "Önce seçim",
-          sample: "Örnek veri",
-          statusReview: "Doğrulama gerekli",
-          reviewYears: "GENİŞ ARAÇ DİZİNİ",
-          reviewName: "Bu araç için Stage 1 aralığı doğrulanmalı",
-          reviewEngine: "Bakım, tamir ve arıza rehberi aşağıdaki katalogda açılabilir. Güç/tork ancak motor kodu ve şanzımanla doğrulanır.",
-          reviewBadge: "Kesin veri yok",
-          catalogueLink: "Bu araç için bakım ve tamir kataloğunu aç"
-        },
-        de: {
-          brandPlaceholder: "Marke wählen",
-          modelFirst: "Zuerst Marke wählen",
-          modelPlaceholder: "Modell / Motor wählen",
-          statusEmpty: "Fahrzeug wählen",
-          statusReady: "Daten bereit",
-          emptyYears: "FAHRZEUGAUSWAHL AUSSTEHEND",
-          emptyName: "Fahrzeug für Stage 1 wählen",
-          emptyEngine: "Zuerst Marke, dann Modell / Motor wählen.",
-          emptyBadge: "Erst auswählen",
-          sample: "Beispieldaten",
-          statusReview: "Abgleich erforderlich",
-          reviewYears: "ERWEITERTES FAHRZEUGVERZEICHNIS",
-          reviewName: "Stage-1-Spanne für dieses Fahrzeug prüfen",
-          reviewEngine: "Wartung, Reparatur und Diagnose lassen sich im Katalog öffnen. Leistung und Drehmoment werden erst mit Motorcode und Getriebe bestätigt.",
-          reviewBadge: "Keine Pauschalwerte",
-          catalogueLink: "Wartungs- und Reparaturkatalog für dieses Fahrzeug öffnen"
-        },
-        en: {
-          brandPlaceholder: "Select brand",
-          modelFirst: "Select a brand first",
-          modelPlaceholder: "Select model / engine",
-          statusEmpty: "Select vehicle",
-          statusReady: "Data ready",
-          emptyYears: "VEHICLE SELECTION PENDING",
-          emptyName: "Select a vehicle for Stage 1",
-          emptyEngine: "Select brand, then model / engine.",
-          emptyBadge: "Select first",
-          sample: "Sample data",
-          statusReview: "Verification required",
-          reviewYears: "EXTENDED VEHICLE DIRECTORY",
-          reviewName: "Verify the Stage 1 range for this vehicle",
-          reviewEngine: "Open maintenance, repair and fault guidance in the catalogue below. Power and torque need the confirmed engine code and gearbox.",
-          reviewBadge: "No generic figures",
-          catalogueLink: "Open maintenance and repair catalogue for this vehicle"
-        }
-      };
+      const vehicleCopy = {
+  "tr": {
+    "brandPlaceholder": "Marka seçin",
+    "modelFirst": "Önce marka seçin",
+    "modelPlaceholder": "Model / motor seçin",
+    "statusEmpty": "Araç seçin",
+    "statusReady": "Araç seçildi",
+    "emptyYears": "ARAÇ SEÇİMİ BEKLİYOR",
+    "emptyName": "Aracınız için seçenekleri görün",
+    "emptyEngine": "Önce marka, ardından model / motor seçin.",
+    "emptyBadge": "Önce seçim",
+    "sample": "Araç profili",
+    "statusReview": "Araç seçildi",
+    "reviewYears": "GENİŞ ARAÇ DİZİNİ",
+    "reviewName": "Araç bilgilerini tamamlayın",
+    "reviewEngine": "Bakım, tamir ve arıza rehberini araç kataloğunda açın. Yazılım ve kodlama seçenekleri araç donanımı incelendikten sonra netleşir.",
+    "reviewBadge": "Araç profili",
+    "catalogueLink": "Bu aracın kataloğunu aç"
+  },
+  "de": {
+    "brandPlaceholder": "Marke wählen",
+    "modelFirst": "Zuerst Marke wählen",
+    "modelPlaceholder": "Modell / Motor wählen",
+    "statusEmpty": "Fahrzeug wählen",
+    "statusReady": "Fahrzeug gewählt",
+    "emptyYears": "FAHRZEUGAUSWAHL AUSSTEHEND",
+    "emptyName": "Möglichkeiten für Ihr Fahrzeug ansehen",
+    "emptyEngine": "Zuerst Marke, dann Modell / Motor wählen.",
+    "emptyBadge": "Erst auswählen",
+    "sample": "Fahrzeugprofil",
+    "statusReview": "Fahrzeug gewählt",
+    "reviewYears": "ERWEITERTES FAHRZEUGVERZEICHNIS",
+    "reviewName": "Fahrzeugangaben ergänzen",
+    "reviewEngine": "Wartung, Reparatur und Fehlerdiagnose im Fahrzeugkatalog öffnen. Software- und Codiermöglichkeiten werden anhand der Fahrzeugausstattung geprüft.",
+    "reviewBadge": "Fahrzeugprofil",
+    "catalogueLink": "Katalog für dieses Fahrzeug öffnen"
+  },
+  "en": {
+    "brandPlaceholder": "Select brand",
+    "modelFirst": "Select a brand first",
+    "modelPlaceholder": "Select model / engine",
+    "statusEmpty": "Select vehicle",
+    "statusReady": "Vehicle selected",
+    "emptyYears": "VEHICLE SELECTION PENDING",
+    "emptyName": "Explore options for your vehicle",
+    "emptyEngine": "Select brand, then model / engine.",
+    "emptyBadge": "Select first",
+    "sample": "Vehicle profile",
+    "statusReview": "Vehicle selected",
+    "reviewYears": "EXTENDED VEHICLE DIRECTORY",
+    "reviewName": "Complete vehicle details",
+    "reviewEngine": "Open maintenance, repair and fault guidance in the vehicle catalogue. Software and coding options depend on confirmed vehicle equipment.",
+    "reviewBadge": "Vehicle profile",
+    "catalogueLink": "Open this vehicle’s catalogue"
+  }
+};
 
       const assistantVehicleCopy = {
-        tr: {
-          matched: "Katalog eşleşmesi", stock: "Stok", gain: "Artış",
-          confirm: "Bu sonuç katalogdaki motor varyantı içindir; motor kodu, yıl ve şanzımanı teyit ederek netleştirelim.",
-          clarify: "Bu araç için tek bir doğru Stage 1 değeri yok. Motor/yakıt, stok güç, yıl ve şanzımanı yazın. Örnek: “Passat B8 2.0 TDI 150 PS DSG, 2018”."
-        },
-        de: {
-          matched: "Katalogtreffer", stock: "Serie", gain: "Zuwachs",
-          confirm: "Dieser Wert gilt für die Katalog-Motorvariante. Bitte Motorkennbuchstabe, Baujahr und Getriebe bestätigen.",
-          clarify: "Für dieses Fahrzeug gibt es keinen einzigen korrekten Stage-1-Wert. Bitte Motor/Kraftstoff, Serienleistung, Baujahr und Getriebe angeben. Beispiel: „Passat B8 2.0 TDI 150 PS DSG, 2018“.",
-        },
-        en: {
-          matched: "Catalogue match", stock: "Stock", gain: "Gain",
-          confirm: "This result applies to the catalogue engine variant; please confirm the engine code, year and gearbox.",
-          clarify: "There is no single correct Stage 1 figure for this vehicle. Please provide engine/fuel, stock power, year and gearbox. Example: “Passat B8 2.0 TDI 150 PS DSG, 2018”."
-        }
-      };
+  "tr": {
+    "matched": "Katalog eşleşmesi",
+    "stock": "Stok",
+    "confirm": "Bu sonuç katalogdaki motor varyantı içindir; motor kodu, yıl ve şanzımanı teyit ederek netleştirelim.",
+    "clarify": "Marka/model, yıl, motor ve istediğiniz özelliği yazın. Uygun yazılım veya kodlama işlemi araç donanımına göre belirlenir."
+  },
+  "de": {
+    "matched": "Katalogtreffer",
+    "stock": "Serie",
+    "confirm": "Dieser Wert gilt für die Katalog-Motorvariante. Bitte Motorkennbuchstabe, Baujahr und Getriebe bestätigen.",
+    "clarify": "Bitte Marke/Modell, Baujahr, Motor und die gewünschte Funktion nennen. Passende Software- und Codierarbeiten hängen von der Fahrzeugausstattung ab."
+  },
+  "en": {
+    "matched": "Catalogue match",
+    "stock": "Stock",
+    "confirm": "This result applies to the catalogue engine variant; please confirm the engine code, year and gearbox.",
+    "clarify": "Enter make/model, year, engine and the function you want. Suitable software and coding work depends on the vehicle equipment."
+  }
+};
 
       const contactCopy = {
         tr: {
@@ -1669,15 +1765,15 @@ html{scroll-padding-top:1.25rem}
 
       const inquiryCopy = {
         tr: {
-          stageAction: "Kişisel Stage 1 değerlendirmesi iste",
+          softwareAction: "Yazılım ve kodlama için teklif iste",
           channel: "WhatsApp Business",
           compliance: "Trafiğe uygunluk, sigorta, garanti ve emisyon sistemleri işlemden önce ayrıca değerlendirilir.",
-          stageIntro: "Merhaba 6006 Performance, Stage 1 değerlendirmesi istiyorum.",
+          softwareIntro: "Merhaba 6006 Performance, aracım için yazılım ve kodlama seçeneklerini öğrenmek istiyorum.",
           vehicle: "Araç",
           engine: "Motor",
           years: "Yıl aralığı",
-          catalogue: "Katalog Stage 1 aralığı",
-          stagePrompt: "Lütfen motor kodu, mevcut yazılım, teknik durum ve uygunluk kontrolü için sonraki adımı paylaşın.",
+
+          softwarePrompt: "Lütfen motor kodu, mevcut yazılım, teknik durum ve uygunluk kontrolü için sonraki adımı paylaşın.",
           faultAction: (code) => `${code} için OEM uyumlu teşhis iste`,
           faultIntro: "Merhaba 6006 Performance, OEM uyumlu teşhis değerlendirmesi istiyorum.",
           faultCode: "Hata kodu",
@@ -1685,15 +1781,15 @@ html{scroll-padding-top:1.25rem}
           faultPrompt: "Lütfen marka/model, motor, yıl ve belirtileri (ne zaman, ne sıklıkta, hangi uyarı ışığı) ekleyin."
         },
         de: {
-          stageAction: "Persönliche Stage-1-Bewertung anfragen",
+          softwareAction: "Software- und Codierangebot anfragen",
           channel: "WhatsApp Business",
           compliance: "Straßenzulässigkeit, Betriebserlaubnis, Versicherung, Garantie und Emissionssysteme werden vor einer Beauftragung gesondert geprüft.",
-          stageIntro: "Hallo 6006 Performance, ich möchte eine Stage-1-Bewertung anfragen.",
+          softwareIntro: "Hallo 6006 Performance, ich möchte Software- und Codiermöglichkeiten für mein Fahrzeug anfragen.",
           vehicle: "Fahrzeug",
           engine: "Motor",
           years: "Baujahrbereich",
-          catalogue: "Stage-1-Katalogbereich",
-          stagePrompt: "Bitte teilen Sie mir den nächsten Schritt für die Prüfung von Motorkennbuchstabe, Softwarestand, technischem Zustand und Zulässigkeit mit.",
+
+          softwarePrompt: "Bitte teilen Sie mir den nächsten Schritt für die Prüfung von Motorkennbuchstabe, Softwarestand, technischem Zustand und Zulässigkeit mit.",
           faultAction: (code) => `OEM-orientierte Diagnose für ${code} anfragen`,
           faultIntro: "Hallo 6006 Performance, ich möchte eine OEM-orientierte Diagnose anfragen.",
           faultCode: "Fehlercode",
@@ -1701,15 +1797,15 @@ html{scroll-padding-top:1.25rem}
           faultPrompt: "Bitte ergänzen Sie Marke/Modell, Motor, Baujahr und Symptome (wann, wie häufig, welche Warnleuchte)."
         },
         en: {
-          stageAction: "Request a personal Stage 1 assessment",
+          softwareAction: "Request a software and coding quote",
           channel: "WhatsApp Business",
           compliance: "Road legality, insurance, warranty and emissions systems are assessed separately before any work is agreed.",
-          stageIntro: "Hello 6006 Performance, I would like a Stage 1 assessment.",
+          softwareIntro: "Hello 6006 Performance, I would like to discuss software and coding options for my vehicle.",
           vehicle: "Vehicle",
           engine: "Engine",
           years: "Year range",
-          catalogue: "Stage 1 catalogue range",
-          stagePrompt: "Please share the next step for checking the engine code, software version, technical condition and suitability.",
+
+          softwarePrompt: "Please share the next step for checking the engine code, software version, technical condition and suitability.",
           faultAction: (code) => `Request OEM-aligned diagnosis for ${code}`,
           faultIntro: "Hello 6006 Performance, I would like an OEM-aligned diagnostic assessment.",
           faultCode: "Fault code",
@@ -1719,78 +1815,615 @@ html{scroll-padding-top:1.25rem}
       };
 
       const pageCopy = {
-        "ECU Yazılımı": { de: "ECU-Software", en: "ECU software" },
-        "6006 Performance · ECU Yazılımı · Kodlama · Arıza Teşhisi": { de: "6006 Performance · ECU-Software · Codierung · Diagnose", en: "6006 Performance · ECU software · Coding · Diagnostics" },
-        "ECU Yazılımı,": { de: "ECU-Optimierung,", en: "ECU software," },
-        "Kodlama ve Teşhis.": { de: "Codierung & Diagnose.", en: "Coding & Diagnostics." },
-        "6006 Performance: ECU yazılımı, araç kodlama ve canlı veriyle arıza teşhisi. Aracına özel teklif iste; ücretsiz arıza kodu ve çözüm rehberlerini de incele.": { de: "6006 Performance: ECU-Softwareoptimierung, Fahrzeugcodierung und Diagnose mit Live-Daten. Fordern Sie ein fahrzeugspezifisches Angebot an und entdecken Sie kostenlose Fehlercode-Ratgeber.", en: "6006 Performance: ECU software optimisation, vehicle coding and live-data diagnostics. Request a quote for your car and explore free fault-code guides." },
-        "Hizmetlerimizi gör": { de: "Unsere Leistungen", en: "Explore services" },
-        "Teklif al": { de: "Angebot anfragen", en: "Request a quote" },
-        "ECU yazılımı & kalibrasyon": { de: "ECU-Software & Kalibrierung", en: "ECU software & calibration" },
-        "Kodlama & adaptasyon": { de: "Codierung & Anpassungen", en: "Coding & adaptations" },
-        "Teşhis & teknik destek": { de: "Diagnose & technische Hilfe", en: "Diagnostics & support" },
-        "Stage 1 · ECU Optimizasyonu": { de: "Stage 1 · ECU-Optimierung", en: "Stage 1 · ECU Optimisation" },
-        "Motor, ECU, emisyon mevzuatı ve gerekli onaylar kontrol edilerek araç özelinde değerlendirilir.": { de: "Wir prüfen Motor, ECU, Abgasvorschriften und erforderliche Genehmigungen, bevor eine fahrzeugspezifische Optimierung infrage kommt.", en: "We check the engine, ECU, emissions rules and required approvals before considering vehicle-specific optimisation." },
-        "DPF · EGR/AGR · AdBlue · NOx": { de: "DPF · AGR · AdBlue · NOx", en: "DPF · EGR · AdBlue · NOx" },
-        "Sensör, dozaj ve rejenerasyon teşhisi; emisyon sistemlerini devre dışı bırakmadan yasal onarım.": { de: "Sensor-, Dosier- und Regenerationsdiagnose sowie zulässige Reparaturen statt Abschaltung der Abgasreinigung.", en: "Sensor, dosing and regeneration diagnostics with compliant repairs, not emissions-system deactivation." },
-        "Teşhis hizmetlerini gör →": { de: "Diagnoseleistungen ansehen →", en: "View diagnostics →" },
-        "Stage 1 · Motor Referansları": { de: "Stage 1 · Motor-Referenzkatalog", en: "Stage 1 · Engine References" },
-        "32 markada yayımlanmış 62 üçüncü taraf motor örneğini kaynaklarıyla karşılaştır.": { de: "62 veröffentlichte Motorbeispiele von Drittanbietern für 32 Automarken mit Originalquellen vergleichen.", en: "Compare 62 published third-party engine examples across 32 makes, with original sources." },
-        "Motor örneklerini gör →": { de: "Motorreferenzen ansehen →", en: "View engine examples →" },
-        "Aracını seç →": { de: "Fahrzeug wählen →", en: "Choose vehicle →" },
-        "6006 Performance · Hizmetlerimiz": { de: "6006 Performance · Unsere Leistungen", en: "6006 Performance · Our services" },
-        "Aracın için yazılım, kodlama ve teşhis.": { de: "Software, Codierung und Diagnose für Ihr Auto.", en: "Software, coding and diagnostics for your car." },
-        "Marka, model, yıl, motor ve istediğiniz hizmeti paylaşın. Uygunluk kontrolünden sonra aracınıza özel teklif isteyin.": { de: "Teilen Sie Marke, Modell, Baujahr, Motor und Ihr Anliegen mit. Nach der Eignungsprüfung erstellen wir ein individuelles Angebot.", en: "Share your vehicle make, model, year, engine and request. We assess suitability before preparing a personal quote." },
-        "ECU Yazılımı & Stage 1": { de: "ECU-Optimierung & Stage 1", en: "ECU optimisation & Stage 1" },
-        "Motor/ECU uyumu, teknik durum ve gerekli onaylar kontrol edilerek Stage 1 uygunluğu değerlendirilir.": { de: "Stage-1-Eignung erst nach Prüfung von Motor/ECU, technischem Zustand und erforderlichen Genehmigungen.", en: "Stage 1 eligibility is assessed only after engine/ECU, vehicle condition and required approvals are checked." },
-        "Araç Kodlama & Adaptasyon": { de: "Fahrzeugcodierung & Anpassung", en: "Vehicle coding & adaptations" },
-        "Desteklenen modellerde kontrol ünitesi kodlama, adaptasyonlar ve konfor özellikleri.": { de: "Steuergerätecodierung, zulässige Anpassungen und Komfortfunktionen bei unterstützten Modellen.", en: "Control unit coding, permissible adaptations and convenience features on supported models." },
-        "Arıza Kodu & Canlı Veri Teşhisi": { de: "Fehlerdiagnose & Live-Daten", en: "Fault codes & live diagnostics" },
-        "Hata kodları, freeze-frame ve sensör verileriyle sorunların olası nedenlerini değerlendirme.": { de: "Fehlercodes, Freeze-Frame und Sensordaten helfen, mögliche Fehlerursachen einzugrenzen.", en: "Review potential root causes through fault codes, freeze-frame and sensor data." },
-        "ECU Okuma, Yazma & Yedekleme": { de: "ECU auslesen, schreiben & sichern", en: "ECU read, write & backup" },
-        "Uyumlu kontrol ünitelerinde orijinal yazılım yedeği ve ECU dosya işlemleri için ön kontrol.": { de: "Eignungsprüfung für Originalsoftware-Sicherung und ECU-Dateiarbeiten bei kompatiblen Steuergeräten.", en: "Eligibility check for original software backup and ECU file work on supported control units." },
-        "DPF, EGR, AdBlue & NOx Teşhisi": { de: "DPF-, AGR-, AdBlue- & NOx-Diagnose", en: "DPF, EGR, AdBlue & NOx Diagnostics" },
-        "DPF rejenerasyonu, EGR valfi, AdBlue/SCR dozajı ve NOx sensörü için teşhis ve mevzuata uygun onarım değerlendirmesi.": { de: "DPF-Regeneration, AGR-Ventil, AdBlue/SCR-Dosierung und NOx-Sensor: Diagnose und Prüfung zulässiger Reparaturen.", en: "DPF regeneration, EGR valve, AdBlue/SCR dosing and NOx sensor checks, with assessment of compliant repairs." },
-        "Araç Özelinde Teknik Teklif": { de: "Individuelles Fahrzeugangebot", en: "Vehicle-specific quote" },
-        "Marka, model, yıl, motor ve istediğiniz işlemi gönderin; yapılabilirliği ve fiyatı birlikte netleştirelim.": { de: "Senden Sie Marke, Modell, Baujahr, Motor und die gewünschte Leistung – Machbarkeit und Preis klären wir individuell.", en: "Send your vehicle details and requested service for an individual feasibility and pricing review." },
-        "ECU yazılımı, kodlama veya arıza teşhisi için marka, model, yıl, motor ve talebinizi WhatsApp ya da e-posta ile gönderin. Uygulanabilirlik ve fiyat araç özelinde netleştirilir.": { de: "Senden Sie Marke, Modell, Baujahr, Motor und Ihren Wunsch per WhatsApp oder E-Mail. Machbarkeit und Preis werden je Fahrzeug geprüft.", en: "Send make, model, year, engine and your request via WhatsApp or email for a vehicle-specific quote." },
-        "6006 Performance · Arıza kodları, bakım ve Stage 1": {"de":"6006 Performance · Fehlercodes, Wartung und Stage 1","en":"6006 Performance · Fault codes, maintenance & Stage 1"},
-        "Arıza kodları, bakım": {"de":"Fehlercodes, Wartung","en":"Fault codes, maintenance"},
-        "ve Stage 1.": {"de":"& Stage 1.","en":"& Stage 1."},
-        "Arıza kodunu öğren, bakım ve tamir rehberini aç veya aracına uygun Stage 1 bilgilerini incele. İhtiyacın olan bilgiye doğrudan ulaş.": {"de":"Fehlercodes verstehen, Wartung und Reparatur nachlesen oder Stage 1 für Ihr Fahrzeug erkunden. Direkt zur passenden Information.","en":"Understand fault codes, browse maintenance and repair guides, or explore Stage 1 for your vehicle. Find the right information fast."},
-        "Arıza kodu ara": {"de":"Fehlercode suchen","en":"Search fault codes"},
-        "Aracımı seç": {"de":"Fahrzeug wählen","en":"Choose my vehicle"},
-        "18.805 kod tanımı": {"de":"18.805 Code-Beschreibungen","en":"18,805 code definitions"},
-        "160+ marka": {"de":"160+ Fahrzeugmarken","en":"160+ vehicle brands"},
-        "Adım adım rehberler": {"de":"Schritt-für-Schritt-Anleitungen","en":"Step-by-step guides"},
-        "Aracını seç, motoruna uygun Stage 1 bilgilerini incele.": {"de":"Fahrzeug wählen und Stage-1-Informationen zum Motor ansehen.","en":"Choose your vehicle and explore Stage 1 information for its engine."},
-        "Stage 1'e git": {"de":"Stage 1 ansehen","en":"Explore Stage 1"},
-        "Sistemlere göz at": {"de":"Fahrzeugsysteme ansehen","en":"Explore vehicle systems"},
-        "Tüm kodları gör →": {"de":"Alle Fehlercodes →","en":"All fault codes →"},
-        "Turbo / Hava": {"de":"Turbo / Luft","en":"Turbo / Air"},
-        "DPF / Egzoz": {"de":"DPF / Abgas","en":"DPF / Exhaust"},
-        "EGR Sistemi": {"de":"AGR-System","en":"EGR system"},
-        "Hata kodları": { de: "Fehlercodes", en: "Fault codes" }, "Hata kodu rehberi": { de: "Fehlercode-Wissen", en: "Fault code knowledge" }, "Hizmetler": { de: "Leistungen", en: "Services" }, "Teknik rehber": { de: "Technik-Ratgeber", en: "Technical guide" }, "Tamir & bakım": { de: "Reparatur & Wartung", en: "Repair & maintenance" }, "Yaklaşım": { de: "Ansatz", en: "Approach" }, "Araç profili": { de: "Fahrzeugprofil", en: "Vehicle profile" }, "İletişim": { de: "Kontakt", en: "Contact" },
-        "6006 Performance · kalibrasyon atölyesi": { de: "6006 Performance · Kalibrierungswerkstatt", en: "6006 Performance · calibration atelier" }, "Hassasiyet, farkı": { de: "Präzision schafft den Unterschied —", en: "Precision makes the difference —" }, "sessizce": { de: "leise", en: "quietly" }, "yaratır.": { de: ".", en: "." },
-        "6006 Performance; motor verisini, sürüş beklentisini ve mekanik sınırları özenle bir araya getiren, araç özelinde bir kalibrasyon yaklaşımıdır.": { de: "6006 Performance steht für eine fahrzeugspezifische Kalibrierung, die Motordaten, Fahrerwartung und mechanische Grenzen mit Sorgfalt zusammenführt.", en: "6006 Performance is a vehicle-specific calibration approach that brings engine data, driving expectations and mechanical limits together with care." },
-        "Araç profilini gör": { de: "Fahrzeugprofil ansehen", en: "View vehicle profile" }, "Kod rehberi": { de: "Fehlercode-Leitfaden", en: "Code guide" }, "Detaylı hata kodu bilgisi": { de: "Detailliertes Fehlercode-Wissen", en: "Detailed fault-code knowledge" }, "Tüm kodlar": { de: "Alle Codes", en: "All codes" }, "Araç özelinde değerlendirme": { de: "Fahrzeugspezifische Beurteilung", en: "Vehicle-specific assessment" }, "Orijinal dosya yedeği": { de: "Sicherung der Originaldatei", en: "Original file backup" }, "Ölçülebilir teknik notlar": { de: "Nachvollziehbare technische Notizen", en: "Measurable technical notes" },
-        "Stage 1 keşfi": { de: "Stage-1-Analyse", en: "Stage 1 assessment" }, "Potansiyeli abartmadan, aralıklarla göster.": { de: "Potenzial, in ehrlichen Bandbreiten.", en: "Potential, expressed in honest ranges." },
-        "Rakamları kesin vaat gibi değil; motor kodu, yakıt, çevresel koşullar ve mekanik sağlıkla birlikte yorumlanan teknik bir başlangıç olarak sunuyoruz.": { de: "Die Werte sind kein verbindliches Versprechen, sondern ein technischer Ausgangspunkt — abhängig von Motorkennbuchstabe, Kraftstoff, Umgebungsbedingungen und mechanischem Zustand.", en: "These figures are not a fixed promise; they are a technical starting point, interpreted alongside engine code, fuel, ambient conditions and mechanical health." },
-        "Önce sağlık:": { de: "Erst der Zustand:", en: "Health first:" }, "Aktif motor veya aktarma arızası varsa kalibrasyon öncesi teşhis gerekir.": { de: "Bei aktiven Motor- oder Antriebsfehlern steht die Diagnose vor jeder Kalibrierung.", en: "Active engine or drivetrain faults require diagnosis before calibration." },
-        "Önce doğrulama:": { de: "Erst die Verifikation:", en: "Verification first:" }, "Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.": { de: "Für ein verbindliches Angebot prüfen wir Motorkennbuchstabe und Softwarestand.", en: "For a firm quotation, we verify engine code and software version." },
-        "Önce denge:": { de: "Erst die Balance:", en: "Balance first:" }, "Tork hedefi, şanzıman ve kullanım biçimine göre planlanır.": { de: "Das Drehmomentziel richtet sich nach Getriebe und Nutzung.", en: "Torque targets are planned around the transmission and intended use." },
-        "Stage 1 tahmini": { de: "Stage-1-Schätzung", en: "Stage 1 estimate" }, "Veri hazır": { de: "Daten bereit", en: "Data ready" }, "Marka": { de: "Marke", en: "Brand" }, "Model / motor": { de: "Modell / Motor", en: "Model / engine" }, "Güç": { de: "Leistung", en: "Power" }, "Tork": { de: "Drehmoment", en: "Torque" }, "Stok güç": { de: "Serienleistung", en: "Stock power" }, "Stage 1 hedefi": { de: "Stage-1-Zielwert", en: "Stage 1 target" },
-        "Bu değerler bilgi amaçlı aralıklardır. Kesin sonuç motor kodu, mekanik kontrol ve ölçüm koşullarında farklılaşabilir.": { de: "Diese Werte sind Orientierungsbereiche. Das tatsächliche Ergebnis kann je nach Motorkennbuchstabe, mechanischer Prüfung und Messbedingungen abweichen.", en: "These figures are indicative ranges. Actual results may vary with engine code, mechanical inspection and measurement conditions." },
-        "OBD rehberi": { de: "OBD-Leitfaden", en: "OBD guide" }, "Belirsizliği, doğru veriyle azalt.": { de: "Klarheit beginnt mit präzisen Daten.", en: "Clarity begins with the right data." }, "Hata kodu tek başına kesin teşhis değildir. Dondurulmuş veri, canlı değerler ve sistemin bağlamı birlikte değerlendirilmelidir.": { de: "Ein Fehlercode ist für sich allein keine eindeutige Diagnose. Freeze-Frame-Daten, Live-Werte und Systemkontext müssen gemeinsam bewertet werden.", en: "A fault code alone is not a definitive diagnosis. Freeze-frame data, live values and system context must be assessed together." },
-        "Hızlı kod bulucu": { de: "Fehlercode-Schnellsuche", en: "Quick code finder" }, "P0299 ya da “turbo” gibi bir kod veya anahtar kelime yaz.": { de: "Geben Sie einen Code oder Suchbegriff wie P0299 oder „Turbo“ ein.", en: "Enter a code or term such as P0299 or “turbo”." }, "Tümü": { de: "Alle", en: "All" }, "Hava / Turbo": { de: "Luft / Turbo", en: "Air / turbo" }, "Yakıt": { de: "Kraftstoff", en: "Fuel" }, "Egzoz": { de: "Abgas", en: "Exhaust" }, "Şanzıman": { de: "Getriebe", en: "Transmission" }, "Not:": { de: "Hinweis:", en: "Note:" }, "Kodu silmek arızayı çözmez. Önce kök nedenin bulunması gerekir.": { de: "Das Löschen eines Codes behebt den Fehler nicht. Zuerst muss die Ursache geklärt werden.", en: "Clearing a code does not resolve the fault. The root cause must be found first." },
-        "Teknik kapsam": { de: "Technischer Umfang", en: "Technical scope" }, "Teknik kapsam, ölçülü bir disiplin ister.": { de: "Technischer Umfang verlangt Disziplin mit Augenmaß.", en: "Technical scope calls for measured discipline." }, "Hizmeti sadece adıyla değil; araç güvenliği, mevzuat ve kullanım bağlamıyla birlikte tanımlıyoruz.": { de: "Wir definieren jede Leistung nicht allein über ihren Namen, sondern im Zusammenhang mit Fahrzeugsicherheit, Rechtslage und Nutzung.", en: "We define each service not merely by name, but in relation to vehicle safety, regulation and intended use." }, "Yasal kapsam: Stage 1 işlemleri gerekli onay ve tescil şartlarına bağlıdır. DPF, EGR/AGR, AdBlue/SCR ve NOx emisyon sistemlerinin devre dışı bırakılması yerine teşhis ve uygun onarım esas alınır.": { de: "Rechtlicher Rahmen: Stage 1 setzt die erforderlichen Genehmigungen und gegebenenfalls eine Eintragung voraus. Bei DPF, AGR, AdBlue/SCR und NOx stehen Diagnose und zulässige Reparaturen statt einer Deaktivierung im Vordergrund.", en: "Legal scope: Stage 1 depends on required approvals and registration where applicable. For DPF, EGR, AdBlue/SCR and NOx, we focus on diagnostics and compliant repairs rather than deactivation." },
-        "Uygunluk kontrolü": { de: "Eignungsprüfung", en: "Suitability check" }, "Canlı veri": { de: "Live-Daten", en: "Live data" }, "OEM uyumlu": { de: "OEM-orientiert", en: "OEM-aligned" }, "Kapalı alan / pist": { de: "Abgesperrtes Gelände / Rennstrecke", en: "Closed course / track" },
-        "Stage 1 ECU Kalibrasyonu": { de: "Stage-1-ECU-Kalibrierung", en: "Stage 1 ECU calibration" }, "Sağlıklı motor verileri ve aktarma sınırları üzerinde, dengeli güç ve tork hedefi.": { de: "Ausgewogene Leistungs- und Drehmomentziele auf Grundlage einwandfreier Motordaten und innerhalb der Grenzen des Antriebsstrangs.", en: "Balanced power and torque targets, based on sound engine data and within drivetrain limits." }, "Arıza Teşhisi": { de: "Fehlerdiagnose", en: "Fault diagnosis" }, "Hata kodu, freeze-frame ve temel çalışma değerlerini tek bir teknik hikâyede birleştirir.": { de: "Verbindet Fehlercode, Freeze-Frame-Daten und zentrale Betriebswerte zu einem stimmigen technischen Bild.", en: "Brings fault codes, freeze-frame data and core operating values into one coherent technical picture." }, "DPF Sağlık Kontrolü": { de: "DPF-Zustandsprüfung", en: "DPF health assessment" }, "Kurum yükü, diferansiyel basınç ve rejenerasyon koşullarının sistematik değerlendirmesi.": { de: "Systematische Beurteilung von Rußbeladung, Differenzdruck und Regenerationsbedingungen.", en: "A systematic assessment of soot load, differential pressure and regeneration conditions." }, "EGR Sistem Teşhisi": { de: "EGR-Systemdiagnose", en: "EGR system diagnosis" }, "Valf, soğutucu ve ilişkili sensörler için kök neden odaklı kontrol yaklaşımı.": { de: "Ursachenorientierte Prüfung von Ventil, Kühler und zugehörigen Sensoren.", en: "A root-cause-led assessment of the valve, cooler and associated sensors." }, "SCR / AdBlue Teşhisi": { de: "SCR-/AdBlue-Diagnose", en: "SCR / AdBlue diagnosis" }, "NOx, ısıtma, pompa ve dozaj sisteminin canlı veriyle teknik değerlendirmesi.": { de: "Technische Bewertung der NOx-, Heizungs-, Pumpen- und Dosiersysteme anhand von Live-Daten.", en: "A live-data technical assessment of NOx, heating, pump and dosing systems." }, "Pop & Bangs Değerlendirmesi": { de: "Bewertung von Pop & Bangs", en: "Pop & Bangs assessment" }, "Gürültü, ısıl yük ve yerel kurallar dikkate alınarak yalnızca araç uygunluğu kapsamında değerlendirilir.": { de: "Ausschließlich im Rahmen der Fahrzeugeignung und unter Berücksichtigung von Geräuschentwicklung, thermischer Belastung und örtlichen Vorschriften.", en: "Considered only in the context of vehicle suitability, with noise, thermal load and local rules in view." },
-        "6006 yaklaşımı": { de: "Der 6006-Ansatz", en: "The 6006 approach" }, "Dosya değil, ölçülü karar.": { de: "Nicht bloß eine Datei. Eine wohlüberlegte Entscheidung.", en: "Not a file. A considered decision." }, "Her araç, güç hedefinden önce mevcut durumuyla ele alınır. Bu yaklaşım hem sonucu hem de iletişimi daha güvenilir kılar.": { de: "Jedes Fahrzeug wird zunächst in seinem aktuellen Zustand beurteilt — noch vor jedem Leistungsziel. Das macht Ergebnis und Beratung verlässlicher.", en: "Each vehicle is assessed first as it stands, before setting a power target. This makes both the result and the conversation more dependable." }, "Oku ve doğrula": { de: "Auslesen & verifizieren", en: "Read & verify" }, "Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.": { de: "Motorkennbuchstabe, vorhandene Software, DTCs und wesentliche Betriebswerte werden erfasst.", en: "Engine code, existing software, DTCs and core operating values are established." }, "Kalibre et": { de: "Kalibrieren", en: "Calibrate" }, "Hedefler, yakıt kalitesi ve aktarma limitleriyle uyumlu biçimde belirlenir.": { de: "Ziele werden im Einklang mit Kraftstoffqualität und den Grenzen des Antriebsstrangs definiert.", en: "Targets are defined in line with fuel quality and drivetrain limits." }, "Kontrol et": { de: "Prüfen", en: "Check" }, "Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.": { de: "Das Ergebnis wird anhand von Live-Daten und Rückmeldung aus der Fahrt erneut bewertet.", en: "The result is reassessed through live data and driving feedback." },
-        "Yasal kullanım notu": { de: "Hinweis zur legalen Nutzung", en: "Legal-use notice" }, "DPF, EGR ve AdBlue gibi emisyon kontrol sistemlerinin devre dışı bırakılması trafiğe açık araçlarda mevzuata aykırı olabilir. Bu site, bu sistemleri devre dışı bırakmaya yönelik uygulama veya yönlendirme sunmaz; uygunluk ve OEM uyumlu teşhis yaklaşımını esas alır.": { de: "Die Deaktivierung von Emissionskontrollsystemen wie DPF, EGR und AdBlue kann bei Fahrzeugen im öffentlichen Straßenverkehr gegen geltendes Recht verstoßen. Diese Website bietet keine Durchführung oder Anleitung zur Deaktivierung solcher Systeme; ihr Fokus liegt auf Eignungsprüfung und OEM-orientierter Diagnose.", en: "Disabling emission-control systems such as the DPF, EGR and AdBlue may be unlawful for vehicles used on public roads. This site neither offers nor instructs on disabling these systems; it is centred on suitability checks and OEM-aligned diagnostics." },
-        "Bilgilendirme amaçlı teknik içerik. Araç üzerinde yapılacak her işlemden önce üretici, sigorta, garanti ve yerel mevzuat koşulları ayrıca doğrulanmalıdır.": { de: "Technische Inhalte zu Informationszwecken. Vor jedem Eingriff am Fahrzeug müssen Herstelleranforderungen, Versicherung, Garantiebedingungen und lokale rechtliche Vorgaben gesondert geprüft werden.", en: "Technical content for information purposes. Before any work is undertaken, manufacturer requirements, insurance, warranty conditions and local legal requirements must be verified separately." },
-        "Aracınızı ve hedefinizi paylaşın.": { de: "Teilen Sie uns Ihr Fahrzeug und Ihr Ziel mit.", en: "Share your vehicle and objective." }, "Teknik talebinizi e-posta ya da WhatsApp Business üzerinden iletebilirsiniz.": { de: "Senden Sie Ihre technische Anfrage per E-Mail oder über WhatsApp Business.", en: "Send your technical request by email or WhatsApp Business." }, "E-posta gönder": { de: "E-Mail senden", en: "Send email" }, "WhatsApp Business": { de: "WhatsApp Business", en: "WhatsApp Business" }, "Doğrudan mesaj": { de: "Direktnachricht", en: "Direct message" }
-      };
+  "ECU Yazılımı": {
+    "de": "ECU-Software",
+    "en": "ECU software"
+  },
+  "6006 Performance · ECU Yazılımı · Kodlama · Arıza Teşhisi": {
+    "de": "6006 Performance · ECU-Software · Codierung · Diagnose",
+    "en": "6006 Performance · ECU software · Coding · Diagnostics"
+  },
+  "ECU Yazılımı,": {
+    "de": "ECU-Optimierung,",
+    "en": "ECU software,"
+  },
+  "Kodlama ve Teşhis.": {
+    "de": "Codierung & Diagnose.",
+    "en": "Coding & Diagnostics."
+  },
+  "6006 Performance: ECU yazılımı, araç kodlama ve canlı veriyle arıza teşhisi. Aracına özel teklif iste; ücretsiz arıza kodu ve çözüm rehberlerini de incele.": {
+    "de": "6006 Performance: ECU-Softwareoptimierung, Fahrzeugcodierung und Diagnose mit Live-Daten. Fordern Sie ein fahrzeugspezifisches Angebot an und entdecken Sie kostenlose Fehlercode-Ratgeber.",
+    "en": "6006 Performance: ECU software optimisation, vehicle coding and live-data diagnostics. Request a quote for your car and explore free fault-code guides."
+  },
+  "Hizmetlerimizi gör": {
+    "de": "Unsere Leistungen",
+    "en": "Explore services"
+  },
+  "Teklif al": {
+    "de": "Angebot anfragen",
+    "en": "Request a quote"
+  },
+  "ECU yazılımı & kalibrasyon": {
+    "de": "ECU-Software & Kalibrierung",
+    "en": "ECU software & calibration"
+  },
+  "Kodlama & adaptasyon": {
+    "de": "Codierung & Anpassungen",
+    "en": "Coding & adaptations"
+  },
+  "Teşhis & teknik destek": {
+    "de": "Diagnose & technische Hilfe",
+    "en": "Diagnostics & support"
+  },
+  "Teşhis hizmetlerini gör →": {
+    "de": "Diagnoseleistungen ansehen →",
+    "en": "View diagnostics →"
+  },
+  "Aracını seç →": {
+    "de": "Fahrzeug wählen →",
+    "en": "Choose vehicle →"
+  },
+  "6006 Performance · Hizmetlerimiz": {
+    "de": "6006 Performance · Unsere Leistungen",
+    "en": "6006 Performance · Our services"
+  },
+  "Aracın için yazılım, kodlama ve teşhis.": {
+    "de": "Software, Codierung und Diagnose für Ihr Auto.",
+    "en": "Software, coding and diagnostics for your car."
+  },
+  "Marka, model, yıl, motor ve istediğiniz hizmeti paylaşın. Uygunluk kontrolünden sonra aracınıza özel teklif isteyin.": {
+    "de": "Teilen Sie Marke, Modell, Baujahr, Motor und Ihr Anliegen mit. Nach der Eignungsprüfung erstellen wir ein individuelles Angebot.",
+    "en": "Share your vehicle make, model, year, engine and request. We assess suitability before preparing a personal quote."
+  },
+  "Araç Kodlama & Adaptasyon": {
+    "de": "Fahrzeugcodierung & Anpassung",
+    "en": "Vehicle coding & adaptations"
+  },
+  "Desteklenen modellerde kontrol ünitesi kodlama, adaptasyonlar ve konfor özellikleri.": {
+    "de": "Steuergerätecodierung, zulässige Anpassungen und Komfortfunktionen bei unterstützten Modellen.",
+    "en": "Control unit coding, permissible adaptations and convenience features on supported models."
+  },
+  "Arıza Kodu & Canlı Veri Teşhisi": {
+    "de": "Fehlerdiagnose & Live-Daten",
+    "en": "Fault codes & live diagnostics"
+  },
+  "Hata kodları, freeze-frame ve sensör verileriyle sorunların olası nedenlerini değerlendirme.": {
+    "de": "Fehlercodes, Freeze-Frame und Sensordaten helfen, mögliche Fehlerursachen einzugrenzen.",
+    "en": "Review potential root causes through fault codes, freeze-frame and sensor data."
+  },
+  "ECU Okuma, Yazma & Yedekleme": {
+    "de": "ECU auslesen, schreiben & sichern",
+    "en": "ECU read, write & backup"
+  },
+  "Uyumlu kontrol ünitelerinde orijinal yazılım yedeği ve ECU dosya işlemleri için ön kontrol.": {
+    "de": "Eignungsprüfung für Originalsoftware-Sicherung und ECU-Dateiarbeiten bei kompatiblen Steuergeräten.",
+    "en": "Eligibility check for original software backup and ECU file work on supported control units."
+  },
+  "DPF, EGR, AdBlue & NOx Teşhisi": {
+    "de": "DPF-, AGR-, AdBlue- & NOx-Diagnose",
+    "en": "DPF, EGR, AdBlue & NOx Diagnostics"
+  },
+  "DPF rejenerasyonu, EGR valfi, AdBlue/SCR dozajı ve NOx sensörü için teşhis ve mevzuata uygun onarım değerlendirmesi.": {
+    "de": "DPF-Regeneration, AGR-Ventil, AdBlue/SCR-Dosierung und NOx-Sensor: Diagnose und Prüfung zulässiger Reparaturen.",
+    "en": "DPF regeneration, EGR valve, AdBlue/SCR dosing and NOx sensor checks, with assessment of compliant repairs."
+  },
+  "Araç Özelinde Teknik Teklif": {
+    "de": "Individuelles Fahrzeugangebot",
+    "en": "Vehicle-specific quote"
+  },
+  "Marka, model, yıl, motor ve istediğiniz işlemi gönderin; yapılabilirliği ve fiyatı birlikte netleştirelim.": {
+    "de": "Senden Sie Marke, Modell, Baujahr, Motor und die gewünschte Leistung – Machbarkeit und Preis klären wir individuell.",
+    "en": "Send your vehicle details and requested service for an individual feasibility and pricing review."
+  },
+  "ECU yazılımı, kodlama veya arıza teşhisi için marka, model, yıl, motor ve talebinizi WhatsApp ya da e-posta ile gönderin. Uygulanabilirlik ve fiyat araç özelinde netleştirilir.": {
+    "de": "Senden Sie Marke, Modell, Baujahr, Motor und Ihren Wunsch per WhatsApp oder E-Mail. Machbarkeit und Preis werden je Fahrzeug geprüft.",
+    "en": "Send make, model, year, engine and your request via WhatsApp or email for a vehicle-specific quote."
+  },
+  "Arıza kodları, bakım": {
+    "de": "Fehlercodes, Wartung",
+    "en": "Fault codes, maintenance"
+  },
+  "Arıza kodu ara": {
+    "de": "Fehlercode suchen",
+    "en": "Search fault codes"
+  },
+  "Aracımı seç": {
+    "de": "Fahrzeug wählen",
+    "en": "Choose my vehicle"
+  },
+  "18.805 kod tanımı": {
+    "de": "18.805 Code-Beschreibungen",
+    "en": "18,805 code definitions"
+  },
+  "160+ marka": {
+    "de": "160+ Fahrzeugmarken",
+    "en": "160+ vehicle brands"
+  },
+  "Adım adım rehberler": {
+    "de": "Schritt-für-Schritt-Anleitungen",
+    "en": "Step-by-step guides"
+  },
+  "Sistemlere göz at": {
+    "de": "Fahrzeugsysteme ansehen",
+    "en": "Explore vehicle systems"
+  },
+  "Tüm kodları gör →": {
+    "de": "Alle Fehlercodes →",
+    "en": "All fault codes →"
+  },
+  "Turbo / Hava": {
+    "de": "Turbo / Luft",
+    "en": "Turbo / Air"
+  },
+  "DPF / Egzoz": {
+    "de": "DPF / Abgas",
+    "en": "DPF / Exhaust"
+  },
+  "EGR Sistemi": {
+    "de": "AGR-System",
+    "en": "EGR system"
+  },
+  "Hata kodları": {
+    "de": "Fehlercodes",
+    "en": "Fault codes"
+  },
+  "Hata kodu rehberi": {
+    "de": "Fehlercode-Wissen",
+    "en": "Fault code knowledge"
+  },
+  "Hizmetler": {
+    "de": "Leistungen",
+    "en": "Services"
+  },
+  "Teknik rehber": {
+    "de": "Technik-Ratgeber",
+    "en": "Technical guide"
+  },
+  "Tamir & bakım": {
+    "de": "Reparatur & Wartung",
+    "en": "Repair & maintenance"
+  },
+  "Yaklaşım": {
+    "de": "Ansatz",
+    "en": "Approach"
+  },
+  "Araç profili": {
+    "de": "Fahrzeugprofil",
+    "en": "Vehicle profile"
+  },
+  "İletişim": {
+    "de": "Kontakt",
+    "en": "Contact"
+  },
+  "6006 Performance · kalibrasyon atölyesi": {
+    "de": "6006 Performance · Kalibrierungswerkstatt",
+    "en": "6006 Performance · calibration atelier"
+  },
+  "Hassasiyet, farkı": {
+    "de": "Präzision schafft den Unterschied —",
+    "en": "Precision makes the difference —"
+  },
+  "sessizce": {
+    "de": "leise",
+    "en": "quietly"
+  },
+  "yaratır.": {
+    "de": ".",
+    "en": "."
+  },
+  "6006 Performance; motor verisini, sürüş beklentisini ve mekanik sınırları özenle bir araya getiren, araç özelinde bir kalibrasyon yaklaşımıdır.": {
+    "de": "6006 Performance steht für eine fahrzeugspezifische Kalibrierung, die Motordaten, Fahrerwartung und mechanische Grenzen mit Sorgfalt zusammenführt.",
+    "en": "6006 Performance is a vehicle-specific calibration approach that brings engine data, driving expectations and mechanical limits together with care."
+  },
+  "Araç profilini gör": {
+    "de": "Fahrzeugprofil ansehen",
+    "en": "View vehicle profile"
+  },
+  "Kod rehberi": {
+    "de": "Fehlercode-Leitfaden",
+    "en": "Code guide"
+  },
+  "Detaylı hata kodu bilgisi": {
+    "de": "Detailliertes Fehlercode-Wissen",
+    "en": "Detailed fault-code knowledge"
+  },
+  "Tüm kodlar": {
+    "de": "Alle Codes",
+    "en": "All codes"
+  },
+  "Araç özelinde değerlendirme": {
+    "de": "Fahrzeugspezifische Beurteilung",
+    "en": "Vehicle-specific assessment"
+  },
+  "Orijinal dosya yedeği": {
+    "de": "Sicherung der Originaldatei",
+    "en": "Original file backup"
+  },
+  "Ölçülebilir teknik notlar": {
+    "de": "Nachvollziehbare technische Notizen",
+    "en": "Measurable technical notes"
+  },
+  "Potansiyeli abartmadan, aralıklarla göster.": {
+    "de": "Potenzial, in ehrlichen Bandbreiten.",
+    "en": "Potential, expressed in honest ranges."
+  },
+  "Rakamları kesin vaat gibi değil; motor kodu, yakıt, çevresel koşullar ve mekanik sağlıkla birlikte yorumlanan teknik bir başlangıç olarak sunuyoruz.": {
+    "de": "Die Werte sind kein verbindliches Versprechen, sondern ein technischer Ausgangspunkt — abhängig von Motorkennbuchstabe, Kraftstoff, Umgebungsbedingungen und mechanischem Zustand.",
+    "en": "These figures are not a fixed promise; they are a technical starting point, interpreted alongside engine code, fuel, ambient conditions and mechanical health."
+  },
+  "Önce sağlık:": {
+    "de": "Erst der Zustand:",
+    "en": "Health first:"
+  },
+  "Aktif motor veya aktarma arızası varsa kalibrasyon öncesi teşhis gerekir.": {
+    "de": "Bei aktiven Motor- oder Antriebsfehlern steht die Diagnose vor jeder Kalibrierung.",
+    "en": "Active engine or drivetrain faults require diagnosis before calibration."
+  },
+  "Önce doğrulama:": {
+    "de": "Erst die Verifikation:",
+    "en": "Verification first:"
+  },
+  "Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.": {
+    "de": "Für ein verbindliches Angebot prüfen wir Motorkennbuchstabe und Softwarestand.",
+    "en": "For a firm quotation, we verify engine code and software version."
+  },
+  "Önce denge:": {
+    "de": "Erst die Balance:",
+    "en": "Balance first:"
+  },
+  "Tork hedefi, şanzıman ve kullanım biçimine göre planlanır.": {
+    "de": "Das Drehmomentziel richtet sich nach Getriebe und Nutzung.",
+    "en": "Torque targets are planned around the transmission and intended use."
+  },
+  "Veri hazır": {
+    "de": "Daten bereit",
+    "en": "Data ready"
+  },
+  "Marka": {
+    "de": "Marke",
+    "en": "Brand"
+  },
+  "Model / motor": {
+    "de": "Modell / Motor",
+    "en": "Model / engine"
+  },
+  "Güç": {
+    "de": "Leistung",
+    "en": "Power"
+  },
+  "Tork": {
+    "de": "Drehmoment",
+    "en": "Torque"
+  },
+  "Stok güç": {
+    "de": "Serienleistung",
+    "en": "Stock power"
+  },
+  "Bu değerler bilgi amaçlı aralıklardır. Kesin sonuç motor kodu, mekanik kontrol ve ölçüm koşullarında farklılaşabilir.": {
+    "de": "Diese Werte sind Orientierungsbereiche. Das tatsächliche Ergebnis kann je nach Motorkennbuchstabe, mechanischer Prüfung und Messbedingungen abweichen.",
+    "en": "These figures are indicative ranges. Actual results may vary with engine code, mechanical inspection and measurement conditions."
+  },
+  "OBD rehberi": {
+    "de": "OBD-Leitfaden",
+    "en": "OBD guide"
+  },
+  "Belirsizliği, doğru veriyle azalt.": {
+    "de": "Klarheit beginnt mit präzisen Daten.",
+    "en": "Clarity begins with the right data."
+  },
+  "Hata kodu tek başına kesin teşhis değildir. Dondurulmuş veri, canlı değerler ve sistemin bağlamı birlikte değerlendirilmelidir.": {
+    "de": "Ein Fehlercode ist für sich allein keine eindeutige Diagnose. Freeze-Frame-Daten, Live-Werte und Systemkontext müssen gemeinsam bewertet werden.",
+    "en": "A fault code alone is not a definitive diagnosis. Freeze-frame data, live values and system context must be assessed together."
+  },
+  "Hızlı kod bulucu": {
+    "de": "Fehlercode-Schnellsuche",
+    "en": "Quick code finder"
+  },
+  "P0299 ya da “turbo” gibi bir kod veya anahtar kelime yaz.": {
+    "de": "Geben Sie einen Code oder Suchbegriff wie P0299 oder „Turbo“ ein.",
+    "en": "Enter a code or term such as P0299 or “turbo”."
+  },
+  "Tümü": {
+    "de": "Alle",
+    "en": "All"
+  },
+  "Hava / Turbo": {
+    "de": "Luft / Turbo",
+    "en": "Air / turbo"
+  },
+  "Yakıt": {
+    "de": "Kraftstoff",
+    "en": "Fuel"
+  },
+  "Egzoz": {
+    "de": "Abgas",
+    "en": "Exhaust"
+  },
+  "Şanzıman": {
+    "de": "Getriebe",
+    "en": "Transmission"
+  },
+  "Not:": {
+    "de": "Hinweis:",
+    "en": "Note:"
+  },
+  "Kodu silmek arızayı çözmez. Önce kök nedenin bulunması gerekir.": {
+    "de": "Das Löschen eines Codes behebt den Fehler nicht. Zuerst muss die Ursache geklärt werden.",
+    "en": "Clearing a code does not resolve the fault. The root cause must be found first."
+  },
+  "Teknik kapsam": {
+    "de": "Technischer Umfang",
+    "en": "Technical scope"
+  },
+  "Teknik kapsam, ölçülü bir disiplin ister.": {
+    "de": "Technischer Umfang verlangt Disziplin mit Augenmaß.",
+    "en": "Technical scope calls for measured discipline."
+  },
+  "Hizmeti sadece adıyla değil; araç güvenliği, mevzuat ve kullanım bağlamıyla birlikte tanımlıyoruz.": {
+    "de": "Wir definieren jede Leistung nicht allein über ihren Namen, sondern im Zusammenhang mit Fahrzeugsicherheit, Rechtslage und Nutzung.",
+    "en": "We define each service not merely by name, but in relation to vehicle safety, regulation and intended use."
+  },
+  "Uygunluk kontrolü": {
+    "de": "Eignungsprüfung",
+    "en": "Suitability check"
+  },
+  "Canlı veri": {
+    "de": "Live-Daten",
+    "en": "Live data"
+  },
+  "OEM uyumlu": {
+    "de": "OEM-orientiert",
+    "en": "OEM-aligned"
+  },
+  "Kapalı alan / pist": {
+    "de": "Abgesperrtes Gelände / Rennstrecke",
+    "en": "Closed course / track"
+  },
+  "Sağlıklı motor verileri ve aktarma sınırları üzerinde, dengeli güç ve tork hedefi.": {
+    "de": "Ausgewogene Leistungs- und Drehmomentziele auf Grundlage einwandfreier Motordaten und innerhalb der Grenzen des Antriebsstrangs.",
+    "en": "Balanced power and torque targets, based on sound engine data and within drivetrain limits."
+  },
+  "Arıza Teşhisi": {
+    "de": "Fehlerdiagnose",
+    "en": "Fault diagnosis"
+  },
+  "Hata kodu, freeze-frame ve temel çalışma değerlerini tek bir teknik hikâyede birleştirir.": {
+    "de": "Verbindet Fehlercode, Freeze-Frame-Daten und zentrale Betriebswerte zu einem stimmigen technischen Bild.",
+    "en": "Brings fault codes, freeze-frame data and core operating values into one coherent technical picture."
+  },
+  "DPF Sağlık Kontrolü": {
+    "de": "DPF-Zustandsprüfung",
+    "en": "DPF health assessment"
+  },
+  "Kurum yükü, diferansiyel basınç ve rejenerasyon koşullarının sistematik değerlendirmesi.": {
+    "de": "Systematische Beurteilung von Rußbeladung, Differenzdruck und Regenerationsbedingungen.",
+    "en": "A systematic assessment of soot load, differential pressure and regeneration conditions."
+  },
+  "EGR Sistem Teşhisi": {
+    "de": "EGR-Systemdiagnose",
+    "en": "EGR system diagnosis"
+  },
+  "Valf, soğutucu ve ilişkili sensörler için kök neden odaklı kontrol yaklaşımı.": {
+    "de": "Ursachenorientierte Prüfung von Ventil, Kühler und zugehörigen Sensoren.",
+    "en": "A root-cause-led assessment of the valve, cooler and associated sensors."
+  },
+  "SCR / AdBlue Teşhisi": {
+    "de": "SCR-/AdBlue-Diagnose",
+    "en": "SCR / AdBlue diagnosis"
+  },
+  "NOx, ısıtma, pompa ve dozaj sisteminin canlı veriyle teknik değerlendirmesi.": {
+    "de": "Technische Bewertung der NOx-, Heizungs-, Pumpen- und Dosiersysteme anhand von Live-Daten.",
+    "en": "A live-data technical assessment of NOx, heating, pump and dosing systems."
+  },
+  "Pop & Bangs Değerlendirmesi": {
+    "de": "Bewertung von Pop & Bangs",
+    "en": "Pop & Bangs assessment"
+  },
+  "Gürültü, ısıl yük ve yerel kurallar dikkate alınarak yalnızca araç uygunluğu kapsamında değerlendirilir.": {
+    "de": "Ausschließlich im Rahmen der Fahrzeugeignung und unter Berücksichtigung von Geräuschentwicklung, thermischer Belastung und örtlichen Vorschriften.",
+    "en": "Considered only in the context of vehicle suitability, with noise, thermal load and local rules in view."
+  },
+  "6006 yaklaşımı": {
+    "de": "Der 6006-Ansatz",
+    "en": "The 6006 approach"
+  },
+  "Dosya değil, ölçülü karar.": {
+    "de": "Nicht bloß eine Datei. Eine wohlüberlegte Entscheidung.",
+    "en": "Not a file. A considered decision."
+  },
+  "Her araç, güç hedefinden önce mevcut durumuyla ele alınır. Bu yaklaşım hem sonucu hem de iletişimi daha güvenilir kılar.": {
+    "de": "Jedes Fahrzeug wird zunächst in seinem aktuellen Zustand beurteilt — noch vor jedem Leistungsziel. Das macht Ergebnis und Beratung verlässlicher.",
+    "en": "Each vehicle is assessed first as it stands, before setting a power target. This makes both the result and the conversation more dependable."
+  },
+  "Oku ve doğrula": {
+    "de": "Auslesen & verifizieren",
+    "en": "Read & verify"
+  },
+  "Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.": {
+    "de": "Motorkennbuchstabe, vorhandene Software, DTCs und wesentliche Betriebswerte werden erfasst.",
+    "en": "Engine code, existing software, DTCs and core operating values are established."
+  },
+  "Kalibre et": {
+    "de": "Kalibrieren",
+    "en": "Calibrate"
+  },
+  "Hedefler, yakıt kalitesi ve aktarma limitleriyle uyumlu biçimde belirlenir.": {
+    "de": "Ziele werden im Einklang mit Kraftstoffqualität und den Grenzen des Antriebsstrangs definiert.",
+    "en": "Targets are defined in line with fuel quality and drivetrain limits."
+  },
+  "Kontrol et": {
+    "de": "Prüfen",
+    "en": "Check"
+  },
+  "Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.": {
+    "de": "Das Ergebnis wird anhand von Live-Daten und Rückmeldung aus der Fahrt erneut bewertet.",
+    "en": "The result is reassessed through live data and driving feedback."
+  },
+  "Yasal kullanım notu": {
+    "de": "Hinweis zur legalen Nutzung",
+    "en": "Legal-use notice"
+  },
+  "DPF, EGR ve AdBlue gibi emisyon kontrol sistemlerinin devre dışı bırakılması trafiğe açık araçlarda mevzuata aykırı olabilir. Bu site, bu sistemleri devre dışı bırakmaya yönelik uygulama veya yönlendirme sunmaz; uygunluk ve OEM uyumlu teşhis yaklaşımını esas alır.": {
+    "de": "Die Deaktivierung von Emissionskontrollsystemen wie DPF, EGR und AdBlue kann bei Fahrzeugen im öffentlichen Straßenverkehr gegen geltendes Recht verstoßen. Diese Website bietet keine Durchführung oder Anleitung zur Deaktivierung solcher Systeme; ihr Fokus liegt auf Eignungsprüfung und OEM-orientierter Diagnose.",
+    "en": "Disabling emission-control systems such as the DPF, EGR and AdBlue may be unlawful for vehicles used on public roads. This site neither offers nor instructs on disabling these systems; it is centred on suitability checks and OEM-aligned diagnostics."
+  },
+  "Bilgilendirme amaçlı teknik içerik. Araç üzerinde yapılacak her işlemden önce üretici, sigorta, garanti ve yerel mevzuat koşulları ayrıca doğrulanmalıdır.": {
+    "de": "Technische Inhalte zu Informationszwecken. Vor jedem Eingriff am Fahrzeug müssen Herstelleranforderungen, Versicherung, Garantiebedingungen und lokale rechtliche Vorgaben gesondert geprüft werden.",
+    "en": "Technical content for information purposes. Before any work is undertaken, manufacturer requirements, insurance, warranty conditions and local legal requirements must be verified separately."
+  },
+  "Aracınızı ve hedefinizi paylaşın.": {
+    "de": "Teilen Sie uns Ihr Fahrzeug und Ihr Ziel mit.",
+    "en": "Share your vehicle and objective."
+  },
+  "Teknik talebinizi e-posta ya da WhatsApp Business üzerinden iletebilirsiniz.": {
+    "de": "Senden Sie Ihre technische Anfrage per E-Mail oder über WhatsApp Business.",
+    "en": "Send your technical request by email or WhatsApp Business."
+  },
+  "E-posta gönder": {
+    "de": "E-Mail senden",
+    "en": "Send email"
+  },
+  "WhatsApp Business": {
+    "de": "WhatsApp Business",
+    "en": "WhatsApp Business"
+  },
+  "Doğrudan mesaj": {
+    "de": "Direktnachricht",
+    "en": "Direct message"
+  },
+  "Motor Yazılımı & Araç Kodlama": {
+    "de": "Motorsoftware & Fahrzeugcodierung",
+    "en": "Engine software & vehicle coding"
+  },
+  "Yazılım sürümü kontrolü, araca uygun ayarlar ve desteklenen konfor özellikleri.": {
+    "de": "Softwarestand prüfen, passende Einstellungen und unterstützte Komfortfunktionen.",
+    "en": "Software version checks, compatible settings and supported comfort features."
+  },
+  "Egzoz Sistemi & Uyarı Lambaları": {
+    "de": "Abgassystem & Warnleuchten",
+    "en": "Exhaust systems & warning lights"
+  },
+  "Motor lambası, filtre ve AdBlue uyarılarında arıza kaynağının canlı verilerle incelenmesi.": {
+    "de": "Ursachensuche mit Live-Daten bei Motorkontrollleuchte, Filter- und AdBlue-Warnungen.",
+    "en": "Live-data diagnosis for engine, filter and AdBlue warnings."
+  },
+  "Motor yazılımı ve araç kodlama": {
+    "de": "Motorsoftware und Fahrzeugcodierung",
+    "en": "Engine software and vehicle coding"
+  },
+  "Aracının özelliklerini tanı. Sana uygun ayarı bul.": {
+    "de": "Ihr Fahrzeug. Ihre passenden Einstellungen.",
+    "en": "Your vehicle. Settings that suit you."
+  },
+  "Motor yazılımının mevcut sürümünü kontrol ediyor, desteklenen özellikleri araca uygun şekilde ayarlıyoruz. Gaz tepkisi, kullanım beklentin ve konfor işlevleri için önce aracının donanımını ve teknik durumunu birlikte değerlendiriyoruz.": {
+    "de": "Wir prüfen den Stand der Motorsoftware und passen unterstützte Funktionen an Ihr Fahrzeug an. Für Ansprechverhalten, Fahrwünsche und Komfortfunktionen betrachten wir zuerst Ausstattung und technischen Zustand.",
+    "en": "We check the engine software version and adjust supported functions to suit your vehicle. We first review its equipment and condition when discussing throttle response, driving preferences and comfort functions."
+  },
+  "Yazılım kontrolü:": {
+    "de": "Software prüfen:",
+    "en": "Software check:"
+  },
+  "Motor kontrol ünitesi, mevcut sürüm ve uyumlu seçenekler incelenir.": {
+    "de": "Motorsteuergerät, Softwarestand und passende Möglichkeiten werden geprüft.",
+    "en": "We check the engine control unit, software version and compatible options."
+  },
+  "Konfor özellikleri:": {
+    "de": "Komfortfunktionen:",
+    "en": "Comfort functions:"
+  },
+  "Desteklenen araçlarda ayna, kilitleme, aydınlatma ve gösterge ayarları.": {
+    "de": "Spiegel-, Verriegelungs-, Licht- und Anzeigeeinstellungen bei unterstützten Fahrzeugen.",
+    "en": "Mirror, locking, lighting and display settings on supported vehicles."
+  },
+  "Önce ve sonra:": {
+    "de": "Vorher und nachher:",
+    "en": "Before and after:"
+  },
+  "İşlem öncesi kayıt, uygun yazılım yedeği ve işlem sonrası işlev kontrolü.": {
+    "de": "Ausgangszustand dokumentieren, Software nach Möglichkeit sichern und Funktionen anschließend prüfen.",
+    "en": "Record the initial state, back up software where supported and check functions afterwards."
+  },
+  "Aracını seç, seçenekleri gör": {
+    "de": "Fahrzeug wählen, Möglichkeiten ansehen",
+    "en": "Choose your vehicle, explore options"
+  },
+  "Motor yazılımı": {
+    "de": "Motorsoftware",
+    "en": "Engine software"
+  },
+  "Mevcut sürüm, kontrol ünitesi uyumu ve kullanımına uygun seçenekler.": {
+    "de": "Softwarestand, Steuergeräte-Kompatibilität und Möglichkeiten für Ihren Bedarf.",
+    "en": "Current version, control unit compatibility and options for your needs."
+  },
+  "Araç kodlama": {
+    "de": "Fahrzeugcodierung",
+    "en": "Vehicle coding"
+  },
+  "Desteklenen donanımlarda konfor, aydınlatma ve gösterge ayarları.": {
+    "de": "Komfort-, Licht- und Anzeigeeinstellungen bei unterstützter Ausstattung.",
+    "en": "Comfort, lighting and display settings on supported equipment."
+  },
+  "Teşhis ve kontrol": {
+    "de": "Diagnose und Prüfung",
+    "en": "Diagnostics and checks"
+  },
+  "Arıza kayıtları, canlı sensör verileri ve işlem sonrası işlev testi.": {
+    "de": "Fehlerspeicher, Live-Sensordaten und Funktionsprüfung nach der Arbeit.",
+    "en": "Fault records, live sensor data and checks after the work."
+  },
+  "Her özellik her araçta bulunmaz. Seçiminiz araç kataloğunu açar; yapılabilecek işlemler donanım ve yazılım kontrolüyle netleşir.": {
+    "de": "Nicht jede Funktion ist für jedes Fahrzeug verfügbar. Ihre Auswahl öffnet den Fahrzeugkatalog; mögliche Arbeiten werden anhand von Ausstattung und Software geprüft.",
+    "en": "Not every feature is available on every vehicle. Your selection opens the vehicle catalogue; available work depends on equipment and software checks."
+  },
+  "Araç ve motor referans verileri:": {
+    "de": "Fahrzeug- und Motorreferenzdaten:",
+    "en": "Vehicle and engine reference data:"
+  },
+  "Açık veri": {
+    "de": "Offene Daten",
+    "en": "Open data"
+  },
+  "Donanım ve yazılım uyumu araç üzerinde doğrulanır.": {
+    "de": "Ausstattungs- und Software-Kompatibilität werden am Fahrzeug geprüft.",
+    "en": "Equipment and software compatibility are checked on the vehicle."
+  },
+  "Aracını tanıyoruz.": {
+    "de": "Wir verstehen Ihr Fahrzeug.",
+    "en": "We understand your vehicle."
+  },
+  "Ayarını sana uyduruyoruz.": {
+    "de": "Einstellungen, die zu Ihnen passen.",
+    "en": "Settings that suit you."
+  },
+  "Yazılım sürümü, desteklenen özellikler ve canlı veriler incelenir. İşlem kapsamı aracının donanımına ve ihtiyacına göre belirlenir.": {
+    "de": "Softwarestand, unterstützte Funktionen und Live-Daten werden geprüft. Der Arbeitsumfang richtet sich nach Ausstattung und Bedarf.",
+    "en": "We review the software version, supported functions and live data. The scope of work depends on your vehicle’s equipment and needs."
+  },
+  "Her işlem aracın donanımına ve yazılımına göre değerlendirilir. Gerekli onaylar işlemden önce netleştirilir; emisyon sistemlerinde teşhis ve onarım esas alınır.": {
+    "de": "Jede Arbeit wird anhand von Ausstattung und Software beurteilt. Erforderliche Genehmigungen werden vorher geklärt; bei Abgassystemen stehen Diagnose und Instandsetzung im Mittelpunkt.",
+    "en": "Each job is assessed for the equipment and software fitted. Required approvals are clarified beforehand; exhaust system work focuses on diagnosis and repair."
+  },
+  "Motor Yazılımı & Ayarlar": {
+    "de": "Motorsoftware & Einstellungen",
+    "en": "Engine software & settings"
+  },
+  "Mevcut yazılım sürümünün kontrolü, uyumlu yazılım işlemleri ve kullanım beklentinize göre araç özelinde değerlendirme.": {
+    "de": "Prüfung des Softwarestands, kompatible Softwarearbeiten und eine fahrzeugspezifische Beurteilung Ihrer Wünsche.",
+    "en": "Software version checks, compatible software work and a vehicle-specific assessment of your needs."
+  },
+  "Önce aracının mevcut durumunu ve istediğin özelliği anlıyoruz. Uygun işlemi belirliyor, değişikliği kaydediyor ve sonucu kontrol ediyoruz.": {
+    "de": "Zuerst klären wir den Zustand Ihres Fahrzeugs und die gewünschte Funktion. Wir legen passende Arbeiten fest, dokumentieren Änderungen und prüfen das Ergebnis.",
+    "en": "We start with your vehicle’s condition and the function you want. We agree suitable work, record changes and check the result."
+  },
+  "Araca uygun ayarla": {
+    "de": "Passend einstellen",
+    "en": "Adjust to your vehicle"
+  },
+  "Desteklenen işlevler, mevcut donanım ve kullanım ihtiyacına göre ayarlanır.": {
+    "de": "Unterstützte Funktionen werden passend zu Ausstattung und Bedarf eingestellt.",
+    "en": "Supported functions are adjusted to the equipment fitted and your needs."
+  }
+};
 
       const faultTitles = {
         P0101: { de: "Luftmassenmesser – Bereich / Leistung", en: "Mass air flow sensor – range / performance" }, P0234: { de: "Turbolader – Ladedruck zu hoch", en: "Turbocharger overboost" }, P0299: { de: "Turbolader – Ladedruck zu niedrig", en: "Turbocharger underboost" }, P0087: { de: "Kraftstoffdruck zu niedrig", en: "Fuel rail pressure too low" }, P0191: { de: "Kraftstoffdrucksensor – Bereich / Leistung", en: "Fuel rail pressure sensor – range / performance" }, P0401: { de: "EGR-Durchfluss zu niedrig", en: "EGR flow insufficient" }, P0420: { de: "Katalysatoreffizienz unter Grenzwert", en: "Catalyst efficiency below threshold" }, P2002: { de: "DPF-Effizienz unter Grenzwert", en: "DPF efficiency below threshold" }, P2452: { de: "DPF-Differenzdrucksensor – Stromkreis", en: "DPF differential pressure sensor circuit" }, P2463: { de: "DPF-Rußbeladung", en: "DPF soot accumulation" }, P20EE: { de: "SCR-NOx-Katalysatoreffizienz", en: "SCR NOx catalyst efficiency" }, P204F: { de: "AdBlue-System – Leistung", en: "Reductant / AdBlue system performance" }, P2201: { de: "NOx-Sensor – Bereich / Leistung", en: "NOx sensor range / performance" }, P0700: { de: "Getriebesteuerungssystem – Fehlfunktion", en: "Transmission control system malfunction" }, U0100: { de: "Kommunikation mit dem Motorsteuergerät unterbrochen", en: "Lost communication with engine control module" }
@@ -1810,8 +2443,6 @@ html{scroll-padding-top:1.25rem}
       const detectedLanguage = browserLanguages.map((language) => language.slice(0, 2).toLowerCase()).find((language) => ["de", "tr", "en"].includes(language)) || "de";
       let currentLanguage = window.Locale6006?.getLanguage() || detectedLanguage;
       const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]));
-      const fmtRange = (range, unit) => `${range[0]}–${range[1]} ${unit}`;
-      const fmtGain = (range, stock, unit) => `+${range[0] - stock}–${range[1] - stock} ${unit}`;
       let vehicleHasRendered = false;
       let faultHasRendered = false;
       let pageTextNodes = [];
@@ -1820,8 +2451,8 @@ html{scroll-padding-top:1.25rem}
         return languageContent[currentLanguage]?.[key] || languageContent.tr[key] || key;
       }
 
-      function stageLabels() {
-        return stageCopy[currentLanguage] || stageCopy.de;
+      function vehicleLabels() {
+        return vehicleCopy[currentLanguage] || vehicleCopy.de;
       }
 
       function syncQuickAccessCopy() {
@@ -1836,8 +2467,8 @@ html{scroll-padding-top:1.25rem}
         byId("repairGuideAction").textContent = copy.repairAction;
       }
 
-      function syncStageSelectCopy() {
-        const copy = stageLabels();
+      function syncVehicleSelectCopy() {
+        const copy = vehicleLabels();
         const brandPlaceholder = brandSelect.querySelector('option[value=""]');
         const modelPlaceholder = modelSelect.querySelector('option[value=""]');
         if (brandPlaceholder) brandPlaceholder.textContent = copy.brandPlaceholder;
@@ -1875,7 +2506,7 @@ html{scroll-padding-top:1.25rem}
       function syncContextualInquiryCopy() {
         const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
         const stageInquiry = byId("stageInquiry");
-        stageInquiry.querySelector(".context-request-title").textContent = copy.stageAction;
+        stageInquiry.querySelector(".context-request-title").textContent = copy.softwareAction;
         stageInquiry.querySelector(".context-request-channel").textContent = copy.channel;
         byId("stageComplianceNote").lastElementChild.textContent = copy.compliance;
       }
@@ -1888,7 +2519,7 @@ html{scroll-padding-top:1.25rem}
         });
         const pageMeta = {
           tr: { title: "6006 Performance | ECU Yazılımı, Kodlama ve Arıza Teşhisi", description: "ECU kalibrasyonu, araç kodlama ve arıza teşhisi. Aracınıza özel teklif isteyin, ücretsiz arıza kodu rehberlerini okuyun." },
-          de: { title: "ECU Softwareoptimierung, Fahrzeugcodierung & Diagnose | 6006 Performance", description: "6006 Performance: ECU-Software, Fahrzeugcodierung, Chiptuning und OBD-Diagnose. Individuelles Angebot anfragen und Fehlercodes kostenlos nachlesen." },
+          de: { title: "ECU Softwareoptimierung, Fahrzeugcodierung & Diagnose | 6006 Performance", description: "Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und OBD-Diagnose. Fahrzeug wählen, Möglichkeiten kennenlernen und passendes Angebot anfragen." },
           en: { title: "6006 Performance | ECU Software, Vehicle Coding & Diagnostics", description: "ECU software optimisation, vehicle coding, live-data diagnostics and free fault-code guides. Request a vehicle-specific quote." }
         };
         document.documentElement.lang = currentLanguage;
@@ -1900,12 +2531,12 @@ html{scroll-padding-top:1.25rem}
         languageSelect.setAttribute("aria-label", languageLabel);
         document.querySelector(".language-picker .sr-only").textContent = languageLabel;
         document.querySelector(".hero-proof").setAttribute("aria-label", currentLanguage === "de" ? "Arbeitsprinzipien" : currentLanguage === "en" ? "Working principles" : "Çalışma ilkeleri");
-        document.querySelector(".intro-notes").setAttribute("aria-label", currentLanguage === "de" ? "Grundsätze der Stage-1-Bewertung" : currentLanguage === "en" ? "Stage 1 assessment principles" : "Stage 1 değerlendirme ilkeleri");
-        byId("estimateCard").setAttribute("aria-label", currentLanguage === "de" ? "Stage-1-Schätzung" : currentLanguage === "en" ? "Stage 1 estimate" : "Stage 1 tahmin kartı");
+        document.querySelector(".intro-notes").setAttribute("aria-label", currentLanguage === "de" ? "Software- und Codierleistungen" : currentLanguage === "en" ? "Software and coding services" : "Yazılım ve kodlama hizmetleri");
+        byId("estimateCard").setAttribute("aria-label", currentLanguage === "de" ? "Fahrzeug- und Serviceauswahl" : currentLanguage === "en" ? "Vehicle and service selection" : "Araç ve hizmet seçimi");
         brandSelect.setAttribute("aria-label", currentLanguage === "de" ? "Fahrzeugmarke" : currentLanguage === "en" ? "Vehicle brand" : "Araç markası");
         modelSelect.setAttribute("aria-label", currentLanguage === "de" ? "Fahrzeugmodell und Motor" : currentLanguage === "en" ? "Vehicle model and engine" : "Araç modeli ve motoru");
-        document.querySelector(".dyno-chart").setAttribute("aria-label", currentLanguage === "de" ? "Beispielhafte Leistungskennlinie: Serie und Stage 1" : currentLanguage === "en" ? "Example power curve: stock and Stage 1" : "Stok ve Stage 1 örnek güç eğrisi");
-        document.querySelector(".chart-legend").setAttribute("aria-label", currentLanguage === "de" ? "Diagrammerklärung" : currentLanguage === "en" ? "Chart legend" : "Grafik açıklaması");
+
+
         document.querySelector(".code-finder").setAttribute("aria-label", currentLanguage === "de" ? "Fehlercode-Suche" : currentLanguage === "en" ? "Fault-code search" : "Hata kodu arama");
         document.querySelector(".category-list").setAttribute("aria-label", currentLanguage === "de" ? "Fehlerkategorien" : currentLanguage === "en" ? "Fault categories" : "Hata kategorileri");
         document.querySelector(".contact-actions").setAttribute("aria-label", currentLanguage === "de" ? "Kontaktmöglichkeiten" : currentLanguage === "en" ? "Contact options" : "İletişim seçenekleri");
@@ -1917,7 +2548,7 @@ html{scroll-padding-top:1.25rem}
         mobileNavToggle.setAttribute("aria-label", menuLabel);
         byId("mobileNavToggle").querySelector("[data-mobile-nav-label]").textContent = menuLabel;
         syncQuickAccessCopy();
-        syncStageSelectCopy();
+        syncVehicleSelectCopy();
         syncContactLinks();
         syncContextualInquiryCopy();
       }
@@ -1965,14 +2596,14 @@ html{scroll-padding-top:1.25rem}
       function populateBrands() {
         const brands = [...new Set([...Object.keys(vehicleDirectory), ...vehicles.map((vehicle) => vehicle.brand), ...(window.VehicleCatalog6006?.brands() || [])])].sort((a, b) => a.localeCompare(b, "de"));
         const currentBrand = brands.includes(brandSelect.value) ? brandSelect.value : "";
-        const copy = stageLabels();
+        const copy = vehicleLabels();
         brandSelect.innerHTML = `<option value="">${copy.brandPlaceholder}</option>${brands.map((brand) => `<option value="${brand}">${brand}</option>`).join("")}`;
         brandSelect.value = currentBrand;
         populateModels();
       }
 
       function populateModels() {
-        const copy = stageLabels();
+        const copy = vehicleLabels();
         const currentModel = modelSelect.value;
         const models = [...new Set([
           ...vehicles.filter((vehicle) => vehicle.brand === brandSelect.value).map((vehicle) => vehicle.name),
@@ -2003,7 +2634,7 @@ html{scroll-padding-top:1.25rem}
 
       function renderVehicle() {
         const vehicle = currentVehicle();
-        const copy = stageLabels();
+        const copy = vehicleLabels();
         const card = byId("estimateCard");
         if (!vehicle) {
           const hasDirectorySelection = Boolean(brandSelect.value && modelSelect.value);
@@ -2014,14 +2645,14 @@ html{scroll-padding-top:1.25rem}
           byId("vehicleName").textContent = hasDirectorySelection ? `${brandSelect.value} ${modelSelect.value}` : copy.emptyName;
           byId("vehicleEngine").textContent = hasDirectorySelection ? copy.reviewEngine : copy.emptyEngine;
           document.querySelector(".vehicle-badge").textContent = hasDirectorySelection ? copy.reviewBadge : copy.emptyBadge;
-          byId("psValue").textContent = "—";
-          byId("psGain").textContent = "—";
-          byId("nmValue").textContent = "—";
-          byId("nmGain").textContent = "—";
+
+
+
+
           const catalogLink = byId("stageCatalogLink");
           if (catalogLink) {
             const query = selectedVehicleParams(brandSelect.value, modelSelect.value);
-            catalogLink.href = hasDirectorySelection ? `reparatur-wartung/?${query.toString()}` : "reparatur-wartung/";
+            catalogLink.href = hasDirectorySelection ? `fahrzeug/?${query.toString()}` : "fahrzeug/";
           }
           return;
         }
@@ -2031,12 +2662,12 @@ html{scroll-padding-top:1.25rem}
         byId("vehicleName").textContent = vehicle.brand + " " + vehicle.name;
         byId("vehicleEngine").textContent = localizeEngine(vehicle.engine) + (window.VehicleCatalog6006?.details() ? " · " + window.VehicleCatalog6006.details() : "");
         document.querySelector(".vehicle-badge").textContent = copy.sample;
-        byId("psValue").textContent = fmtRange(vehicle.stage.ps, "PS");
-        byId("psGain").textContent = fmtGain(vehicle.stage.ps, vehicle.stock.ps, "PS");
-        byId("nmValue").textContent = fmtRange(vehicle.stage.nm, "Nm");
-        byId("nmGain").textContent = fmtGain(vehicle.stage.nm, vehicle.stock.nm, "Nm");
+
+
+
+
         const catalogLink = byId("stageCatalogLink");
-        if (catalogLink) catalogLink.href = `reparatur-wartung/?${selectedVehicleParams(vehicle.brand, vehicle.name).toString()}`;
+        if (catalogLink) catalogLink.href = `fahrzeug/?${selectedVehicleParams(vehicle.brand, vehicle.name).toString()}`;
         if (vehicleHasRendered) replayMotion(byId("estimateCard"), "data-refresh");
         vehicleHasRendered = true;
       }
@@ -2102,7 +2733,7 @@ html{scroll-padding-top:1.25rem}
         });
       });
 
-      byId("stageInquiry").addEventListener("click", () => openWhatsAppMessage(stageInquiryMessage()));
+      byId("stageInquiry").addEventListener("click", () => openWhatsAppMessage(softwareInquiryMessage()));
       byId("faultResult").addEventListener("click", (event) => {
         const button = event.target.closest("button[data-fault-inquiry-code]");
         if (!button) return;
@@ -2217,24 +2848,24 @@ html{scroll-padding-top:1.25rem}
         if (popup) popup.opener = null;
       }
 
-      function stageInquiryMessage() {
+      function softwareInquiryMessage() {
         const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
         const vehicle = currentVehicle();
-        const lines = [copy.stageIntro, ""];
+        const lines = [copy.softwareIntro, ""];
         if (vehicle) {
           lines.push(`${copy.vehicle}: ${vehicle.brand} ${vehicle.name}`);
           lines.push(`${copy.engine}: ${localizeEngine(vehicle.engine)}`);
           lines.push(`${copy.years}: ${vehicle.years}`);
-          lines.push(`${copy.catalogue}: ${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`);
+
         } else if (brandSelect.value && modelSelect.value) {
           lines.push(`${copy.vehicle}: ${brandSelect.value} ${modelSelect.value}`);
           const specs = window.VehicleCatalog6006?.details();
           if (specs) lines.push(specs);
-          lines.push("Stage 1: motor kodu doğrulanmadan rakam verilemez.");
+
         } else {
           lines.push(copy.vehicleMissing);
         }
-        lines.push("", copy.stagePrompt);
+        lines.push("", copy.softwarePrompt);
         return lines.join("\n");
       }
 
@@ -2250,10 +2881,10 @@ html{scroll-padding-top:1.25rem}
         return lines.join("\n");
       }
 
-      function stageSummary() {
+      function vehicleSummary() {
         const vehicle = currentVehicle() || assistantState.selectedVehicle;
         if (!vehicle) return "";
-        return `${vehicle.brand} ${vehicle.name} · ${fmtRange(vehicle.stage.ps, "PS")} · ${fmtRange(vehicle.stage.nm, "Nm")}`;
+        return `${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}`;
       }
 
       function selectCatalogVehicle(vehicle) {
@@ -2268,9 +2899,7 @@ html{scroll-padding-top:1.25rem}
       function catalogVehicleResponse(vehicle) {
         const labels = assistantVehicleLabels();
         const stock = `${vehicle.stock.ps} PS / ${vehicle.stock.nm} Nm`;
-        const stage = `${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`;
-        const gain = `${fmtGain(vehicle.stage.ps, vehicle.stock.ps, "PS")} / ${fmtGain(vehicle.stage.nm, vehicle.stock.nm, "Nm")}`;
-        return `${labels.matched}: ${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}\n${labels.stock}: ${stock} → Stage 1: ${stage}\n${labels.gain}: ${gain}\n${labels.confirm}`;
+        return `${labels.matched}: ${vehicle.brand} ${vehicle.name} · ${localizeEngine(vehicle.engine)} · ${vehicle.years}\n${labels.stock}: ${stock}\n${assistantCopy().software}\n${labels.confirm}`;
       }
 
       function openConcierge() {
@@ -2292,9 +2921,9 @@ html{scroll-padding-top:1.25rem}
       function assistantIntent(intent) {
         const copy = assistantCopy();
         assistantState.intent = intent;
-        if (intent === "stage") {
-          addAssistantMessage("user", copy.quick.stage, "quick");
-          addAssistantMessage("assistant", assistantState.selectedVehicle ? `${copy.stage}\n${stageSummary()}` : copy.stageNeedVehicle);
+        if (intent === "software") {
+          addAssistantMessage("user", copy.quick.software, "quick");
+          addAssistantMessage("assistant", assistantState.selectedVehicle ? `${copy.software}\n${vehicleSummary()}` : copy.softwareNeedVehicle);
         } else if (intent === "dtc") {
           addAssistantMessage("user", copy.quick.dtc, "quick");
           addAssistantMessage("assistant", copy.dtc);
@@ -2307,7 +2936,7 @@ html{scroll-padding-top:1.25rem}
       function inferredAssistantIntent(raw) {
         const text = raw.toLocaleLowerCase(currentLanguage);
         if (/\b([PBUC][0-9A-F]{4})\b/i.test(raw)) return "dtc";
-        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) return "stage";
+        if (/(software|yazılım|yazilim|kodlama|codier|coding|komfort|konfor|spiegel|ayna|kalibr|calibr)/i.test(text)) return "software";
         if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return "consult";
         return null;
       }
@@ -2336,14 +2965,14 @@ html{scroll-padding-top:1.25rem}
         const general = window.VehicleCatalog6006?.match(raw);
         if (general?.brand) {
           window.VehicleCatalog6006.select(general);
-          const prompt = currentLanguage === "tr" ? "Yıl, motor/yakıt, stok güç (PS) ve şanzımanı seçiciden doldurun. Motor kodu doğrulanmadan kesin Stage 1 değeri gösterilmez." : currentLanguage === "de" ? "Bitte Baujahr, Motor/Kraftstoff, Serienleistung (PS) und Getriebe im Fahrzeugfinder ergänzen. Ohne Motorcode keine verbindliche Stage-1-Angabe." : "Please add year, engine/fuel, stock power (PS) and gearbox in the vehicle finder; exact Stage 1 figures require a verified engine code.";
+          const prompt = currentLanguage === "tr" ? "Yıl, motor/yakıt ve şanzımanı seçiciden doldurun; ardından istediğiniz yazılım veya konfor özelliğini yazın." : currentLanguage === "de" ? "Bitte Baujahr, Motor/Kraftstoff und Getriebe im Fahrzeugfinder ergänzen. Nennen Sie anschließend die gewünschte Software- oder Komfortfunktion." : "Please add year, engine/fuel and gearbox in the vehicle finder, then tell us which software or comfort function you need.";
           return `${general.brand}${general.model ? " " + general.model : ""} — ${prompt}`;
         }
         if (vehicleMatch.conflict || isVehicleLikeQuery(vehicleMatch.query)) return assistantVehicleLabels().clarify;
-        if (/(stage|stufe|leistung|power|ps|nm|kalibr|calibr)/i.test(text)) {
-          if (assistantState.selectedVehicle) return `${copy.stage}\n${stageSummary()}`;
+        if (/(software|yazılım|yazilim|kodlama|codier|coding|komfort|konfor|spiegel|ayna|kalibr|calibr)/i.test(text)) {
+          if (assistantState.selectedVehicle) return `${copy.software}\n${vehicleSummary()}`;
           if (brandSelect.value && modelSelect.value) return `${brandSelect.value} ${modelSelect.value}\n${window.VehicleCatalog6006?.details() || ""}\n${assistantVehicleLabels().clarify}`;
-          return copy.stageNeedVehicle;
+          return copy.softwareNeedVehicle;
         }
         if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return copy.consult;
         return copy.generic;
@@ -2361,7 +2990,7 @@ html{scroll-padding-top:1.25rem}
         assistantForm.querySelector("button").textContent = copy.send;
         assistantWhatsapp.textContent = copy.whatsapp;
         byId("assistantPrivacy").textContent = copy.privacy;
-        assistantQuick.querySelector('[data-assistant-intent="stage"]').textContent = copy.quick.stage;
+        assistantQuick.querySelector('[data-assistant-intent="software"]').textContent = copy.quick.software;
         assistantQuick.querySelector('[data-assistant-intent="dtc"]').textContent = copy.quick.dtc;
         assistantQuick.querySelector('[data-assistant-intent="consult"]').textContent = copy.quick.consult;
         if (resetConversation) resetAssistantConversation();
@@ -2403,7 +3032,7 @@ html{scroll-padding-top:1.25rem}
         const lines = [copy.waIntro, ""];
         if (vehicle) {
           lines.push(`${copy.waVehicle}: ${vehicle.brand} ${vehicle.name}`);
-          lines.push(`${copy.waStage}: ${fmtRange(vehicle.stage.ps, "PS")} / ${fmtRange(vehicle.stage.nm, "Nm")}`);
+
         } else {
           lines.push(copy.waVehicleMissing);
         }

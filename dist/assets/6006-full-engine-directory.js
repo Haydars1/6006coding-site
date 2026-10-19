@@ -1,13 +1,13 @@
 (()=>{
 "use strict";
-// Search ALL open reference engines, separately from the 62 individually sourced Stage-1 ads.
+// Search open reference engines to identify the vehicle before a service inquiry.
 // Engine index is fetched lazily only when the visitor opens this catalogue.
 const vehicle=document.getElementById("vehicle-selector-6006");
 if(!vehicle||document.getElementById("vin6-full-engine-directory"))return;
 const copy={
-de:{summary:"Alle Motoren durchsuchen – über 30.000 Referenzvarianten",subtitle:"Markenübergreifender Suchindex aus offenen Fahrzeugdaten. Derzeit keine verifizierten Stage-1-Ergebnisse für die meisten Motoren.",search:"Marke, Modell, Motorkennung oder Getriebe suchen",make:"Marke",all:"Alle Marken",year:"Baujahr (optional)",yearHint:"Alle Baujahre",empty:"Mindestens 2 Zeichen eingeben oder eine Marke auswählen.",loading:"Vollständiger Motorindex wird geladen …",failed:"Der Motorindex konnte nicht geladen werden. Bitte Fahrzeug über den Finder oben auswählen.",count:"Motorvarianten gefunden",more:"Weitere 20 Motoren anzeigen",source:"Offene Fahrzeugreferenz",stock:"Referenz-Seriendaten (nicht OEM-bestätigt)",quote:"Motor im Fahrzeugfinder prüfen →",inquiry:"Unverbindlich per WhatsApp anfragen →",unknown:"Unbekannt",none:"Keine Motorreferenz gefunden. Prüfen Sie Schreibweise oder melden Sie den Motor über das Fahrzeugformular.",caution:"Wichtig: 30.000+ Motorvarianten sind offene technische Referenzen, keine bestätigten Stage-1-Kalibrierungen. Nur separat belegte Drittanbieterangebote zeigen konkrete Stage-1-Werte. Motorcode, ECU, Getriebe, Serienleistung und Straßenverkehrsrecht vor einem Angebot prüfen.",license:"Datenquelle / ODbL 1.0"},
-tr:{summary:"Tüm motorlarda ara – 30.000'den fazla referans",subtitle:"Tüm markaları kapsayan açık motor veritabanı. Çoğu motorun doğrulanmış Stage 1 sonucu henüz yoktur.",search:"Marka, model, motor kodu veya şanzıman ara",make:"Marka",all:"Tüm markalar",year:"Model yılı (isteğe bağlı)",yearHint:"Tüm yıllar",empty:"En az 2 karakter yaz veya marka seç.",loading:"Tüm motor indeksi yükleniyor…",failed:"Motor indeksi yüklenemedi. Yukarıdaki araç bulucuyu kullan.",count:"motor varyantı bulundu",more:"20 motor daha göster",source:"Açık araç verisi",stock:"Orijinal referans verisi (OEM onaylı değil)",quote:"Araç bulucuda motoru kontrol et →",inquiry:"WhatsApp ile uygunluk sor →",unknown:"Bilinmiyor",none:"Motor bulunamadı. Başka yazımla ara veya eksik motor bildirimi gönder.",caution:"Önemli: 30.000'den fazla motor, açık teknik referans kaydıdır; Stage 1 sonucu değildir. Yalnız ayrı kaynakla doğrulanan üçüncü taraf ilanlarında Stage 1 değerleri gösterilir. Teklif öncesi motor kodu, ECU, şanzıman ve yasal uygunluk kontrol edilmelidir.",license:"Veri kaynağı / ODbL 1.0"},
-en:{summary:"Search every engine – over 30,000 reference variants",subtitle:"Cross-brand open engine directory. Most engines do not have verified Stage 1 tuning figures.",search:"Search make, model, engine or transmission",make:"Make",all:"All makes",year:"Model year (optional)",yearHint:"All years",empty:"Enter at least 2 characters or select a make.",loading:"Loading complete engine index…",failed:"Could not load the engine index. Please use the vehicle selector above.",count:"engine variants found",more:"Show 20 more engines",source:"Open vehicle reference",stock:"Reference stock data (not OEM verified)",quote:"Review engine in vehicle finder →",inquiry:"Ask by WhatsApp →",unknown:"Unknown",none:"No engines found. Try another name or report a missing engine.",caution:"Important: 30,000+ engine variants are open technical references, NOT confirmed Stage 1 calibrations. Only separately sourced third-party ads show Stage 1 figures. Check engine code, ECU, transmission, factory values and local road regulations before a quote.",license:"Data source / ODbL 1.0"}
+de:{summary:"Alle Motoren durchsuchen – über 30.000 Referenzvarianten",subtitle:"Marke, Modell und Motor für Fahrzeugsoftware, Codierung oder eine gezielte Diagnose zuordnen. Die offenen Fahrzeugdaten helfen beim Einstieg.",search:"Marke, Modell, Motorkennung oder Getriebe suchen",make:"Marke",all:"Alle Marken",year:"Baujahr (optional)",yearHint:"Alle Baujahre",empty:"Mindestens 2 Zeichen eingeben oder eine Marke auswählen.",loading:"Vollständiger Motorindex wird geladen …",failed:"Der Motorindex konnte nicht geladen werden. Bitte Fahrzeug über den Finder oben auswählen.",count:"Motorvarianten gefunden",more:"Weitere 20 Motoren anzeigen",source:"Offene Fahrzeugreferenz",stock:"Referenz-Seriendaten (nicht OEM-bestätigt)",quote:"Fahrzeugkatalog öffnen →",inquiry:"Software, Codierung oder Diagnose anfragen →",unknown:"Unbekannt",none:"Keine Motorreferenz gefunden. Prüfen Sie Schreibweise oder melden Sie den Motor über das Fahrzeugformular.",caution:"Die offenen Referenzdaten dienen der Fahrzeugzuordnung. Motorkennung, Steuergerät, Softwarestand und Getriebe werden vor der Arbeit am Fahrzeug geprüft. Welche Funktionen und Anpassungen möglich sind, hängt von Ausstattung, Freigaben und der konkreten Fahrzeugvariante ab.",license:"Datenquelle / ODbL 1.0"},
+tr:{summary:"Tüm motorlarda ara – 30.000'den fazla referans",subtitle:"Araç yazılımı, kodlama veya arıza teşhisi için marka, model ve motoru belirle. Açık araç verileri doğru başlangıcı bulmaya yardımcı olur.",search:"Marka, model, motor kodu veya şanzıman ara",make:"Marka",all:"Tüm markalar",year:"Model yılı (isteğe bağlı)",yearHint:"Tüm yıllar",empty:"En az 2 karakter yaz veya marka seç.",loading:"Tüm motor indeksi yükleniyor…",failed:"Motor indeksi yüklenemedi. Yukarıdaki araç bulucuyu kullan.",count:"motor varyantı bulundu",more:"20 motor daha göster",source:"Açık araç verisi",stock:"Orijinal referans verisi (OEM onaylı değil)",quote:"Araç kataloğunu aç →",inquiry:"Yazılım, kodlama veya teşhis için bilgi al →",unknown:"Bilinmiyor",none:"Motor bulunamadı. Başka yazımla ara veya eksik motor bildirimi gönder.",caution:"Açık referans verileri aracı tanımlamak içindir. İşlem öncesinde motor kodu, kontrol ünitesi, yazılım sürümü ve şanzıman araç üzerinde doğrulanır. Uygulanabilecek özellikler ve ayarlar aracın donanımına, gerekli onaylara ve tam varyantına bağlıdır.",license:"Veri kaynağı / ODbL 1.0"},
+en:{summary:"Search every engine – over 30,000 reference variants",subtitle:"Identify the make, model and engine for vehicle software, coding or targeted diagnostics. Open vehicle data provides a starting point.",search:"Search make, model, engine or transmission",make:"Make",all:"All makes",year:"Model year (optional)",yearHint:"All years",empty:"Enter at least 2 characters or select a make.",loading:"Loading complete engine index…",failed:"Could not load the engine index. Please use the vehicle selector above.",count:"engine variants found",more:"Show 20 more engines",source:"Open vehicle reference",stock:"Reference stock data (not OEM verified)",quote:"Open vehicle catalogue →",inquiry:"Enquire about software, coding or diagnostics →",unknown:"Unknown",none:"No engines found. Try another name or report a missing engine.",caution:"Open reference data helps identify the vehicle. Engine code, control unit, software version and gearbox are checked on the vehicle before any work. Available functions and adjustments depend on its equipment, required approvals and exact variant.",license:"Data source / ODbL 1.0"}
 };
 const locale=()=>{const l=(document.documentElement.lang||"").toLowerCase();return l.startsWith("tr")?"tr":l.startsWith("de")?"de":"en";};
 const text=()=>copy[locale()];
@@ -22,9 +22,7 @@ panel.innerHTML='<summary id="vin6-global-summary"></summary>'
 +'<p class="vin6006-full-warning" id="vin6-global-warning"></p>'
 +'<a class="vin6006-full-license" id="vin6-global-license" target="_blank" rel="noopener noreferrer" href="https://github.com/gor3a/vehicle-makes-models"></a>'
 +'</div>';
-const sourcePanel=document.getElementById("vin6-stage-directory");
-if(sourcePanel)sourcePanel.insertAdjacentElement("beforebegin",panel);
-else vehicle.querySelector(".vin6006-head")?.insertAdjacentElement("afterend",panel);
+vehicle.querySelector(".vin6006-head")?.insertAdjacentElement("afterend",panel);
 const e=id=>document.getElementById("vin6-global-"+id);
 const make=e("make"),search=e("search"),year=e("year"),results=e("results"),status=e("status"),more=e("more");
 let index=null,loading=null,limit=20,filtered=[],timer=null,initialised=false,error=false,makeCount=0;
@@ -89,15 +87,15 @@ function find(){
  return matches;
 }
 function inquiryDraft(brand,model,engine,yearRange,transmission,fuel,stockHp,stockNm){
- // All numbers here are open community reference values, not Stage 1 targets.
+ // Factory values provide vehicle context, with no promised service outcome.
  const lang=locale();
  const values=([stockHp,stockNm].every(x=>Number.isFinite(Number(x))&&Number(x)>0)
   ?String(stockHp)+" HP / "+String(stockNm)+" Nm":"nicht geprüft / not verified");
  const details=[
   "6006 Performance",
-  lang==="tr"?"Merhaba, bu aracın motor/ECU uygunluğu ve kişisel teklif için kontrol rica ediyorum."
-   :lang==="de"?"Guten Tag, bitte prüfen Sie Motor-/ECU-Eignung und erstellen Sie ein individuelles Angebot."
-   :"Hello, please check engine/ECU compatibility and provide an individual quote.",
+  lang==="tr"?"Merhaba, bu araç için yazılım, kodlama ve arıza teşhisi hizmetleriniz hakkında bilgi almak istiyorum. İstediğim işlemi ve belirtileri birlikte değerlendirebilir miyiz?"
+   :lang==="de"?"Guten Tag, ich interessiere mich für Fahrzeugsoftware, Codierung oder Fehlerdiagnose für dieses Fahrzeug. Bitte besprechen Sie mit mir den gewünschten Auftrag und die vorhandenen Symptome."
+   :"Hello, I would like to enquire about vehicle software, coding or fault diagnosis for this vehicle. Please help me review the requested work and any symptoms.",
   "",
   (lang==="tr"?"Araç":lang==="de"?"Fahrzeug":"Vehicle")+": "+brand+" "+model,
   (lang==="tr"?"Yıl aralığı":lang==="de"?"Baujahr-Referenz":"Model years")+": "+(yearRange||"—"),
@@ -106,9 +104,9 @@ function inquiryDraft(brand,model,engine,yearRange,transmission,fuel,stockHp,sto
   (lang==="tr"?"Şanzıman":lang==="de"?"Getriebe":"Transmission")+": "+(transmission||"—"),
   (lang==="tr"?"Stok referansı (doğrulanmamış)":lang==="de"?"Serien-Referenz (nicht verifiziert)":"Factory reference (unverified)")+": "+values,
   "",
-  lang==="tr"?"Bu bilgiler açık veritabanından gelmiştir. Motor kodu, gerçek stok değerleri, ECU ve şanzıman kontrol edilmelidir. Stage 1 sonucu/garantisi değildir."
-   :lang==="de"?"Diese Daten stammen aus einer offenen Fahrzeugdatenbank. Motorkennung, echte Serienwerte, ECU und Getriebe müssen geprüft werden. Keine bestätigte Stage-1-Leistung oder Garantie."
-   :"These values come from an open vehicle database. Engine code, actual stock output, ECU and gearbox require verification. Not a confirmed Stage 1 result or guarantee."
+  lang==="tr"?"Bu bilgiler açık araç veritabanından alınmıştır. Motor kodu, gerçek orijinal değerler, kontrol ünitesi ve şanzıman işlem öncesinde doğrulanmalıdır."
+   :lang==="de"?"Diese Angaben stammen aus einer offenen Fahrzeugdatenbank. Motorkennung, tatsächliche Serienwerte, Steuergerät und Getriebe bitte vor der Arbeit bestätigen."
+   :"These details come from an open vehicle database. Please confirm the engine code, actual factory values, control unit and gearbox before any work."
  ];
  return details.join("\n");
 }

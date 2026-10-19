@@ -3,9 +3,9 @@
 "use strict";
 const root=document.getElementById("vehicle-picker-dtc");if(!root)return;
 const translations={
- tr:{heading:"Araç bilgisi",description:"Aracını bir kez seç. Aynı bilgiler arıza kodlarında, teknik sayfalarda ve Stage 1 incelemesinde kullanılır.",choose:"Araç seç veya değiştir",chosen:"Seçili araç",filter:"Kod tanımı filtresi"},
- de:{heading:"Fahrzeugprofil",description:"Fahrzeug einmal auswählen und für Fehlercodes, Technik und Stage 1 verwenden.",choose:"Fahrzeug wählen oder ändern",chosen:"Ausgewähltes Fahrzeug",filter:"Filter der Code-Definitionen"},
- en:{heading:"Vehicle profile",description:"Choose your vehicle once for fault codes, technical information and Stage 1.",choose:"Choose or change vehicle",chosen:"Selected vehicle",filter:"Code-definition filter"}
+ tr:{heading:"Araç bilgisi",description:"Aracını bir kez seç. Aynı bilgiler arıza kodlarında, teknik sayfalarda ve yazılım hizmetlerinde kullanılır.",choose:"Araç seç veya değiştir",chosen:"Seçili araç",filter:"Kod tanımı filtresi"},
+ de:{heading:"Fahrzeugprofil",description:"Fahrzeug einmal auswählen und für Fehlercodes, Technik und Fahrzeugsoftware verwenden.",choose:"Fahrzeug wählen oder ändern",chosen:"Ausgewähltes Fahrzeug",filter:"Filter der Code-Definitionen"},
+ en:{heading:"Vehicle profile",description:"Choose your vehicle once for fault codes, technical information and vehicle software services.",choose:"Choose or change vehicle",chosen:"Selected vehicle",filter:"Code-definition filter"}
 };
 function locale(){const l=(document.documentElement.lang||"").slice(0,2).toLowerCase();return translations[l]?l:"de";}
 function profile(){try{return JSON.parse(sessionStorage.getItem("6006-vehicle-choice")||"null")}catch(_){return null}}

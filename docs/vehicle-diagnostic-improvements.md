@@ -1,5 +1,7 @@
 # Vehicle selection, Stage 1 and diagnostic guides
 
+Current status (19 October 2026): public power comparisons, upgrade figures and the comparison hub are retired. The live journey now explains engine software review, vehicle coding, supported comfort functions and fault diagnosis. Vehicle identity, stock technical references, VIN privacy and diagnostic guides remain. Legacy hub bookmarks redirect in the browser to the home service section; archived third-party data is outside the published directory. The research decisions below record the earlier release and do not describe a current power offer.
+
 Reviewed 13 October 2026. This update keeps one selected vehicle through the catalogue, published Stage 1 references and fault-code search. Source data is a reference, not an OEM vehicle identity or a diagnosis.
 
 ## Research and decisions
@@ -43,4 +45,4 @@ The requested Instagram profile artwork is also available as `/assets/6006-codin
 
 Run `npm test` for the complete static build, locale, source/guide and generated-link checks. In this proxy-based execution environment use `NODE_USE_ENV_PROXY=1 npm test`; Render uses its normal network environment.
 
-Browser journey regressions are in `scripts/verify-journey-browser.cjs` and require Playwright/Chromium in the development environment. Serve `dist` on a local HTTP port, then run `JOURNEY_BASE_URL=http://127.0.0.1:8767 node scripts/verify-journey-browser.cjs`. Coverage includes incomplete and exact engine selection, cross-vehicle memory, VIN privacy, published Stage 1 results, first-click navigation, manufacturer/filter consistency, reports and native-language guide pages.
+Browser journey regressions are in `scripts/verify-journey-browser.cjs` and require Playwright/Chromium in the development environment. Serve `dist` on a local HTTP port, then run `JOURNEY_BASE_URL=http://127.0.0.1:8767 node scripts/verify-journey-browser.cjs`. Coverage includes incomplete and exact engine selection, cross-vehicle memory, VIN privacy, software/coding services, ignored legacy comparison parameters, first-click navigation, manufacturer/filter consistency, reports and native-language guide pages.

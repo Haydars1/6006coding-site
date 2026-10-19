@@ -1,5 +1,5 @@
 /* 6006 Performance: broad vehicle finder. NHTSA provides make/model names only,
-   never engine codes, European trim verification or Stage-1 performance figures. */
+   never engine codes, European trim verification or calibration results. */
 (function(){
 "use strict";
 const extras={
@@ -186,9 +186,9 @@ function match(input){
  return m?{brand:m[1],model:""}:null;
 }
 const word={
- tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",missingBrand:"Marka listede yoksa buraya yazın",addBrand:"Markayı ekle",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Kesin motor varyantını doğrulamak için yıl, yakıt, motor kodu, stok güç ve şanzıman girin. Stage 1 rakamları otomatik uydurulmaz."},
- de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",missingBrand:"Marke fehlt? Hier eingeben",addBrand:"Marke hinzufügen",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Für den genauen Motor Baujahr, Kraftstoff, Motorcode, Serienleistung und Getriebe ergänzen. Keine erfundenen Stage-1-Werte."},
- en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",missingBrand:"Make missing? Enter it here",addBrand:"Add make",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Enter year, fuel, engine code, stock power and gearbox to identify the variant. No invented Stage 1 figures."}
+ tr:{year:"Model yılı",fuel:"Yakıt",engine:"Motor / motor kodu",power:"Stok güç (PS)",gear:"Şanzıman",find:"Araç bul",manual:"Modeli ekle",missing:"Model listede yoksa buraya yazın",missingBrand:"Marka listede yoksa buraya yazın",addBrand:"Markayı ekle",hint:"Örn. VW Golf, BMW X5, Mercedes E 220 d",choose:"Seçin",result:"Araç seçildi",error:"Araç bulunamadı. Listeden seçin veya modeli elle ekleyin.",notice:"Aracına uygun yazılım ve kodlama seçenekleri için yıl, yakıt, motor kodu ve şanzıman bilgilerini tamamla. Stok güç yalnızca motor varyantını ayırt etmeye yardımcı olur."},
+ de:{year:"Baujahr",fuel:"Kraftstoff",engine:"Motor / Motorkennbuchstabe",power:"Serienleistung (PS)",gear:"Getriebe",find:"Fahrzeug finden",manual:"Modell hinzufügen",missing:"Modell nicht da? Hier eingeben",missingBrand:"Marke fehlt? Hier eingeben",addBrand:"Marke hinzufügen",hint:"Z. B. VW Golf, BMW X5, Mercedes E 220 d",choose:"Wählen",result:"Fahrzeug gewählt",error:"Kein Treffer. Fahrzeug auswählen oder manuell ergänzen.",notice:"Baujahr, Kraftstoff, Motorkennung und Getriebe helfen, passende Software- und Codiermöglichkeiten einzuordnen. Die Serienleistung dient nur zur Zuordnung der Motorvariante."},
+ en:{year:"Model year",fuel:"Fuel",engine:"Engine / engine code",power:"Stock power (PS)",gear:"Transmission",find:"Find vehicle",manual:"Add model",missing:"Model missing? Enter it here",missingBrand:"Make missing? Enter it here",addBrand:"Add make",hint:"e.g. VW Golf, BMW X5, Mercedes E 220 d",choose:"Select",result:"Vehicle selected",error:"No match. Choose from lists or add model manually.",notice:"Add year, fuel, engine code and gearbox to identify suitable software and coding options. Stock power only helps distinguish the engine variant."}
 };
 function lang(){const v=String(window.Locale6006?.getLanguage?.()||document.documentElement.lang||"").slice(0,2);return word[v]?v:"de";}
 const tr=k=>word[lang()][k];
@@ -320,25 +320,25 @@ function install(){
  addEventListener("6006-engines-ready",event=>{if(event.detail?.brand===brand.value)variantOptions();});
  updateVariants();
  brand.addEventListener("change",engineSuggestions);
- const tech=document.createElement("section");tech.id="vehicle-stage-verification";tech.style.cssText="margin:1rem 0;padding:1rem;border:1px solid rgba(198,154,99,.43);background:#1b1a18;font-size:.76rem;line-height:1.68;color:#f0e9df";
+ const tech=document.createElement("section");tech.id="vehicle-service-overview";tech.style.cssText="margin:1rem 0;padding:1rem;border:1px solid rgba(198,154,99,.43);background:#1b1a18;font-size:.76rem;line-height:1.68;color:#f0e9df";
  tech.setAttribute("aria-live","polite");
  extraBox.insertAdjacentElement("afterend",tech);
- function stageAdvice(){
+ function serviceAdvice(){
   const modelName=model.value,make=brand.value,engine=field("engineInput"),fuel=field("fuelSelect"),power=field("powerInput");
   if(!make||!modelName){tech.hidden=true;return;}
   tech.hidden=false;
   const langCode=lang();
   const electrical=/^(Electric)$/i.test(fuel)||/\b(EV|Elektro)\b/i.test(engine);
   const copy=langCode==="tr"
-   ?{head:"Stage 1 · araç özelinde ön değerlendirme",selected:"Seçim",unknown:"Güç artışı henüz doğrulanmadı.",task:"Kontrol sırası",steps:["Motor kodu ve ECU yazılım sürümünü doğrula.","Önce DTC, canlı veriler, turbo / yakıt ve sıcaklık değerlerini incele.","Şanzımanın tork limitlerini ve mekanik durumunu kontrol et.","TÜV, sigorta ve emisyon kuralları için uygunluğu doğrula."],ev:"Elektrikli araçlarda klasik içten yanmalı motor Stage 1 işlemi uygulanmaz; üretici desteği ayrıca doğrulanmalıdır.",estimate:"Tahmini PS/Nm verilmez: aynı modelin farklı motor ve şanzımanları olabilir."}
+   ?{head:"Bu araç için yazılım ve kodlama",selected:"Seçilen araç",unknown:"Motor bilgisi henüz tamamlanmadı",task:"Neler yapılabilir?",steps:["Motor yazılımı: ECU sürümünün ve mevcut kalibrasyonun incelenmesi.","Araç kodlama: desteklenen konfor ve kişiselleştirme işlevlerinin belirlenmesi.","Arıza teşhisi: kayıtlı hataların ve canlı ölçümlerin birlikte değerlendirilmesi.","İşlem planı: uygun işlevlerin, kapsamın ve teklifin araç özelinde netleştirilmesi."],ev:"Elektrikli araçlarda da yazılım sürümü, arıza kayıtları ve desteklenen kişiselleştirme seçenekleri incelenir.",estimate:"Desteklenen işlevler donanıma, kontrol ünitesine ve yazılım sürümüne bağlıdır; kesin kapsam araç kontrolünden sonra belirlenir."}
    :langCode==="de"
-   ?{head:"Stage 1 · fahrzeugspezifische Vorprüfung",selected:"Auswahl",unknown:"Leistungssteigerung noch nicht bestätigt.",task:"Prüfreihenfolge",steps:["Motorkennbuchstabe und ECU-Softwarestand bestätigen.","Zuerst DTC, Live-Daten, Ladedruck/Kraftstoffsystem und Temperaturen prüfen.","Drehmomentgrenzen des Getriebes und technischen Zustand prüfen.","Zulässigkeit, TÜV, Versicherung und Abgasvorschriften klären."],ev:"Für Elektrofahrzeuge ist konventionelles Motor-Stage-1 nicht anwendbar; OEM-Unterstützung separat prüfen.",estimate:"Keine erfundenen PS/Nm: Das gleiche Modell kann zahlreiche Motor- und Getriebevarianten haben."}
-   :{head:"Stage 1 · vehicle-specific preliminary check",selected:"Selection",unknown:"Performance increase is not confirmed.",task:"Checklist",steps:["Confirm engine code and ECU software revision.","Review DTCs, live boost/fuel values and temperatures first.","Check gearbox torque limits and mechanical condition.","Confirm local road legality, insurance and emissions requirements."],ev:"Traditional combustion-engine Stage 1 does not apply to electric vehicles; manufacturer support must be checked.",estimate:"No invented power or torque figures: trim and engine versions vary."};
+   ?{head:"Software & Codierung für Ihr Fahrzeug",selected:"Gewähltes Fahrzeug",unknown:"Motorangaben noch unvollständig",task:"Was ist möglich?",steps:["Motorsoftware: Softwarestand und vorhandene Steuergeräte-Abstimmung prüfen.","Fahrzeugcodierung: unterstützte Komfortfunktionen und persönliche Einstellungen zuordnen.","Fehlerdiagnose: Fehlerspeicher und Live-Messwerte zusammen auswerten.","Individueller Ablauf: passende Funktionen, Umfang und Angebot am Fahrzeug klären."],ev:"Auch bei Elektrofahrzeugen lassen sich Softwarestand, Fehler und unterstützte Fahrzeugeinstellungen einordnen.",estimate:"Welche Funktionen verfügbar sind, hängt von Ausstattung, Steuergerät und Softwareversion ab. Der genaue Umfang wird am Fahrzeug geklärt."}
+   :{head:"Software and coding for your vehicle",selected:"Selected vehicle",unknown:"Engine details are incomplete",task:"What can be checked?",steps:["Engine software: review the software revision and existing control-module calibration.","Vehicle coding: identify supported comfort features and personal settings.","Fault diagnosis: evaluate stored faults alongside live measurements.","Individual service plan: confirm suitable features, scope and a quote for the actual vehicle."],ev:"Electric vehicles can also be assessed for software revision, fault records and supported settings.",estimate:"Available features depend on equipment, control modules and software version. The actual scope is confirmed on the vehicle."};
   const safe=x=>String(x||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
   tech.innerHTML="<strong style='color:#e0bd89;display:block;font-size:.82rem'>"+copy.head+"</strong><p>"+copy.selected+": <b>"+safe(make+" "+modelName)+"</b> · "+safe(engine||fuel||copy.unknown)+(power?" · "+safe(power)+" PS":"")+"</p><strong>"+copy.task+"</strong><ol style='padding-left:1.2rem'>"+copy.steps.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>"+(electrical?copy.ev:copy.estimate)+"</p>";
  }
- [brand,model,...["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"].map(id=>document.getElementById(id))].forEach(e=>e.addEventListener("change",stageAdvice));
- stageAdvice();engineSuggestions();
+ [brand,model,...["yearSelect","fuelSelect","engineInput","powerInput","gearboxSelect"].map(id=>document.getElementById(id))].forEach(e=>e.addEventListener("change",serviceAdvice));
+ serviceAdvice();engineSuggestions();
  function applyWords(){
    [["yearSelect","year"],["fuelSelect","fuel"],["engineInput","engine"],["powerInput","power"],["gearboxSelect","gear"],["customModelInput","missing"],["customBrandInput","missingBrand"],["vehicleQuickSearch","find"]].forEach(x=>document.querySelector('label[for="'+x[0]+'"]').textContent=tr(x[1]));
    document.getElementById("vehicleFindButton").textContent=tr("find");document.getElementById("customModelButton").textContent=tr("manual");document.getElementById("customBrandButton").textContent=tr("addBrand");
@@ -346,6 +346,7 @@ function install(){
    ["yearSelect","fuelSelect","gearboxSelect"].forEach(id=>document.getElementById(id).options[0].textContent=tr("choose"));
    const variantLabel=document.getElementById("engineVariantLabel");if(variantLabel)variantLabel.textContent=lang()==="tr"?"Motor varyantı · açık veri":lang()==="de"?"Motorvariante · offene Fahrzeugdaten":"Engine variant · open reference data";
    updatePowerNote();
+   serviceAdvice();
  }
  applyWords();new MutationObserver(applyWords).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
  const feedback=document.getElementById("vehicleFindMessage");
