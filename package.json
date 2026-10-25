@@ -2,9 +2,9 @@
   "name": "6006coding-performance",
   "private": true,
   "version": "1.0.0",
-  "description": "6006 Performance source and deployment configuration",
+  "description": "6006 Coding personal hobby website",
   "scripts": {
-    "test": "node scripts/verify-locale.mjs && node scripts/generate-seo.mjs && node scripts/verify-playbooks.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/prepare-services-release.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs",
-    "build": "node scripts/verify-locale.mjs && node scripts/generate-seo.mjs && node scripts/verify-playbooks.mjs && node scripts/generate-all-code-pages.mjs && node scripts/generate-dtc-directory.mjs && node scripts/build-vehicle-db.mjs && node scripts/prepare-services-release.mjs && node scripts/verify-site.mjs && node scripts/verify-generated.mjs"
+    "test": "node scripts/prepare-hobby-release.mjs",
+    "build": "node scripts/prepare-hobby-release.mjs"
   }
 }

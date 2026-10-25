@@ -1,33 +1,14 @@
-# 6006 Coding — kişisel teknik bilgi projesi
+# 6006 Coding — persönliche Hobbyseite
 
-Bu depo **6006coding.de** için ayrı statik site kaynağıdır. JARVIS projesiyle bağlantısı yoktur.
+Dieses Repository baut die öffentliche Website [6006coding.de](https://6006coding.de). Die Veröffentlichung ist eine mehrsprachige, statische Hobbyseite mit Projektinformationen, Datenschutzhinweisen und freiwilligem E-Mail-Kontakt.
 
-- **Kaynak sayfalar:** `dist/`
-- **Arıza kataloğu:** `dist/assets/6006-dtc-catalog.json` (18.805 tanım)
-- **Etkileşimli parça görselleri:** `dist/assets/realparts/` (17 sistem)
-- **Test:** `npm test`
-- **Render build command:** `npm run build`
-- **Render publish directory:** `dist`
-- **Render auto-deploy:** `main` dalındaki her güncelleme
+Der Build erzeugt nur die Hobbyseite und die zwei Informationsseiten. Fahrzeugkataloge, Fehlercodes, technische Ratgeber und zugehörige Daten werden nicht mehr erzeugt oder veröffentlicht.
 
-11 Ekim 2026 kontrolünde `6006coding.de` HTTP yanıtı Render/CDN üzerinden gelmektedir. GitHub test başarısı ile canlı yayın ayrı kontrol edilmelidir. DNS değişikliği bu geliştirme için gerekli değildir.
+- Render build command: `npm run build`
+- Render publish directory: `dist`
+- Render auto-deploy: `main`-Branch
+- Veröffentlichte Seiten: `/`, `/projektinfo/`, `/datenschutz/`
+- Sprache: wird bei jedem Seitenaufruf anhand der Browsersprache gewählt (Deutsch, Türkisch oder Englisch); die Auswahl wird nicht gespeichert.
+- Kontakt: `kontakt@6006coding.de`
 
-## Otomatik sayfalarda kalite kontrolü
-
-Build, 86 ayrıntılı rehber ve 12.042 otomatik kod referansı üretir. Bu iki sayı ayrı raporlanır; referanslar OEM tarafından doğrulanmış onarım talimatı sayılmaz. Üretici açıklamaları ayrı ilk kontrol alanları içerir. Tamamlanmamış OBD testleri parça arızası olarak sunulmaz; SRS ve yüksek voltaj kayıtlarında genel elektrik testleri önerilmez.
-
-Site kişisel ve ticari olmayan bir bilgi projesidir. Ücretli hizmet, randevu, reklam veya satış ortaklığı sunmaz. Araç seçimi, açık teknik referanslar ve bakım/arıza rehberleri bilgilendirme amacıyla korunur. Eski karşılaştırma bağlantısı `prepare-services-release.mjs` ile `noindex` bir yönlendirme sayfasına dönüşür; ziyaretçiyi araç kataloğuna götürür.
-
-Yalnızca boş/ayrılmış tanımı bulunan kod sayfaları erişilebilir kalır, `noindex,follow` ile sitemap dışında tutulur. `lastmod` build tarihinden türetilmez. `verify-generated.mjs` tüm sitemap ve kod sayfalarını; canonical, tek H1, JSON-LD, yerel bağlantı, dosya ve fragment hedefleri açısından kontrol eder. Google indeksleme ve sıralama bu testlerle doğrulanamaz. Bu yayın derlemesinde AdSense yapılandırması bulunmaz.
-
-## Bir defalık kurulum
-
-1. GitHub hesabında ayrı bir depo oluştur: `6006coding-site`.
-2. Bu dizinin içeriğini GitHub depo köküne ekle.
-3. Render -> New -> Static Site -> depoyu bağla.
-4. Dal `main`, build `npm run build`, publish `dist`, auto-deploy açık.
-5. Yeni `.onrender.com` adresini kontrol ettikten sonra Render'ın verdiği DNS değerleriyle `6006coding.de` alan adını bağla.
-
-## İçerik kalitesi
-
-Araç katalog sayfaları marka/motor seçimi yaptı diye OEM bakım, parça veya sıkma torku değerleri doğrulanmış kabul edilmez. Kesin rakamlar için araç/motor kaynağı gereklidir. Arıza parçaları temsili çizimlerdir, OEM teknik şemalar değildir.
+Die Hobbydarstellung oder der Verzicht auf Anzeigen und Verkäufe ist keine verbindliche rechtliche Feststellung darüber, ob für ein öffentliches Angebot Informationspflichten gelten.
