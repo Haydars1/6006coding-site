@@ -68,6 +68,14 @@ const homeExamples=()=>typeof vehicles==="undefined"?[]:vehicles;
 const brands=()=>[...new Set([...makes,...Object.keys(homeDirectory())])];
 const models=brand=>[...new Set([...(seed[brand]||[]),...(homeDirectory()[brand]||[]),...homeExamples().filter(x=>x.brand===brand).map(x=>x.name),...(remote.get(brand)||[])])].sort((a,b)=>a.localeCompare(b,"de",{numeric:true}));
 async function get(url){
+ // External NHTSA requests require a deliberate user opt-in; local catalogue remains available.
+ let allowed=false;
+ try{allowed=sessionStorage.getItem("6006-vpic-external-consent")==="yes";}catch(e){}
+ if(!allowed){
+  const accepted=window.confirm("Externe Fahrzeugdaten laden? Dabei wird eine Anfrage samt IP-Adresse an die US-Behörde NHTSA (vpic.nhtsa.dot.gov) übertragen. Ohne Zustimmung bleiben die lokalen Fahrzeugdaten nutzbar.\\n\\nLoad external vehicle data from NHTSA (USA)? Your IP address will be transmitted.");
+  if(!accepted)throw Error("External NHTSA request declined");
+  try{sessionStorage.setItem("6006-vpic-external-consent","yes");}catch(e){}
+ }
  const ctrl=new AbortController(), timer=setTimeout(()=>ctrl.abort(),7000);
  try{const r=await fetch(url,{signal:ctrl.signal,mode:"cors"});if(!r.ok)throw Error("vPIC");const v=await r.json();return Array.isArray(v.Results)?v.Results:[];}
  finally{clearTimeout(timer);}
