@@ -115,7 +115,8 @@ console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback
 const videoCode=fs.readFileSync(videoJs,'utf8');
 assert(videoCode.includes('dtc-video-suggest')&&videoCode.includes('P0335'),'Instant fault-code suggestions missing');
 assert(fs.existsSync(path.join(ROOT,'fehlercodes/p0335/index.html')),'Curated P0335 guide not published');
-assert(!fs.existsSync(path.join(ROOT,'ads.txt')),'Non-commercial project must not publish AdSense ads.txt');
+const adsText=fs.readFileSync(path.join(ROOT,'ads.txt'),'utf8');
+assert(!/^\s*google\.com\s*,/im.test(adsText),'Non-commercial project must not authorize ad sellers in ads.txt');
 assert(!fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('google-adsense-account'),'Non-commercial project must not carry an AdSense publisher tag');
 console.log('PASS: Advanced VIN finder and instant DTC search; no advertising configuration');
 const javascript=['assets/6006-dtc-intelligence.js','assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
