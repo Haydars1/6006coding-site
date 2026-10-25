@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="de">
   <head>
+    <script src="/assets/6006-storage-gate.js?v=20261025"></script>
     <script src="/assets/6006-locale.js?v=20261013-auto"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,10 +10,10 @@
     <meta name="google" content="notranslate" />
     <link rel="canonical" href="https://6006coding.de/fahrzeug/" />
     <link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml" />
-    <title>Fahrzeugkatalog | 6006 Performance</title>
-<link rel="stylesheet" href="/assets/6006-vin-stage1.css?v=20261019-services" />
-<link rel="stylesheet" href="/assets/6006-full-engine-directory.css?v=20261019-services" />
-<link rel="stylesheet" href="/assets/6006-missing-request.css?v=20261012-missing-engine" />
+    <title>Fahrzeugkatalog | 6006 Coding</title>
+<link rel="stylesheet" href="/assets/6006-vin-stage1.css?v=20261025-noncommercial" />
+<link rel="stylesheet" href="/assets/6006-full-engine-directory.css?v=20261025-noncommercial" />
+<link rel="stylesheet" href="/assets/6006-missing-request.css?v=20261025-noncommercial" />
     <style>
       :root { --ink:#12100f; --porcelain:#f3eee4; --mist:#d0c7bb; --muted:#9e9589; --copper:#c69a63; --copper-pale:#e0bd89; --line:rgba(243,238,228,.15); --line-copper:rgba(198,154,99,.43); --shadow:0 26px 78px rgba(0,0,0,.30); --serif:Iowan Old Style,Baskerville,"Times New Roman",serif; --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; --mono:ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,monospace; }
       * { box-sizing:border-box; }
@@ -113,12 +114,12 @@ html{scroll-padding-top:1.25rem}
 </style><link rel="stylesheet" href="/assets/6006-ui.css?v=20261008" /></head>
   <body>
     <a class="skip-link" href="#catalog">Zum Fahrzeugkatalog</a>
-    <header class="site-header"><div class="shell header-inner"><a class="brand" href="../" aria-label="6006 Performance"><img src="/assets/6006-primary-white.png" alt="6006 Performance" /></a><a id="back-link" class="back-link" href="../reparatur-wartung/">Fahrzeug ändern</a></div></header>
+    <header class="site-header"><div class="shell header-inner"><a class="brand" href="../" aria-label="6006 Coding"><img src="/assets/6006-primary-white.png" alt="6006 Coding" /></a><a id="back-link" class="back-link" href="../reparatur-wartung/">Fahrzeug ändern</a></div></header>
     <main>
       <section class="hero">
         <div class="shell hero-grid">
           <div class="hero-copy">
-            <p class="eyebrow" id="eyebrow">6006 Performance · Fahrzeugkatalog</p>
+            <p class="eyebrow" id="eyebrow">6006 Coding · Fahrzeugkatalog</p>
             <h1 id="vehicle-title">Dein <em>Fahrzeug</em>, klar eingeordnet.</h1>
             <p class="lead" id="vehicle-lead">Dieser Katalog bündelt Wartung, Reparatur, Fehlerdiagnose und technische Hinweise. Bevor Teile, Flüssigkeiten oder Anzugswerte gewählt werden, muss die genaue Variante bestätigt sein.</p>
             <div class="identity" id="vehicle-identity" aria-label="Fahrzeugauswahl"><span>Fahrzeugprofil</span><span>Variante vor Werten prüfen</span></div>
@@ -179,7 +180,7 @@ html{scroll-padding-top:1.25rem}
         </div>
       </section>
     </main>
-    <footer><div class="shell footer-inner"><span id="footer-text">© 2026 6006 Performance · Fahrzeugwissen mit Kontext.</span><nav class="footer-links"><a id="footer-repair" href="../reparatur-wartung/">Reparatur &amp; Wartung</a><a href="../fehlercodes/">Fehlercodes</a><a href="../">6006 Performance</a></nav></div></footer>
+    <footer><div class="shell footer-inner"><span id="footer-text">© 2026 6006 Coding · Fahrzeugwissen mit Kontext.</span><nav class="footer-links"><a id="footer-repair" href="../reparatur-wartung/">Reparatur &amp; Wartung</a><a href="../fehlercodes/">Fehlercodes</a><a href="../">6006 Coding</a></nav></div><a href="/projektinfo/">Projektinfo</a> · <a href="/datenschutz/">Datenschutz</a></footer>
     <script>
       (() => {
         const query = new URLSearchParams(location.search);
@@ -201,7 +202,7 @@ html{scroll-padding-top:1.25rem}
 
         const copy = {
           de: {
-            eyebrow: '6006 Performance · Fahrzeugkatalog', back: 'Fahrzeug ändern', footer: '© 2026 6006 Performance · Fahrzeugwissen mit Kontext.', repair: 'Reparatur & Wartung',
+            eyebrow: '6006 Coding · Fahrzeugkatalog', back: 'Fahrzeug ändern', footer: '© 2026 6006 Coding · Fahrzeugwissen mit Kontext.', repair: 'Reparatur & Wartung',
             title: ['Dein ', 'Fahrzeug', ', klar eingeordnet.'],
             lead: 'Dieser Katalog bündelt Wartung, Reparatur, Fehlerdiagnose und technische Hinweise für deine Auswahl. Er leitet nicht in einen Chat weiter; jede Kategorie bleibt direkt auf der Website.',
             tabs: { overview:'Übersicht', maintenance:'Wartung', repairs:'Reparatur', faults:'Fehler & Diagnose', specs:'Technische Daten' },
@@ -234,7 +235,7 @@ html{scroll-padding-top:1.25rem}
             }
           },
           tr: {
-            eyebrow: '6006 Performance · Araç kataloğu', back: 'Aracı değiştir', footer: '© 2026 6006 Performance · Araç bilgisi, doğru bağlamla.', repair: 'Tamir ve bakım',
+            eyebrow: '6006 Coding · Araç kataloğu', back: 'Aracı değiştir', footer: '© 2026 6006 Coding · Araç bilgisi, doğru bağlamla.', repair: 'Tamir ve bakım',
             title: ['Aracın ', 'doğru', ' şekilde incelendi.'],
             lead: 'Bu katalog, seçtiğin araç için bakım, tamir, arıza teşhisi ve teknik notları tek yerde toplar. Sohbete yönlendirmez; bütün kategoriler sitenin içinde kalır.',
             tabs: { overview:'Genel bakış', maintenance:'Bakım', repairs:'Tamir', faults:'Arıza & teşhis', specs:'Teknik bilgiler' },
@@ -267,7 +268,7 @@ html{scroll-padding-top:1.25rem}
             }
           },
           en: {
-            eyebrow: '6006 Performance · Vehicle catalogue', back: 'Change vehicle', footer: '© 2026 6006 Performance · Vehicle knowledge with context.', repair: 'Repair & maintenance',
+            eyebrow: '6006 Coding · Vehicle catalogue', back: 'Change vehicle', footer: '© 2026 6006 Coding · Vehicle knowledge with context.', repair: 'Repair & maintenance',
             title: ['Your ', 'vehicle', ', clearly mapped.'],
             lead: 'This catalogue keeps maintenance, repairs, fault diagnosis and technical notes for your selected vehicle in one place. It stays on the website; it does not send visitors into a chat.',
             tabs: { overview:'Overview', maintenance:'Maintenance', repairs:'Repairs', faults:'Faults & diagnosis', specs:'Technical data' },
@@ -537,7 +538,7 @@ html{scroll-padding-top:1.25rem}
             ? { before: `${fullVehicleName}, `, emphasis: 'clearly mapped', after: '.' }
             : { before: `${fullVehicleName}, `, emphasis: 'klar eingeordnet', after: '.' };
         title.replaceChildren(document.createTextNode(titleCopy.before), (() => { const em = document.createElement('em'); em.textContent = titleCopy.emphasis; return em; })(), document.createTextNode(titleCopy.after));
-        document.title = `${fullVehicleName} | ${ui.eyebrow} | 6006 Performance`;
+        document.title = `${fullVehicleName} | ${ui.eyebrow} | 6006 Coding`;
         document.querySelector('#eyebrow').textContent = ui.eyebrow;
         document.querySelector('#vehicle-lead').textContent = ui.lead;
         document.querySelector('#back-link').textContent = ui.back;
@@ -825,5 +826,5 @@ html{scroll-padding-top:1.25rem}
   enhance("code-search",".code-card");
   enhance("topic-search",".topic");
   enhance("work-search",".work");
-})();</script><script defer src="/assets/6006-vehicle-catalog.js?v=20261019-services"></script><script defer src="/assets/6006-vin-stage1.js?v=20261019-services"></script><script defer src="/assets/6006-full-engine-directory.js?v=20261019-services"></script><script defer src="/assets/6006-missing-request.js?v=20261019-services"></script><script defer src="/assets/6006-ui.js?v=20261008"></script></body>
+})();</script><script defer src="/assets/6006-vehicle-catalog.js?v=20261025-noncommercial"></script><script defer src="/assets/6006-vin-stage1.js?v=20261025-noncommercial"></script><script defer src="/assets/6006-full-engine-directory.js?v=20261025-noncommercial"></script><script defer src="/assets/6006-missing-request.js?v=20261025-noncommercial"></script><script defer src="/assets/6006-ui.js?v=20261025-noncommercial"></script></body>
 </html>

@@ -6,7 +6,7 @@ const w={
   "tr": {
     "kicker": "6006 / ARAÇ & MOTOR BULUCU",
     "head": "Motor yazılımı & araç kodlama",
-    "intro": "Aracını seç; teknik motor bilgilerini, yazılım, kodlama ve teşhis hizmetlerini aynı yerde gör. VIN başlangıcından markayı belirle veya marka, model, yıl ve motor seç.",
+    "intro": "Aracını seç; açık motor referanslarını ve ilgili arıza kodlarını incele. VIN başlangıcından markayı bul veya marka, model, yıl ve motor seç.",
     "all": "Tüm arıza kodları",
     "vin": "Şasi numarası (VIN)",
     "vinHelp": "17 karakterli VIN için önce yerel üretici kodlarına bakılır; tanınmazsa yalnızca ilk 3 karakter NHTSA'ya sorgulanır. Tam VIN gönderilmez veya kaydedilmez. Üretici/model/motor doğrulanmalıdır.",
@@ -59,21 +59,21 @@ const w={
     "vinUnavailable": "Üretici kaydı bulunamadı. NHTSA Avrupa araçlarının tamamını kapsamaz; marka, model ve motoru listeden seçerek devam edebilirsin.",
     "ambiguous": "Önceki motor adı birden fazla varyantla eşleşiyor. Doğru nesil ve şanzımanı listeden seç; motor otomatik seçilmedi.",
     "stockHead": "Aracın teknik referans bilgileri",
-    "openService": "Yazılım ve kodlama hizmetlerini gör",
-    "serviceHeading": "Bu araç için hizmet talebi",
-    "serviceIntro": "İstediğin işlemi araç bilgilerinle birlikte inceleyelim. Desteklenen işlevler kontrol ünitesi, yazılım sürümü ve mevcut donanıma göre değişir.",
-    "softwareTitle": "Motor ve kontrol ünitesi yazılımı",
-    "softwareText": "Mevcut yazılım sürümünün okunması, hata kaydının incelenmesi ve güncelleme veya yazılım sorunlarına yönelik araç özelinde değerlendirme.",
-    "codingTitle": "Konfor ve donanım kodlama",
-    "codingText": "Desteklenen araçlarda ayna katlama, merkezi kilit ve aydınlatma tercihleri gibi mevcut donanımın işlevlerini değerlendirme.",
-    "diagnosticTitle": "Arıza teşhisi ve canlı veriler",
-    "diagnosticText": "Motor, sensör ve emisyon sistemi uyarılarını hata kodları, canlı değerler ve belirtilerle birlikte inceleme.",
-    "eligibility": "İşleme uygunluk, donanım desteği ve gerekli izinler araç üzerinde kontrol edilir. Araç seçimi tek başına bir işlevin kullanılabildiğini doğrulamaz."
+    "openService": "Bakım ve onarım rehberini aç",
+    "serviceHeading": "Araç hakkında teknik bilgiler",
+    "serviceIntro": "Seçilen varyant için genel motor referansları ve ilgili bilgi başlıkları. Bu içerik, araç üzerinde yapılacak işlem veya üretici onayı değildir.",
+    "softwareTitle": "Motor referansları",
+    "softwareText": "Model ailesi, motor varyantı ve açık veri kaynaklarındaki temel teknik bilgiler.",
+    "codingTitle": "Arıza kodları",
+    "codingText": "Seçilen araç sistemiyle ilişkili genel kod örnekleri ve açıklamalar.",
+    "diagnosticTitle": "Bakım ve onarım",
+    "diagnosticText": "Üretici kaynaklarıyla kontrol edilmesi gereken genel bakım ve güvenlik bilgileri.",
+    "eligibility": "Veriler açık kaynaklardan derlenmiştir ve OEM onayı değildir. Araca özgü değerleri üretici belgeleriyle doğrula."
   },
   "de": {
     "kicker": "6006 / FAHRZEUG & MOTORFINDER",
     "head": "Motorsoftware & Fahrzeugcodierung",
-    "intro": "Fahrzeug auswählen und Motorreferenzen, Software, Codierung und Diagnose an einem Ort finden. Marke über den VIN-Anfang bestimmen oder Marke, Modell, Baujahr und Motor manuell wählen.",
+    "intro": "Fahrzeug auswählen und offene Motorreferenzen sowie passende Fehlercodes ansehen. Marke über die ersten VIN-Zeichen bestimmen oder Marke, Modell, Baujahr und Motor manuell wählen.",
     "all": "Alle Fehlercodes",
     "vin": "Fahrgestellnummer (FIN/VIN)",
     "vinHelp": "Hersteller wird zuerst lokal gesucht; andernfalls werden nur die ersten 3 Stellen bei NHTSA abgefragt. Die vollständige FIN wird nicht versendet oder gespeichert. Fahrzeug und Motor separat bestätigen.",
@@ -126,21 +126,21 @@ const w={
     "vinUnavailable": "Kein Hersteller gefunden. NHTSA deckt nicht alle europäischen Fahrzeuge ab. Marke, Modell und Motor können manuell gewählt werden.",
     "ambiguous": "Die gespeicherte Motorbezeichnung passt zu mehreren Varianten. Baureihe und Getriebe auswählen; kein Motor wurde automatisch gewählt.",
     "stockHead": "Technische Fahrzeugreferenz",
-    "openService": "Software- und Codierleistungen ansehen",
-    "serviceHeading": "Service für dieses Fahrzeug anfragen",
-    "serviceIntro": "Wir prüfen Ihren Wunsch zusammen mit den Fahrzeugdaten. Verfügbare Funktionen hängen von Steuergerät, Softwarestand und vorhandener Ausstattung ab.",
-    "softwareTitle": "Motor- und Steuergerätesoftware",
-    "softwareText": "Vorhandenen Softwarestand auslesen, Fehlerspeicher einordnen und fahrzeugspezifische Möglichkeiten bei Softwareproblemen oder Aktualisierungen prüfen.",
-    "codingTitle": "Komfort- und Ausstattungscodierung",
-    "codingText": "Bei unterstützten Fahrzeugen Funktionen vorhandener Ausstattung prüfen, etwa Spiegelanklappen, Zentralverriegelung und Lichtpräferenzen.",
-    "diagnosticTitle": "Fehlerdiagnose und Live-Daten",
-    "diagnosticText": "Motor-, Sensor- und Abgassystemmeldungen anhand von Fehlercodes, Messwerten und den geschilderten Symptomen untersuchen.",
-    "eligibility": "Technische Eignung, Ausstattung und erforderliche Freigaben werden am Fahrzeug geprüft. Die Fahrzeugauswahl bestätigt noch keine bestimmte Funktion."
+    "openService": "Wartungs- und Reparaturratgeber öffnen",
+    "serviceHeading": "Technische Referenzen zum Fahrzeug",
+    "serviceIntro": "Allgemeine Motorreferenzen und passende Informationsthemen zur ausgewählten Variante. Keine fahrzeugbezogene Freigabe oder Arbeitsanweisung.",
+    "softwareTitle": "Motorreferenzen",
+    "softwareText": "Offene Referenzangaben zu Modellfamilie, Motorvariante und Grunddaten.",
+    "codingTitle": "Fehlercodes",
+    "codingText": "Allgemeine Codebeispiele und Erklärungen zu den zugehörigen Fahrzeugsystemen.",
+    "diagnosticTitle": "Wartung und Reparatur",
+    "diagnosticText": "Allgemeine Hinweise zu Sicherheit und Herstellerunterlagen.",
+    "eligibility": "Offene Daten sind nicht OEM-bestätigt. Fahrzeugspezifische Angaben immer in Herstellerunterlagen prüfen."
   },
   "en": {
     "kicker": "6006 / VEHICLE & ENGINE FINDER",
     "head": "Engine software & vehicle coding",
-    "intro": "Choose your vehicle to view technical engine references, software, coding and diagnostic services together. Identify the make from the VIN prefix or select make, model, year and engine manually.",
+    "intro": "Choose a vehicle to browse open engine references and related fault codes. Identify the make from the VIN prefix or select make, model, year and engine manually.",
     "all": "All fault codes",
     "vin": "Vehicle identification number (VIN)",
     "vinHelp": "Manufacturer is checked locally first; if unknown, only the 3-character prefix is sent to NHTSA. The full VIN is never transmitted or stored. Verify make, model and engine.",
@@ -193,16 +193,16 @@ const w={
     "vinUnavailable": "No manufacturer found. NHTSA does not cover every European vehicle; select make, model and engine manually to continue.",
     "ambiguous": "The saved engine name matches several variants. Select the generation and gearbox; no engine was selected automatically.",
     "stockHead": "Technical vehicle reference",
-    "openService": "View software and coding services",
-    "serviceHeading": "Request service for this vehicle",
-    "serviceIntro": "We review your request with the vehicle details. Supported functions depend on the control unit, software version and fitted equipment.",
-    "softwareTitle": "Engine and control unit software",
-    "softwareText": "Read the current software version, review stored faults and assess vehicle-specific options for software issues or updates.",
-    "codingTitle": "Comfort and equipment coding",
-    "codingText": "Review supported functions of fitted equipment, such as mirror folding, central locking and lighting preferences.",
-    "diagnosticTitle": "Fault diagnosis and live data",
-    "diagnosticText": "Investigate engine, sensor and emissions warnings using fault codes, live measurements and reported symptoms.",
-    "eligibility": "Technical suitability, equipment support and required approvals are checked on the vehicle. Selecting a model does not confirm any particular function."
+    "openService": "Open maintenance and repair guides",
+    "serviceHeading": "Technical references for this vehicle",
+    "serviceIntro": "General engine references and related information topics for the selected variant. Not vehicle approval or work instructions.",
+    "softwareTitle": "Engine references",
+    "softwareText": "Open reference information about model family, engine variant and basic specifications.",
+    "codingTitle": "Fault codes",
+    "codingText": "General code examples and explanations of related vehicle systems.",
+    "diagnosticTitle": "Maintenance and repair",
+    "diagnosticText": "General safety notes and links to manufacturer documentation.",
+    "eligibility": "Open data is not OEM-verified. Always check vehicle-specific details in manufacturer documents."
   }
 };
 function lang(){const l=String(window.Locale6006?.getLanguage?.()||document.documentElement.lang||"").slice(0,2);return w[l]?l:"de";}
@@ -235,156 +235,7 @@ function renderVinStatus(){
 // Quick links show that the finder is not limited to Volkswagen.
 // The native make dropdown remains the complete catalogue, not the buttons below.
 
-// Quotation handoff stays entirely browser-side until the visitor opens a contact link.
-// The VIN input is intentionally NEVER part of the outgoing message.
-const quoteCopy={
-  "tr": {
-    "head": "Yazılım veya kodlama işlemini sor",
-    "intro": "İstediğin konfor özelliğini, yazılım sorununu veya arıza belirtisini yaz. Araç bilgilerinle birlikte hangi işlemin desteklendiğini inceleyelim.",
-    "mileage": "Kilometre (isteğe bağlı)",
-    "ecu": "ECU / yazılım versiyonu (biliniyorsa)",
-    "note": "İstenen işlem / belirti",
-    "wa": "WhatsApp ile hizmet sor →",
-    "email": "E-posta ile hizmet sor →",
-    "choose": "Marka ve modelle birlikte yılı veya motor kodunu gir.",
-    "ready": "Araç bilgileri hazır. Gönderilecek bilgiler aşağıda özetlendi.",
-    "preview": "Gönderilecek araç özeti",
-    "privacy": "Şasi numarası (VIN) gönderilmez. Bağlantıya dokunduğunda WhatsApp veya e-posta uygulamasına geçilir; mesajı göndermek senin kontrolündedir.",
-    "subject": "6006 Performance | Araç yazılımı ve kodlama talebi",
-    "salutation": "Merhaba 6006 Performance, aracım için yazılım, kodlama veya teşhis hizmeti hakkında bilgi rica ediyorum.",
-    "stock": "Referans stok değer",
-    "unverified": "Referans veri doğrulanmamış / OEM onayı yok",
-    "family": "Model ailesi eşleşmesi; tam jenerasyon doğrulanmadı",
-    "verification": "İstenen işlevin donanım, kontrol ünitesi ve yazılım sürümüyle uyumluluğunu işlemden önce birlikte doğrulayalım.",
-    "mileageUnit": "km",
-    "vehicle": "Araç",
-    "year": "Yıl",
-    "fuel": "Yakıt",
-    "engine": "Motor",
-    "generation": "Nesil",
-    "gearbox": "Şanzıman",
-    "ecuVersion": "ECU",
-    "extra": "Açıklama",
-    "unavailable": "Bilinmiyor",
-    "placeholder": "Örn. ayna katlama, merkezi kilit tercihi, yazılım sorunu veya motor uyarısı"
-  },
-  "de": {
-    "head": "Fahrzeugsoftware & Codierung anfragen",
-    "intro": "Beschreiben Sie die gewünschte Komfortfunktion, das Softwareproblem oder die Fehlermeldung. Anhand Ihrer Fahrzeugdaten prüfen wir, welche Leistung unterstützt wird.",
-    "mileage": "Kilometerstand (optional)",
-    "ecu": "ECU / Softwarestand (falls bekannt)",
-    "note": "Gewünschte Funktion / Fehlerbild",
-    "wa": "Service per WhatsApp anfragen →",
-    "email": "Service per E-Mail anfragen →",
-    "choose": "Marke und Modell sowie Baujahr oder Motorkennung ergänzen.",
-    "ready": "Fahrzeugangaben bereit. Die folgenden Angaben werden vorbereitet.",
-    "preview": "Zusammenfassung der Anfrage",
-    "privacy": "Die Fahrgestellnummer (VIN) wird nicht übertragen. WhatsApp bzw. E-Mail öffnet sich erst beim Klick; das Absenden bleibt Ihre Entscheidung.",
-    "subject": "6006 Performance | Fahrzeugsoftware und Codierung",
-    "salutation": "Hallo 6006 Performance, ich interessiere mich für Fahrzeugsoftware, Codierung oder Diagnose für mein Fahrzeug.",
-    "stock": "Serien-Referenzwerte",
-    "unverified": "Referenzdaten nicht OEM-verifiziert",
-    "family": "Modellfamilie statt exakter Baureihe; bitte prüfen",
-    "verification": "Bitte die gewünschte Funktion vorab auf Unterstützung durch Ausstattung, Steuergerät und Softwarestand prüfen.",
-    "mileageUnit": "km",
-    "vehicle": "Fahrzeug",
-    "year": "Baujahr",
-    "fuel": "Kraftstoff",
-    "engine": "Motor",
-    "generation": "Generation",
-    "gearbox": "Getriebe",
-    "ecuVersion": "ECU",
-    "extra": "Hinweise",
-    "unavailable": "Unbekannt",
-    "placeholder": "Zum Beispiel Spiegelanklappen, Zentralverriegelung, Softwareproblem oder Motorwarnung"
-  },
-  "en": {
-    "head": "Ask about vehicle software & coding",
-    "intro": "Describe the comfort function, software issue or warning you want help with. We use your vehicle details to check which service is supported.",
-    "mileage": "Mileage (optional)",
-    "ecu": "ECU / software version (if known)",
-    "note": "Requested function / symptoms",
-    "wa": "Ask about service via WhatsApp →",
-    "email": "Ask about service via email →",
-    "choose": "Enter make and model, plus year or engine code.",
-    "ready": "Vehicle details ready. The summary below will be shared.",
-    "preview": "Vehicle request summary",
-    "privacy": "Your VIN is not included. WhatsApp or your email app opens only after you click; sending the message is your choice.",
-    "subject": "6006 Performance | Vehicle software and coding",
-    "salutation": "Hello 6006 Performance, I would like information about vehicle software, coding or diagnosis for my vehicle.",
-    "stock": "Reference stock figures",
-    "unverified": "Reference data not OEM verified",
-    "family": "Model-family match, exact generation not verified",
-    "verification": "Please check support for the requested function against the fitted equipment, control unit and software version before work.",
-    "mileageUnit": "km",
-    "vehicle": "Vehicle",
-    "year": "Year",
-    "fuel": "Fuel",
-    "engine": "Engine",
-    "generation": "Generation",
-    "gearbox": "Gearbox",
-    "ecuVersion": "ECU",
-    "extra": "Notes",
-    "unavailable": "Unknown",
-    "placeholder": "For example mirror folding, central locking preference, software issue or engine warning"
-  }
-};
-const contactWaNumber="491788354756",contactEmail="6006performance@gmail.com";
-const quoteBox=document.createElement("section");
-quoteBox.className="vin6006-quote";quoteBox.id="vin6-quote";
-quoteBox.innerHTML='<div class="vin6006-quote-top"><div class="vin6006-quote-eyebrow">6006 PERFORMANCE</div><h4 id="vin6-quote-title"></h4><p id="vin6-quote-intro"></p></div>'
-+'<div class="vin6006-quote-grid"><div class="vin6006-field"><label for="vin6-mileage" id="vin6-mileage-label"></label><input type="number" id="vin6-mileage" inputmode="numeric" min="0" max="2000000" placeholder="120000"></div>'
-+'<div class="vin6006-field"><label for="vin6-ecu" id="vin6-ecu-label"></label><input type="text" id="vin6-ecu" maxlength="90" placeholder="EDC17 / Bosch / SW ..."></div>'
-+'<div class="vin6006-field vin6006-quote-note"><label for="vin6-inquiry-note" id="vin6-inquiry-label"></label><textarea id="vin6-inquiry-note" maxlength="400" rows="2"></textarea></div></div>'
-+'<p class="vin6006-quote-state" role="status" aria-live="polite" id="vin6-quote-state"></p><p class="vin6006-quote-preview" id="vin6-quote-preview"></p>'
-+'<div class="vin6006-quote-actions"><a id="vin6-quote-whatsapp" target="_blank" rel="noopener noreferrer"></a><a id="vin6-quote-email"></a></div>'
-+'<p id="vin6-quote-privacy" class="vin6006-quote-privacy"></p>';
-report.append(quoteBox);
-const quoteControls={mileage:document.getElementById("vin6-mileage"),ecu:document.getElementById("vin6-ecu"),note:document.getElementById("vin6-inquiry-note"),wa:document.getElementById("vin6-quote-whatsapp"),email:document.getElementById("vin6-quote-email")};
-function renderQuote(){
- const copy=quoteCopy[lang()];
- for(const [id,value] of Object.entries({"quote-title":copy.head,"quote-intro":copy.intro,"mileage-label":copy.mileage,"ecu-label":copy.ecu,"inquiry-label":copy.note,"quote-privacy":copy.privacy}))$(id).textContent=value;
- quoteControls.wa.textContent=copy.wa;quoteControls.email.textContent=copy.email;quoteControls.note.placeholder=copy.placeholder;
- const selected=selectedVariant();
- const engineCode=manual.value.trim()||selected?.engine||"";
- const valid=Boolean(make.value&&model.value&&(year.value||engineCode));
- const details=[];
- const put=(label,value)=>{if(value)details.push(label+": "+String(value).replace(/[\r\n]+/g," ").trim());};
- put(copy.vehicle,make.value+" "+model.value);
- put(copy.year,year.value);
- put(copy.fuel,selected?.fuel||(fuel.value?(w[lang()].fuels[fuel.value]||fuel.value):""));
- put(copy.engine,engineCode);
- if(selected){
-  put(copy.generation,selected.generation||"");
-  put(copy.gearbox,selected.transmission||"");
-  if(stockNeedsReview(selected))details.push(copy.unverified);
-  if(clean(selected.model)!==clean(model.value))details.push(copy.family);
- }
- const stockPS=numeric(ps.value)||(!selected?null:stockPower(selected));
- const stockNM=numeric(nm.value)||(!selected?null:stockTorque(selected));
- if(stockPS||stockNM)put(copy.stock,[stockPS?stockPS+" PS":"",stockNM?stockNM+" Nm":""].filter(Boolean).join(" / "));
- const mileage=Number(quoteControls.mileage.value);if(quoteControls.mileage.value&&Number.isSafeInteger(mileage)&&mileage>=0&&mileage<=2000000)put(copy.mileage,mileage.toLocaleString(lang()==="de"?"de-DE":lang()==="tr"?"tr-TR":"en-US")+" "+copy.mileageUnit);
- put(copy.ecuVersion,quoteControls.ecu.value.trim().slice(0,90));
- put(copy.extra,quoteControls.note.value.trim().slice(0,400));
- const message=[copy.salutation,"",...details,"",copy.verification].join("\n");
- $("quote-state").textContent=valid?copy.ready:copy.choose;
- $("quote-preview").textContent=copy.preview+": "+[make.value,model.value,year.value,engineCode].filter(Boolean).join(" · ");
- for(const a of [quoteControls.wa,quoteControls.email]){
-  a.setAttribute("aria-disabled",String(!valid));
-  a.tabIndex=valid?0:-1;
- }
- if(valid){
-  quoteControls.wa.href="https://wa.me/"+contactWaNumber+"?text="+encodeURIComponent(message);
-  quoteControls.email.href="mailto:"+contactEmail+"?subject="+encodeURIComponent(copy.subject)+"&body="+encodeURIComponent(message);
- }else{
-  quoteControls.wa.removeAttribute("href");quoteControls.email.removeAttribute("href");
- }
-}
-for(const control of [quoteControls.mileage,quoteControls.ecu,quoteControls.note]){
- control.addEventListener("input",renderQuote);
- control.addEventListener("change",renderQuote);
-}
-
+// Informational catalogue only; no paid-service contact form.
 const popularMakes=["Volkswagen","BMW","Mercedes-Benz","Audi","Ford","Toyota","Renault","Peugeot","Hyundai","Kia","Opel","Škoda","Porsche","Fiat","Honda","Tesla","Volvo","Nissan"];
 const brandBar=document.createElement("div");brandBar.className="vin6006-brands";
 const brandCaption=document.createElement("p");brandCaption.className="vin6006-brand-caption";
@@ -456,7 +307,7 @@ if(fuel.options.length){const value=fuel.value;fill(fuel,fuelKeys.slice(1).map(k
 if(engine.options.length)engine.options[0].textContent=t("noneMotor");
 engineSearchLabel.textContent=w[lang()].searchLabel;
 engineSearch.placeholder=w[lang()].searchLabel;
-renderQuote();
+
 if(year.options.length)year.options[0].textContent=t("choose");
 if(report&&!report.hidden)renderReport();
 }
@@ -585,10 +436,10 @@ for(const [label,value,unit] of [[t("hp"),basePS,"PS"],[t("nm"),baseNM,"Nm"]]){
 }
 $("stage-note").textContent=(!basePS||!baseNM?t("noData"):t("variant"))+(v&&stockNeedsReview(v)?" "+w[lang()].reviewWarning:"");
 renderRelatedCodes();
-$("stage-link").href="/#hizmetler";
+$("stage-link").href="/reparatur-wartung/";
 $("dtc-link").href="/fehlercodes/?"+vehicleParams().toString();
 $("provenance").textContent=t("variant")+(v&&stockNeedsReview(v)?" · "+w[lang()].reviewWarning:"")+(v&&clean(v.model)!==clean(model.value)?" · "+w[lang()].familyWarning:"")+(manuallyEditedStock?" · "+t("manual"):"");
-renderQuote();
+
 saveChoice();
 }
 const wmi={

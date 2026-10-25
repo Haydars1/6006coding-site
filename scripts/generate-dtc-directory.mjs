@@ -28,16 +28,16 @@ const codeHref = code => hasGuide(code)?'/fehlercodes/'+code.toLowerCase()+'/':'
 const save = (relative,html) => {const filename = path.join(root,relative);fs.mkdirSync(path.dirname(filename),{recursive:true});fs.writeFileSync(filename,html,'utf8');};
 const rootDir = '/fehlercodes/verzeichnis/';
 const folder = (g,page) => rootDir+g+'/'+(page===1?'':page+'/');
-const header = '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/">Fehlercode-Suche</a><a href="/fehlercodes/loesungen/">Diagnoseanleitungen</a><a href="/fahrzeug/">Fahrzeug wählen</a></nav></header>';
+const header = '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Coding"></a><nav><a href="/fehlercodes/">Fehlercode-Suche</a><a href="/fehlercodes/loesungen/">Diagnoseanleitungen</a><a href="/fahrzeug/">Fahrzeug wählen</a><a href="/datenschutz/">Datenschutz</a></nav></header>';
 function layout(title,desc,url,body){
-  const ld = {'@context':'https://schema.org','@type':'CollectionPage',name:title,description:desc,url:base+url,isPartOf:{'@type':'WebSite',name:'6006 Performance',url:base+'/'}};
+  const ld = {'@context':'https://schema.org','@type':'CollectionPage',name:title,description:desc,url:base+url,isPartOf:{'@type':'WebSite',name:'6006 Coding',url:base+'/'}};
   return '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-   +'<title>'+safe(title)+' | 6006 Performance</title><meta name="description" content="'+safe(desc)+'">'
+   +'<title>'+safe(title)+' | 6006 Coding</title><meta name="description" content="'+safe(desc)+'">'
    +'<meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+base+url+'">'
    +'<meta name="theme-color" content="#1a1714"><link rel="icon" type="image/svg+xml" href="/assets/6006-favicon.svg">'
-   +'<link rel="stylesheet" href="/assets/6006-seo.css"><script type="application/ld+json">'+JSON.stringify(ld)+'</script></head><body>'
-   +header+'<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/">Fehlercodes</a> / <a href="'+rootDir+'">Gesamtverzeichnis</a></nav>'
-   +body+'</main><footer>© 2026 6006 Performance · OBD-Fehlercodes sind Hinweise, keine Bauteildiagnose. Referenzdefinitionen: Wal33D/dtc-database (MIT).</footer></body></html>';
+   +'<link rel="stylesheet" href="/assets/6006-seo.css"><script src="/assets/6006-storage-gate.js?v=20261025"></script><script type="application/ld+json">'+JSON.stringify(ld)+'</script></head><body>'
+   +header+'<main class="main"><nav class="crumb"><a href="/">6006 Coding</a> / <a href="/fehlercodes/">Fehlercodes</a> / <a href="'+rootDir+'">Gesamtverzeichnis</a></nav>'
+   +body+'</main><footer>© 2026 6006 Coding · Privates, nicht kommerzielles Informationsprojekt. OBD-Fehlercodes sind Hinweise, keine Bauteildiagnose. Referenzdefinitionen: Wal33D/dtc-database (MIT). <a href="/datenschutz/">Datenschutz</a> · <a href="/projektinfo/">Projektinfo</a></footer></body></html>';
 }
 const urls=[rootDir], perPage=180;
 let pages=0, written=0;

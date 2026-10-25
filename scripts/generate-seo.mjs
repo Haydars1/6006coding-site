@@ -625,18 +625,18 @@ function focusedArticle(code){
  const entry=playbooks.codes[code],family=playbooks.families[entry.family];
  const url=base+'/fehlercodes/'+code.toLowerCase()+'/';
  const subset={version:playbooks.version,sources:playbooks.sources.filter(source=>family.sourceIds.includes(source.id)),families:{[entry.family]:family},codes:{[code]:entry}};
- const ld={'@context':'https://schema.org','@type':'TechArticle',headline:code+' – '+entry.title.de,description:entry.meaning.de,url,inLanguage:'de',publisher:{'@type':'Organization',name:'6006 Performance',url:base+'/'},citation:subset.sources.map(source=>source.url)};
+ const ld={'@context':'https://schema.org','@type':'TechArticle',headline:code+' – '+entry.title.de,description:entry.meaning.de,url,inLanguage:'de',publisher:{'@type':'Organization',name:'6006 Coding',url:base+'/'},citation:subset.sources.map(source=>source.url)};
  return '<!doctype html>\n<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
- +'<script src="/assets/6006-locale.js?v=20261013-auto"></script><title>'+esc(code+': '+entry.title.de)+' | 6006 Performance</title>'
+ +'<script src="/assets/6006-storage-gate.js?v=20261025"></script><script src="/assets/6006-locale.js?v=20261013-auto"></script><title>'+esc(code+': '+entry.title.de)+' | 6006 Coding</title>'
  +'<meta name="description" content="'+esc(entry.meaning.de)+'"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="'+url+'">'
  +'<link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#171513">'
  +'<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="stylesheet" href="/assets/6006-diagnostic-playbooks.css?v=20261013-guides">'
  +'<script type="application/ld+json">'+JSON.stringify(ld).replaceAll('<','\\u003c')+'</script></head><body>'
- +'<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/" data-guide-label="guides">Diagnoseanleitungen</a><a href="/fahrzeug/" data-guide-label="stage">Fahrzeugkatalog</a></nav></header>'
- +'<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a> / '+esc(code)+'</nav>'
+ +'<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Coding"></a><nav><a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/" data-guide-label="guides">Diagnoseanleitungen</a><a href="/fahrzeug/" data-guide-label="stage">Fahrzeugkatalog</a></nav></header>'
+ +'<main class="main"><nav class="crumb"><a href="/">6006 Coding</a> / <a href="/fehlercodes/" data-guide-label="all">Alle Fehlercodes</a> / '+esc(code)+'</nav>'
  +'<div data-diagnostic-article="'+esc(code)+'">'+playbookUI.render(playbooks,code,'de',true)+'</div>'
  +'<div class="bottomnav"><a href="/fehlercodes/?code='+encodeURIComponent(code)+'" data-guide-label="all">Alle Fehlercodes</a><a href="/fahrzeug/" data-guide-label="choose">Fahrzeug auswählen</a></div></main>'
- +'<footer data-guide-label="footer">6006 Performance · Fahrzeugdiagnose und Reparaturwissen</footer>'
+ +'<footer data-guide-label="footer">6006 Coding · Fahrzeugdiagnose und Reparaturwissen</footer>'
  +'<script type="application/json" id="6006-playbook-data">'+JSON.stringify(subset).replaceAll('<','\\u003c')+'</script>'
  +'<script defer src="/assets/6006-diagnostic-playbooks.js?v=20261019-services"></script></body></html>\n';
 }
@@ -645,18 +645,18 @@ function article(r){
  if(playbooks.codes[code])return focusedArticle(code);
  const slug=code.toLowerCase(),url=base+'/fehlercodes/'+slug+'/';
  const name=code+' – '+title;
- const description=code+' Fehlercode: Bedeutung, Symptome, mögliche Ursachen und Diagnose-Schritte. '+system+' bei 6006 Performance verständlich erklärt.';
+ const description=code+' Fehlercode: Bedeutung, Symptome, mögliche Ursachen und Diagnose-Schritte. '+system+' bei 6006 Coding verständlich erklärt.';
  const rel=related.split(',').map(k=>'<a href="../'+k.toLowerCase()+'/">'+esc(k)+' Fehlercode</a>').join(' · ');
  const list=(a,ordered=false)=>'<'+(ordered?'ol':'ul')+'>'+split(a).map(x=>'<li>'+esc(x)+'.</li>').join('')+'</'+(ordered?'ol':'ul')+'>';
- const ld={'@context':'https://schema.org','@type':'TechArticle',headline:name,description,url,inLanguage:'de',publisher:{'@type':'Organization',name:'6006 Performance',url:base+'/'}};
+ const ld={'@context':'https://schema.org','@type':'TechArticle',headline:name,description,url,inLanguage:'de',publisher:{'@type':'Organization',name:'6006 Coding',url:base+'/'}};
  return '<!doctype html>\n<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
- +'<title>'+esc(code)+' Fehler: '+esc(title)+' – Ursachen und Lösung | 6006 Performance</title>'
+ +'<title>'+esc(code)+' Fehler: '+esc(title)+' – Ursachen und Lösung | 6006 Coding</title>'
  +'<meta name="description" content="'+esc(description)+'"><meta name="robots" content="index,follow,max-image-preview:large">'
  +'<link rel="canonical" href="'+url+'"><meta property="og:type" content="article"><meta property="og:title" content="'+esc(name)+'"><meta property="og:description" content="'+esc(description)+'">'
  +'<meta property="og:url" content="'+url+'"><meta name="theme-color" content="#1a1714"><link rel="icon" type="image/svg+xml" href="/assets/6006-favicon.svg">'
- +'<link rel="stylesheet" href="/assets/6006-seo.css"><script type="application/ld+json">'+JSON.stringify(ld)+'</script></head>'
- +'<body><header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/fehlercodes/">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/">Fehlerlösungen</a><a href="/#aracin">Fahrzeugsoftware</a><a href="/reparatur-wartung/">Reparatur</a></nav></header>'
- +'<main class="main"><nav aria-label="Brotkrumen" class="crumb"><a href="/">6006 Performance</a> / <a href="/fehlercodes/">Fehlercodes</a> / '+code+'</nav>'
+ +'<link rel="stylesheet" href="/assets/6006-seo.css"><script src="/assets/6006-storage-gate.js?v=20261025"></script><script type="application/ld+json">'+JSON.stringify(ld)+'</script></head>'
+ +'<body><header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Coding"></a><nav><a href="/fahrzeug/">Fahrzeugkatalog</a><a href="/fehlercodes/">Alle Fehlercodes</a><a href="/fehlercodes/loesungen/">Fehlerlösungen</a><a href="/datenschutz/">Datenschutz</a></nav></header>'
+ +'<main class="main"><nav aria-label="Brotkrumen" class="crumb"><a href="/">6006 Coding</a> / <a href="/fehlercodes/">Fehlercodes</a> / '+code+'</nav>'
  +'<article><span class="kicker">FEHLERCODE · '+esc(system)+'</span><h1>'+esc(code)+': '+esc(title)+' – was tun?</h1>'
  +'<p class="lead">'+esc(meaning)+'</p>'
  +'<div class="overview"><div><span>OBD-Code</span><strong>'+esc(code)+'</strong></div><div><span>System</span><strong>'+esc(system)+'</strong></div><div><span>Erstdiagnose</span><strong>Vor Teiletausch messen</strong></div></div>'
@@ -664,11 +664,10 @@ function article(r){
  +'<section><h2>Mögliche Ursachen bei '+code+'</h2><p>Eine Fehlernummer ist noch kein Nachweis für ein defektes Bauteil. Diese Fehlerquellen werden bei der Diagnose einzeln ausgeschlossen:</p>'+list(causes)+'</section>'
  +'<section><h2>So lässt sich '+code+' systematisch prüfen</h2><p>Zuerst die vollständige Fehlermeldung mit Zusatzcode, Freeze-Frame und Bedingungen speichern. Danach folgen die fahrzeugspezifischen Kontrollen in sinnvoller Reihenfolge:</p>'+list(checks,true)+'</section>'
  +'<section class="notice"><h2>Wichtig für die Sicherheit</h2><p>'+esc(warning)+'</p><p>Vor einem Teiletausch sollten Motorcode, tatsächliche Messwerte und Herstellerinformationen abgeglichen werden. Bei Arbeiten an Bremse, Airbag, Hochvolttechnik oder Kraftstoff-Hochdrucksystemen gelten besondere Sicherheitsvorgaben.</p></section>'
- +'<section><h2>Was kostet die Reparatur?</h2><p>Ein seriöser Preis ist erst möglich, wenn klar ist, ob Sensorik, Leitungen, mechanische Bauteile oder nur Betriebsbedingungen den Code ausgelöst haben. Derselbe Fehlercode kann deshalb je nach Marke und Motor völlig unterschiedliche Reparaturen erfordern. Entscheidend sind Prüfzeit, das tatsächlich betroffene Bauteil und erforderliche Anpassungen.</p></section>'
  +'<section><h2>Für welche Fahrzeuge gilt die Information?</h2><p>'+code+' beschreibt eine Diagnosegruppe, nicht ein bestimmtes Fahrzeugmodell. Volkswagen, Audi, BMW, Mercedes-Benz, Opel, Ford und andere Marken können abweichende Hersteller-Untercodes oder Prüfbedingungen verwenden. Mit Marke, Modell, Motor, Baujahr und Getriebe lässt sich die Prüfung eingrenzen.</p><p><a class="btn" href="/#aracin">Mein Fahrzeug auswählen →</a> <a class="btn outline" href="/fehlercodes/?code='+code+'">Herstellerdefinitionen vergleichen →</a></p></section>'
  +'<section><h2>Verwandte Fehlercodes</h2><p class="related">'+rel+'</p></section>'
  +'<section class="notice"><h2>Fazit: '+code+' richtig eingrenzen</h2><p>'+esc(meaning)+' Die tatsächliche Ursache ergibt sich aus dem Zusammenspiel von Symptomen, Messdaten und weiteren Steuergeräte-Einträgen. Fehlercodes ohne Diagnose nur zu löschen oder Teile auf Verdacht zu wechseln, kann zu unnötigen Kosten führen.</p></section>'
- +'</article><nav class="bottomnav"><a href="/fehlercodes/loesungen/">← Alle Fehlerlösungen</a><a href="/fehlercodes/">18.805 DTC-Definitionen durchsuchen →</a></nav></main><footer>© 2026 6006 Performance · Diagnose- und Reparaturwissen. Keine Fahrzeugfreigabe oder verbindliche OEM-Reparaturanweisung.</footer>'
+ +'</article><nav class="bottomnav"><a href="/fehlercodes/loesungen/">← Alle Fehlerlösungen</a><a href="/fehlercodes/">18.805 DTC-Definitionen durchsuchen →</a></nav></main><footer>© 2026 6006 Coding · Privates, nicht kommerzielles Informationsprojekt. Keine Fahrzeugfreigabe oder verbindliche OEM-Reparaturanweisung. <a href="/datenschutz/">Datenschutz</a> · <a href="/projektinfo/">Projektinfo</a></footer>'
  +'</body></html>\n';
 }
 function write(file,content){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,content,'utf8');}
@@ -676,21 +675,21 @@ write(path.join(ROOT,'assets','6006-curated-guides.json'),JSON.stringify({codes:
 for(const row of rows)write(path.join(ROOT,'fehlercodes',row[0].toLowerCase(),'index.html'),article(row));
 const sections=[
  '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
- '<title>Fehlercodes: Ursachen, Symptome und Reparatur | 6006 Performance</title>',
+ '<title>Fehlercodes: Ursachen, Symptome und Reparatur | 6006 Coding</title>',
  '<meta name="description" content="Häufige OBD-Fehlercodes von P0299 bis U0100 verständlich erklärt: Symptome, Ursachen und praktische Prüfreihenfolge für die Fahrzeugdiagnose.">',
  '<meta name="robots" content="index,follow"><link rel="canonical" href="'+base+'/fehlercodes/loesungen/">',
- '<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"></head><body>',
- '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Performance"></a><nav><a href="/">Start</a><a href="/fehlercodes/">Alle DTC</a><a href="/#aracin">Fahrzeugsoftware</a></nav></header>',
- '<main class="main"><nav class="crumb"><a href="/">6006 Performance</a> / Fehlerlösungen</nav><span class="kicker">DIAGNOSE · OBD · KONTROLLSCHRITTE</span><h1>Fehlercodes verstehen. Ursachen prüfen. Defekte gezielt beheben.</h1>',
+ '<link rel="stylesheet" href="/assets/6006-seo.css"><link rel="icon" href="/assets/6006-favicon.svg" type="image/svg+xml"><script src="/assets/6006-storage-gate.js?v=20261025"></script></head><body>',
+ '<header class="bar"><a class="brand" href="/"><img src="/assets/6006-primary-white.png" alt="6006 Coding"></a><nav><a href="/">Start</a><a href="/fehlercodes/">Alle DTC</a><a href="/#aracin">Fahrzeugkatalog</a></nav></header>',
+ '<main class="main"><nav class="crumb"><a href="/">6006 Coding</a> / Fehlerlösungen</nav><span class="kicker">DIAGNOSE · OBD · KONTROLLSCHRITTE</span><h1>Fehlercodes verstehen. Ursachen prüfen. Defekte gezielt beheben.</h1>',
  '<p class="lead">Von Motorkontrollleuchte über Turbo- und DPF-Probleme bis zu ABS- und CAN-Fehlern: Wählen Sie einen Code für Bedeutung, typische Symptome und die sichere Prüfreihenfolge. Die Hinweise ersetzen keine Prüfung der konkreten Fahrzeugvariante.</p>',
  '<div class="codegrid">'+rows.map(r=>'<a href="/fehlercodes/'+r[0].toLowerCase()+'/"><strong>'+esc(r[0])+'</strong><span>'+esc(r[1])+'</span><small>'+esc(r[2])+'</small></a>').join('')+'</div>',
  '<section><h2>Ihr Fehlercode fehlt?</h2><p>Der vollständige Fehlercode-Katalog enthält 18.805 Hersteller- und Standarddefinitionen. Verwenden Sie die Suche und prüfen Sie die Fahrzeugmarke sowie den vollständigen Zusatzcode.</p><a class="btn" href="/fehlercodes/">Alle Fehlercodes durchsuchen →</a></section></main>',
- '<footer>© 2026 6006 Performance · Fahrzeugdiagnose und technische Hinweise.</footer></body></html>'
+ '<footer>© 2026 6006 Coding · Fahrzeugdiagnose und technische Hinweise.</footer></body></html>'
 ].join('\n');
 write(path.join(ROOT,'fehlercodes','loesungen','index.html'),sections);
 const css=':root{color-scheme:dark;--bg:#171513;--ink:#f0e8dd;--muted:#c4b4a2;--gold:#c49a67;--panel:#27211c}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.72 system-ui,-apple-system,Segoe UI,sans-serif}a{color:#e4b980}a:hover{color:#fff}.bar{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;border-bottom:1px solid #483727;padding:1rem max(1rem,calc((100vw - 1080px)/2));background:#1e1915}.brand img{width:145px;max-width:35vw}.bar nav{display:flex;flex-wrap:wrap;gap:1rem;font-size:.84rem}.bar nav a{text-decoration:none}.main{max-width:900px;margin:0 auto;padding:2.3rem 1.3rem 5rem}.crumb{font-size:.77rem;color:var(--muted);margin-bottom:3rem}.kicker{color:var(--gold);font-size:.73rem;font-weight:800;letter-spacing:.12em}h1{font:500 clamp(2.3rem,5.6vw,4rem)/1.12 Georgia,serif;margin:.5rem 0 1.2rem;letter-spacing:-.025em}h2{font:500 clamp(1.55rem,3vw,2.1rem)/1.2 Georgia,serif;margin:0 0 .7rem}p{margin:.7rem 0 1.2rem}p.lead{font-size:1.2rem;color:#ddd2c5;line-height:1.7}.overview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2rem 0}.overview>div{background:#29221d;border:1px solid #66503a;padding:1.2rem}.overview span{display:block;font-size:.7rem;color:#cdb99f;text-transform:uppercase}.overview strong{display:block;margin:.3rem 0;font-size:.95rem}section{padding:2rem 0;border-top:1px solid #48382c}li{padding:.35rem .1rem .4rem 0}li::marker{color:var(--gold)}.notice{padding:1.4rem;margin:1.8rem 0;border:1px solid #89673f;background:#282017}.btn{display:inline-block;background:var(--gold);color:#1f1913;text-decoration:none;border:1px solid var(--gold);padding:.65rem 1rem;border-radius:3px;font-weight:700;margin:.25rem .3rem .25rem 0;font-size:.9rem}.btn.outline{color:var(--gold);background:transparent}.related a{margin-right:.7rem}.bottomnav{display:flex;justify-content:space-between;gap:1rem;border-top:1px solid #654c34;padding:1.5rem 0;flex-wrap:wrap}.codegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:2rem 0}.codegrid a{display:flex;flex-direction:column;gap:.35rem;border:1px solid #63503b;padding:1.2rem;text-decoration:none;background:var(--panel)}.codegrid strong{font:700 1.25rem monospace;color:#edbd80}.codegrid span{font-size:1.03rem;color:var(--ink)}.codegrid small{color:var(--muted)}footer{padding:2rem;text-align:center;border-top:1px solid #433424;color:var(--muted);font-size:.78rem}@media(max-width:610px){.bar{flex-direction:column;align-items:flex-start}.overview,.codegrid{grid-template-columns:1fr}.main{padding:1.5rem 1rem 4rem}.crumb{margin-bottom:1.6rem}.lead{font-size:1.07rem!important}}';
 write(path.join(ROOT,'assets','6006-seo.css'),css+'\n.main{overflow-wrap:anywhere}.overview>div,.codegrid>*{min-width:0}a:focus-visible,summary:focus-visible{outline:3px solid #edbd80;outline-offset:4px}.definition-list{padding-left:1.3rem}.definition-list>li{padding:1rem .3rem;border-bottom:1px solid #48382c}details{margin:.7rem 0}summary{cursor:pointer;min-height:44px;padding:.6rem 0;color:#edbd80}.bar nav a{display:inline-flex;align-items:center;min-height:44px}.btn{max-width:100%;white-space:normal}@media(max-width:610px){.bar nav{gap:.3rem 1rem}.bottomnav a{min-height:44px;display:inline-flex;align-items:center}}');
-const fixed=['/','/fehlercodes/','/fahrzeug/','/technik/','/reparatur-wartung/','/fehlercodes/loesungen/'];
+const fixed=['/','/fehlercodes/','/fahrzeug/','/technik/','/reparatur-wartung/','/fehlercodes/loesungen/','/datenschutz/','/projektinfo/'];
 const urls=[...fixed,...rows.map(r=>'/fehlercodes/'+r[0].toLowerCase()+'/')];
 const date=new Date().toISOString().slice(0,10);
 write(path.join(ROOT,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>'  <url><loc>'+base+u+'</loc></url>').join('\n')+'\n</urlset>\n');

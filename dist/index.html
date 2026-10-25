@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="de">
   <head>
+    <script src="/assets/6006-storage-gate.js?v=20261025"></script>
     <script src="/assets/6006-locale.js?v=20261013-auto"></script>
-    <meta name="google-adsense-account" content="ca-pub-7331900145381998" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und Fehlerdiagnose bei 6006 Coding. Fahrzeug wählen und passende Software- und Codierleistungen kennenlernen." />
+    <meta name="description" content="Kostenlose Fahrzeugratgeber zu Fahrzeugdaten, Fehlercodes, Wartung und Technik. Ein privates, nicht kommerzielles Informationsprojekt." />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <meta name="theme-color" content="#302a23" />
     <meta name="color-scheme" content="dark light" />
@@ -13,12 +13,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="6006 Coding" />
     <meta property="og:url" content="https://6006coding.de/" />
-    <meta property="og:title" content="6006 Coding – ECU Software, Codierung & Diagnose" />
-    <meta property="og:description" content="Motorsoftware, Fahrzeugcodierung, Komfortfunktionen, Fehlercodes und Fahrzeugwissen." />
+    <meta property="og:title" content="6006 Coding – Fahrzeugkatalog und technische Ratgeber" />
+    <meta property="og:description" content="Kostenlose, unabhängige Ratgeber zu Fahrzeugen, Fehlercodes und Wartung." />
     <meta property="og:locale" content="de_DE" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link href="/assets/fonts/fonts.css" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/assets/6006-favicon.svg" />
     <title>ECU Softwareoptimierung, Fahrzeugcodierung & Diagnose | 6006 Coding</title>
     <script type="application/ld+json">
@@ -36,24 +34,23 @@
             "@type": "WebPage",
             "@id": "https://6006coding.de/#webpage",
             "url": "https://6006coding.de/",
-            "name": "6006 Coding – ECU Softwareoptimierung, Fahrzeugcodierung und Diagnose",
-            "description": "Präzise ECU-Kalibrierung, Live-Daten und ein OBD-Fehlercode-Leitfaden.",
+            "name": "6006 Coding – Fahrzeug- und Fehlercode-Ratgeber",
+            "description": "Privates, nicht kommerzielles Informationsprojekt zu Fahrzeugen, Fehlercodes und Wartung.",
             "isPartOf": { "@id": "https://6006coding.de/#website" },
             "inLanguage": "de-DE"
           },
           {
-            "@type": "AutomotiveBusiness",
+            "@type": "Organization",
             "@id": "https://6006coding.de/#organization",
             "name": "6006 Coding",
             "url": "https://6006coding.de/",
-            "email": "6006performance@gmail.com",
-            "telephone": "+49 178 8354756",
-            "description": "Fahrzeugspezifischer Software-Service, Fahrzeugcodierung, Komfortfunktionen, Steuergeräte-Auslesen und Fehlerdiagnose.",
-            "logo": "https://6006coding.de/assets/6006-primary-white.png",
+            "email": "kontakt@6006coding.de",
+            "description": "Technische Fahrzeugratgeber zu Diagnose, Codierung und Fahrzeugsoftware.",
+            "logo": "https://6006coding.de/assets/6006-mark-white.png",
             "contactPoint": [{
               "@type": "ContactPoint",
-              "telephone": "+49 178 8354756",
-              "contactType": "customer service",
+              "email": "kontakt@6006coding.de",
+              "contactType": "editorial feedback",
               "availableLanguage": ["de", "tr", "en"]
             }]
           }
@@ -1123,28 +1120,28 @@ html{scroll-padding-top:1.25rem}
 </style>
 
     <link rel="stylesheet" href="/assets/6006-home-layout.css?v=20261019-services" />
-</head>
+<style>#conciergeLauncher[hidden],#concierge[hidden]{display:none!important}</style></head>
   <body class="home-page">
     <div class="site-diagnostics-bg" aria-hidden="true"></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="#baslangic" aria-label="6006 Coding ana sayfa"><img class="brand-logo" src="/assets/6006-primary-white.png" alt="6006 Coding" /></a>
         <nav class="top-nav" aria-label="Ana gezinti">
-          <a href="#aracin">ECU Yazılımı</a>
+          <a href="fahrzeug/">Araç kataloğu</a>
           <a href="#teshis">Hata kodları</a>
           <a href="fehlercodes/">Hata kodu rehberi</a>
-          <a href="#hizmetler">Hizmetler</a>
+          <a href="#hizmetler">Rehberler</a>
           <a href="technik/">Teknik rehber</a>
           <a href="reparatur-wartung/">Tamir &amp; bakım</a>
         </nav>
         <div class="header-tools">
           <label class="language-picker" for="languageSelect"><span class="sr-only">Site dili</span><select id="languageSelect" aria-label="Site dili"><option value="de">DE</option><option value="tr">TR</option><option value="en">EN</option></select></label>
-          <a class="header-button" href="#iletisim">İletişim</a>
+          <a class="header-button" href="#iletisim">Geri bildirim</a>
         </div>
           <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Menüyü aç"><span class="mobile-nav-lines" aria-hidden="true"></span><span class="sr-only" data-mobile-nav-label>Menüyü aç</span></button>
       </div>
         <nav class="mobile-nav" id="mobileNav" aria-label="Hızlı gezinme" hidden>
-          <a href="#aracin">ECU Yazılımı</a>
+          <a href="fahrzeug/">Araç kataloğu</a>
           <a href="fehlercodes/">Hata kodu rehberi</a>
           <a href="reparatur-wartung/">Tamir &amp; bakım</a>
           <a href="technik/">Teknik rehber</a>
@@ -1156,11 +1153,11 @@ html{scroll-padding-top:1.25rem}
         <img class="cover-emblem cover-emblem--wide" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" />
         <div class="shell hero-inner">
           <div class="hero-copy reveal visible">
-            <p class="eyebrow">6006 Coding · ECU Yazılımı · Kodlama · Arıza Teşhisi</p>
-            <h1 id="hero-title">ECU Yazılımı, <em>Kodlama ve Teşhis.</em></h1>
-            <p>6006 Coding: ECU yazılımı, araç kodlama ve canlı veriyle arıza teşhisi. Aracına özel bilgi al; ücretsiz arıza kodu ve çözüm rehberlerini de incele.</p>
-            <div class="hero-actions"><a class="button-primary" href="#hizmetler">Hizmetlerimizi gör</a><a class="button-quiet" href="#iletisim">İletişim</a><a class="button-quiet" href="fehlercodes/">Arıza kodu ara</a></div>
-            <div class="hero-proof" aria-label="Hizmetler"><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>ECU yazılımı &amp; kalibrasyon</span><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Kodlama &amp; adaptasyon</span><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Teşhis &amp; teknik destek</span></div>
+            <p class="eyebrow">6006 Coding · Teknik Araç Rehberleri</p>
+            <h1 id="hero-title">Araç sistemlerini <em>anla, doğru teşhis et.</em></h1>
+            <p>Arıza kodları, araç sistemleri ve bakım üzerine bağımsız teknik bilgi projesi. İçerikler genel bilgilendirme içindir; araç özelinde kesin teşhis yerine geçmez.</p>
+            <div class="hero-actions"><a class="button-primary" href="#hizmetler">Rehberleri keşfet</a><a class="button-quiet" href="fahrzeug/">Araç kataloğu</a><a class="button-quiet" href="fehlercodes/">Arıza kodu ara</a></div>
+            <div class="hero-proof" aria-label="Rehber konuları"><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Araç katalogları</span><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Arıza kodları</span><span class="proof-item"><i class="proof-dot" aria-hidden="true"></i>Bakım ve teknik bilgi</span></div>
           </div>
         </div>
       </section>
@@ -1179,17 +1176,17 @@ html{scroll-padding-top:1.25rem}
                 <div><h3 id="faultGuideTitle">Arıza kodu rehberi</h3><p id="faultGuideText">OBD hata kodunu, olası nedenleri ve güvenli kontrol sırasını inceleyin.</p></div>
                 <span class="quick-access-action" id="faultGuideAction">Kodları aç</span>
               </a>
-              <a class="quick-access-card" href="#hizmetler" id="repairGuideCard">
-                <div><h3 id="repairGuideTitle">Araç Kodlama</h3><p id="repairGuideText">Desteklenen modellerde kodlama, adaptasyon ve konfor özellikleri.</p></div>
-                <span class="quick-access-action" id="repairGuideAction">Hizmetleri gör</span>
+              <a class="quick-access-card" href="reparatur-wartung/" id="repairGuideCard">
+                <div><h3 id="repairGuideTitle">Katalog ve bakım rehberleri</h3><p id="repairGuideText">Araç varyantını bul; bakım ve onarım konularındaki genel bilgileri incele.</p></div>
+                <span class="quick-access-action" id="repairGuideAction">Rehberleri aç →</span>
               </a>
-              <a class="quick-access-card" href="#aracin" id="stageGuideCard">
-                <div><h3>Motor Yazılımı &amp; Araç Kodlama</h3><p>Yazılım sürümü kontrolü, araca uygun ayarlar ve desteklenen konfor özellikleri.</p></div>
-                <span class="quick-access-action">Aracını seç →</span>
+              <a class="quick-access-card" href="fahrzeug/" id="stageGuideCard">
+                <div><h3>Araç kataloğu</h3><p>Marka, model, yıl ve motor bilgilerini karşılaştırıp ilgili teknik sayfalara geçin.</p></div>
+                <span class="quick-access-action">Kataloğu aç →</span>
               </a>
-              <a class="quick-access-card" href="#hizmetler" id="emissionsGuideCard">
-                <div><h3>Egzoz Sistemi &amp; Uyarı Lambaları</h3><p>Motor lambası, filtre ve AdBlue uyarılarında arıza kaynağının canlı verilerle incelenmesi.</p></div>
-                <span class="quick-access-action">Teşhis hizmetlerini gör →</span>
+              <a class="quick-access-card" href="technik/" id="emissionsGuideCard">
+                <div><h3>Egzoz sistemi uyarıları</h3><p>DPF, EGR ve AdBlue ile ilgili uyarıların anlamını ve güvenli kontrol adımlarını öğren.</p></div>
+                <span class="quick-access-action">Teknik rehberi aç →</span>
               </a>
             </div>
           </div>
@@ -1204,25 +1201,25 @@ html{scroll-padding-top:1.25rem}
       
 
       <section class="vehicle-section" id="aracin" aria-labelledby="vehicle-title">
-        <img class="cover-emblem" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" loading="lazy" />
+        <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
         <div class="shell vehicle-grid">
           <div class="vehicle-intro reveal">
             <div class="section-copy">
-              <p class="eyebrow">Motor yazılımı ve araç kodlama</p>
-              <h2 id="vehicle-title">Aracının özelliklerini tanı. Sana uygun ayarı bul.</h2>
-              <p>Motor yazılımının mevcut sürümünü kontrol ediyor, desteklenen özellikleri araca uygun şekilde ayarlıyoruz. Gaz tepkisi, kullanım beklentin ve konfor işlevleri için önce aracının donanımını ve teknik durumunu birlikte değerlendiriyoruz.</p>
+              <p class="eyebrow">Araç ve motor kataloğu</p>
+              <h2 id="vehicle-title">Aracını seç. Teknik referansları incele.</h2>
+              <p>Marka, model, yıl ve motor varyantını seçerek açık araç verilerindeki referans bilgileri ve arıza kodu rehberlerini bul. Kayıtlar üretici onaylı servis verisi değildir; kendi aracın için üretici kaynaklarıyla doğrula.</p>
             </div>
-            <ul class="intro-notes" aria-label="Yazılım ve kodlama hizmetleri">
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Yazılım kontrolü:</strong> Motor kontrol ünitesi, mevcut sürüm ve uyumlu seçenekler incelenir.</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Konfor özellikleri:</strong> Desteklenen araçlarda ayna, kilitleme, aydınlatma ve gösterge ayarları.</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span><strong>Önce ve sonra:</strong> İşlem öncesi kayıt, uygun yazılım yedeği ve işlem sonrası işlev kontrolü.</span></li>
+            <ul class="intro-notes" aria-label="Katalog hakkında">
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Araç eşleştirme:</strong> Model yılı, yakıt türü ve motor varyantını dikkatle karşılaştır.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Arıza kodları:</strong> Seçilen araçla ilgili genel sistem kodlarına geç.</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span><strong>Kaynak kontrolü:</strong> Kritik bakım değerlerini tahmin etme; araç üreticisinin dokümanını esas al.</span></li>
             </ul>
           </div>
 
           <div class="estimate-wrap reveal">
-            <section class="estimate-card" id="estimateCard" aria-label="Araç ve hizmet seçimi">
+            <section class="estimate-card" id="estimateCard" aria-label="Araç kataloğu seçimi">
               <div class="calc-top">
-                <h3>Aracını seç, seçenekleri gör</h3>
+                <h3>Aracını seç, referansları gör</h3>
                 <span class="calc-status" id="stageStatus"><i class="status-signal" aria-hidden="true"></i>Araç seçin</span>
               </div>
               <div class="select-grid">
@@ -1243,20 +1240,15 @@ html{scroll-padding-top:1.25rem}
                 </div>
                 <span class="vehicle-badge">Önce seçim</span>
               </div>
-              <div class="software-options" aria-label="Hizmet seçenekleri">
-                <div><span aria-hidden="true">01</span><strong>Motor yazılımı</strong><p>Mevcut sürüm, kontrol ünitesi uyumu ve kullanımına uygun seçenekler.</p></div>
-                <div><span aria-hidden="true">02</span><strong>Araç kodlama</strong><p>Desteklenen donanımlarda konfor, aydınlatma ve gösterge ayarları.</p></div>
-                <div><span aria-hidden="true">03</span><strong>Teşhis ve kontrol</strong><p>Arıza kayıtları, canlı sensör verileri ve işlem sonrası işlev testi.</p></div>
+              <div class="software-options" aria-label="Katalogda bulunan bilgiler">
+                <div><span aria-hidden="true">01</span><strong>Motor verileri</strong><p>Model, motor, yakıt ve stok referans bilgileri.</p></div>
+                <div><span aria-hidden="true">02</span><strong>Arıza kodları</strong><p>İlgili genel kod tanımlarına ve kontrol adımlarına bağlantılar.</p></div>
+                <div><span aria-hidden="true">03</span><strong>Kaynak notları</strong><p>Açık verilerin sınırları ve doğrulama uyarıları.</p></div>
               </div>
-              <div class="estimate-foot"><span aria-hidden="true">[i]</span><div>Her özellik her araçta bulunmaz. Seçiminiz araç kataloğunu açar; yapılabilecek işlemler donanım ve yazılım kontrolüyle netleşir.</div></div>
+              <div class="estimate-foot"><span aria-hidden="true">[i]</span><div>Bu katalog bilgilendirme amaçlıdır; araç özelinde bakım talimatı, servis geçmişi veya üretici onayı sağlamaz.</div></div>
               <p class="vehicle-data-credit" style="color:#d9c6b0;font-size:.67rem;line-height:1.6;margin:.8rem 0"><span>Araç ve motor referans verileri:</span> <a href="https://github.com/gor3a/vehicle-makes-models" target="_blank" rel="noopener noreferrer">vehicle-makes-models</a> / <a href="https://www.autoevolution.com/" target="_blank" rel="noopener noreferrer">autoevolution</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener noreferrer">ODbL 1.0</a> · <a href="/assets/vehicle-data/index.json">Açık veri</a>. <span>Donanım ve yazılım uyumu araç üzerinde doğrulanır.</span></p>
               <div class="estimate-request">
-                <button class="context-request" id="stageInquiry" type="button">
-                  <span class="context-request-title">Bu araç için kişisel değerlendirme iste</span>
-                  <span class="context-request-channel">WhatsApp Business</span>
-                </button>
                 <a class="stage-catalog-link" id="stageCatalogLink" href="reparatur-wartung/">Bakım, tamir ve arıza kataloğunu aç <span aria-hidden="true">→</span></a>
-                <p class="estimate-compliance" id="stageComplianceNote"><span aria-hidden="true">[i]</span><span>Trafiğe uygunluk, sigorta, garanti ve emisyon sistemleri işlemden önce ayrıca değerlendirilir.</span></p>
               </div>
             </section>
           </div>
@@ -1265,8 +1257,8 @@ html{scroll-padding-top:1.25rem}
 
       <section class="ecu-after" id="ecu-summary" aria-labelledby="ecuAfterTitle">
         <div class="ecu-after__inner">
-          <h2 id="ecuAfterTitle"><span data-ecu-flow-text="summaryA">Aracını tanıyoruz.</span> <em data-ecu-flow-text="summaryB">Ayarını sana uyduruyoruz.</em></h2>
-          <p data-ecu-flow-text="summary">Yazılım sürümü, desteklenen özellikler ve canlı veriler incelenir. İşlem kapsamı aracının donanımına ve ihtiyacına göre belirlenir.</p>
+          <h2 id="ecuAfterTitle"><span data-ecu-flow-text="summaryA">Veriyi karşılaştır.</span> <em data-ecu-flow-text="summaryB">Kaynağını kontrol et.</em></h2>
+          <p data-ecu-flow-text="summary">Açık araç verileri bir başlangıç noktası sunar. Araca özel teknik kararlar için üretici belgelerini ve güncel ölçümleri esas alın.</p>
         </div>
       </section>
 
@@ -1308,23 +1300,23 @@ html{scroll-padding-top:1.25rem}
       </section>
 
       <section class="services-section" id="hizmetler" aria-labelledby="services-title">
-        <img class="cover-emblem" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" loading="lazy" />
+        <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
         <div class="shell">
           <div class="services-head reveal">
             <div class="section-copy">
-              <p class="eyebrow">6006 Coding · Hizmetlerimiz</p>
-              <h2 id="services-title">Aracın için yazılım, kodlama ve teşhis.</h2>
-              <p>Marka, model, yıl, motor ve istediğiniz hizmeti paylaşın. Uygunluk kontrolünden sonra aracınıza özel bilgi alyin.</p>
+              <p class="eyebrow">6006 Coding · Bilgi merkezi</p>
+              <h2 id="services-title">Araç rehberleri ve teknik başlıklar.</h2>
+              <p>Arıza kodları, araç sistemleri, yazılım kavramları ve bakım konularında yayımlanan ücretsiz bilgilere göz atın.</p>
             </div>
-            <p class="compliance-key">Her işlem aracın donanımına ve yazılımına göre değerlendirilir. Gerekli onaylar işlemden önce netleştirilir; emisyon sistemlerinde teşhis ve onarım esas alınır.</p>
+            <p class="compliance-key">Bu, özel bir bilgi projesidir; ücretli hizmet, randevu veya araç üzerinde işlem teklifi sunmaz.</p>
           </div>
           <div class="services-grid">
-<a class="service-card reveal" href="#aracin"><span class="service-number">01</span><span class="service-tag">Software-Service</span><h3>Motor Yazılımı &amp; Ayarlar</h3><p>Mevcut yazılım sürümünün kontrolü, uyumlu yazılım işlemleri ve kullanım beklentinize göre araç özelinde değerlendirme.</p><i class="service-line" aria-hidden="true"></i></a>
-<a class="service-card reveal" href="#iletisim"><span class="service-number">02</span><span class="service-tag">Codierung</span><h3>Araç Kodlama &amp; Adaptasyon</h3><p>Desteklenen modellerde kontrol ünitesi kodlama, adaptasyonlar ve konfor özellikleri.</p><i class="service-line" aria-hidden="true"></i></a>
-<a class="service-card reveal" href="fehlercodes/"><span class="service-number">03</span><span class="service-tag">OBD / Live-Daten</span><h3>Arıza Kodu &amp; Canlı Veri Teşhisi</h3><p>Hata kodları, freeze-frame ve sensör verileriyle sorunların olası nedenlerini değerlendirme.</p><i class="service-line" aria-hidden="true"></i></a>
-<a class="service-card reveal" href="#iletisim"><span class="service-number">04</span><span class="service-tag">ECU Backup</span><h3>ECU Okuma, Yazma &amp; Yedekleme</h3><p>Uyumlu kontrol ünitelerinde orijinal yazılım yedeği ve ECU dosya işlemleri için ön kontrol.</p><i class="service-line" aria-hidden="true"></i></a>
-<a class="service-card reveal" href="fehlercodes/"><span class="service-number">05</span><span class="service-tag">DPF / AGR / SCR / NOx</span><h3>DPF, EGR, AdBlue &amp; NOx Teşhisi</h3><p>DPF rejenerasyonu, EGR valfi, AdBlue/SCR dozajı ve NOx sensörü için teşhis ve mevzuata uygun onarım değerlendirmesi.</p><i class="service-line" aria-hidden="true"></i></a>
-<a class="service-card reveal" href="#iletisim"><span class="service-number">06</span><span class="service-tag">Angebot</span><h3>Araç Özelinde Teknik Teklif</h3><p>Marka, model, yıl, motor ve istediğiniz işlemi gönderin; yapılabilirliği ve fiyatı birlikte netleştirelim.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="fahrzeug/"><span class="service-number">01</span><span class="service-tag">KATALOG</span><h3>Araç ve motor bulucu</h3><p>Marka, model, yıl ve motor varyantlarına ait açık referans verilerini karşılaştır.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="technik/"><span class="service-number">02</span><span class="service-tag">TEKNİK REHBER</span><h3>Kontrol üniteleri ve kodlama</h3><p>Araç elektroniği, modüller ve kodlama kavramları hakkında temel bilgiler.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="fehlercodes/"><span class="service-number">03</span><span class="service-tag">OBD · DTC</span><h3>Arıza kodu rehberi</h3><p>Kod tanımlarını, olası nedenleri ve güvenli kontrol adımlarını incele.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="technik/"><span class="service-number">04</span><span class="service-tag">SÖZLÜK</span><h3>ECU ve yazılım terimleri</h3><p>Motor kontrolü ve araç yazılımında sık kullanılan teknik terimler.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="fehlercodes/?category=dpf#arama"><span class="service-number">05</span><span class="service-tag">EMİSYON SİSTEMLERİ</span><h3>DPF, EGR, AdBlue ve NOx</h3><p>Emisyon sistemi uyarılarını ve ilgili kodları üreticiye uygun teşhis perspektifiyle öğren.</p><i class="service-line" aria-hidden="true"></i></a>
+<a class="service-card reveal" href="reparatur-wartung/"><span class="service-number">06</span><span class="service-tag">BAKIM REHBERİ</span><h3>Bakım ve onarım temelleri</h3><p>Güvenlik, belirtiler ve üretici dokümanlarına dayalı genel kontrol sıraları.</p><i class="service-line" aria-hidden="true"></i></a>
           </div>
         </div>
       </section>
@@ -1334,16 +1326,16 @@ html{scroll-padding-top:1.25rem}
         <div class="shell process-layout">
           <div class="process-copy reveal">
             <p class="eyebrow">6006 yaklaşımı</p>
-            <h2 id="process-title">Dosya değil, ölçülü karar.</h2>
-            <p>Önce aracının mevcut durumunu ve istediğin özelliği anlıyoruz. Uygun işlemi belirliyor, değişikliği kaydediyor ve sonucu kontrol ediyoruz.</p>
+            <h2 id="process-title">Bir arıza kodu nasıl araştırılır?</h2>
+            <p>Kod tek başına parça arızasını kanıtlamaz. Araç kimliğini, tam hata kaydını ve ölçüm koşullarını birlikte incelemek gerekir.</p>
           </div>
           <ol class="process-list reveal">
-            <li><div><h3>Oku ve doğrula</h3><p>Motor kodu, mevcut yazılım, DTC’ler ve temel çalışma değerleri belirlenir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
-            <li><div><h3>Araca uygun ayarla</h3><p>Desteklenen işlevler, mevcut donanım ve kullanım ihtiyacına göre ayarlanır.</p></div><i class="process-marker" aria-hidden="true"></i></li>
-            <li><div><h3>Kontrol et</h3><p>Sonuç, canlı veri ve sürüş geri bildirimiyle tekrar değerlendirilir.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Araç varyantını belirle</h3><p>Marka, model yılı, motor ve kontrol ünitesi bilgilerini not et.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Tam kodu ve koşulları oku</h3><p>Freeze-frame ve eşlik eden kodları kaydet; genel tanımı araç üreticisinin verisiyle karşılaştır.</p></div><i class="process-marker" aria-hidden="true"></i></li>
+            <li><div><h3>Güvenliği öncelikle</h3><p>Fren, hava yastığı, yüksek voltaj ve hararet uyarılarında sürüşü sürdürmeden destek al.</p></div><i class="process-marker" aria-hidden="true"></i></li>
           </ol>
         </div>
-        <div class="shell legal-bar reveal"><strong>Yasal kullanım notu</strong><span>DPF, EGR ve AdBlue gibi emisyon kontrol sistemlerinin devre dışı bırakılması trafiğe açık araçlarda mevzuata aykırı olabilir. Bu site, bu sistemleri devre dışı bırakmaya yönelik uygulama veya yönlendirme sunmaz; uygunluk ve OEM uyumlu teşhis yaklaşımını esas alır.</span></div>
+        <div class="shell legal-bar reveal"><strong>Proje hakkında</strong><span>6006 Coding, kişisel ve ticari olmayan bir bilgi projesidir. Burada ücretli hizmet, teklif, randevu, reklam veya satış ortaklığı sunulmaz. Teknik içerikler genel bilgilendirme amaçlıdır ve üretici belgelerinin yerine geçmez.</span></div>
       </section>
 
       <section class="contact-section" id="iletisim" aria-labelledby="contact-title">
@@ -1351,19 +1343,18 @@ html{scroll-padding-top:1.25rem}
         <div class="shell contact-card reveal">
           <div class="contact-copy">
             <p class="eyebrow">İletişim</p>
-            <h2 id="contact-title">Aracınızı ve hedefinizi paylaşın.</h2>
-            <p>ECU yazılımı, kodlama veya arıza teşhisi için marka, model, yıl, motor ve talebinizi WhatsApp ya da e-posta ile gönderin. Uygulanabilirlik ve fiyat araç özelinde netleştirilir.</p>
+            <h2 id="contact-title">Rehberler hakkında fikriniz var mı?</h2>
+            <p>Teknik rehberlerde eksik veya hatalı bilgi fark ederseniz, düzeltme ve içerik önerilerinizi e-posta ile paylaşabilirsiniz.</p>
           </div>
           <div class="contact-actions" aria-label="İletişim seçenekleri">
-            <a class="contact-action email" data-contact-email href="mailto:6006performance@gmail.com" aria-label="6006performance@gmail.com adresine e-posta gönder"><span>E-posta gönder</span><span>6006performance@gmail.com</span></a>
-            <a class="contact-action whatsapp" data-contact-whatsapp href="https://wa.me/491788354756" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Business üzerinden 6006 Coding'e mesaj gönder"><span>WhatsApp Business</span><span>Doğrudan mesaj</span></a>
+            <a class="contact-action email" data-contact-email href="mailto:kontakt@6006coding.de" aria-label="Rehberler hakkında e-posta gönder"><span>Rehberler hakkında yazın</span><span>kontakt@6006coding.de</span></a>
           </div>
         </div>
       </section>
     </main>
 
-    <button class="concierge-launcher" id="conciergeLauncher" type="button" aria-controls="concierge" aria-expanded="false"><svg class="concierge-launcher-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a7.8 7.8 0 0 1-8 7.5 9.2 9.2 0 0 1-3.6-.7L4 20l1.4-4A7.1 7.1 0 0 1 4 11.5 7.8 7.8 0 0 1 12 4a7.8 7.8 0 0 1 8 7.5Z"/><path d="M8 11.5h8"/></svg><span>Akıllı danışman</span></button>
-    <aside class="concierge" id="concierge" role="dialog" aria-modal="false" aria-labelledby="conciergeTitle" aria-hidden="true" inert>
+    <button hidden class="concierge-launcher" id="conciergeLauncher" type="button" aria-controls="concierge" aria-expanded="false"><svg class="concierge-launcher-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a7.8 7.8 0 0 1-8 7.5 9.2 9.2 0 0 1-3.6-.7L4 20l1.4-4A7.1 7.1 0 0 1 4 11.5 7.8 7.8 0 0 1 12 4a7.8 7.8 0 0 1 8 7.5Z"/><path d="M8 11.5h8"/></svg><span>Akıllı danışman</span></button>
+    <aside hidden class="concierge" id="concierge" role="dialog" aria-modal="false" aria-labelledby="conciergeTitle" aria-hidden="true" inert>
       <div class="concierge-head">
         <div><span class="concierge-eyebrow">6006 Coding</span><h2 id="conciergeTitle">Akıllı danışman</h2></div>
         <div class="concierge-actions"><button class="concierge-reset" id="assistantReset" type="button">Sıfırla</button><button class="concierge-close" id="conciergeClose" type="button" aria-label="Asistanı kapat">×</button></div>
@@ -1372,26 +1363,24 @@ html{scroll-padding-top:1.25rem}
       <div class="concierge-quick" id="assistantQuick">
         <button type="button" data-assistant-intent="software">Yazılım ve kodlama</button>
         <button type="button" data-assistant-intent="dtc">Hata kodu</button>
-        <button type="button" data-assistant-intent="consult">Danışmanlık</button>
       </div>
       <form class="concierge-form" id="assistantForm">
         <label class="sr-only" for="assistantInput">Mesajınız</label><input id="assistantInput" type="text" autocomplete="off" placeholder="Aracınızı veya kodunuzu yazın" />
         <button type="submit">Gönder</button>
       </form>
-      <button class="concierge-whatsapp" id="assistantWhatsApp" type="button">WhatsApp’ta devam et</button>
-      <p class="concierge-privacy" id="assistantPrivacy">Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.</p>
     </aside>
 
     <footer>
-      <img class="cover-emblem" src="/assets/6006-primary-white.png" alt="" aria-hidden="true" loading="lazy" />
+      <img class="cover-emblem" src="/assets/6006-mark-white.png" alt="" aria-hidden="true" loading="lazy" />
       <div class="shell footer-inner">
-        <span class="footer-brand">6006 CODING</span>
-        <span class="footer-note">Bilgilendirme amaçlı teknik içerik. Araç üzerinde yapılacak her işlemden önce üretici, sigorta, garanti ve yerel mevzuat koşulları ayrıca doğrulanmalıdır.</span>
+        <span class="footer-brand">6006 CODING / TECHNICAL GUIDES</span>
+        <span class="footer-note">Kişisel ve ticari olmayan teknik bilgi projesi. Ücretli hizmet, randevu, reklam veya satış ortaklığı sunulmaz. İçerikler bilgilendirme amaçlıdır.</span>
+        <nav class="footer-links" aria-label="Yasal ve proje bilgileri"><a href="/projektinfo/">Proje bilgisi</a><a href="/datenschutz/">Gizlilik ve depolama</a><a href="mailto:kontakt@6006coding.de?subject=6006%20Coding%20rehber%20geri%20bildirimi">Rehber geri bildirimi</a></nav>
       </div>
     </footer>
 
     <script defer src="/assets/6006-language-bridge.js"></script>
-    <script src="/assets/6006-vehicle-catalog.js?v=20261019-services"></script>
+    <script src="/assets/6006-vehicle-catalog.js?v=20261025-noncommercial"></script>
     <script>
       const vehicles = [
         { brand: "BMW", name: "320i G20", years: "2019–2024", engine: "2.0T B48 · Benzin · Otomatik", stock: { ps: 184, nm: 300 } },
@@ -1500,21 +1489,21 @@ html{scroll-padding-top:1.25rem}
       "close": "Asistanı kapat",
       "input": "Aracınızı veya kodunuzu yazın",
       "send": "Gönder",
-      "whatsapp": "WhatsApp’ta devam et",
-      "privacy": "Bilgiler yalnızca bu cihazda tutulur. WhatsApp’ta devam ederek özeti kendiniz gönderirsiniz.",
+      "whatsapp": "",
+      "privacy": "",
       "quick": {
         "dtc": "Hata kodu",
-        "consult": "Danışmanlık",
+        "consult": "Rehberler",
         "software": "Yazılım ve kodlama"
       },
-      "greeting": "Yazılım hizmetleri, araç kodlama veya arıza kodları hakkında yardımcı olabilirim. Marka, model, yıl ve öğrenmek istediğiniz özelliği yazın.",
+      "greeting": "Araç sistemleri ve arıza kodu rehberlerinde arama yapmanıza yardımcı olabilirim. Marka, model veya kod yazın.",
       "dtc": "Hata kodunu (ör. P0299) ve mümkünse belirtiyi yazın. Kod tek başına kesin teşhis değildir.",
-      "consult": "Araç marka/modeli, motor, yıl ve beklentinizi yazın. Size WhatsApp için düzenli bir talep özeti hazırlayacağım.",
+      "consult": "",
       "generic": "Motor yazılımı, araç kodlama, konfor özellikleri ve arıza teşhisi hakkında yardımcı olabilirim. Aracınızı ve istediğiniz işlemi yazın.",
       "legal": "DPF, EGR veya AdBlue sistemini devre dışı bırakma konusunda yardımcı olamam. Hata kodunu veya belirtileri paylaşın; üretici standartlarına uygun teşhis ve onarım seçeneklerini netleştirelim.",
       "safety": "Bu belirti güvenlik veya motor sağlığı açısından öncelikli olabilir. Aracı zorlamayın; profesyonel teşhis değerlendirmesi alın.",
       "dtcFound": "Bu kod için sitedeki teknik rehbere yönlendirdim. Canlı veri ve araç bağlamı olmadan kesin parça kararı verilmemelidir.",
-      "waIntro": "Merhaba 6006 Coding, teknik danışmanlık talebim var.",
+      "waIntro": "",
       "waVehicle": "Araç",
       "waVehicleMissing": "Araç: henüz seçilmedi",
       "waRequest": "Talep",
@@ -1553,8 +1542,8 @@ html{scroll-padding-top:1.25rem}
       "close": "Assistent schließen",
       "input": "Fahrzeug oder Fehlercode eingeben",
       "send": "Senden",
-      "whatsapp": "Weiter auf WhatsApp",
-      "privacy": "Die Angaben bleiben nur auf diesem Gerät. Den vorbereiteten Überblick senden Sie selbst über WhatsApp.",
+      "whatsapp": "",
+      "privacy": "",
       "quick": {
         "dtc": "Fehlercode",
         "consult": "Beratung",
@@ -1562,12 +1551,12 @@ html{scroll-padding-top:1.25rem}
       },
       "greeting": "Ich helfe bei Software-Service, Fahrzeugcodierung und Fehlercodes. Nennen Sie Marke, Modell, Baujahr und die gewünschte Funktion.",
       "dtc": "Senden Sie den Fehlercode (z. B. P0299) und möglichst das Symptom. Ein Code allein ist keine eindeutige Diagnose.",
-      "consult": "Schreiben Sie Marke/Modell, Motor, Baujahr und Ihr Ziel. Ich bereite eine strukturierte Anfrage für WhatsApp vor.",
+      "consult": "",
       "generic": "Ich helfe bei Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und Fehlerdiagnose. Nennen Sie Ihr Fahrzeug und den gewünschten Service.",
       "legal": "Bei der Deaktivierung von DPF, EGR oder AdBlue kann ich nicht helfen. Teilen Sie Fehlercode oder Symptome mit; wir klären herstellerkonforme Diagnose- und Instandsetzungsoptionen.",
       "safety": "Dieses Symptom kann für die Sicherheit oder den Motorschutz kritisch sein. Bitte das Fahrzeug nicht weiter belasten und professionell prüfen lassen.",
       "dtcFound": "Für diesen Code finden Sie in der technischen Übersicht einen ersten Hinweis. Ohne Live-Daten und Fahrzeugkontext sollte keine endgültige Teileentscheidung getroffen werden.",
-      "waIntro": "Hallo 6006 Coding, ich möchte eine technische Beratung.",
+      "waIntro": "",
       "waVehicle": "Fahrzeug",
       "waVehicleMissing": "Fahrzeug: noch nicht ausgewählt",
       "waRequest": "Anfrage",
@@ -1606,8 +1595,8 @@ html{scroll-padding-top:1.25rem}
       "close": "Close assistant",
       "input": "Enter your vehicle or code",
       "send": "Send",
-      "whatsapp": "Continue in WhatsApp",
-      "privacy": "Details stay only on this device. You send the prepared summary yourself in WhatsApp.",
+      "whatsapp": "",
+      "privacy": "",
       "quick": {
         "dtc": "Fault code",
         "consult": "Consultation",
@@ -1615,12 +1604,12 @@ html{scroll-padding-top:1.25rem}
       },
       "greeting": "I can help with vehicle software, coding and fault codes. Enter the make, model, year and the function you would like.",
       "dtc": "Send the fault code (for example P0299) and, if possible, the symptom. A code alone is not a definitive diagnosis.",
-      "consult": "Write the make/model, engine, year and your objective. I’ll prepare a structured WhatsApp request.",
+      "consult": "",
       "generic": "I can help with engine software, vehicle coding, comfort functions and fault diagnosis. Enter your vehicle and the service you need.",
       "legal": "I can’t help deactivate DPF, EGR or AdBlue systems. Share the fault code or symptoms and we can identify manufacturer-aligned diagnostic and repair options.",
       "safety": "This symptom may need priority attention for safety or engine protection. Please do not stress the vehicle and arrange professional diagnosis.",
       "dtcFound": "The technical guide includes a first note for this code. No final part decision should be made without live data and vehicle context.",
-      "waIntro": "Hello 6006 Coding, I would like technical advice.",
+      "waIntro": "",
       "waVehicle": "Vehicle",
       "waVehicleMissing": "Vehicle: not selected yet",
       "waRequest": "Request",
@@ -1633,34 +1622,34 @@ html{scroll-padding-top:1.25rem}
 
       const quickAccessCopy = {
         tr: {
-          eyebrow: "6006 · Hızlı erişim",
-          title: "Aracın için ne yapabiliriz?",
+          eyebrow: "6006 · Bilgi merkezi",
+          title: "Araç ve bakım rehberlerini keşfet.",
           faultTitle: "Arıza kodu",
           faultText: "Kodu gir, ne anlama geldiğini ve neleri kontrol edeceğini öğren.",
           faultAction: "Kod ara",
-          repairTitle: "Araç Kodlama",
-          repairText: "Desteklenen modellerde kodlama, adaptasyon ve konfor özellikleri.",
-          repairAction: "Hizmetleri gör"
+          repairTitle: "Katalog ve bakım rehberleri",
+          repairText: "Araç varyantını bul; bakım ve onarım konularındaki genel bilgileri incele.",
+          repairAction: "Rehberleri aç →"
         },
         de: {
-          eyebrow: "6006 · Direkteinstieg",
-          title: "Wie können wir Ihrem Fahrzeug helfen?",
+          eyebrow: "6006 · Wissensbereich",
+          title: "Fahrzeug- und Wartungsratgeber entdecken.",
           faultTitle: "Fehlercode",
           faultText: "Code eingeben, Bedeutung und Prüfschritte verstehen.",
           faultAction: "Code suchen",
-          repairTitle: "Fahrzeugcodierung",
-          repairText: "Codierung, Anpassungen und freischaltbare Funktionen für unterstützte Fahrzeugmodelle.",
-          repairAction: "Leistungen ansehen"
+          repairTitle: "Katalog und Wartungsratgeber",
+          repairText: "Fahrzeugvariante finden und allgemeine Wartungs- und Reparaturhinweise lesen.",
+          repairAction: "Ratgeber öffnen →"
         },
         en: {
-          eyebrow: "6006 · Quick access",
-          title: "How can we help your vehicle?",
+          eyebrow: "6006 · Information",
+          title: "Browse vehicle and maintenance guides.",
           faultTitle: "Fault codes",
           faultText: "Enter a code, see what it means and what to check.",
           faultAction: "Search codes",
-          repairTitle: "Vehicle coding",
-          repairText: "Coding, adaptations and convenience features for supported vehicles.",
-          repairAction: "View services"
+          repairTitle: "Vehicle and maintenance guides",
+          repairText: "Find a vehicle variant and read general maintenance and repair information.",
+          repairAction: "Open the guides →"
         }
       };
 
@@ -1744,70 +1733,70 @@ html{scroll-padding-top:1.25rem}
 
       const contactCopy = {
         tr: {
-          emailAria: "6006performance@gmail.com adresine e-posta gönder",
+          emailAria: "Rehberler hakkında geri bildirim e-postası gönder",
           whatsappAria: "WhatsApp Business üzerinden 6006 Coding'e mesaj gönder",
-          emailSubject: "6006 Coding teknik danışmanlık",
-          whatsappMessage: "Merhaba 6006 Coding, teknik danışmanlık talebim var."
+          emailSubject: "6006 Coding rehber geri bildirimi",
+          whatsappMessage: ""
         },
         de: {
-          emailAria: "E-Mail an 6006performance@gmail.com senden",
+          emailAria: "Rückmeldung zu den technischen Ratgebern per E-Mail senden",
           whatsappAria: "6006 Coding über WhatsApp Business eine Nachricht senden",
-          emailSubject: "6006 Coding technische Beratung",
-          whatsappMessage: "Hallo 6006 Coding, ich möchte eine technische Beratung."
+          emailSubject: "6006 Coding – Rückmeldung zum Ratgeber",
+          whatsappMessage: ""
         },
         en: {
-          emailAria: "Email 6006performance@gmail.com",
+          emailAria: "Send feedback about the technical guides by email",
           whatsappAria: "Message 6006 Coding on WhatsApp Business",
-          emailSubject: "6006 Coding technical advice",
-          whatsappMessage: "Hello 6006 Coding, I would like technical advice."
+          emailSubject: "6006 Coding guide feedback",
+          whatsappMessage: ""
         }
       };
 
       const inquiryCopy = {
         tr: {
-          softwareAction: "Yazılım ve kodlama için bilgi al",
-          channel: "WhatsApp Business",
+          softwareAction: "Araç kataloğuna geri dön",
+          channel: "Teknik rehberler",
           compliance: "Trafiğe uygunluk, sigorta, garanti ve emisyon sistemleri işlemden önce ayrıca değerlendirilir.",
-          softwareIntro: "Merhaba 6006 Coding, aracım için yazılım ve kodlama seçeneklerini öğrenmek istiyorum.",
+          softwareIntro: "6006 Coding araç referans kataloğu.",
           vehicle: "Araç",
           engine: "Motor",
           years: "Yıl aralığı",
 
-          softwarePrompt: "Lütfen motor kodu, mevcut yazılım, teknik durum ve uygunluk kontrolü için sonraki adımı paylaşın.",
-          faultAction: (code) => `${code} için OEM uyumlu teşhis iste`,
-          faultIntro: "Merhaba 6006 Coding, OEM uyumlu teşhis değerlendirmesi istiyorum.",
+          softwarePrompt: "Bu bilgiler açık referans verisidir ve araç üreticisinin verileriyle doğrulanmalıdır.",
+          faultAction: (code) => `${code} için rehberi aç`,
+          faultIntro: "Arıza kodu rehberi:",
           faultCode: "Hata kodu",
           vehicleMissing: "Araç: henüz seçilmedi",
-          faultPrompt: "Lütfen marka/model, motor, yıl ve belirtileri (ne zaman, ne sıklıkta, hangi uyarı ışığı) ekleyin."
+          faultPrompt: "Araç üreticisinin tanım ve test adımlarını ayrıca doğrulayın."
         },
         de: {
-          softwareAction: "Software- und Codierangebot anfragen",
-          channel: "WhatsApp Business",
+          softwareAction: "Technische Referenzen ansehen",
+          channel: "Teknik rehberler",
           compliance: "Straßenzulässigkeit, Betriebserlaubnis, Versicherung, Garantie und Emissionssysteme werden vor einer Beauftragung gesondert geprüft.",
-          softwareIntro: "Hallo 6006 Coding, ich möchte Software- und Codiermöglichkeiten für mein Fahrzeug anfragen.",
+          softwareIntro: "Technische Hinweise zum ausgewählten Fahrzeug anzeigen.",
           vehicle: "Fahrzeug",
           engine: "Motor",
           years: "Baujahrbereich",
 
-          softwarePrompt: "Bitte teilen Sie mir den nächsten Schritt für die Prüfung von Motorkennbuchstabe, Softwarestand, technischem Zustand und Zulässigkeit mit.",
-          faultAction: (code) => `OEM-orientierte Diagnose für ${code} anfragen`,
-          faultIntro: "Hallo 6006 Coding, ich möchte eine OEM-orientierte Diagnose anfragen.",
+          softwarePrompt: "Diese offenen Referenzdaten dienen nur zur Orientierung und ersetzen keine Herstellerunterlagen.",
+          faultAction: (code) => `${code}: Fehlercode-Ratgeber öffnen`,
+          faultIntro: "Fehlercode-Ratgeber:",
           faultCode: "Fehlercode",
           vehicleMissing: "Fahrzeug: noch nicht ausgewählt",
           faultPrompt: "Bitte ergänzen Sie Marke/Modell, Motor, Baujahr und Symptome (wann, wie häufig, welche Warnleuchte)."
         },
         en: {
-          softwareAction: "Request a software and coding quote",
-          channel: "WhatsApp Business",
+          softwareAction: "Explore the vehicle catalogue",
+          channel: "Teknik rehberler",
           compliance: "Road legality, insurance, warranty and emissions systems are assessed separately before any work is agreed.",
-          softwareIntro: "Hello 6006 Coding, I would like to discuss software and coding options for my vehicle.",
+          softwareIntro: "View technical references for the selected vehicle.",
           vehicle: "Vehicle",
           engine: "Engine",
           years: "Year range",
 
-          softwarePrompt: "Please share the next step for checking the engine code, software version, technical condition and suitability.",
-          faultAction: (code) => `Request OEM-aligned diagnosis for ${code}`,
-          faultIntro: "Hello 6006 Coding, I would like an OEM-aligned diagnostic assessment.",
+          softwarePrompt: "These open reference data are for general guidance and do not replace manufacturer information.",
+          faultAction: (code) => `Open the ${code} fault-code guide`,
+          faultIntro: "Fault-code guide:",
           faultCode: "Fault code",
           vehicleMissing: "Vehicle: not selected yet",
           faultPrompt: "Please add make/model, engine, year and symptoms (when, how often and which warning light)."
@@ -1815,6 +1804,69 @@ html{scroll-padding-top:1.25rem}
       };
 
       const pageCopy = {
+        "6006 Coding · Teknik Araç Rehberleri": {"de": "6006 Coding · Technische Fahrzeugratgeber", "en": "6006 Coding · Technical vehicle guides"},
+        "Araç sistemlerini": {"de": "Fahrzeugsysteme verstehen", "en": "Understand vehicle systems"},
+        "anla, doğru teşhis et.": {"de": "und systematisch prüfen.", "en": "and diagnose them carefully."},
+        "Arıza kodları, araç sistemleri ve bakım üzerine bağımsız teknik bilgi projesi. İçerikler genel bilgilendirme içindir; araç özelinde kesin teşhis yerine geçmez.": {"de": "Ein privates technisches Informationsprojekt zu Fehlercodes, Fahrzeugsystemen und Wartung. Die Inhalte dienen der allgemeinen Information und ersetzen keine fahrzeugspezifische Diagnose.", "en": "A private technical information project about fault codes, vehicle systems and maintenance. Content is general information and is not a vehicle-specific diagnosis."},
+        "Rehberleri keşfet": {"de": "Ratgeber entdecken", "en": "Explore the guides"},
+        "Araç kataloğu": {"de": "Fahrzeugkatalog", "en": "Vehicle catalogue"},
+        "Araç katalogları": {"de": "Fahrzeugkataloge", "en": "Vehicle catalogues"},
+        "Arıza kodları": {"de": "Fehlercodes", "en": "Fault codes"},
+        "Bakım ve teknik bilgi": {"de": "Wartung und Technik", "en": "Maintenance and technical information"},
+        "Araç ve motor kataloğu": {"de": "Fahrzeug- und Motorkatalog", "en": "Vehicle and engine catalogue"},
+        "Marka, model, yıl ve motor varyantını seçerek açık araç verilerindeki referans bilgileri ve arıza kodu rehberlerini bul. Kayıtlar üretici onaylı servis verisi değildir; kendi aracın için üretici kaynaklarıyla doğrula.": {"de": "Wählen Sie Marke, Modell, Baujahr und Motorvariante, um offene Referenzdaten und Fehlercode-Ratgeber zu finden. Die Einträge sind keine bestätigten OEM-Reparaturdaten; bitte mit Herstellerquellen abgleichen.", "en": "Choose make, model, year and engine variant to browse open reference data and fault-code guides. Entries are not OEM-approved repair data; verify them with manufacturer sources."},
+        "Katalog hakkında": {"de": "Zum Katalog", "en": "About this catalogue"},
+        "Araç eşleştirme:": {"de": "Fahrzeugzuordnung:", "en": "Vehicle matching:"},
+        "Model yılı, yakıt türü ve motor varyantını dikkatle karşılaştır.": {"de": "Modelljahr, Kraftstoff und Motorvariante sorgfältig vergleichen.", "en": "Compare model year, fuel type and engine variant carefully."},
+        "Arıza kodları:": {"de": "Fehlercodes:", "en": "Fault codes:"},
+        "Seçilen araçla ilgili genel sistem kodlarına geç.": {"de": "Zu allgemeinen Systemcodes für das gewählte Fahrzeug wechseln.", "en": "Open general system codes related to the selected vehicle."},
+        "Kaynak kontrolü:": {"de": "Quellenprüfung:", "en": "Check sources:"},
+        "Kritik bakım değerlerini tahmin etme; araç üreticisinin dokümanını esas al.": {"de": "Kritische Wartungswerte nicht schätzen; Herstellerunterlagen verwenden.", "en": "Do not guess critical maintenance values; consult the vehicle manufacturer’s documentation."},
+        "Aracını seç, referansları gör": {"de": "Fahrzeug wählen, Referenzen ansehen", "en": "Choose a vehicle and view references"},
+        "Katalogda bulunan bilgiler": {"de": "Kataloginhalte", "en": "Catalogue contents"},
+        "Motor verileri": {"de": "Motordaten", "en": "Engine data"},
+        "Model, motor, yakıt ve stok referans bilgileri.": {"de": "Modell-, Motor-, Kraftstoff- und Serienreferenzdaten.", "en": "Model, engine, fuel and stock reference data."},
+        "Arıza kodu rehberi": {"de": "Fehlercode-Ratgeber", "en": "Fault-code guide"},
+        "İlgili genel kod tanımlarına ve kontrol adımlarına bağlantılar.": {"de": "Links zu allgemeinen Codebeschreibungen und Prüfschritten.", "en": "Links to general code definitions and diagnostic checks."},
+        "Kaynak notları": {"de": "Quellenhinweise", "en": "Source notes"},
+        "Açık verilerin sınırları ve doğrulama uyarıları.": {"de": "Grenzen offener Daten und Hinweise zur Überprüfung.", "en": "Limits of open data and verification notes."},
+        "Bu katalog bilgilendirme amaçlıdır; araç özelinde bakım talimatı, servis geçmişi veya üretici onayı sağlamaz.": {"de": "Dieser Katalog dient der Information; er enthält keine fahrzeugspezifischen Wartungsanweisungen, Servicehistorie oder Herstellerfreigaben.", "en": "This catalogue is for information only; it does not provide vehicle-specific maintenance instructions, service history or manufacturer approval."},
+        "Veriyi karşılaştır.": {"de": "Daten vergleichen.", "en": "Compare the data."},
+        "Kaynağını kontrol et.": {"de": "Quellen prüfen.", "en": "Check the source."},
+        "Açık araç verileri bir başlangıç noktası sunar. Araca özel teknik kararlar için üretici belgelerini ve güncel ölçümleri esas alın.": {"de": "Offene Fahrzeugdaten bieten einen ersten Überblick. Für fahrzeugspezifische Entscheidungen Herstellerunterlagen und aktuelle Messwerte verwenden.", "en": "Open vehicle data is a starting point. Use manufacturer documentation and current measurements for vehicle-specific decisions."},
+        "6006 Coding · Bilgi merkezi": {"de": "6006 Coding · Wissensbereich", "en": "6006 Coding · Knowledge hub"},
+        "Araç rehberleri ve teknik başlıklar.": {"de": "Fahrzeugratgeber und Technikthemen.", "en": "Vehicle guides and technical topics."},
+        "Arıza kodları, araç sistemleri, yazılım kavramları ve bakım konularında yayımlanan ücretsiz bilgilere göz atın.": {"de": "Kostenlose Informationen zu Fehlercodes, Fahrzeugsystemen, Softwarebegriffen und Wartung.", "en": "Browse free information on fault codes, vehicle systems, software concepts and maintenance."},
+        "Bu, özel bir bilgi projesidir; ücretli hizmet, randevu veya araç üzerinde işlem teklifi sunmaz.": {"de": "Dies ist ein privates Informationsprojekt. Es bietet keine kostenpflichtigen Leistungen, Termine oder Fahrzeugarbeiten an.", "en": "This is a private information project. It does not offer paid services, appointments or work on vehicles."},
+        "KATALOG": {"de": "KATALOG", "en": "CATALOGUE"},
+        "Araç ve motor bulucu": {"de": "Fahrzeug- und Motorsuche", "en": "Vehicle and engine finder"},
+        "Marka, model, yıl ve motor varyantlarına ait açık referans verilerini karşılaştır.": {"de": "Offene Referenzdaten zu Marke, Modell, Baujahr und Motorvariante vergleichen.", "en": "Compare open reference data for make, model, year and engine variant."},
+        "TEKNİK REHBER": {"de": "TECHNIKRATGEBER", "en": "TECHNICAL GUIDE"},
+        "Kontrol üniteleri ve kodlama": {"de": "Steuergeräte und Codierung", "en": "Control units and coding"},
+        "Araç elektroniği, modüller ve kodlama kavramları hakkında temel bilgiler.": {"de": "Grundlagen zu Fahrzeugelektronik, Modulen und Codierungsbegriffen.", "en": "Basics of vehicle electronics, modules and coding concepts."},
+        "OBD · DTC": {"de": "OBD · DTC", "en": "OBD · DTC"},
+        "Kod tanımlarını, olası nedenleri ve güvenli kontrol adımlarını incele.": {"de": "Codebeschreibungen, mögliche Ursachen und sichere Prüfschritte lesen.", "en": "Explore code definitions, possible causes and safe diagnostic checks."},
+        "SÖZLÜK": {"de": "GLOSSAR", "en": "GLOSSARY"},
+        "ECU ve yazılım terimleri": {"de": "ECU- und Softwarebegriffe", "en": "ECU and software terms"},
+        "Motor kontrolü ve araç yazılımında sık kullanılan teknik terimler.": {"de": "Häufige Fachbegriffe zu Motorsteuerung und Fahrzeugsoftware.", "en": "Common technical terms in engine management and vehicle software."},
+        "EMİSYON SİSTEMLERİ": {"de": "ABGASSYSTEME", "en": "EMISSIONS SYSTEMS"},
+        "DPF, EGR, AdBlue ve NOx": {"de": "DPF, EGR, AdBlue und NOx", "en": "DPF, EGR, AdBlue and NOx"},
+        "Emisyon sistemi uyarılarını ve ilgili kodları üreticiye uygun teşhis perspektifiyle öğren.": {"de": "Warnungen und zugehörige Codes aus herstellerorientierter Diagnosesicht verstehen.", "en": "Understand emissions warnings and related codes from an OEM-aligned diagnostic perspective."},
+        "BAKIM REHBERİ": {"de": "WARTUNGSRATGEBER", "en": "MAINTENANCE GUIDE"},
+        "Bakım ve onarım temelleri": {"de": "Grundlagen zu Wartung und Reparatur", "en": "Maintenance and repair basics"},
+        "Güvenlik, belirtiler ve üretici dokümanlarına dayalı genel kontrol sıraları.": {"de": "Sicherheit, Symptome und allgemeine Prüfreihenfolgen anhand von Herstellerunterlagen.", "en": "Safety, symptoms and general checks based on manufacturer documentation."},
+        "Bir arıza kodu nasıl araştırılır?": {"de": "Wie untersucht man einen Fehlercode?", "en": "How to investigate a fault code"},
+        "Kod tek başına parça arızasını kanıtlamaz. Araç kimliğini, tam hata kaydını ve ölçüm koşullarını birlikte incelemek gerekir.": {"de": "Ein Code beweist keinen Bauteildefekt. Fahrzeug, vollständigen Fehlerspeicher und Messbedingungen gemeinsam betrachten.", "en": "A code alone does not prove component failure. Review vehicle identity, the full fault record and measurement conditions together."},
+        "Araç varyantını belirle": {"de": "Fahrzeugvariante bestimmen", "en": "Identify the vehicle variant"},
+        "Marka, model yılı, motor ve kontrol ünitesi bilgilerini not et.": {"de": "Marke, Modelljahr, Motor und Steuergerät notieren.", "en": "Note the make, model year, engine and control unit."},
+        "Tam kodu ve koşulları oku": {"de": "Vollständigen Code und Bedingungen lesen", "en": "Read the full code and conditions"},
+        "Freeze-frame ve eşlik eden kodları kaydet; genel tanımı araç üreticisinin verisiyle karşılaştır.": {"de": "Freeze-Frame und Begleitcodes sichern; allgemeine Beschreibung mit Herstellerdaten vergleichen.", "en": "Save freeze-frame and related codes; compare the general definition with manufacturer data."},
+        "Güvenliği öncelikle": {"de": "Sicherheit zuerst", "en": "Safety first"},
+        "Fren, hava yastığı, yüksek voltaj ve hararet uyarılarında sürüşü sürdürmeden destek al.": {"de": "Bei Brems-, Airbag-, Hochvolt- oder Überhitzungswarnungen nicht weiterfahren und Unterstützung holen.", "en": "For brake, airbag, high-voltage or overheating warnings, stop driving and seek assistance."},
+        "Proje hakkında": {"de": "Über dieses Projekt", "en": "About this project"},
+        "6006 Coding, kişisel ve ticari olmayan bir bilgi projesidir. Burada ücretli hizmet, teklif, randevu, reklam veya satış ortaklığı sunulmaz. Teknik içerikler genel bilgilendirme amaçlıdır ve üretici belgelerinin yerine geçmez.": {"de": "6006 Coding ist ein privates, nicht kommerzielles Informationsprojekt. Es bietet keine kostenpflichtigen Leistungen, Angebote, Termine, Werbung oder Affiliate-Links. Technische Inhalte dienen der allgemeinen Information und ersetzen keine Herstellerunterlagen.", "en": "6006 Coding is a private, non-commercial information project. It offers no paid services, quotes, appointments, advertising or affiliate links. Technical content is general information and does not replace manufacturer documentation."},
+        "Kişisel ve ticari olmayan teknik bilgi projesi. Ücretli hizmet, randevu, reklam veya satış ortaklığı sunulmaz. İçerikler bilgilendirme amaçlıdır.": {"de": "Privates, nicht kommerzielles Technikprojekt. Keine kostenpflichtigen Leistungen, Termine, Werbung oder Affiliate-Links. Die Inhalte dienen der Information.", "en": "Private, non-commercial technical project. No paid services, appointments, advertising or affiliate links. Content is for information."},
+
   "ECU Yazılımı": {
     "de": "ECU-Software",
     "en": "ECU software"
@@ -1824,24 +1876,24 @@ html{scroll-padding-top:1.25rem}
     "en": "6006 Coding · ECU software · Coding · Diagnostics"
   },
   "ECU Yazılımı,": {
-    "de": "ECU-Optimierung,",
-    "en": "ECU software,"
+    "de": "Fahrzeugtechnik,",
+    "en": "Vehicle technology,"
   },
-  "Kodlama ve Teşhis.": {
+  "Araç Bilgisi ve Rehberler.": {
     "de": "Codierung & Diagnose.",
-    "en": "Coding & Diagnostics."
+    "en": "Vehicle Information & Guides."
   },
-  "6006 Coding: ECU yazılımı, araç kodlama ve canlı veriyle arıza teşhisi. Aracına özel bilgi al; ücretsiz arıza kodu ve çözüm rehberlerini de incele.": {
-    "de": "6006 Coding: ECU-Softwareoptimierung, Fahrzeugcodierung und Diagnose mit Live-Daten. Fordern Sie ein fahrzeugspezifisches Angebot an und entdecken Sie kostenlose Fehlercode-Ratgeber.",
-    "en": "6006 Coding: ECU software optimisation, vehicle coding and live-data diagnostics. Request a quote for your car and explore free fault-code guides."
+  "6006 Coding: Ücretsiz ve bağımsız araç kataloğu, arıza kodu, bakım ve teknik bilgi rehberleri.": {
+    "de": "6006 Coding: Kostenlose, unabhängige Ratgeber zu Fahrzeugen, Fehlercodes, Wartung und Technik.",
+    "en": "6006 Coding: Free, independent guides to vehicle catalogues, fault codes, maintenance and automotive technology."
   },
   "Hizmetlerimizi gör": {
     "de": "Unsere Leistungen",
     "en": "Explore services"
   },
-  "İletişim": {
-    "de": "Angebot anfragen",
-    "en": "Request a quote"
+  "Rehberi aç": {
+    "de": "Ratgeber öffnen",
+    "en": "Open the guide"
   },
   "ECU yazılımı & kalibrasyon": {
     "de": "ECU-Software & Kalibrierung",
@@ -1867,17 +1919,17 @@ html{scroll-padding-top:1.25rem}
     "de": "6006 Coding · Unsere Leistungen",
     "en": "6006 Coding · Our services"
   },
-  "Aracın için yazılım, kodlama ve teşhis.": {
-    "de": "Software, Codierung und Diagnose für Ihr Auto.",
-    "en": "Software, coding and diagnostics for your car."
+  "Araç sistemleri, bakım ve arıza kodları için rehberler.": {
+    "de": "Ratgeber zu Fahrzeugsystemen, Wartung und Fehlercodes.",
+    "en": "Guides to vehicle systems, maintenance and fault codes."
   },
-  "Marka, model, yıl, motor ve istediğiniz hizmeti paylaşın. Uygunluk kontrolünden sonra aracınıza özel bilgi alyin.": {
-    "de": "Teilen Sie Marke, Modell, Baujahr, Motor und Ihr Anliegen mit. Nach der Eignungsprüfung erstellen wir ein individuelles Angebot.",
-    "en": "Share your vehicle make, model, year, engine and request. We assess suitability before preparing a personal quote."
+  "Marka, model, yıl ve motor varyantına göre açık teknik referansları inceleyin.": {
+    "de": "Finden Sie offene technische Referenzen nach Marke, Modell, Baujahr und Motor.",
+    "en": "Browse open technical references by make, model, year and engine."
   },
   "Araç Kodlama & Adaptasyon": {
-    "de": "Fahrzeugcodierung & Anpassung",
-    "en": "Vehicle coding & adaptations"
+    "de": "Codierung verstehen",
+    "en": "Understanding vehicle coding"
   },
   "Desteklenen modellerde kontrol ünitesi kodlama, adaptasyonlar ve konfor özellikleri.": {
     "de": "Steuergerätecodierung, zulässige Anpassungen und Komfortfunktionen bei unterstützten Modellen.",
@@ -1892,8 +1944,8 @@ html{scroll-padding-top:1.25rem}
     "en": "Review potential root causes through fault codes, freeze-frame and sensor data."
   },
   "ECU Okuma, Yazma & Yedekleme": {
-    "de": "ECU auslesen, schreiben & sichern",
-    "en": "ECU read, write & backup"
+    "de": "ECU-Grundlagen",
+    "en": "ECU basics"
   },
   "Uyumlu kontrol ünitelerinde orijinal yazılım yedeği ve ECU dosya işlemleri için ön kontrol.": {
     "de": "Eignungsprüfung für Originalsoftware-Sicherung und ECU-Dateiarbeiten bei kompatiblen Steuergeräten.",
@@ -1907,17 +1959,17 @@ html{scroll-padding-top:1.25rem}
     "de": "DPF-Regeneration, AGR-Ventil, AdBlue/SCR-Dosierung und NOx-Sensor: Diagnose und Prüfung zulässiger Reparaturen.",
     "en": "DPF regeneration, EGR valve, AdBlue/SCR dosing and NOx sensor checks, with assessment of compliant repairs."
   },
-  "Araç Özelinde Teknik Teklif": {
-    "de": "Individuelles Fahrzeugangebot",
-    "en": "Vehicle-specific quote"
+  "Araç Kataloğu": {
+    "de": "Fahrzeugkatalog",
+    "en": "Vehicle catalogue"
   },
-  "Marka, model, yıl, motor ve istediğiniz işlemi gönderin; yapılabilirliği ve fiyatı birlikte netleştirelim.": {
-    "de": "Senden Sie Marke, Modell, Baujahr, Motor und die gewünschte Leistung – Machbarkeit und Preis klären wir individuell.",
-    "en": "Send your vehicle details and requested service for an individual feasibility and pricing review."
+  "Marka, model, yıl ve motor varyantına göre araç referanslarını inceleyin.": {
+    "de": "Finden Sie technische Referenzen nach Marke, Modell, Baujahr und Motor.",
+    "en": "Browse vehicle references by make, model, year and engine."
   },
-  "ECU yazılımı, kodlama veya arıza teşhisi için marka, model, yıl, motor ve talebinizi WhatsApp ya da e-posta ile gönderin. Uygulanabilirlik ve fiyat araç özelinde netleştirilir.": {
-    "de": "Senden Sie Marke, Modell, Baujahr, Motor und Ihren Wunsch per WhatsApp oder E-Mail. Machbarkeit und Preis werden je Fahrzeug geprüft.",
-    "en": "Send make, model, year, engine and your request via WhatsApp or email for a vehicle-specific quote."
+  "Araç kataloğu, arıza kodları ve bakım rehberlerindeki içerikler genel bilgilendirme içindir.": {
+    "de": "Fahrzeugkatalog, Fehlercodes und Wartungshinweise dienen der allgemeinen Information.",
+    "en": "Vehicle catalogue, fault codes and maintenance guides are for general information."
   },
   "Arıza kodları, bakım": {
     "de": "Fehlercodes, Wartung",
@@ -2063,7 +2115,7 @@ html{scroll-padding-top:1.25rem}
     "de": "Erst die Verifikation:",
     "en": "Verification first:"
   },
-  "Kesin bilgi için modelden önce motor kodu ve yazılım sürümü kontrol edilir.": {
+  "Kesin teklif için modelden önce motor kodu ve yazılım sürümü kontrol edilir.": {
     "de": "Für ein verbindliches Angebot prüfen wir Motorkennbuchstabe und Softwarestand.",
     "en": "For a firm quotation, we verify engine code and software version."
   },
@@ -2271,25 +2323,17 @@ html{scroll-padding-top:1.25rem}
     "de": "Technische Inhalte zu Informationszwecken. Vor jedem Eingriff am Fahrzeug müssen Herstelleranforderungen, Versicherung, Garantiebedingungen und lokale rechtliche Vorgaben gesondert geprüft werden.",
     "en": "Technical content for information purposes. Before any work is undertaken, manufacturer requirements, insurance, warranty conditions and local legal requirements must be verified separately."
   },
-  "Aracınızı ve hedefinizi paylaşın.": {
-    "de": "Teilen Sie uns Ihr Fahrzeug und Ihr Ziel mit.",
-    "en": "Share your vehicle and objective."
+  "Rehberler hakkında fikriniz var mı?": {
+    "de": "Haben Sie Feedback zu den Ratgebern?",
+    "en": "Have feedback about the guides?"
   },
-  "Teknik talebinizi e-posta ya da WhatsApp Business üzerinden iletebilirsiniz.": {
-    "de": "Senden Sie Ihre technische Anfrage per E-Mail oder über WhatsApp Business.",
-    "en": "Send your technical request by email or WhatsApp Business."
+  "Teknik rehberlerde eksik veya hatalı bilgi fark ederseniz, düzeltme ve içerik önerilerinizi e-posta ile paylaşabilirsiniz.": {
+    "de": "Hinweise, Ergänzungen und Korrekturen zu den technischen Ratgebern sind per E-Mail willkommen.",
+    "en": "Feedback, corrections and ideas for the technical guides are welcome by email."
   },
-  "E-posta gönder": {
-    "de": "E-Mail senden",
-    "en": "Send email"
-  },
-  "WhatsApp Business": {
-    "de": "WhatsApp Business",
-    "en": "WhatsApp Business"
-  },
-  "Doğrudan mesaj": {
-    "de": "Direktnachricht",
-    "en": "Direct message"
+  "Rehberler hakkında yazın": {
+    "de": "Feedback zu den Ratgebern",
+    "en": "Guide feedback"
   },
   "Motor Yazılımı & Araç Kodlama": {
     "de": "Motorsoftware & Fahrzeugcodierung",
@@ -2494,21 +2538,18 @@ html{scroll-padding-top:1.25rem}
       function syncContactLinks() {
         const copy = contactCopy[currentLanguage] || contactCopy.tr;
         document.querySelectorAll("[data-contact-email]").forEach((link) => {
-          link.href = `mailto:6006performance@gmail.com?subject=${encodeURIComponent(copy.emailSubject)}`;
+          link.href = `mailto:kontakt@6006coding.de?subject=${encodeURIComponent(copy.emailSubject)}`;
           link.setAttribute("aria-label", copy.emailAria);
-        });
-        document.querySelectorAll("[data-contact-whatsapp]").forEach((link) => {
-          link.href = `https://wa.me/491788354756?text=${encodeURIComponent(copy.whatsappMessage)}`;
-          link.setAttribute("aria-label", copy.whatsappAria);
         });
       }
 
       function syncContextualInquiryCopy() {
-        const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
         const stageInquiry = byId("stageInquiry");
-        stageInquiry.querySelector(".context-request-title").textContent = copy.softwareAction;
-        stageInquiry.querySelector(".context-request-channel").textContent = copy.channel;
-        byId("stageComplianceNote").lastElementChild.textContent = copy.compliance;
+        if (stageInquiry) {
+          stageInquiry.querySelector(".context-request-title").textContent = currentLanguage === "de" ? "Wartungsratgeber öffnen" : currentLanguage === "en" ? "Open maintenance guide" : "Bakım rehberini aç";
+          stageInquiry.querySelector(".context-request-channel").textContent = currentLanguage === "de" ? "Ratgeber" : currentLanguage === "en" ? "Guides" : "Rehber";
+        }
+        if (byId("stageComplianceNote")) byId("stageComplianceNote").lastElementChild.textContent = copy.compliance;
       }
 
       function translateStaticPage() {
@@ -2518,9 +2559,9 @@ html{scroll-padding-top:1.25rem}
           node.nodeValue = `${leadingSpace}${translation}${after}`;
         });
         const pageMeta = {
-          tr: { title: "6006 Coding | ECU Yazılımı, Kodlama ve Arıza Teşhisi", description: "ECU kalibrasyonu, araç kodlama ve arıza teşhisi. Aracınıza özel bilgi alyin, ücretsiz arıza kodu rehberlerini okuyun." },
-          de: { title: "ECU Softwareoptimierung, Fahrzeugcodierung & Diagnose | 6006 Coding", description: "Motorsoftware, Fahrzeugcodierung, Komfortfunktionen und OBD-Diagnose. Fahrzeug wählen, Möglichkeiten kennenlernen und passendes Angebot anfragen." },
-          en: { title: "6006 Coding | ECU Software, Vehicle Coding & Diagnostics", description: "ECU software optimisation, vehicle coding, live-data diagnostics and free fault-code guides. Request a vehicle-specific quote." }
+          tr: { title: "6006 Coding | Araç ve Arıza Kodu Rehberleri", description: "Arıza kodları, araç sistemleri, motor referansları ve bakım üzerine ücretsiz teknik rehberler." },
+          de: { title: "6006 Coding | Fahrzeug- und Fehlercode-Ratgeber", description: "Kostenlose technische Ratgeber zu Fehlercodes, Fahrzeugsystemen, Motorreferenzen und Wartung." },
+          en: { title: "6006 Coding | Vehicle and Fault-Code Guides", description: "Free technical guides on fault codes, vehicle systems, engine references and maintenance." }
         };
         document.documentElement.lang = currentLanguage;
         document.title = pageMeta[currentLanguage].title;
@@ -2681,7 +2722,6 @@ html{scroll-padding-top:1.25rem}
           return;
         }
         const displayFault = localizeFault(fault);
-        const inquiry = inquiryCopy[currentLanguage] || inquiryCopy.de;
         const related = query ? ` · ${t("related")} “${escapeHtml(query.toUpperCase())}”` : "";
         result.innerHTML = `
           <div class="fault-meta"><span class="fault-code">${displayFault.code}</span><span class="severity">${displayFault.severity}</span></div>
@@ -2691,7 +2731,7 @@ html{scroll-padding-top:1.25rem}
             <div><div class="detail-label">${t("likely")}${related}</div><div class="cause-list">${displayFault.causes.map((cause) => `<span>${cause}</span>`).join("")}</div></div>
             <div><div class="detail-label">${t("next")}</div><div class="next-step">${displayFault.next}</div></div>
           </div>
-          <button class="fault-request" type="button" data-fault-inquiry-code="${displayFault.code}">${inquiry.faultAction(displayFault.code)}</button>`;
+          <p class="fault-guide-link"><a href="fehlercodes/?code=${displayFault.code}">Ayrıntılı kod kayıtlarını aç →</a></p>`;
         if (faultHasRendered) replayMotion(result, "result-enter");
         faultHasRendered = true;
       }
@@ -2733,15 +2773,7 @@ html{scroll-padding-top:1.25rem}
         });
       });
 
-      byId("stageInquiry").addEventListener("click", () => openWhatsAppMessage(softwareInquiryMessage()));
-      byId("faultResult").addEventListener("click", (event) => {
-        const button = event.target.closest("button[data-fault-inquiry-code]");
-        if (!button) return;
-        const fault = faultCodes.find((item) => item.code === button.dataset.faultInquiryCode);
-        if (fault) openWhatsAppMessage(faultInquiryMessage(fault));
-      });
 
-      const whatsappNumber = "491788354756";
       const concierge = byId("concierge");
       const conciergeLauncher = byId("conciergeLauncher");
       const conciergeClose = byId("conciergeClose");
@@ -2750,7 +2782,6 @@ html{scroll-padding-top:1.25rem}
       const assistantQuick = byId("assistantQuick");
       const assistantForm = byId("assistantForm");
       const assistantInput = byId("assistantInput");
-      const assistantWhatsapp = byId("assistantWhatsApp");
       const assistantState = { messages: [], selectedVehicle: null, intent: null };
       const vehicleAliasRules = [
         { brand: "BMW", name: "320i G20", aliases: ["BMW 320i G20", "320i G20", "G20 320i"], engineHints: ["2.0 T", "2.0 B48"], conflicts: ["320d", "B47", "diesel", "dizel"] },
@@ -2843,11 +2874,6 @@ html{scroll-padding-top:1.25rem}
         return vehicles.find((item) => item.brand === brandSelect.value && item.name === modelSelect.value) || null;
       }
 
-      function openWhatsAppMessage(message) {
-        const popup = window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
-        if (popup) popup.opener = null;
-      }
-
       function softwareInquiryMessage() {
         const copy = inquiryCopy[currentLanguage] || inquiryCopy.de;
         const vehicle = currentVehicle();
@@ -2937,7 +2963,6 @@ html{scroll-padding-top:1.25rem}
         const text = raw.toLocaleLowerCase(currentLanguage);
         if (/\b([PBUC][0-9A-F]{4})\b/i.test(raw)) return "dtc";
         if (/(software|yazılım|yazilim|kodlama|codier|coding|komfort|konfor|spiegel|ayna|kalibr|calibr)/i.test(text)) return "software";
-        if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return "consult";
         return null;
       }
 
@@ -2974,7 +2999,6 @@ html{scroll-padding-top:1.25rem}
           if (brandSelect.value && modelSelect.value) return `${brandSelect.value} ${modelSelect.value}\n${window.VehicleCatalog6006?.details() || ""}\n${assistantVehicleLabels().clarify}`;
           return copy.softwareNeedVehicle;
         }
-        if (/(randevu|termin|beratung|consult|whatsapp|angebot|fiyat|preis|price)/i.test(text)) return copy.consult;
         return copy.generic;
       }
 
@@ -2988,11 +3012,8 @@ html{scroll-padding-top:1.25rem}
         assistantInput.setAttribute("placeholder", copy.input);
         assistantInput.previousElementSibling.textContent = copy.input;
         assistantForm.querySelector("button").textContent = copy.send;
-        assistantWhatsapp.textContent = copy.whatsapp;
-        byId("assistantPrivacy").textContent = copy.privacy;
         assistantQuick.querySelector('[data-assistant-intent="software"]').textContent = copy.quick.software;
         assistantQuick.querySelector('[data-assistant-intent="dtc"]').textContent = copy.quick.dtc;
-        assistantQuick.querySelector('[data-assistant-intent="consult"]').textContent = copy.quick.consult;
         if (resetConversation) resetAssistantConversation();
       }
 
@@ -3021,26 +3042,6 @@ html{scroll-padding-top:1.25rem}
       mobileNavToggle.addEventListener("click", () => setMobileNav(mobileNav.hidden));
       mobileNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMobileNav(false)));
 
-      assistantWhatsapp.addEventListener("click", () => {
-        const copy = assistantCopy();
-        const vehicle = currentVehicle() || assistantState.selectedVehicle;
-        const notes = assistantState.messages
-          .filter((message) => message.role === "user" && message.source === "input")
-          .map((message) => message.text.trim())
-          .filter((message) => message && !isStandaloneCatalogVehicleQuery(message))
-          .slice(-3);
-        const lines = [copy.waIntro, ""];
-        if (vehicle) {
-          lines.push(`${copy.waVehicle}: ${vehicle.brand} ${vehicle.name}`);
-
-        } else {
-          lines.push(copy.waVehicleMissing);
-        }
-        if (assistantState.intent) lines.push(`${copy.waRequest}: ${copy.quick[assistantState.intent]}`);
-        if (notes.length) lines.push(`${copy.waNote}: ${notes.join(" · ")}`);
-        const text = lines.join("\n");
-        openWhatsAppMessage(text);
-      });
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
         if (concierge.classList.contains("is-open")) closeConcierge();

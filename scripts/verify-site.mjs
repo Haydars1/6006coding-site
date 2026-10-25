@@ -4,7 +4,7 @@ import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import vm from 'node:vm';
 const ROOT='dist';
-const SERVICES_VERSION='20261019-services';
+const SERVICES_VERSION='20261025-noncommercial';
 const pages=['index.html','fahrzeug/index.html','reparatur-wartung/index.html','fehlercodes/index.html','technik/index.html'];
 for(const f of pages){
  assert(fs.existsSync(path.join(ROOT,f)),`Missing required page: ${f}`);
@@ -67,17 +67,9 @@ assert(carPage.includes('6006-vin-stage1.js?v='+SERVICES_VERSION),'Vehicle servi
 const referenceIndex=JSON.parse(fs.readFileSync(path.join(ROOT,'assets/vehicle-data/index.json'),'utf8'));
 assert(referenceIndex.totalEngines>=30000&&referenceIndex.totalModels>=2600,'Open motor reference import too small');
 console.log('PASS: Full engine matching, fuel categorization, data provenance and stock power safeguards');
-const quoteSection=vinCode.slice(vinCode.indexOf('const quoteCopy='),vinCode.indexOf('const popularMakes='));
-assert(quoteSection.length>2000,'Vehicle service request request module missing');
-assert(quoteSection.includes('https://wa.me/')&&quoteSection.includes('mailto:'),'Both business contact channels missing');
-assert(quoteSection.includes('6006performance@gmail.com')&&quoteSection.includes('491788354756'),'Business contact targets changed');
-assert(quoteSection.includes('Number.isSafeInteger(mileage)')&&quoteSection.includes('mileage<=2000000'),'Vehicle mileage mishandled');
-assert(quoteSection.includes('contactWaNumber')&&quoteSection.includes('encodeURIComponent(message)'),'Quote message is not encoded safely');
-assert(!quoteSection.includes('document.getElementById("vin6-vin")')&&!quoteSection.includes('$("vin")'),'Full VIN must not be included in contact message');
-assert(quoteSection.includes('aria-disabled')&&quoteSection.includes('Boolean(make.value&&model.value&&(year.value||engineCode))'),'Service inquiry requires make/model plus year or engine');
-assert(quoteSection.includes('stockNeedsReview(selected)'),'Unverified engine values must be marked in quote');
-assert(fs.readFileSync(path.join(ROOT,'assets/6006-vin-stage1.css'),'utf8').includes('.vin6006-quote-actions'),'Vehicle service request form CSS not found');
-console.log('PASS: Multi-language service inquiry, correct business contacts, user-initiated handoff and VIN privacy');
+assert(!/https:\/\/wa\.me|WhatsApp/i.test(vinCode),'Vehicle finder still contains a commercial WhatsApp handoff');
+assert(!/quotation|Angebot|Teklif/i.test(vinCode),'Vehicle finder still exposes commercial quote flow');
+console.log('PASS: VIN lookup remains informational and has no sales/quote handoff');
 
 const missingRequestJs=path.join(ROOT,'assets/6006-missing-request.js');
 const missingRequestCss=path.join(ROOT,'assets/6006-missing-request.css');
@@ -86,16 +78,16 @@ execFileSync(process.execPath,['--check',missingRequestJs],{stdio:'pipe'});
 const missingCode=fs.readFileSync(missingRequestJs,'utf8');
 assert(missingCode.includes('vin6-missing-toggle')&&missingCode.includes('vin6-missing-fields'),'Missing vehicle request not available or expandable');
 assert(missingCode.includes('document.getElementById("vehicle-selector-6006")'),'Missing request not connected to vehicle finder');
-assert(missingCode.includes('https://wa.me/491788354756')&&missingCode.includes('mailto:6006performance@gmail.com'),'Business contact channels must match 6006 Performance');
+assert(!/wa\.me|WhatsApp/i.test(missingCode)&&missingCode.includes('mailto:')&&missingCode.includes('kontakt@6006coding.de'),'Catalogue correction must use editorial email only');
 assert(missingCode.includes('encodeURIComponent(msg)')&&missingCode.includes('valid=Boolean(make&&model&&(year||engine))'),'Missing request validation / URL safety not installed');
 assert(missingCode.includes('lang')&&missingCode.includes('tr:')&&missingCode.includes('de:')&&missingCode.includes('en:'),'Missing vehicle request requires TR / DE / EN');
 assert(!missingCode.includes('vin6-vin')&&!missingCode.includes('fetch(')&&!missingCode.includes('localStorage'),'Request must not upload or save full VIN, personal form inputs or contact messages');
 assert(missingCode.includes('aria-disabled')&&missingCode.includes('removeAttribute("href")'),'Invalid requests must not open contact links');
-assert(missingCode.includes('report a missing')||missingCode.includes('Report a missing'),'Missing motor information must be visibly discoverable');
+assert(/Suggest a catalogue correction|Kataloga düzeltme öner|Katalogkorrektur vorschlagen/.test(missingCode),'Catalogue correction UI must be discoverable');
 assert(fs.readFileSync(missingRequestCss,'utf8').includes('@media(max-width:600px)'),'Missing request iPhone layout not configured');
-assert(carPage.includes('/assets/6006-missing-request.js?v='+SERVICES_VERSION)&&carPage.includes('/assets/6006-missing-request.css?v=20261012-missing-engine'),'Missing engine form not mounted with cache version');
+assert(carPage.includes('/assets/6006-missing-request.js?v='+SERVICES_VERSION)&&carPage.includes('/assets/6006-missing-request.css?v='+SERVICES_VERSION+''),'Missing engine form not mounted with cache version');
 assert(fs.existsSync('docs/missing-engine-request-policy.md'),'Manual approval policy for reported catalogue entries missing');
-console.log('PASS: Privacy-safe missing make/model/engine requests, translated UI, working business contacts');
+console.log('PASS: Privacy-safe catalogue corrections through optional editorial email');
 
 // Public comparisons are retired; archived data must never re-enter the service UI.
 const retiredAssets=['6006-stage1-references.json','6006-stage1-seo-summary.json','6006-stage1-directory.js','6006-stage1-directory.css','6006-stage1-seo-filter.js','6006-stage1-seo.css','6006-stage1-open-engine-finder.js'];
@@ -123,9 +115,9 @@ console.log('PASS: Multi-brand model and engine finder, WMI prefix-only fallback
 const videoCode=fs.readFileSync(videoJs,'utf8');
 assert(videoCode.includes('dtc-video-suggest')&&videoCode.includes('P0335'),'Instant fault-code suggestions missing');
 assert(fs.existsSync(path.join(ROOT,'fehlercodes/p0335/index.html')),'Curated P0335 guide not published');
-const ads=fs.readFileSync(path.join(ROOT,'ads.txt'),'utf8').trim();
-assert(ads==='google.com, pub-7331900145381998, DIRECT, f08c47fec0942fa0','AdSense ads.txt publisher configuration invalid');
-console.log('PASS: Advanced VIN finder, instant DTC search, curated P0335 and publisher ads.txt');
+assert(!fs.existsSync(path.join(ROOT,'ads.txt')),'Non-commercial project must not publish AdSense ads.txt');
+assert(!fs.readFileSync(path.join(ROOT,'index.html'),'utf8').includes('google-adsense-account'),'Non-commercial project must not carry an AdSense publisher tag');
+console.log('PASS: Advanced VIN finder and instant DTC search; no advertising configuration');
 const javascript=['assets/6006-dtc-intelligence.js','assets/6006-dtc-catalog.js','assets/6006-ui.js','assets/6006-language-bridge.js','assets/6006-vehicle-catalog.js','assets/6006-dtc-vehicle.js'];
 
 // Exercise the actual catalogue script without requiring a network or browser.
@@ -182,6 +174,7 @@ const urls=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>m[1]);
 assert(urls.length>100,'SEO sitemap is unexpectedly empty');
 assert(urls.length===new Set(urls).size,'Duplicate sitemap URLs');
 assert(urls.some(u=>u.endsWith('/fahrzeug/')),'Indexed vehicle catalog missing from sitemap');
+assert(urls.includes('https://6006coding.de/datenschutz/')&&urls.includes('https://6006coding.de/projektinfo/'),'Legal/project pages missing from sitemap');
 for(const code of ['p0299','p0401','p2002','p20ee','u0100','p0301','p0128','p2015','p0562','p0741','u0415']){
   const pathname=path.join(ROOT,'fehlercodes',code,'index.html');
   assert(fs.existsSync(pathname),'Missing curated troubleshooting article: '+code);
@@ -313,17 +306,16 @@ assert(vinCode.includes('engineSearch.value=initial.engineSearch;\n renderEngine
 assert(vinCode.includes('ps.value=\"\";\n nm.value=\"\";\n manuallyEditedStock=false;'),'Community reference must not silently populate verified stock power');
 assert(fs.readFileSync(path.join(ROOT,'fahrzeug/index.html'),'utf8').includes('6006-vin-stage1.js?v='+SERVICES_VERSION),'Corrected motor search hint cache version not published');
 
-assert(allEngineCode.includes('inquiryDraft('),'Search result must prepare a specific engine inquiry message');
-assert(allEngineCode.includes('https://wa.me/491788354756?text=')&&allEngineCode.includes('encodeURIComponent(draft)'),'Customer-initiated WhatsApp inquiry must use business contact and URL encoding');
+assert(!/wa\.me|WhatsApp|inquiryDraft|Angebot|quote/i.test(allEngineCode),'Engine directory still offers paid/contact handoff');
 assert(allEngineCode.includes('nicht OEM-bestätigt')&&allEngineCode.includes('OEM onaylı değil')&&allEngineCode.includes('not OEM verified'),'All three languages must distinguish open stock references from verified vehicle specifications');
 assert(!/stage[\s-]+1\b/i.test(allEngineCode),'Engine directory must describe software, coding and diagnostics without gain advertising');
-assert(allEngineCode.includes('vin6006-full-actions')&&allEngineCode.includes('actions.append(ask,contact)'),'Both inspect-vehicle and ask-by-WhatsApp CTAs must be shown');
+assert(allEngineCode.includes('actions.append(ask)'),'Engine directory must provide a catalogue navigation link');
 assert(!allEngineCode.includes('vin6-vin')&&!allEngineCode.includes('sendBeacon('),'Do not automatically send or collect full VIN and visitor data');
 assert(finderHtml.includes('6006-full-engine-directory.js?v='+SERVICES_VERSION)&&finderHtml.includes('6006-full-engine-directory.css?v='+SERVICES_VERSION),'New direct-contact assets must have cache-busted URLs');
 assert(fs.readFileSync(path.join(ROOT,'assets','6006-full-engine-directory.css'),'utf8').includes('.vin6006-full-actions'),'Responsive dual CTAs missing stylesheet');
 assert(!allEngineCode.includes('publishedStage1Ps')&&!allEngineCode.includes('publishedStage1Nm'),'Open engine data must not claim third-party tuning gains');
 assert(allEngineCode.includes('databaseLicense')||fs.readFileSync(globalSearchFile,'utf8').includes('databaseLicense'),'ODbL source attribution missing');
-console.log('PASS: '+globalEngineIndex.count+' globally searchable open reference engines, 164+ makes, paginated safe quote handoff');
+console.log('PASS: '+globalEngineIndex.count+' globally searchable open reference engines, 164+ makes, paginated catalogue lookup');
 
 
 for(const f of javascript){
@@ -361,28 +353,27 @@ assert(homepage.includes('VehicleCatalog6006?.brands()'),'Extended make options 
 assert(homepage.includes('VehicleCatalog6006?.models(brandSelect.value)'),'Extended model options missing');
 assert(homepage.includes('VehicleCatalog6006?.match(raw)'),'Assistant make/model matching missing');
 assert(homepage.includes('class="real-home-feature"'),'Existing home systems list removed unexpectedly');
-assert(homepage.includes('id="hero-title">ECU Yazılımı,'),'Commercial homepage must lead with ECU software');
-assert(homepage.includes('id="repairGuideTitle">Araç Kodlama'),'Quick services must include vehicle coding');
+assert(homepage.includes('id="hero-title">Araç sistemlerini <em>anla, doğru teşhis et.</em>'),'Homepage must lead with informational vehicle guidance');
+assert(homepage.includes('id="repairGuideTitle">Katalog ve bakım rehberleri'),'Quick access should foreground informational topics');
 
 const quickCardStart=homepage.indexOf('<div class="quick-access-grid">');
 const quickCardEnd=homepage.indexOf('</div>\n          </div>\n        </div>\n      </section>',quickCardStart);
 assert(quickCardStart>=0&&quickCardEnd>quickCardStart,'Quick-access section missing');
 const quickCards=homepage.slice(quickCardStart,quickCardEnd);
-assert.equal((quickCards.match(/class="quick-access-card"/g)||[]).length,4,'Homepage should retain four direct service entry points');
+assert((quickCards.match(/class="quick-access-card"/g)||[]).length>=3,'Homepage should retain topic entry points');
 assert(!quickCards.includes('stageReferenceCard'),'Motor reference shortcut must not return');
 assert(!/stage[\s-]+1\b/i.test(homepage),'Homepage copy and translations must not advertise the retired comparison');
 assert(homepage.includes('id="emissionsGuideCard"'),'Emissions diagnosis must remain available');
-assert(homepage.includes('DPF, EGR, AdBlue &amp; NOx Teşhisi'),'Technical emissions diagnosis remains available without deletion claims');
+assert(homepage.includes('id="emissionsGuideCard"'),'Emissions system information must remain available');
 assert(catalogCode.includes('vehicle-service-overview'),'Selected vehicle must show an informative software and coding service overview');
 for(const unsafe of ['id="psValue"','id="nmValue"','class="dyno-chart"','class="power-grid"'])
  assert(!homepage.includes(unsafe),'Retired tuned-power presentation remains: '+unsafe);
-console.log('PASS: Four direct service cards and vehicle software overview without power-gain advertising');
+console.log('PASS: Informational topic cards and vehicle catalogue without power-gain advertising');
 
-assert(homepage.includes('href="#hizmetler">Hizmetlerimizi gör'),'Homepage needs a direct services CTA');
-for(const name of ['Araç Kodlama &amp; Adaptasyon','ECU Okuma, Yazma &amp; Yedekleme','Arıza Kodu &amp; Canlı Veri Teşhisi'])assert(homepage.includes(name),'Missing advertised service: '+name);
-assert(homepage.includes('"Wie können wir Ihrem Fahrzeug helfen?"'),'Missing German service finder copy');
-assert(/(?:Motorsoftware|Fahrzeugsoftware|Softwareoptimierung)/.test(homepage)&&homepage.includes('Fahrzeugcodierung'),'Missing German software and coding focus');
-console.log('PASS: commercial ECU, vehicle coding and OBD diagnostics homepage with TR/DE/EN copy');
+assert(homepage.includes('kontakt@6006coding.de'),'Editorial feedback email missing');
+assert(homepage.includes('/datenschutz/')&&homepage.includes('/projektinfo/'),'Legal and project information links missing');
+assert(!/wa\.me|Angebot anfragen|Fiyat teklifi|Teklif iste/i.test(homepage),'Homepage retains commercial contact language');
+console.log('PASS: non-commercial guide homepage and editorial email in TR/DE/EN');
 console.log('PASS: ECU scene, photo controls, 3D links and animation assets are absent from homepage');
 for(const folder of ['ecu-final','ecu3d','ecu3d-real']){
  assert(!fs.existsSync(path.join(ROOT,folder)),'Retired ECU preview still publicly published: '+folder);

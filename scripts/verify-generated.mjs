@@ -85,5 +85,5 @@ for(const asset of ['6006-stage1-references.json','6006-stage1-seo-summary.json'
  assert(!fs.existsSync(path.join(root,'assets',asset)),'Retired comparison data or browser remains public: '+asset);
 console.log('PASS: Open vehicle data retained; source comparisons and sitemap advertising retired with a working legacy fallback');
 
-assert.equal(urls.length,grouped.size-noindex+170,'Unexpected sitemap coverage');
+assert.equal(urls.length,grouped.size-noindex+172,'Unexpected sitemap coverage');
 console.log(`PASS: ${files.size} HTML pages, ${links} internal links/assets/fragments, canonical URLs and JSON-LD; ${noindex} placeholder-only pages excluded from sitemap`);

@@ -1,4 +1,4 @@
-# 6006 Performance — Kaynak ve otomatik yayın
+# 6006 Coding — kişisel teknik bilgi projesi
 
 Bu depo **6006coding.de** için ayrı statik site kaynağıdır. JARVIS projesiyle bağlantısı yoktur.
 
@@ -16,9 +16,9 @@ Bu depo **6006coding.de** için ayrı statik site kaynağıdır. JARVIS projesiy
 
 Build, 86 ayrıntılı rehber ve 12.042 otomatik kod referansı üretir. Bu iki sayı ayrı raporlanır; referanslar OEM tarafından doğrulanmış onarım talimatı sayılmaz. Üretici açıklamaları ayrı ilk kontrol alanları içerir. Tamamlanmamış OBD testleri parça arızası olarak sunulmaz; SRS ve yüksek voltaj kayıtlarında genel elektrik testleri önerilmez.
 
-Hizmet sunumu motor yazılımı incelemesi, araç kodlama, konfor işlevleri ve arıza teşhisini anlatır. Güç artışı hesaplayıcısı ve üçüncü taraf karşılaştırma kataloğu yayından kaldırılmıştır. Araç seçimi, orijinal teknik referanslar ve bakım/arıza rehberleri korunur. Eski karşılaştırma bağlantısı `prepare-services-release.mjs` ile `noindex` bir yönlendirme sayfasına dönüşür; tarayıcı yeni hizmet bölümünü açar. Arşivlenen üçüncü taraf verileri `docs/archive/` altındadır ve `dist/` içine yayınlanmaz.
+Site kişisel ve ticari olmayan bir bilgi projesidir. Ücretli hizmet, randevu, reklam veya satış ortaklığı sunmaz. Araç seçimi, açık teknik referanslar ve bakım/arıza rehberleri bilgilendirme amacıyla korunur. Eski karşılaştırma bağlantısı `prepare-services-release.mjs` ile `noindex` bir yönlendirme sayfasına dönüşür; ziyaretçiyi araç kataloğuna götürür.
 
-Yalnızca boş/ayrılmış tanımı bulunan kod sayfaları erişilebilir kalır, `noindex,follow` ile sitemap dışında tutulur. `lastmod` build tarihinden türetilmez. `verify-generated.mjs` tüm sitemap ve kod sayfalarını; canonical, tek H1, JSON-LD, yerel bağlantı, dosya ve fragment hedefleri açısından kontrol eder. Google indeksleme, sıralama ve AdSense geliri bu testlerle doğrulanamaz.
+Yalnızca boş/ayrılmış tanımı bulunan kod sayfaları erişilebilir kalır, `noindex,follow` ile sitemap dışında tutulur. `lastmod` build tarihinden türetilmez. `verify-generated.mjs` tüm sitemap ve kod sayfalarını; canonical, tek H1, JSON-LD, yerel bağlantı, dosya ve fragment hedefleri açısından kontrol eder. Google indeksleme ve sıralama bu testlerle doğrulanamaz. Bu yayın derlemesinde AdSense yapılandırması bulunmaz.
 
 ## Bir defalık kurulum
 

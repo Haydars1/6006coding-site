@@ -1,13 +1,13 @@
 (()=>{
 "use strict";
-// Search open reference engines to identify the vehicle before a service inquiry.
+// Search open reference engines to identify a vehicle variant for the public catalogue.
 // Engine index is fetched lazily only when the visitor opens this catalogue.
 const vehicle=document.getElementById("vehicle-selector-6006");
 if(!vehicle||document.getElementById("vin6-full-engine-directory"))return;
 const copy={
-de:{summary:"Alle Motoren durchsuchen – über 30.000 Referenzvarianten",subtitle:"Marke, Modell und Motor für Fahrzeugsoftware, Codierung oder eine gezielte Diagnose zuordnen. Die offenen Fahrzeugdaten helfen beim Einstieg.",search:"Marke, Modell, Motorkennung oder Getriebe suchen",make:"Marke",all:"Alle Marken",year:"Baujahr (optional)",yearHint:"Alle Baujahre",empty:"Mindestens 2 Zeichen eingeben oder eine Marke auswählen.",loading:"Vollständiger Motorindex wird geladen …",failed:"Der Motorindex konnte nicht geladen werden. Bitte Fahrzeug über den Finder oben auswählen.",count:"Motorvarianten gefunden",more:"Weitere 20 Motoren anzeigen",source:"Offene Fahrzeugreferenz",stock:"Referenz-Seriendaten (nicht OEM-bestätigt)",quote:"Fahrzeugkatalog öffnen →",inquiry:"Software, Codierung oder Diagnose anfragen →",unknown:"Unbekannt",none:"Keine Motorreferenz gefunden. Prüfen Sie Schreibweise oder melden Sie den Motor über das Fahrzeugformular.",caution:"Die offenen Referenzdaten dienen der Fahrzeugzuordnung. Motorkennung, Steuergerät, Softwarestand und Getriebe werden vor der Arbeit am Fahrzeug geprüft. Welche Funktionen und Anpassungen möglich sind, hängt von Ausstattung, Freigaben und der konkreten Fahrzeugvariante ab.",license:"Datenquelle / ODbL 1.0"},
-tr:{summary:"Tüm motorlarda ara – 30.000'den fazla referans",subtitle:"Araç yazılımı, kodlama veya arıza teşhisi için marka, model ve motoru belirle. Açık araç verileri doğru başlangıcı bulmaya yardımcı olur.",search:"Marka, model, motor kodu veya şanzıman ara",make:"Marka",all:"Tüm markalar",year:"Model yılı (isteğe bağlı)",yearHint:"Tüm yıllar",empty:"En az 2 karakter yaz veya marka seç.",loading:"Tüm motor indeksi yükleniyor…",failed:"Motor indeksi yüklenemedi. Yukarıdaki araç bulucuyu kullan.",count:"motor varyantı bulundu",more:"20 motor daha göster",source:"Açık araç verisi",stock:"Orijinal referans verisi (OEM onaylı değil)",quote:"Araç kataloğunu aç →",inquiry:"Yazılım, kodlama veya teşhis için bilgi al →",unknown:"Bilinmiyor",none:"Motor bulunamadı. Başka yazımla ara veya eksik motor bildirimi gönder.",caution:"Açık referans verileri aracı tanımlamak içindir. İşlem öncesinde motor kodu, kontrol ünitesi, yazılım sürümü ve şanzıman araç üzerinde doğrulanır. Uygulanabilecek özellikler ve ayarlar aracın donanımına, gerekli onaylara ve tam varyantına bağlıdır.",license:"Veri kaynağı / ODbL 1.0"},
-en:{summary:"Search every engine – over 30,000 reference variants",subtitle:"Identify the make, model and engine for vehicle software, coding or targeted diagnostics. Open vehicle data provides a starting point.",search:"Search make, model, engine or transmission",make:"Make",all:"All makes",year:"Model year (optional)",yearHint:"All years",empty:"Enter at least 2 characters or select a make.",loading:"Loading complete engine index…",failed:"Could not load the engine index. Please use the vehicle selector above.",count:"engine variants found",more:"Show 20 more engines",source:"Open vehicle reference",stock:"Reference stock data (not OEM verified)",quote:"Open vehicle catalogue →",inquiry:"Enquire about software, coding or diagnostics →",unknown:"Unknown",none:"No engines found. Try another name or report a missing engine.",caution:"Open reference data helps identify the vehicle. Engine code, control unit, software version and gearbox are checked on the vehicle before any work. Available functions and adjustments depend on its equipment, required approvals and exact variant.",license:"Data source / ODbL 1.0"}
+de:{summary:"Alle Motoren durchsuchen – über 30.000 Referenzvarianten",subtitle:"Marke, Modell und Motorvariante im offenen Katalog finden. Die Fahrzeugdaten bieten einen ersten Überblick und ersetzen keine Herstellerunterlagen.",search:"Marke, Modell, Motorkennung oder Getriebe suchen",make:"Marke",all:"Alle Marken",year:"Baujahr (optional)",yearHint:"Alle Baujahre",empty:"Mindestens 2 Zeichen eingeben oder eine Marke auswählen.",loading:"Vollständiger Motorindex wird geladen …",failed:"Der Motorindex konnte nicht geladen werden. Bitte Fahrzeug über den Finder oben auswählen.",count:"Motorvarianten gefunden",more:"Weitere 20 Motoren anzeigen",source:"Offene Fahrzeugreferenz",stock:"Referenz-Seriendaten (nicht OEM-bestätigt)",catalogLabel:"Fahrzeugkatalog öffnen →",unknown:"Unbekannt",none:"Keine Motorreferenz gefunden. Prüfen Sie die Schreibweise oder schlagen Sie eine Katalogkorrektur vor.",caution:"Offene Referenzdaten helfen bei der Fahrzeugzuordnung. Sie sind nicht OEM-bestätigt und ersetzen keine Herstellerunterlagen.",license:"Datenquelle / ODbL 1.0"},
+tr:{summary:"Tüm motorlarda ara – 30.000'den fazla referans",subtitle:"Açık araç kataloğunda marka, model ve motor varyantını bul. Veriler genel referanstır; üretici dokümanlarının yerini tutmaz.",search:"Marka, model, motor kodu veya şanzıman ara",make:"Marka",all:"Tüm markalar",year:"Model yılı (isteğe bağlı)",yearHint:"Tüm yıllar",empty:"En az 2 karakter yaz veya marka seç.",loading:"Tüm motor indeksi yükleniyor…",failed:"Motor indeksi yüklenemedi. Yukarıdaki araç bulucuyu kullan.",count:"motor varyantı bulundu",more:"20 motor daha göster",source:"Açık araç verisi",stock:"Orijinal referans verisi (OEM onaylı değil)",catalogLabel:"Araç kataloğunu aç →",unknown:"Bilinmiyor",none:"Motor bulunamadı. Yazımı kontrol et veya katalog düzeltmesi öner.",caution:"Açık referans verileri aracı tanımlamaya yardımcı olur. OEM onaylı değildir ve üretici dokümanlarının yerini tutmaz.",license:"Veri kaynağı / ODbL 1.0"},
+en:{summary:"Search every engine – over 30,000 reference variants",subtitle:"Find a make, model and engine variant in the open vehicle catalogue. These references are a starting point, not manufacturer documentation.",search:"Search make, model, engine or transmission",make:"Make",all:"All makes",year:"Model year (optional)",yearHint:"All years",empty:"Enter at least 2 characters or select a make.",loading:"Loading complete engine index…",failed:"Could not load the engine index. Please use the vehicle selector above.",count:"engine variants found",more:"Show 20 more engines",source:"Open vehicle reference",stock:"Reference stock data (not OEM verified)",catalogLabel:"Open vehicle catalogue →",unknown:"Unknown",none:"No engines found. Check the spelling or suggest a catalogue correction.",caution:"Open data helps identify vehicle variants. It is not OEM-verified and does not replace manufacturer documentation.",license:"Data source / ODbL 1.0"}
 };
 const locale=()=>{const l=(document.documentElement.lang||"").toLowerCase();return l.startsWith("tr")?"tr":l.startsWith("de")?"de":"en";};
 const text=()=>copy[locale()];
@@ -86,30 +86,6 @@ function find(){
  }
  return matches;
 }
-function inquiryDraft(brand,model,engine,yearRange,transmission,fuel,stockHp,stockNm){
- // Factory values provide vehicle context, with no promised service outcome.
- const lang=locale();
- const values=([stockHp,stockNm].every(x=>Number.isFinite(Number(x))&&Number(x)>0)
-  ?String(stockHp)+" HP / "+String(stockNm)+" Nm":"nicht geprüft / not verified");
- const details=[
-  "6006 Performance",
-  lang==="tr"?"Merhaba, bu araç için yazılım, kodlama ve arıza teşhisi hizmetleriniz hakkında bilgi almak istiyorum. İstediğim işlemi ve belirtileri birlikte değerlendirebilir miyiz?"
-   :lang==="de"?"Guten Tag, ich interessiere mich für Fahrzeugsoftware, Codierung oder Fehlerdiagnose für dieses Fahrzeug. Bitte besprechen Sie mit mir den gewünschten Auftrag und die vorhandenen Symptome."
-   :"Hello, I would like to enquire about vehicle software, coding or fault diagnosis for this vehicle. Please help me review the requested work and any symptoms.",
-  "",
-  (lang==="tr"?"Araç":lang==="de"?"Fahrzeug":"Vehicle")+": "+brand+" "+model,
-  (lang==="tr"?"Yıl aralığı":lang==="de"?"Baujahr-Referenz":"Model years")+": "+(yearRange||"—"),
-  (lang==="tr"?"Motor":lang==="de"?"Motor":"Engine")+": "+(engine||"—"),
-  (lang==="tr"?"Yakıt":lang==="de"?"Kraftstoff":"Fuel")+": "+(fuel||"—"),
-  (lang==="tr"?"Şanzıman":lang==="de"?"Getriebe":"Transmission")+": "+(transmission||"—"),
-  (lang==="tr"?"Stok referansı (doğrulanmamış)":lang==="de"?"Serien-Referenz (nicht verifiziert)":"Factory reference (unverified)")+": "+values,
-  "",
-  lang==="tr"?"Bu bilgiler açık araç veritabanından alınmıştır. Motor kodu, gerçek orijinal değerler, kontrol ünitesi ve şanzıman işlem öncesinde doğrulanmalıdır."
-   :lang==="de"?"Diese Angaben stammen aus einer offenen Fahrzeugdatenbank. Motorkennung, tatsächliche Serienwerte, Steuergerät und Getriebe bitte vor der Arbeit bestätigen."
-   :"These details come from an open vehicle database. Please confirm the engine code, actual factory values, control unit and gearbox before any work."
- ];
- return details.join("\n");
-}
 function render(){
  const t=text();labels();
  if(error){status.textContent=t.failed;results.replaceChildren();more.hidden=true;return;}
@@ -129,7 +105,7 @@ function render(){
   meta.textContent=[row[1],(row[3]||row[4])?[row[3]||"?",row[4]||"…"].join("–"):"",row[7],row[8],row[9]].filter(Boolean).join(" · ");
   const stock=document.createElement("p");stock.className="vin6006-full-stock";
   stock.textContent=t.stock+": "+(row[5]||"—")+" HP / "+(row[6]||"—")+" Nm";
-  const ask=document.createElement("a");ask.textContent=t.quote;
+  const ask=document.createElement("a");ask.textContent=t.catalogLabel;
   const from=Number(row[3]),to=Number(row[4]);
   const requestedYear=year.value&&yearInRange(row,year.value)?year.value:Number.isInteger(from)&&from>=1950?String(from):Number.isInteger(to)&&to>=1950?String(to):"";
   const params=new URLSearchParams({brand,model:model[1]});
@@ -137,16 +113,9 @@ function render(){
   const fuel=fuelValue(row[7]);if(fuel)params.set("powertrain",fuel);
   params.set("engineSearch",String(row[2]||"").slice(0,90));
   ask.href="/fahrzeug/?"+params.toString()+"#vehicle-selector-6006";
-  const contact=document.createElement("a");
-  contact.textContent=t.inquiry;
-  const years=[row[3]||requestedYear||"",row[4]||""].filter(Boolean).join("–");
-  const draft=inquiryDraft(brand,model[1],String(row[2]||"").slice(0,120),years,row[8],row[7],row[5],row[6]);
-  contact.href="https://wa.me/491788354756?text="+encodeURIComponent(draft);
-  contact.target="_blank";
-  contact.rel="noopener noreferrer";
   const actions=document.createElement("div");
   actions.className="vin6006-full-actions";
-  actions.append(ask,contact);
+  actions.append(ask);
   item.append(head,engine,meta,stock,actions);fragment.append(item);
  }
  results.append(fragment);

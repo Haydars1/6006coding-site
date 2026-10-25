@@ -1,4 +1,4 @@
-# 6006 Performance — proje devri
+# 6006 Coding — proje devri
 
 Bu ZIP, 9 Ekim 2026'da kontrol edilen statik sitenin HTML/CSS/JavaScript kaynaklarını, görsellerini ve kod verilerini içerir. Önceki sohbet veya çalışma klasörü gerekli değildir.
 
@@ -25,14 +25,14 @@ Sites kaynak araçların varsa önce get_site ile son sürümü kontrol et ve si
 
 Kaynak deposu elde edilemiyorsa en güncel yayınlanan Sites sürümünün archive_storage.sediment_file_id arşivini indir. Bu proje buildless statik HTML/CSS/JS olduğundan dist dosyaları düzenlenebilir kaynaklardır. Bunlar kullanılamıyorsa eklediğim ZIP üzerinden çalış.
 
-GitHub'daki farklı bir deponun salt okunur olması nedeniyle durma; Sites'in kendi kaynağını kontrol et. Yeni site oluşturma. Mevcut projeyi, turbo amblemini, tasarımı ve çalışan özellikleri koruyarak değişiklik yap. Rehberler sitede okunmalı; bilgi arayan kişileri WhatsApp'a yönlendirme. Kesin yağ/parça/tork bilgilerini doğrulanmış araç ve motor kaynaklarıyla ekle.
+GitHub'daki farklı bir deponun salt okunur olması nedeniyle durma; Sites'in kendi kaynağını kontrol et. Yeni site oluşturma. Mevcut projeyi, turbo amblemini, tasarımı ve çalışan özellikleri koruyarak değişiklik yap. Rehberler sitede okunmalı; bilgi arayan kişileri ticari iletişim veya WhatsApp akışlarına yönlendirme. Kesin yağ/parça/tork bilgilerini doğrulanmış araç ve motor kaynaklarıyla ekle.
 
 Değişiklikleri uygula ve test et. Sites yazma/yayın araçların varsa aynı projeye yayınla. Yayın erişimin yoksa düzenlenmiş kaynakları ZIP olarak ver ve erişim sınırını açıkça söyle. Sadece “eski sohbet veya klasör bulunamadı” diyerek durma. Erişmeden veya yayınlamadan bunları yaptığını söyleme.
 ```
 
 ## Kaynaklar
 
-- `dist/index.html`: Ana sayfa, Stage 1, hizmetler, danışman.
+- `dist/index.html`: Ana sayfa ve rehberlere giriş.
 - `dist/reparatur-wartung/index.html`: Araç seçimi ve bakım/tamir rehberleri.
 - `dist/fahrzeug/index.html`: Seçilen araç; bakım, tamir, arıza, teknik veri sekmeleri.
 - `dist/fehlercodes/index.html`: Arıza kodu arama ve detaylar.
@@ -43,7 +43,7 @@ Değişiklikleri uygula ve test et. Sites yazma/yayın araçların varsa aynı p
 - `dist/assets/6006-language-bridge.js`: Mobil menü.
 - `dist/assets/realparts/`: Parça ve sistem görselleri.
 
-Marka 6006 Performance. Premium, sakin tasarım; koyu grafit, sıcak altın, kırmızı, beyaz. Mevcut turbo amblemini ve telefon diline geçişi koru. Alman müşteriler için Almanca içerik önemli. WhatsApp +49 178 8354756; e-posta 6006performance@gmail.com.
+Marka 6006 Coding. Kişisel ve ticari olmayan teknik bilgi projesi; ücretli hizmet, reklam veya satış ortaklığı yok. Premium, sakin tasarım; koyu grafit, sıcak altın, kırmızı, beyaz. Mevcut turbo amblemini ve telefon diline geçişi koru. Almanca, Türkçe ve İngilizce içerik telefon diline göre seçilsin. Rehberler için editoryal e-posta: kontakt@6006coding.de. Gizlilik sayfası veri sorumlusu adını kullanıcının bildirdiği şekilde “Özer” olarak yazar; ev adresi verilmediği için uydurma adres eklenmez.
 
 Araç listesi 40'tan fazla marka ve elle giriş seçeneği içerir. Her model için doğrulanmış OEM yağ, parça, tork ve bakım verileri henüz tamamlanmış değildir. Sadece aracın adını seçmek rehberdeki değerlerin o araç için doğrulandığı anlamına gelmez. Kaynaksız verileri veya ölçülmemiş Stage 1 değerlerini kesin sonuç olarak sunma.
 

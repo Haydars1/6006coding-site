@@ -143,6 +143,13 @@ function loadModels(brand){
  loadOpenBrand(brand);
  if(pending.has(brand))return pending.get(brand);
  const task=(async()=>{
+  await loadOpenBrand(brand);
+  const localNames=(openModels.get(norm(brand))||[]).map(x=>x.name).filter(Boolean);
+  if(localNames.length){
+   remote.set(brand,[...new Set([...(remote.get(brand)||[]),...localNames])]);
+   dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
+   return;
+  }
   let names=fromCache("model:"+brand);
   if(!names){names=(await get("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/"+encodeURIComponent(brand)+"?format=json")).map(x=>x.Model_Name).filter(Boolean);cache("model:"+brand,names);}
   remote.set(brand,[...new Set([...(remote.get(brand)||[]),...names.filter(x=>typeof x==="string"&&x.length<=70)])]);dispatchEvent(new CustomEvent("6006-models-ready",{detail:{brand}}));
@@ -330,10 +337,10 @@ function install(){
   const langCode=lang();
   const electrical=/^(Electric)$/i.test(fuel)||/\b(EV|Elektro)\b/i.test(engine);
   const copy=langCode==="tr"
-   ?{head:"Bu araç için yazılım ve kodlama",selected:"Seçilen araç",unknown:"Motor bilgisi henüz tamamlanmadı",task:"Neler yapılabilir?",steps:["Motor yazılımı: ECU sürümünün ve mevcut kalibrasyonun incelenmesi.","Araç kodlama: desteklenen konfor ve kişiselleştirme işlevlerinin belirlenmesi.","Arıza teşhisi: kayıtlı hataların ve canlı ölçümlerin birlikte değerlendirilmesi.","İşlem planı: uygun işlevlerin, kapsamın ve teklifin araç özelinde netleştirilmesi."],ev:"Elektrikli araçlarda da yazılım sürümü, arıza kayıtları ve desteklenen kişiselleştirme seçenekleri incelenir.",estimate:"Desteklenen işlevler donanıma, kontrol ünitesine ve yazılım sürümüne bağlıdır; kesin kapsam araç kontrolünden sonra belirlenir."}
+   ?{head:"Bu araç için teknik referanslar",selected:"Seçilen araç",unknown:"Motor bilgisi henüz tamamlanmadı",task:"Katalogda neler var?",steps:["Motor referansı: açık kaynaklardaki model ve motor bilgileri.","Araç kodlama: araç elektroniği ve modül ayarları hakkında genel bilgi.","Arıza kodları: ilgili sistem tanımları ve güvenli kontrol başlıkları.","Doğrulama: araca özel bilgileri üretici dokümanlarıyla karşılaştır."],ev:"Elektrikli araçlardaki genel sistem ve arıza kodu bilgileri de katalogda yer alır.",estimate:"Açık veriler genel bilgilendirme içindir; üretici onayı veya araç özelinde talimat değildir."}
    :langCode==="de"
-   ?{head:"Software & Codierung für Ihr Fahrzeug",selected:"Gewähltes Fahrzeug",unknown:"Motorangaben noch unvollständig",task:"Was ist möglich?",steps:["Motorsoftware: Softwarestand und vorhandene Steuergeräte-Abstimmung prüfen.","Fahrzeugcodierung: unterstützte Komfortfunktionen und persönliche Einstellungen zuordnen.","Fehlerdiagnose: Fehlerspeicher und Live-Messwerte zusammen auswerten.","Individueller Ablauf: passende Funktionen, Umfang und Angebot am Fahrzeug klären."],ev:"Auch bei Elektrofahrzeugen lassen sich Softwarestand, Fehler und unterstützte Fahrzeugeinstellungen einordnen.",estimate:"Welche Funktionen verfügbar sind, hängt von Ausstattung, Steuergerät und Softwareversion ab. Der genaue Umfang wird am Fahrzeug geklärt."}
-   :{head:"Software and coding for your vehicle",selected:"Selected vehicle",unknown:"Engine details are incomplete",task:"What can be checked?",steps:["Engine software: review the software revision and existing control-module calibration.","Vehicle coding: identify supported comfort features and personal settings.","Fault diagnosis: evaluate stored faults alongside live measurements.","Individual service plan: confirm suitable features, scope and a quote for the actual vehicle."],ev:"Electric vehicles can also be assessed for software revision, fault records and supported settings.",estimate:"Available features depend on equipment, control modules and software version. The actual scope is confirmed on the vehicle."};
+   ?{head:"Technische Referenzen zu diesem Fahrzeug",selected:"Ausgewähltes Fahrzeug",unknown:"Motordaten noch unvollständig",task:"Was enthält der Katalog?",steps:["Motorreferenzen: offene Daten zu Modell und Motor.","Fahrzeugcodierung: allgemeine Informationen zu Fahrzeugelektronik und Modulen.","Fehlercodes: Systembeschreibungen und sichere Prüfthemen.","Abgleich: fahrzeugspezifische Angaben mit Herstellerunterlagen vergleichen."],ev:"Allgemeine System- und Fehlercodeinformationen zu Elektrofahrzeugen sind ebenfalls enthalten.",estimate:"Offene Daten dienen der allgemeinen Information; sie sind keine Herstellerfreigabe oder fahrzeugspezifische Anweisung."}
+   :{head:"Technical references for this vehicle",selected:"Selected vehicle",unknown:"Engine details are incomplete",task:"What is in the catalogue?",steps:["Engine references: open data about models and engines.","Vehicle coding: general information about vehicle electronics and control modules.","Fault codes: system definitions and safe diagnostic topics.","Verification: compare vehicle-specific details with manufacturer documentation."],ev:"General system and fault-code information for electric vehicles is also included.",estimate:"Open data is for general information; it is not manufacturer approval or a vehicle-specific instruction."};
   const safe=x=>String(x||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
   tech.innerHTML="<strong style='color:#e0bd89;display:block;font-size:.82rem'>"+copy.head+"</strong><p>"+copy.selected+": <b>"+safe(make+" "+modelName)+"</b> · "+safe(engine||fuel||copy.unknown)+(power?" · "+safe(power)+" PS":"")+"</p><strong>"+copy.task+"</strong><ol style='padding-left:1.2rem'>"+copy.steps.map(x=>"<li>"+x+"</li>").join("")+"</ol><p>"+(electrical?copy.ev:copy.estimate)+"</p>";
  }
@@ -457,5 +464,5 @@ function install(){
 }
 window.VehicleCatalog6006={brands,models,searchModels,loadModels,loadMakes,loadOpenIndex,loadOpenBrand,engineVariants,referencePowerNeedsReview,match,details,params,select(result){const q=document.getElementById("vehicleQuickSearch");if(q){q.value=result.brand+" "+(result.model||"");document.getElementById("vehicleFindButton").click();}}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});else install();
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{loadOpenIndex();loadMakes();},{once:true});else {loadOpenIndex();loadMakes();}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{loadOpenIndex();},{once:true});else loadOpenIndex();
 })();
