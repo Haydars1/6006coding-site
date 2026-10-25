@@ -371,7 +371,9 @@ for(const unsafe of ['id="psValue"','id="nmValue"','class="dyno-chart"','class="
  assert(!homepage.includes(unsafe),'Retired tuned-power presentation remains: '+unsafe);
 console.log('PASS: Informational topic cards and vehicle catalogue without power-gain advertising');
 
-assert(homepage.includes('kontakt@6006coding.de'),'Editorial feedback email missing');
+assert(homepage.includes('kontakt@6006coding.de'),'Contact email missing');
+assert(homepage.includes('Bana ulaşın')&&homepage.includes('sorunuz varsa e-posta ile bana ulaşabilirsiniz'),'Personal contact copy missing');
+assert(!/içerik önerisi|içerik önerilerinizi|guide ideas|ideas for the technical guides|Ideen.*Ratgeber/i.test(homepage),'Homepage must not solicit content suggestions');
 assert(homepage.includes('/datenschutz/')&&homepage.includes('/projektinfo/'),'Legal and project information links missing');
 assert(!/wa\.me|Angebot anfragen|Fiyat teklifi|Teklif iste/i.test(homepage),'Homepage retains commercial contact language');
 console.log('PASS: non-commercial guide homepage and editorial email in TR/DE/EN');
