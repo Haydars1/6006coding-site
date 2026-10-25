@@ -36,6 +36,15 @@ const localeScript = `(() => {
 })();`;
 fs.writeFileSync(path.join(assets, '6006-hobby-locale.js'), localeScript, 'utf8');
 
+// Replace previously published technical URLs with a short retirement notice.
+// Render's CDN may continue serving a deleted object at an old path, so ship
+// explicit non-technical pages at the former top-level routes.
+const retiredPage = (title, body) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#11100f"><title>${title} | 6006 Coding</title><style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#11100f;color:#f2eee8;font:16px/1.7 system-ui,sans-serif;display:grid;place-items:center;padding:24px}.card{max-width:620px;border:1px solid #494039;border-radius:18px;padding:clamp(24px,6vw,48px);background:#1b1816}.mark{width:54px;height:54px;object-fit:contain}.eyebrow{color:#c9a36c;font:600 .75rem ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;margin:20px 0 8px}h1{font:400 clamp(2rem,7vw,3.2rem)/1.05 Georgia,serif;margin:0 0 16px}p{color:#beb7ae}a{color:#d9b987}</style></head><body><main class="card"><img class="mark" src="/assets/6006-mark-white.png" alt="6006 Coding"><p class="eyebrow" data-de="Persönliches Hobbyprojekt" data-tr="Kişisel hobi projesi" data-en="Personal hobby project">Persönliches Hobbyprojekt</p><h1 data-de="Diese Seite ist nicht mehr verfügbar." data-tr="Bu sayfa artık mevcut değil." data-en="This page is no longer available.">Diese Seite ist nicht mehr verfügbar.</h1><p data-de="Die früheren technischen Inhalte wurden aus diesem Projekt entfernt. Auf der Startseite erfahren Sie mehr über das private Hobbyprojekt." data-tr="Önceki teknik içerikler bu projeden kaldırıldı. Ana sayfada kişisel hobi projesi hakkında bilgi bulabilirsiniz." data-en="The former technical content has been removed from this project. Visit the home page to learn about the personal hobby project.">Die früheren technischen Inhalte wurden aus diesem Projekt entfernt. Auf der Startseite erfahren Sie mehr über das private Hobbyprojekt.</p><a href="/" data-de="Zur Startseite" data-tr="Ana sayfaya dön" data-en="Go to home">Zur Startseite</a></main><script src="/assets/6006-hobby-locale.js"></script></body></html>`;
+for (const [route, title] of Object.entries({fahrzeug:'Fahrzeugkatalog', fehlercodes:'Fehlercodes', technik:'Fahrzeugtechnik', 'reparatur-wartung':'Reparatur und Wartung'})) {
+  fs.mkdirSync(dir(route), { recursive: true });
+  fs.writeFileSync(path.join(dir(route), 'index.html'), retiredPage(title, ''), 'utf8');
+}
+
 write('index.html', `<!doctype html>
 <html lang="de">
 <head>
@@ -82,9 +91,11 @@ fs.rmSync(dir('deploy-check.txt'), { force: true });
 
 const homepage = fs.readFileSync(dir('index.html'), 'utf8');
 if (!homepage.includes('Personal hobby project') || !homepage.includes('kontakt@6006coding.de')) throw new Error('Hobby landing page incomplete');
-for (const route of ['fahrzeug', 'fehlercodes', 'technik', 'reparatur-wartung', 'stage1-referenzen']) {
-  if (fs.existsSync(dir(route))) throw new Error(`Technical route remains public: ${route}`);
+for (const route of ['fahrzeug', 'fehlercodes', 'technik', 'reparatur-wartung']) {
+  const legacyPage = path.join(dir(route), 'index.html');
+  if (!fs.existsSync(legacyPage) || !fs.readFileSync(legacyPage, 'utf8').includes('Die früheren technischen Inhalte wurden aus diesem Projekt entfernt')) throw new Error(`Retired route missing safe replacement: ${route}`);
 }
+if (fs.existsSync(dir('stage1-referenzen'))) throw new Error('Technical reference route remains public: stage1-referenzen');
 for (const file of fs.readdirSync(assets)) {
   if (!keepAssets.has(file) && file !== '6006-hobby-locale.js') throw new Error(`Technical asset remains public: ${file}`);
 }
